@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Projektoj{% endblock %}
+
+{% block content %}
+Bonvenon al la tradukejo de <a href="https://ikso.net">E@I</a>!
+
+<h1 class="mt-3">Projektoj</h1>
+<div class="card mt-4">
+	<ul class="list-group list-group-flush">
+		{% for project in projects %}
+		<li class="list-group-item">
+			<h3><a href="{% url 'project' project.pk %}">{{ project.name }}</a></h3>
+			<a href="{{ project.url }}" target="_blank">{{ project.url }}</a> – <span lang="{{ project.source_language.code }}">{{ project.source_language.name }}</span>
+			<div class="mt-1">{{ project.description }}</div>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}

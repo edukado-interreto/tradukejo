@@ -1,0 +1,120 @@
+main h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.small-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.help-block {
+    font-size: .9em;
+    margin-top: 4px;
+    color: #454545;
+}
+
+.container-fluid {
+    max-width: 1600px;
+}
+
+.translation-row {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 1rem 0;
+    padding: .5rem .6rem;
+}
+
+.translation-row.translated {
+    border-color: #155724;
+    background-color: #d4edda;
+}
+
+.translation-row.untranslated {
+    border-color: #721c24;
+    background-color: #f8d7da;
+}
+
+.translation-row.outdated {
+    border-color: #856404;
+    background-color: #fff3cd;
+}
+
+.translation-row input[type=text] {
+    width: 100%;
+}
+
+a.translated-text {
+    color: inherit;
+    opacity: .76;
+}
+
+a.translated-text:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+.subdirectory-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 1rem;
+}
+
+.subdirectory-list a {
+    text-decoration: none;
+    padding: 8px 0;
+}
+
+.subdirectory-list li + li {
+    border-top: 1px solid #F0F0F0;
+}
+
+.subdirectory-list a svg {
+    color: #333;
+}
+
+.subdirectory-list a:hover {
+    background: #F1F1F1;
+}
+
+.breadcrumb {
+    background: none;
+}
+
+.translation-row .context {
+    color: #555;
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: .9rem;
+}
+
+.translation-row .context svg {
+    cursor: help;
+}
+
+.plural-number-explanation {
+    color: #555;
+    font-weight: bold;
+    margin-top: .8rem;
+    margin-bottom: .3rem;
+    font-size: .9rem;
+}
+
+.translation-form .plural-number-explanation {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.translation-history {
+    font-size: .9em;
+    margin-top: .5rem;
+    padding-top: .5rem;
+    border-top: 1px solid rgba(200, 200, 200, .6);
+}
+
+.translation-state-bar a {
+    font-size: .9rem;
+    top: 1px;
+    position: relative;
+    margin-right: 4px;
+}

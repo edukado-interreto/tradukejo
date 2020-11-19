@@ -1,0 +1,54 @@
+<div class="translation-row {% if str.state == TRANSLATION_STATE_TRANSLATED %}translated{% elif str.state == TRANSLATION_STATE_OUTDATED %}outdated{% else %}untranslated{% endif %}">
+	<div class="row">
+		<div class="col-6">
+			<strong title="Titolo de la ĉeno, ne traduku ĝin">#{{ str.name }}</strong> –
+			<span class="dropdown">
+				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageButton{{ str.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{ str.project.source_language.name}}
+				</a>
+				<div class="dropdown-menu dropdown-language-menu" aria-labelledby="dropdownLanguageButton{{ str.pk }}">
+					{% for l in str.trstringtext_set.all|dictsort:"language.name" %}
+					<a class="dropdown-item" href="{% url 'get_string_translation' str.pk l.language.code %}">{{ l.language.name }}</a>
+					{% endfor %}
+				</div>
+			</span>
+		</div>
+		<div class="col-6 text-right translation-state-bar">
+			{% if editmode %}
+				<a href="#" class="deletestring">Forigi</a>
+			{% else %}
+				{% if str.state == TRANSLATION_STATE_TRANSLATED %}
+					<a href="#" class="markoutdated" data-url="{% url 'markoutdated' str.translated_text.pk %}">Marki kiel retradukendan</a>
+				{% elif str.state == TRANSLATION_STATE_OUTDATED %}
+					<a href="#" class="marktranslated" data-url="{% url 'marktranslated' str.translated_text.pk %}">Marki kiel tradukitan</a>
+				{% endif %}
+			{% endif %}
+
+			{% if str.state == TRANSLATION_STATE_TRANSLATED %}
+			<span class="badge badge-success">Tradukita</span>
+			{% elif str.state == TRANSLATION_STATE_OUTDATED %}
+			<span class="badge badge-warning">Retradukenda</span>
+			{% else %}
+			<span class="badge badge-danger">Netradukita</span>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row mt-1">
+		<div class="col-md-6">
+			{% include 'traduko/translation/original-text.html' %}
+			{% if str.context %}
+				<div class="context">
+					<i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> {{ str.context }}
+				</div>
+			{% endif %}
+			{% include 'traduko/translation/author-and-history.html' with string=str.original_text %}
+		</div>
+		<div class="col-md-6 translation-widget">
+			{% if str.translated_text %}
+				{% include 'traduko/translation/translation-widget-translated.html' %}
+			{% else %}
+				{% include 'traduko/translation/translation-widget-untranslated.html' %}
+			{% endif %}
+		</div>
+	</div>
+</div>

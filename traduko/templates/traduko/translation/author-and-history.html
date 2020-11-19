@@ -1,0 +1,6 @@
+<div class="translation-history">
+	{{ string.last_change }}
+	{% if string.translated_by %}
+	– <a href="{% url 'profile' string.translated_by.pk %}">{{ string.translated_by.username }}</a>
+	{% endif %}
+</div>

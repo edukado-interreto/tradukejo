@@ -1,0 +1,39 @@
+{% load traduko_tags %}
+<form action="{% url 'save_translation' str.pk language.code %}" class="d-none translation-form" method="post">
+	{% if str.original_text.pluralized %}
+		{% for i in language.nplurals|range %}
+		<div class="form-group">
+			{% with plural_example=language.plural_examples_list|list_index:i %}
+			<div class="plural-number-explanation"><label for="textarea{{ str.pk }}_{{ i }}">Se la nombro estas {{ plural_example }}:</label></div>
+			<textarea name="text[{{ i }}]" id="textarea{{ str.pk }}_{{ i }}" rows="3" class="form-control" dir="{{ language.direction }}">{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example }}</textarea>
+			{% endwith %}
+		</div>
+		{% endfor %}
+	{% else %}
+		<div class="form-group">
+			<textarea name="text[0]" id="textarea{{ str.pk }}" rows="6" class="form-control" dir="{{ language.direction }}">{{ str.translated_text.text }}</textarea>
+		</div>
+	{% endif %}
+
+	{% if editmode %}
+	<div class="form-group">
+		<input type="text" class="" name="context" class="form-control" dir="{{ project.source_language.direction }}" value="{{ str.context }}" placeholder="Helpa teksto por tradukistoj">
+	</div>
+	<div class="form-group">
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input pluralized" id="pluralized{{ str.pk }}"{% if str.translated_text.pluralized %} checked{% endif %}>
+			<label class="custom-control-label" for="pluralized{{ str.pk }}">Ĉeno kun pluralaj formoj</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input minor-change" id="minorchange{{ str.pk }}">
+			<label class="custom-control-label" for="minorchange{{ str.pk }}">Malgrava ŝanĝo (ne marki la ĉenon kiel retradukendan)</label>
+		</div>
+	</div>
+	{% endif %}
+	<div class="form-group">
+		<input type="submit" class="btn btn-primary" value="Konservi">
+		<input type="button" class="btn btn-secondary translate-cancel" value="Nuligi">
+	</div>
+</form>

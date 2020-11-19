@@ -1,0 +1,13 @@
+<div class="original-text">
+	{% if str.original_text.pluralized %}
+	<div class="context mt-1">
+		<i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> Ĉi tiu ĉeno havas diversajn formojn depende de nombro.
+	</div>
+	{% for number, text in str.original_text.pluralized_text_dictionary.items %}
+	<div class="plural-number-explanation">Se la nombro estas {{ number }}:</div>
+	<div>{{ text }}</div>
+	{% endfor %}
+	{% else %}
+	{{ str.original_text.text }}
+	{% endif %}
+</div>

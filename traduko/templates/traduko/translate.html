@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load traduko_tags %}
+
+{% block title %}Traduko de {{ project.name }} ({{ language.name }}){% endblock %}
+
+{% block js %}
+<script src="{% static 'traduko/js/translate.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a></h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="stringStateDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{% if state_filter == STATE_FILTER_UNTRANSLATED %}
+				Nur netradukitaj
+				{% elif state_filter == STATE_FILTER_OUTDATED %}
+				Nur retradukendaj
+				{% elif state_filter == STATE_FILTER_OUTDATED_UNTRANSLATED %}
+				Netradukitaj kaj retradukendaj
+				{% else %}
+				Ĉiuj ĉenoj
+				{% endif %}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="stringStateDropdown">
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_ALL 'q' q %}">Ĉiuj ĉenoj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_UNTRANSLATED 'q' q %}">Nur netradukitaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED 'q' q %}">Nur retradukendaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED_UNTRANSLATED 'q' q %}">Netradukitaj kaj retradukendaj</a>
+			</div>
+		</li>
+	</ul>
+	<form class="form-inline my-2 my-lg-0" action="{% url 'translate' project.pk language.code %}" method="get">
+		{% if current_directory %}<input type="hidden" name="dir" value="{{ current_directory }}">{% endif %}
+		{% if state_filter %}<input type="hidden" name="state" value="{{ state_filter }}">{% endif %}
+		<input class="form-control mr-sm-2" type="search" placeholder="Serĉi…" aria-label="Serĉi" value="{{ q }}" name="q">
+		<button class="btn btn-secondary" type="submit">Serĉi</button>
+    </form>
+</nav>
+
+<nav aria-label="breadcrumb" class="my-4">
+	<ol class="breadcrumb p-1">
+		<li class="breadcrumb-item"><a href="#">
+			<span class="dropdown">
+				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageVersionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{ language.name }}
+				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdownLanguageVersionButton">
+					{% for l in available_languages %}
+					<a class="dropdown-item" href="{% url 'translate' project.pk l.code %}{% querystring 'dir' current_directory 'state' state_filter 'q' q %}">{{ l.name }}</a>
+					{% endfor %}
+				</div>
+			</span>
+		</li>
+		{% if current_path %}
+			<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' '' 'state' state_filter 'q' q %}"><i class="fas fa-home"></i></a></li>
+		{% else %}
+			<li class="breadcrumb-item" aria-current="page"><span><i class="fas fa-home"></i></span></li>
+		{% endif %}
+		{% for path in current_path %}
+			{% if forloop.last %}
+				<li class="breadcrumb-item" aria-current="page">{{ path.name }}</li>
+			{% else %}
+				<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' path.path 'state' state_filter 'q' q %}">{{ path.name }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ol>
+</nav>
+
+{% if subdirectories %}
+<ul class="subdirectory-list my-4">
+	<li class="row mb-1 font-weight-bold">
+		<div class="col-6 col-lg-9"></div>
+		<div class="col text-center">Ĉenoj</div>
+		<div class="col text-center">Vortoj</div>
+		<div class="col text-center">Signoj</div>
+	</li>
+	{% for name, dir in subdirectories.items %}
+	<li>
+		<a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' dir.path 'state' state_filter 'q' q %}" class="row">
+			<div class="col-6 col-lg-9"><i class="fas fa-folder mx-2"></i> {{ name }}</div>
+			<div class="col text-center"><span class="badge badge-secondary">{{ dir.strings }}</span></div>
+			<div class="col text-center"><span class="badge badge-secondary">{{ dir.words }}</span></div>
+			<div class="col text-center"><span class="badge badge-secondary">{{ dir.characters }}</span></div>
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% for str in strings %}
+	{% include "traduko/translation/translation-row.html" %}
+{% empty %}
+	{% if not subdirectories %}
+		<div class="alert alert-info">Neniu ĉeno estis trovita.</div>
+	{% endif %}
+{% endfor %}
+
+{% endblock %}
+

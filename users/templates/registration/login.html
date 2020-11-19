@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<h1>Ensaluti</h1>
+
+<form method="post" class="small-form">
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" value="Ensaluti" class="btn btn-primary">
+</form>
+{% endblock %}

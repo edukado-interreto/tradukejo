@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ project.name }}</h1>
+{% if project.url %}
+	<p><a href="{{ project.url }}">{{ project.url }}</a></p>
+{% endif %}
+<p>Fontolingvo: {{ project.source_language.name }}</p>
+<p>{{ project.description }}</p>
+<p><a href="{% url 'translate' project.pk project.source_language.code %}" class="btn btn-secondary">Redakti la tekstojn</a></p>
+<div class="card mt-4">
+	<ul class="list-group list-group-flush">
+		{% for lv in languages_with_stats %}
+		<li class="list-group-item">
+			<div class="row d-flex align-items-center">
+				<div class="col">
+					<strong>{{ lv.language.code }} – <span lang="{{ lv.language.code }}">{{ lv.language.name }}</span> ({{ lv.translated_percent|floatformat:"-2" }}&nbsp;%)</strong>
+					<div class="progress mt-2" title="Netradukitaj vortoj: {{ lv.untranslated_words }} / {{ project.words }}">
+						<div class="progress-bar bg-success" role="progressbar" style="width: {{ lv.translated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.translated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Tradukitaj vortoj: {{ lv.translated_words }} / {{ project.words }}"></div>
+						<div class="progress-bar bg-warning" role="progressbar" style="width: {{ lv.outdated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.outdated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Retradukendaj vortoj: {{ lv.outdated_words }} / {{ project.words }}"></div>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-2 text-center text-md-right">
+					<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">Traduki</a>
+				</div>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}
+

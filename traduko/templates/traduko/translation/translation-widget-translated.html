@@ -1,0 +1,15 @@
+{% load traduko_tags %}
+<a class="translated-text" href="#">
+	{% if str.original_text.pluralized %}
+		{% for i in language.nplurals|range %}
+			{% with plural_example=language.plural_examples_list|list_index:i %}
+			<div class="plural-number-explanation">Se la nombro estas {{ plural_example }}:</div>
+			<div>{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example }}</div>
+			{% endwith %}
+		{% endfor %}
+	{% else %}
+		{{ str.translated_text.text }}
+	{% endif %}
+</a>
+{% include 'traduko/translation/translation-form.html' %}
+{% include 'traduko/translation/author-and-history.html' with string=str.translated_text %}
