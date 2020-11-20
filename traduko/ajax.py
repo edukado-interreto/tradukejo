@@ -5,9 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from datetime import datetime
 from .translation_functions import *
+from django.contrib.auth.decorators import login_required
 
 
 @csrf_exempt
+@login_required
 def save_translation(request, trstring_id, language):
     # TODO: rights
     # TODO: if no change
@@ -63,6 +65,7 @@ def save_translation(request, trstring_id, language):
     return render(request, "traduko/translation/translation-row.html", context)
 
 
+@login_required
 def get_string_translation(request, trstring_id, language):
     # TODO: rights
     translated_text = get_object_or_404(TrStringText, language=language, trstring=trstring_id)
@@ -96,9 +99,11 @@ def change_translation_state(request, trstringtext_id, state):
     return render(request, "traduko/translation/translation-row.html", context)
 
 
+@login_required
 def markoutdated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_OUTDATED)
 
 
+@login_required
 def marktranslated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_TRANSLATED)

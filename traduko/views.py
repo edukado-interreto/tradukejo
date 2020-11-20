@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from .translation_functions import *
+from django.contrib.auth.decorators import login_required
 
 
 def projects(request):
@@ -11,29 +12,34 @@ def projects(request):
     return render(request, "traduko/projects.html", context)
 
 
-def project(request, project_id):
+@login_required
+def projectpage(request, project_id):
     current_project = get_object_or_404(Project, pk=project_id)
-    languages_with_stats = get_project_language_statistics(current_project)
+    languages_with_stats = get_project_language_statistics(current_project, request.user)
 
     context = {
-        'languages_with_stats': languages_with_stats,
+        'my_languages_with_stats': languages_with_stats['current_user'],
+        'available_languages_with_stats': languages_with_stats['other_available'],
         'project': current_project,
+        'is_project_admin': is_project_admin(request.user, current_project),
+        'addible_languages': addible_languages(current_project)
     }
     return render(request, "traduko/project.html", context)
 
 
+@login_required
 def translate(request, project_id, language):
     current_project = get_object_or_404(Project, pk=project_id)
     current_language = get_object_or_404(Language, code=language)
     available_languages = (Language.objects.filter(code=current_project.source_language.code) |
-                           Language.objects.filter(languageversion__project=current_project)).\
-                            order_by('code') # TODO: languages of current user
+                           Language.objects.filter(languageversion__project=current_project)).order_by('code')  # TODO: languages of current user
 
     if current_language == current_project.source_language:
         editmode = True
     else:
         editmode = False
-        current_language_version = get_object_or_404(LanguageVersion, language=current_language, project=current_project)
+        current_language_version = get_object_or_404(LanguageVersion, language=current_language,
+                                                     project=current_project)
 
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
@@ -53,7 +59,7 @@ def translate(request, project_id, language):
         for i in range(len(directories)):
             current_path.append({
                 'name': directories[i],
-                'path': '/'.join(directories[0:i+1])
+                'path': '/'.join(directories[0:i + 1])
             })
 
     for trstr in strings:
@@ -80,6 +86,6 @@ def translate(request, project_id, language):
         'current_directory': current_directory,
         'state_filter': state_filter,
         'q': search_string,
-        'available_languages': available_languages
+        'available_languages': available_languages,
     }
     return render(request, "traduko/translate.html", context)

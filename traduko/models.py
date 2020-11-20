@@ -62,7 +62,7 @@ class Project(models.Model):
                             unique=True)
     url = models.URLField()
     source_language = models.ForeignKey('Language',
-                                         on_delete=models.PROTECT)
+                                        on_delete=models.PROTECT)
     # image
     description = models.TextField(blank=True)
     needed_languages = models.ManyToManyField('Language',
@@ -77,7 +77,8 @@ class Project(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     last_change = models.DateTimeField(auto_now=True)
 
-    # admins
+    admins = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                    blank=True)
 
     def __str__(self):
         return self.name
@@ -89,8 +90,10 @@ class LanguageVersion(models.Model):
                                 on_delete=models.CASCADE)
     language = models.ForeignKey('Language',
                                  on_delete=models.PROTECT)
-    translators = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    translators = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         blank=True)
     translator_requests = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                                 blank=True,
                                                  related_name="translator_requests")  # Request dates?
 
     class Meta:

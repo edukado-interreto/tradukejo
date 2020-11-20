@@ -33,15 +33,14 @@ def update_string_count(project):
     project.save()
 
 
-def get_project_language_statistics(project):
-    languages = project.languageversion_set.all()
-    for l in languages:
-        translated = TrStringText.objects.filter(trstring__project=project, language=l.language, state=TRANSLATION_STATE_TRANSLATED)
-        outdated = l.outdated_strings = TrStringText.objects.filter(trstring__project=project, language=l.language, state=TRANSLATION_STATE_OUTDATED)
+def add_stats_to_language_version(languageversion):
+    for l in languageversion:
+        translated = TrStringText.objects.filter(trstring__project=l.project, language=l.language, state=TRANSLATION_STATE_TRANSLATED)
+        outdated = l.outdated_strings = TrStringText.objects.filter(trstring__project=l.project, language=l.language, state=TRANSLATION_STATE_OUTDATED)
 
         l.translated_strings = translated.count()
         l.outdated_strings = outdated.count()
-        l.untranslated_strings = project.strings - l.translated_strings - l.outdated_strings
+        l.untranslated_strings = l.project.strings - l.translated_strings - l.outdated_strings
 
         translated_aggregated = translated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
         outdated_aggregated = outdated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
@@ -52,7 +51,7 @@ def get_project_language_statistics(project):
         l.outdated_words = outdated_aggregated['trstring__words__sum']
         if l.outdated_words is None:
             l.outdated_words = 0
-        l.untranslated_words = project.words - l.translated_words - l.outdated_words
+        l.untranslated_words = l.project.words - l.translated_words - l.outdated_words
 
         l.translated_characters = translated_aggregated['trstring__characters__sum']
         if l.translated_characters is None:
@@ -60,14 +59,47 @@ def get_project_language_statistics(project):
         l.outdated_characters = outdated_aggregated['trstring__characters__sum']
         if l.outdated_characters is None:
             l.outdated_characters = 0
-        l.untranslated_characters = project.characters - l.translated_characters - l.outdated_characters
+        l.untranslated_characters = l.project.characters - l.translated_characters - l.outdated_characters
 
-        l.translated_percent = l.translated_words / project.words * 100
-        l.outdated_percent = l.outdated_words / project.words * 100
-        l.untranslated_percent = l.untranslated_words / project.words * 100
+        l.translated_percent = l.translated_words / l.project.words * 100
+        l.outdated_percent = l.outdated_words / l.project.words * 100
+        l.untranslated_percent = l.untranslated_words / l.project.words * 100
 
-    return languages
+    return languageversion
 
+
+def is_project_admin(user, project):
+    if user.is_superuser or user in project.admins.all():
+        return True
+    else:
+        return False
+
+
+def get_project_language_statistics(project, user):
+    if is_project_admin(user, project):
+        current_user = project.languageversion_set.all()
+        other_available = LanguageVersion.objects.none()
+    else:
+        current_user = project.languageversion_set.filter(translators=user)
+        other_available = project.languageversion_set.exclude(translators=user)
+
+    current_user = add_stats_to_language_version(current_user)
+    other_available = add_stats_to_language_version(other_available)
+
+    return {
+        'current_user': current_user,
+        'other_available': other_available,
+    }
+
+
+# Returns languages that don't have a language version in a given project but could be added
+def addible_languages(project):
+    if project.needed_languages.count() > 0:
+        languages = project.needed_languages.all()
+    else:
+        languages = Language.objects.all()
+    languages = languages.exclude(code=project.source_language.code).exclude(languageversion__project=project)
+    return languages.order_by('code')
 
 def filter_by_state(trstrings, current_language, state):
     if state == STATE_FILTER_UNTRANSLATED:

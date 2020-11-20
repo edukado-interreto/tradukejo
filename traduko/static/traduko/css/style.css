@@ -118,3 +118,8 @@ a.translated-text:hover {
     position: relative;
     margin-right: 4px;
 }
+
+#addLanguage {
+    width: auto;
+    margin: 1rem 0;
+}

@@ -14,7 +14,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'url', 'strings', 'words', 'characters')
     ordering = ['name']
     search_fields = ['name', 'description']
-    autocomplete_fields = ['source_language', 'needed_languages']
+    autocomplete_fields = ['source_language', 'needed_languages', 'admins']
 
 
 @admin.register(LanguageVersion)
