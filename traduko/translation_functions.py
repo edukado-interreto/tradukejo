@@ -17,7 +17,6 @@ def get_subdirectories(trstrings, current_directory):
             wordcharcount = string_subdirectories.filter(path__startswith=path).aggregate(Sum('words'), Sum('characters'))
             subdirectories[subdirectory] = {
                 'path': path,
-                # TODO filter by translation state
                 'strings': string_subdirectories.filter(path__startswith=path).count(),
                 'words': wordcharcount['words__sum'],
                 'characters': wordcharcount['characters__sum'],
@@ -73,6 +72,31 @@ def is_project_admin(user, project):
         return True
     else:
         return False
+
+
+def is_allowed_to_translate(user, project, language):
+    if is_project_admin(user, project):
+        return True
+
+    try:
+        lv = LanguageVersion.objects.get(project=project, language=language)
+    except LanguageVersion.DoesNotExist:
+        lv = None
+
+    if lv is not None and user in lv.translators.all():
+        return True
+
+    return False
+
+
+def get_project_languages_for_user(project, user):
+    if is_project_admin(user, project):
+        available_languages = (Language.objects.filter(code=project.source_language.code) |
+                              Language.objects.filter(languageversion__project=project))
+    else:
+        available_languages = Language.objects.filter(languageversion__project=project, languageversion__translators=user)
+
+    return available_languages.order_by('code')
 
 
 def get_project_language_statistics(project, user):

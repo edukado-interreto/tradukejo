@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def projects(request):
@@ -31,8 +32,12 @@ def projectpage(request, project_id):
 def translate(request, project_id, language):
     current_project = get_object_or_404(Project, pk=project_id)
     current_language = get_object_or_404(Language, code=language)
-    available_languages = (Language.objects.filter(code=current_project.source_language.code) |
-                           Language.objects.filter(languageversion__project=current_project)).order_by('code')  # TODO: languages of current user
+
+    if not is_allowed_to_translate(request.user, current_project, current_language):
+        messages.error(request, 'Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
+        return redirect('project', project_id)
+
+    available_languages = get_project_languages_for_user(current_project, request.user)
 
     if current_language == current_project.source_language:
         editmode = True

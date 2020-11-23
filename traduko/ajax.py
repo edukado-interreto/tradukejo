@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 @login_required
 def save_translation(request, trstring_id, language):
-    # TODO: rights
     # TODO: if no change
     if request.method != "POST":
         return HttpResponse('')
@@ -19,6 +18,9 @@ def save_translation(request, trstring_id, language):
     current_language = get_object_or_404(Language, code=language)
     current_string = get_object_or_404(TrString, pk=trstring_id)
     editmode = current_language == current_string.project.source_language
+
+    if not is_allowed_to_translate(request.user, current_string, current_language):
+        return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
 
     try:
         translated_text = TrStringText.objects.get(language=current_language, trstring=current_string)
@@ -67,7 +69,6 @@ def save_translation(request, trstring_id, language):
 
 @login_required
 def get_string_translation(request, trstring_id, language):
-    # TODO: rights
     translated_text = get_object_or_404(TrStringText, language=language, trstring=trstring_id)
     str = TrString()
     str.original_text = translated_text
@@ -81,9 +82,12 @@ def change_translation_state(request, trstringtext_id, state):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
     if trstringtext.language == trstringtext.trstring.project.source_language:
         raise Http404('Malĝusta ĉeno')
+
+    if not is_allowed_to_translate(request.user, trstringtext.trstring.project, trstringtext.language):
+        return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + trstringtext.language.name + ').')
+
     trstringtext.state = state
     trstringtext.save()
-    # TODO: rights
 
     current_string = trstringtext.trstring
     current_string.state = state

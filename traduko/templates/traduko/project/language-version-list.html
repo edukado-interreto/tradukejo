@@ -9,8 +9,12 @@
 					<div class="progress-bar bg-warning" role="progressbar" style="width: {{ lv.outdated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.outdated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Retradukendaj vortoj: {{ lv.outdated_words }} / {{ project.words }}"></div>
 				</div>
 			</div>
-			<div class="col-sm-3 col-md-2 col-lg-2 col-xl-1 text-center text-md-right">
+			<div class="col-sm-3 col-md-2 col-lg-2 text-center text-md-right">
+				{% if can_translate %}
 				<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">Traduki</a>
+				{% else %}
+				<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">Peti permeson</a>
+				{% endif %}
 			</div>
 		</div>
 	</li>

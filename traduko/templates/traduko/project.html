@@ -18,14 +18,14 @@
 {% if my_languages_with_stats %}
 <h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
 <div class="card my-4">
-	{% include 'traduko/project/language-version-list.html' with language_versions=my_languages_with_stats %}
+	{% include 'traduko/project/language-version-list.html' with language_versions=my_languages_with_stats can_translate=True %}
 </div>
 {% endif %}
 
 {% if available_languages_with_stats %}
 <h2>Aliaj lingvoj</h2>
 <div class="card my-4">
-	{% include 'traduko/project/language-version-list.html' with language_versions=available_languages_with_stats %}
+	{% include 'traduko/project/language-version-list.html' with language_versions=available_languages_with_stats can_translate=False %}
 </div>
 {% endif %}
 
