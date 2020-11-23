@@ -15,7 +15,7 @@
 		</div>
 		<div class="col-6 text-right translation-state-bar">
 			{% if editmode %}
-				<a href="#" class="deletestring">Forigi</a>
+				<a href="#" class="deletestring" data-url="{% url 'deletestring' str.pk %}">Forigi</a>
 			{% else %}
 				{% if str.state == TRANSLATION_STATE_TRANSLATED %}
 					<a href="#" class="markoutdated" data-url="{% url 'markoutdated' str.translated_text.pk %}">Marki kiel retradukendan</a>

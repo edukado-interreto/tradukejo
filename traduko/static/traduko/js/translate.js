@@ -75,6 +75,21 @@ function setup_translation_events() {
             });
         }
     });
+
+    $('.deletestring').click(function(e){
+        e.preventDefault();
+        if (window.confirm('Ĉu vi certe volas forigi ĉi tiun ĉenon?')) {
+            const row = $(this).parents('.translation-row');
+            $.ajax({
+                url: $(this).attr('data-url'),
+                method: "GET",
+                dataType: "html",
+                success: function(data) {
+                    row.replaceWith('<div class="alert alert-success">' + data + '</div>');
+                }
+            });
+        }
+    });
 }
 setup_translation_events();
 

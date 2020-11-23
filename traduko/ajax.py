@@ -111,3 +111,14 @@ def markoutdated(request, trstringtext_id):
 @login_required
 def marktranslated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_TRANSLATED)
+
+
+@login_required
+def deletestring(request, trstring_id):
+    trstring = get_object_or_404(TrString, pk=trstring_id)
+    if is_project_admin(request.user, trstring.project):
+        trstring.delete()
+        update_string_count(trstring.project)
+        return HttpResponse('La ĉeno estis forigita.')
+    else:
+        return HttpResponse('Vi ne rajtas forigi ĉenojn.')

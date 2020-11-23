@@ -10,4 +10,5 @@ urlpatterns = [
     path("ajax/get-string-translation/<int:trstring_id>/<str:language>/", ajax.get_string_translation, name="get_string_translation"),
     path("ajax/markoutdated/<int:trstringtext_id>/", ajax.markoutdated, name="markoutdated"),
     path("ajax/marktranslated/<int:trstringtext_id>/", ajax.marktranslated, name="marktranslated"),
+    path("ajax/deletestring/<int:trstring_id>/", ajax.deletestring, name="deletestring"),
 ]
