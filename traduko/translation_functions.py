@@ -110,6 +110,9 @@ def get_project_language_statistics(project, user):
     current_user = add_stats_to_language_version(current_user)
     other_available = add_stats_to_language_version(other_available)
 
+    for lv in other_available:
+        lv.translation_request_sent = lv.translatorrequest_set.filter(user=user).count() > 0
+
     return {
         'current_user': current_user,
         'other_available': other_available,

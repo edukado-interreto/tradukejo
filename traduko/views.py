@@ -92,5 +92,6 @@ def translate(request, project_id, language):
         'state_filter': state_filter,
         'q': search_string,
         'available_languages': available_languages,
+        'user_is_project_admin': is_project_admin(request.user, current_project)
     }
     return render(request, "traduko/translate.html", context)

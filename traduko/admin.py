@@ -21,9 +21,16 @@ class ProjectAdmin(admin.ModelAdmin):
 class LanguageVersionAdmin(admin.ModelAdmin):
     list_display = ('project', 'language')
     ordering = ['project', 'language']
-    search_fields = ['translators', 'translator_requests']
-    autocomplete_fields = ['project', 'language', 'translators', 'translator_requests']
+    search_fields = ['translators']
+    autocomplete_fields = ['project', 'language', 'translators']
 
+
+@admin.register(TranslatorRequest)
+class TranslatorRequestAdmin(admin.ModelAdmin):
+    list_display = ('language_version', 'user', 'create_date')
+    ordering = ['create_date']
+    search_fields = ['language_version', 'user']
+    autocomplete_fields = ['language_version', 'user']
 
 @admin.register(TrString)
 class TrStringAdmin(admin.ModelAdmin):

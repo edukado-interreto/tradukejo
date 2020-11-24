@@ -92,15 +92,24 @@ class LanguageVersion(models.Model):
                                  on_delete=models.PROTECT)
     translators = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                          blank=True)
-    translator_requests = models.ManyToManyField(settings.AUTH_USER_MODEL,
-                                                 blank=True,
-                                                 related_name="translator_requests")  # Request dates?
 
     class Meta:
         ordering = ['language']
 
     def __str__(self):
         return self.project.name + " - " + self.language.code
+
+
+class TranslatorRequest(models.Model):
+    language_version = models.ForeignKey('LanguageVersion',
+                                         on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    create_date = models.DateTimeField(auto_now_add=True)
+    explanation = models.TextField()
+
+    def __str__(self):
+        return self.user.username + ' - ' + self.language_version.__str__()
 
 
 # I'd rather not call this class "String" to avoid problems

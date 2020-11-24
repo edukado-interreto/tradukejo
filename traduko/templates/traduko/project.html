@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}{{ project.name }}{% endblock %}
+
+{% block js %}
+<script src="{% static 'traduko/js/project.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <h1>{{ project.name }}</h1>
@@ -34,10 +38,41 @@
 <select name="addLanguage" id="addLanguage" class="form-control">
 	<option>Elektu lingvon…</option>
 	{% for l in addible_languages %}
-		<option value="{{ l.code }}" lang="{{ l.code }}" dir="{{ l.direction }}">{{ l.code }} – {{ l.name }}</option>
+		<option data-code="{{ l.code }}" data-language="{{ l.name }}" lang="{{ l.code }}" dir="{{ l.direction }}">{{ l.code }} – {{ l.name }}</option>
 	{% endfor %}
 </select>
 Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu kontakti nin. (TODO)
+{% endif %}
+
+{% if not user_is_project_admin %}
+<div class="modal fade" id="translatorRequestModal" tabindex="-1" aria-labelledby="translatorRequestModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="{% url 'request_translator_permission' project.pk %}" method="post">
+				<div class="modal-header">
+					<h5 class="modal-title" id="translatorRequestModalLabel">Peti permeson por traduki</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Fermi">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="requestResult"></p>
+					<div class="form-group" id="requestFields">
+						{% csrf_token %}
+						<p>Vi petas permeson traduki al la lingvo: <strong><span id="requestLanguageName">xx</span> (<span id="requestLanguageCode">xx</span>)</strong>.</p>
+						<label for="explanation">Bonvolu klarigi mallonge, kiu vi estas:</label>
+						<textarea name="explanation" id="explanation" rows="6" class="form-control" required></textarea>
+					</div>
+					<input type="hidden" name="language" id="requestLanguageCodeInput">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermi</button>
+					<input type="submit" class="btn btn-primary" value="Sendi" id="requestSubmit">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% endif %}
 
 {% endblock %}

@@ -93,11 +93,11 @@ function setup_translation_events() {
 }
 setup_translation_events();
 
-/*window.addEventListener('beforeunload', function(e){
+window.addEventListener('beforeunload', function(e){
 if ($('.translation-form:visible').length > 0) {
         e.preventDefault();
         e.returnValue = '';
         return;
     }
     delete e['returnValue'];
-});*/
+});
