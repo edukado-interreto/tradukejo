@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ project.name }} – petoj por traduki{% endblock %}
+
+{% block content %}
+<h1><a href="{% url 'project' project.pk %}">{{ project.name }}</a> – petoj por traduki</h1>
+
+{% if not requests %}
+<p class="alert alert-info mt-4">Nuntempe ne estas petoj.</p>
+{% else %}
+<ul class="list-group mt-4">
+	{% for r in requests %}
+		<li class="list-group-item">
+			<div>
+				<a href="{% url 'profile' user.pk %}">{{ r.user }}</a> – {{ r.language_version.language.name }} ({{ r.language_version.language.code }}) – {{ r.create_date }}
+			</div>
+			<div class="my-3">
+				{{ r.explanation }}
+			</div>
+			<div class="text-center">
+				<a href="{% url 'accept_translator_request' r.pk %}" class="btn btn-success mr-3">Akcepti</a>
+				<a href="{% url 'decline_translator_request' r.pk %}" class="btn btn-danger">Malakcepti</a>
+			</div>
+		</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}
+

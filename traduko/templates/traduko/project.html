@@ -7,17 +7,42 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ project.name }}</h1>
-{% if project.url %}
-	<p><a href="{{ project.url }}">{{ project.url }}</a></p>
-{% endif %}
-<p>Fontolingvo: {{ project.source_language.name }}</p>
-<p>
-	Bezonataj lingvoj:
-	{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
-</p>
-<p>{{ project.description }}</p>
-<p><a href="{% url 'translate' project.pk project.source_language.code %}" class="btn btn-secondary">Redakti la tekstojn</a></p>
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">{{ project.name }}</h5>
+		<div class="row">
+			<div class="col">
+				{% if project.url %}
+					<p class="card-text"><a href="{{ project.url }}">{{ project.url }}</a></p>
+				{% endif %}
+				{% if project.description %}
+					<p class="card-text">{{ project.description }}</p>
+				{% endif %}
+			</div>
+			<div class="col-12 col-md-6">
+				<ul class="mb-0">
+					{% if is_project_admin %}
+						<li><a href="{% url 'translate' project.pk project.source_language.code %}">Redakti la tekstojn</a></li>
+						{% if translator_request_count > 0 %}
+							<li><strong><a href="{% url 'translator_request_list' project.pk %}">Petoj por traduki ({{ translator_request_count }})</a></strong></li>
+						{% endif %}
+						{% if user.is_superuser %}
+							<li><a href="{% url 'admin:traduko_project_change' project.pk %}">Redakti en la administrejo</a></li>
+						{% endif %}
+					{% endif %}
+					<li>Fontolingvo: {{ project.source_language.name }}</li>
+					<li>Ĉenoj: {{ project.strings }}</li>
+					<li>Vortoj: {{ project.words }}</li>
+					<li>Signoj: {{ project.characters }}</li>
+					<li>
+						Bezonataj lingvoj:
+						{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% if my_languages_with_stats %}
 <h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
@@ -38,13 +63,13 @@
 <select name="addLanguage" id="addLanguage" class="form-control">
 	<option>Elektu lingvon…</option>
 	{% for l in addible_languages %}
-		<option data-code="{{ l.code }}" data-language="{{ l.name }}" lang="{{ l.code }}" dir="{{ l.direction }}">{{ l.code }} – {{ l.name }}</option>
+		<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>
 	{% endfor %}
 </select>
 Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu kontakti nin. (TODO)
 {% endif %}
 
-{% if not user_is_project_admin %}
+{% if not is_project_admin %}
 <div class="modal fade" id="translatorRequestModal" tabindex="-1" aria-labelledby="translatorRequestModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">

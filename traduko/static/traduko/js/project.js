@@ -16,7 +16,12 @@ $('#translatorRequestModal').on('show.bs.modal', function(e){
 });
 
 $('#addLanguage').change(function(e){
-    $('#translatorRequestModal').modal('show');
+    if ($(this).find(':selected').attr('data-url')) {
+        window.location = $(this).find(':selected').attr('data-url');
+    }
+    else {
+        $('#translatorRequestModal').modal('show');
+    }
 });
 
 $('#translatorRequestModal form').submit(function(e) {

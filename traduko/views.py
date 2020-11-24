@@ -18,13 +18,19 @@ def projectpage(request, project_id):
     current_project = get_object_or_404(Project, pk=project_id)
     languages_with_stats = get_project_language_statistics(current_project, request.user)
 
+    user_is_project_admin = is_project_admin(request.user, current_project)
+
     context = {
         'my_languages_with_stats': languages_with_stats['current_user'],
         'available_languages_with_stats': languages_with_stats['other_available'],
         'project': current_project,
-        'is_project_admin': is_project_admin(request.user, current_project),
+        'is_project_admin': user_is_project_admin,
         'addible_languages': addible_languages(current_project)
     }
+
+    if user_is_project_admin:
+        context['translator_request_count'] = TranslatorRequest.objects.filter(language_version__project=current_project).count()
+
     return render(request, "traduko/project.html", context)
 
 
@@ -92,6 +98,67 @@ def translate(request, project_id, language):
         'state_filter': state_filter,
         'q': search_string,
         'available_languages': available_languages,
-        'user_is_project_admin': is_project_admin(request.user, current_project)
     }
     return render(request, "traduko/translate.html", context)
+
+
+@login_required
+def add_language_version(request, project_id, language):
+    project = get_object_or_404(Project, pk=project_id)
+    if is_project_admin(request.user, project):
+        lang = get_object_or_404(Language, code=language)
+        if LanguageVersion.objects.filter(project=project, language=lang).count() == 0:
+            LanguageVersion(project=project, language=lang).save()
+            messages.success(request, 'La lingvo ' + lang.name + ' estis aldonita.')
+
+    return redirect('project', project_id)
+
+
+@login_required
+def translator_request_list(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    if not is_project_admin(request.user, project):
+        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
+        return redirect('project', project_id)
+
+    requests = TranslatorRequest.objects.filter(language_version__project=project).order_by('-create_date')
+
+    context = {
+        'project': project,
+        'requests': requests
+    }
+    return render(request, "traduko/project-translator-requests.html", context)
+
+
+@login_required
+def accept_translator_request(request, request_id):
+    translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
+    if not is_project_admin(request.user, translatorrequest.language_version.project):
+        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
+        return redirect('project', translatorrequest.language_version.project.pk)
+
+    translatorrequest.language_version.translators.add(translatorrequest.user)
+    translatorrequest.language_version.save()
+    translatorrequest.delete()
+
+    # TODO send mail confirmation
+
+    return redirect('translator_request_list', translatorrequest.language_version.project.pk)
+
+
+@login_required
+def decline_translator_request(request, request_id):
+    translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
+    if not is_project_admin(request.user, translatorrequest.language_version.project):
+        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
+        return redirect('project', translatorrequest.language_version.project.pk)
+
+    # Delete the language version if no translations
+    if TrStringText.objects.filter(trstring__project=translatorrequest.language_version.project, language=translatorrequest.language_version.language).count() == 0:
+        translatorrequest.language_version.delete()  # translatorrequest deleted by cascade
+    else:
+        translatorrequest.delete()
+
+    # TODO send mail confirmation
+
+    return redirect('translator_request_list', translatorrequest.language_version.project.pk)
