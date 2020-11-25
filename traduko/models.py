@@ -129,6 +129,12 @@ class TrString(models.Model):
     def __str__(self):
         return self.path + "#" + self.name
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['project', 'path', 'name']),
+        ]
+        unique_together = [['project', 'path', 'name']]
+
 
 class TrStringText(models.Model):
     trstring = models.ForeignKey('TrString',
