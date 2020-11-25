@@ -19,7 +19,9 @@ def save_translation(request, trstring_id, language):
     current_language = get_object_or_404(Language, code=language)
     current_string = get_object_or_404(TrString, pk=trstring_id)
     editmode = current_language == current_string.project.source_language
-    new_pluralized = bool(request.POST.get('pluralized') == 'true')
+    if editmode:
+        new_pluralized = bool(request.POST.get('pluralized') == 'true')
+        new_context = request.POST.get('context')
 
     if not is_allowed_to_translate(request.user, current_string, current_language):
         return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
@@ -35,14 +37,14 @@ def save_translation(request, trstring_id, language):
                                             TrStringText.objects.get(trstring=current_string, language=current_string.project.source_language).pluralized,
                                             current_language.nplurals())
 
-    if new_translation or parsed_text_data['text'] != translated_text.text or (editmode and translated_text.pluralized != new_pluralized):  # If there are changes
+    if new_translation or parsed_text_data['text'] != translated_text.text or (editmode and (translated_text.pluralized != new_pluralized or current_string.context != new_context)):  # If there are changes
         translated_text.state = TRANSLATION_STATE_TRANSLATED
         translated_text.translated_by = request.user
         translated_text.text = parsed_text_data['text']
 
         if editmode:  # Update word and character count
             translated_text.pluralized = new_pluralized
-            current_string.context = request.POST.get('context')
+            current_string.context = new_context
             current_string.words = parsed_text_data['words']
             current_string.characters = parsed_text_data['characters']
             current_string.save()
