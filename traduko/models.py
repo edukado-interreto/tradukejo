@@ -146,7 +146,7 @@ class TrStringText(models.Model):
     translated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                       null=True,
                                       on_delete=models.SET_NULL)
-    last_change = models.DateTimeField()  # Has to be updated manually!
+    last_change = models.DateTimeField(auto_now_add=True)  # Has to be updated manually!
     state = models.IntegerField(choices=TRANSLATION_STATES,
                                 default=TRANSLATION_STATE_TRANSLATED)
 

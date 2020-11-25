@@ -93,8 +93,26 @@ function setup_translation_events() {
 }
 setup_translation_events();
 
+var post_new_string = false;
+$('#new-string-form').submit(function(){
+    post_new_string = true;
+});
+
+$('#new-string-form').removeClass('d-none').hide();
+$('#new-string-form-show').click(function(){
+    $('#new-string-form').show();
+    $('#new-string-form-show').hide();
+    $('html, body').animate({
+        scrollTop: ($('#new-string-form').offset().top)
+    },200);
+});
+$('#new-string-form-hide').click(function(){
+    $('#new-string-form').hide();
+    $('#new-string-form-show').show();
+});
+
 window.addEventListener('beforeunload', function(e){
-if ($('.translation-form:visible').length > 0) {
+    if ($('.translation-form:visible').length > 0 || ($('#new-string-text').is(':visible') && $('#new-string-text').val() != '' && !post_new_string)) {
         e.preventDefault();
         e.returnValue = '';
         return;

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
@@ -162,3 +162,39 @@ def decline_translator_request(request, request_id):
     # TODO send mail confirmation
 
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
+
+
+@login_required
+def add_string(request, project_id):
+    # TODO: use Django forms
+    # TODO: posting pluralized strings
+    project = get_object_or_404(Project, pk=project_id)
+    if not is_project_admin(request.user, project):
+        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
+        return redirect('project', project_id)
+
+    name = request.POST.get('name').strip()
+    pluralized = bool(request.POST.get('pluralized') == 'true')
+    text_data = parse_submitted_text(request.POST.get('text'), pluralized, project.source_language.nplurals())
+    path = request.POST.get('path').strip('/ ')
+    querystring = '?dir=' + path if path != '' else ''
+
+    if name == '' or text_data['characters'] == 0:
+        messages.error(request, 'Bonvolu plenigi ĉiujn kampojn.')
+    elif TrString.objects.filter(project=project, path=path, name=name).count() > 0:
+        messages.error(request, 'Ĉi tiu nomo ({}#{}) jam estas uzata.'.format(path, name))
+    else:
+        context = request.POST.get('context').strip()
+        trstring = TrString(project=project, path=path, name=name, context=context,
+                            words=text_data['words'],
+                            characters=text_data['characters'])
+        trstring.save()
+        trstringtext = TrStringText(trstring=trstring,
+                                    language=project.source_language,
+                                    text=text_data['text'],
+                                    pluralized=pluralized,
+                                    translated_by=request.user)
+        trstringtext.save()
+        update_string_count(project)
+
+    return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)

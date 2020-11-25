@@ -98,5 +98,9 @@
 	{% endif %}
 {% endfor %}
 
+{% if editmode %}
+{% include 'traduko/translation/new-string-form.html' %}
+{% endif %}
+
 {% endblock %}
 

@@ -128,6 +128,7 @@ def addible_languages(project):
     languages = languages.exclude(code=project.source_language.code).exclude(languageversion__project=project)
     return languages.order_by('code')
 
+
 def filter_by_state(trstrings, current_language, state):
     if state == STATE_FILTER_UNTRANSLATED:
         return trstrings.exclude(trstringtext__language=current_language)
@@ -157,7 +158,10 @@ def filter_by_search(trstrings, current_language, search_string):
 # submitted_text has to be a JSON string like [{"name":"text[0]","value":"content here"},{"name":"text[1]","value":"content2 here"}]
 # There should be several values for translations of pluralized strings, and one otherwise
 def parse_submitted_text(submitted_text, is_pluralized, nplurals):
-    json_data = json.loads(submitted_text)
+    try:
+        json_data = json.loads(submitted_text)
+    except ValueError as e:
+        json_data = [{'name': 'text[0]', 'value': submitted_text},]
 
     submitted_strings = {}
     for s in json_data:
