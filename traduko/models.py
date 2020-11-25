@@ -19,6 +19,9 @@ STATE_FILTER_OUTDATED_UNTRANSLATED = 'unout'
 STATE_FILTER_CHOICES = [STATE_FILTER_ALL, STATE_FILTER_UNTRANSLATED, STATE_FILTER_OUTDATED,
                         STATE_FILTER_OUTDATED_UNTRANSLATED]
 
+SORT_STRINGS_BY_NEWEST = 'new'
+SORT_STRINGS_BY_NAME = ''
+
 
 class Language(models.Model):
     DIRECTION_LTR = 'ltr'
@@ -120,11 +123,11 @@ class TrString(models.Model):
                             blank=True,
                             help_text="Path of the string, can contain slashes for subfolders")
     name = models.CharField(max_length=200)
-    pluralized = models.BooleanField(default=False)
     words = models.IntegerField(default=0)
     characters = models.IntegerField(default=0)
     context = models.TextField(blank=True,
                                help_text="Short explanation for translators")
+    last_change = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.path + "#" + self.name

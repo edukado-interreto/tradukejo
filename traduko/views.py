@@ -55,12 +55,17 @@ def translate(request, project_id, language):
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
     state_filter = request.GET['state'] if 'state' in request.GET.keys() else STATE_FILTER_ALL
+    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_NAME
     search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
 
     all_strings = TrString.objects.filter(project=current_project)
     all_strings = filter_by_state(all_strings, language, state_filter)
     all_strings = filter_by_search(all_strings, language, search_string)
     strings = all_strings.filter(path=current_directory)
+    if sort == SORT_STRINGS_BY_NEWEST:
+        strings = strings.order_by('-last_change')
+    else:
+        strings = strings.order_by('name')
 
     subdirectories = get_subdirectories(all_strings, current_directory)
 
@@ -96,6 +101,7 @@ def translate(request, project_id, language):
         'current_path': current_path,
         'current_directory': current_directory,
         'state_filter': state_filter,
+        'sort': sort,
         'q': search_string,
         'available_languages': available_languages,
     }

@@ -25,16 +25,30 @@
 				{% endif %}
 			</a>
 			<div class="dropdown-menu" aria-labelledby="stringStateDropdown">
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_ALL 'q' q %}">Ĉiuj ĉenoj</a>
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_UNTRANSLATED 'q' q %}">Nur netradukitaj</a>
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED 'q' q %}">Nur retradukendaj</a>
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED_UNTRANSLATED 'q' q %}">Netradukitaj kaj retradukendaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_ALL 'sort' sort 'q' q %}">Ĉiuj ĉenoj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_UNTRANSLATED 'sort' sort 'q' q %}">Nur netradukitaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED 'sort' sort 'q' q %}">Nur retradukendaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' STATE_FILTER_OUTDATED_UNTRANSLATED 'sort' sort 'q' q %}">Netradukitaj kaj retradukendaj</a>
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="sortDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{% if sort == SORT_STRINGS_BY_NEWEST %}
+				Ordigi laŭ lasta ŝanĝo
+				{% else %}
+				Ordigi laŭ nomo
+				{% endif %}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="sortDropdown">
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NAME 'q' q %}">Ordigi laŭ nomo</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NEWEST 'q' q %}">Ordigi laŭ lasta ŝanĝo</a>
 			</div>
 		</li>
 	</ul>
 	<form class="form-inline my-2 my-lg-0" action="{% url 'translate' project.pk language.code %}" method="get">
 		{% if current_directory %}<input type="hidden" name="dir" value="{{ current_directory }}">{% endif %}
 		{% if state_filter %}<input type="hidden" name="state" value="{{ state_filter }}">{% endif %}
+		{% if sort %}<input type="hidden" name="sort" value="{{ sort }}">{% endif %}
 		<input class="form-control mr-sm-2" type="search" placeholder="Serĉi…" aria-label="Serĉi" value="{{ q }}" name="q">
 		<button class="btn btn-secondary" type="submit">Serĉi</button>
     </form>
@@ -49,13 +63,13 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownLanguageVersionButton">
 					{% for l in available_languages %}
-					<a class="dropdown-item" href="{% url 'translate' project.pk l.code %}{% querystring 'dir' current_directory 'state' state_filter 'q' q %}">{{ l.name }}</a>
+					<a class="dropdown-item" href="{% url 'translate' project.pk l.code %}{% querystring 'dir' current_directory 'state' state_filter 'sort' sort 'q' q %}">{{ l.name }}</a>
 					{% endfor %}
 				</div>
 			</span>
 		</li>
 		{% if current_path %}
-			<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' '' 'state' state_filter 'q' q %}"><i class="fas fa-home"></i></a></li>
+			<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' '' 'state' state_filter 'sort' sort 'q' q %}"><i class="fas fa-home"></i></a></li>
 		{% else %}
 			<li class="breadcrumb-item" aria-current="page"><span><i class="fas fa-home"></i></span></li>
 		{% endif %}
@@ -63,7 +77,7 @@
 			{% if forloop.last %}
 				<li class="breadcrumb-item" aria-current="page">{{ path.name }}</li>
 			{% else %}
-				<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' path.path 'state' state_filter 'q' q %}">{{ path.name }}</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' path.path 'state' state_filter 'sort' sort 'q' q %}">{{ path.name }}</a></li>
 			{% endif %}
 		{% endfor %}
 	</ol>
@@ -79,7 +93,7 @@
 	</li>
 	{% for name, dir in subdirectories.items %}
 	<li>
-		<a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' dir.path 'state' state_filter 'q' q %}" class="row">
+		<a href="{% url 'translate' project.pk language.code %}{% querystring 'dir' dir.path 'state' state_filter 'sort' sort 'q' q %}" class="row">
 			<div class="col-6 col-lg-9"><i class="fas fa-folder mx-2"></i> {{ name }}</div>
 			<div class="col text-center"><span class="badge badge-secondary">{{ dir.strings }}</span></div>
 			<div class="col text-center"><span class="badge badge-secondary">{{ dir.words }}</span></div>

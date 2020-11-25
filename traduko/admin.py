@@ -32,9 +32,10 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
     search_fields = ['language_version', 'user']
     autocomplete_fields = ['language_version', 'user']
 
+
 @admin.register(TrString)
 class TrStringAdmin(admin.ModelAdmin):
-    list_display = ('project', 'name', 'path', 'pluralized', 'words', 'characters')
+    list_display = ('project', 'path', 'name', 'words', 'characters', 'last_change')
     ordering = ['project', 'path', 'name']
     search_fields = ['name', 'path']
     autocomplete_fields = ['project']
