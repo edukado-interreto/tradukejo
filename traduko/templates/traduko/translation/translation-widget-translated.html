@@ -1,5 +1,5 @@
 {% load traduko_tags %}
-<a class="translated-text" href="#">
+<a class="translated-text" tabindex="{{ forloop.counter }}" href="#">
 	{% if str.original_text.pluralized %}
 		{% for i in language.nplurals|range %}
 			{% with plural_example=language.plural_examples_list|list_index:i %}

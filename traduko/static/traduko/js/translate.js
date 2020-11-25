@@ -1,21 +1,25 @@
 function setup_translation_events() {
     $('.translate-button').click(function(e) {
         $(this).hide();
-        $(this).parents('.translation-row').find('.translation-form').removeClass('d-none').show();
-        $(this).parents('.translation-row').find('textarea').focus();
+        const row = $(this).parents('.translation-row');
+        row.find('.translation-form').removeClass('d-none').show();
+        row.find('textarea').focus();
     });
 
     $('.translated-text').click(function(e) {
         e.preventDefault();
         $(this).hide();
-        $(this).parents('.translation-row').find('.translation-form').removeClass('d-none').show();
-        $(this).parents('.translation-row').find('textarea').focus();
+        const row = $(this).parents('.translation-row');
+        row.find('.translation-form').removeClass('d-none').show();
+        row.find('textarea').focus();
     });
 
     $('.translate-cancel').click(function() {
-        $(this).parents('.translation-row').find('.translate-button').show();
-        $(this).parents('.translation-row').find('.translated-text').show();
-        $(this).parents('.translation-row').find('.translation-form').hide();
+        const row = $(this).parents('.translation-row');
+        row.find('.translate-button').show();
+        row.find('.translated-text').show();
+        row.find('.translation-form').hide();
+        row.find('.translate-button, .translate-text').focus();
     });
 
     $('.translation-form').submit(function(e) {
@@ -38,6 +42,7 @@ function setup_translation_events() {
             success: function(data) {
                 form.parents('.translation-row').replaceWith(data);
                 setup_translation_events();
+                form.find('.translate-button, .translate-text').focus();
             }
         });
     });

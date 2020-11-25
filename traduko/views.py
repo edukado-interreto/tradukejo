@@ -49,8 +49,6 @@ def translate(request, project_id, language):
         editmode = True
     else:
         editmode = False
-        current_language_version = get_object_or_404(LanguageVersion, language=current_language,
-                                                     project=current_project)
 
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''

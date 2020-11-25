@@ -4,6 +4,28 @@ from collections import OrderedDict
 import json
 
 
+def is_project_admin(user, project):
+    if user.is_superuser or user in project.admins.all():
+        return True
+    else:
+        return False
+
+
+def is_allowed_to_translate(user, project, language):
+    if is_project_admin(user, project):
+        return True
+
+    try:
+        lv = LanguageVersion.objects.get(project=project, language=language)
+    except LanguageVersion.DoesNotExist:
+        lv = None
+
+    if lv is not None and user in lv.translators.all():
+        return True
+
+    return False
+
+
 def get_subdirectories(trstrings, current_directory):
     string_subdirectories = trstrings.filter(path__startswith=current_directory)
     # TODO: improve this (distinct not supported by SQLite)
@@ -65,28 +87,6 @@ def add_stats_to_language_version(languageversion):
         l.untranslated_percent = l.untranslated_words / l.project.words * 100
 
     return languageversion
-
-
-def is_project_admin(user, project):
-    if user.is_superuser or user in project.admins.all():
-        return True
-    else:
-        return False
-
-
-def is_allowed_to_translate(user, project, language):
-    if is_project_admin(user, project):
-        return True
-
-    try:
-        lv = LanguageVersion.objects.get(project=project, language=language)
-    except LanguageVersion.DoesNotExist:
-        lv = None
-
-    if lv is not None and user in lv.translators.all():
-        return True
-
-    return False
 
 
 def get_project_languages_for_user(project, user):

@@ -23,7 +23,7 @@ def save_translation(request, trstring_id, language):
         new_pluralized = bool(request.POST.get('pluralized') == 'true')
         new_context = request.POST.get('context')
 
-    if not is_allowed_to_translate(request.user, current_string, current_language):
+    if not is_allowed_to_translate(request.user, current_string.project, current_language):
         return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
 
     try:
