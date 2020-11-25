@@ -1,6 +1,12 @@
 <div class="translation-history">
 	{{ string.last_change }}
 	{% if string.translated_by %}
-	– <a href="{% url 'profile' string.translated_by.pk %}">{{ string.translated_by.username }}</a>
+		– <a href="{% url 'profile' string.translated_by.pk %}">{{ string.translated_by.username }}</a>
+	{% endif %}
+	{% if string.old_versions %}
+		| <a href="{% url 'get_history' string.pk %}" class="show-history">Historio ({{ string.old_versions }} versio{% if string.old_versions > 1 %}j{% endif %})</a>
+		<div class="old-versions d-none">
+			<div class="text-center old-version load">…</div>
+		</div>
 	{% endif %}
 </div>

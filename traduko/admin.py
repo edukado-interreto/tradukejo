@@ -19,7 +19,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(LanguageVersion)
 class LanguageVersionAdmin(admin.ModelAdmin):
-    list_display = ('project', 'language')
+    list_display = ('__str__', 'project', 'language')
     ordering = ['project', 'language']
     search_fields = ['translators']
     autocomplete_fields = ['project', 'language', 'translators']
@@ -35,7 +35,7 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
 
 @admin.register(TrString)
 class TrStringAdmin(admin.ModelAdmin):
-    list_display = ('project', 'path', 'name', 'words', 'characters', 'last_change')
+    list_display = ('__str__', 'project', 'path', 'name', 'words', 'characters', 'last_change')
     ordering = ['project', 'path', 'name']
     search_fields = ['name', 'path']
     autocomplete_fields = ['project']
@@ -44,10 +44,19 @@ class TrStringAdmin(admin.ModelAdmin):
 
 @admin.register(TrStringText)
 class TrStringTextAdmin(admin.ModelAdmin):
-    list_display = ('trstring', 'language', 'pluralized', 'text', 'state')
+    list_display = ('__str__', 'trstring', 'language', 'pluralized', 'text', 'state')
     ordering = ['trstring', 'language']
     search_fields = ['text']
     autocomplete_fields = ['trstring', 'language']
     list_filter = ('language',)
+
+
+@admin.register(TrStringTextHistory)
+class TrStringTextAdmin(admin.ModelAdmin):
+    list_display = ('trstringtext', 'pluralized', 'text', 'create_date')
+    ordering = ['trstringtext']
+    search_fields = ['text']
+    autocomplete_fields = ['trstringtext',]
+    list_filter = ('trstringtext__trstring__project',)
 
 

@@ -1,3 +1,5 @@
+import difflib
+
 from django.db.models import Sum, Q
 from .models import *
 from collections import OrderedDict
@@ -189,3 +191,27 @@ def parse_submitted_text(submitted_text, is_pluralized, nplurals):
         'words': words,
         'characters': characters,
     }
+
+
+def get_text_difference(text, n_text):
+    """
+    http://stackoverflow.com/a/788780
+    Unify operations between two compared strings seqm is a difflib.
+    SequenceMatcher instance whose a & b are strings
+    """
+    seqm = difflib.SequenceMatcher(None, text, n_text)
+    output= []
+    for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
+        if opcode == 'equal':
+            output.append(seqm.a[a0:a1])
+        elif opcode == 'insert':
+            output.append("<ins>" + seqm.b[b0:b1] + "</ins>")
+        elif opcode == 'delete':
+            output.append("<del>" + seqm.a[a0:a1] + "</del>")
+        elif opcode == 'replace':
+            # seqm.a[a0:a1] -> seqm.b[b0:b1]
+            output.append("<del>" + seqm.a[a0:a1] + "</del>")
+            output.append("<ins>" + seqm.b[b0:b1] + "</ins>")
+        else:
+            raise RuntimeError
+    return ''.join(output)

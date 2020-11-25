@@ -129,3 +129,28 @@ a.translated-text:hover {
     margin-right: auto;
     max-width: 900px;
 }
+
+.old-version {
+    background: white;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-top: 1rem;
+    padding: .6rem .8rem;
+}
+
+.old-version p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.old-version ins {
+  color: #155724;
+  background-color: #d4edda;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.old-version del {
+  color: #721c24;;
+  background-color: #f8d7da;
+}

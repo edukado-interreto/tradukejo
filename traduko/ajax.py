@@ -7,7 +7,7 @@ from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-import json
+import json, html
 
 
 @csrf_exempt
@@ -38,6 +38,15 @@ def save_translation(request, trstring_id, language):
                                             current_language.nplurals())
 
     if new_translation or parsed_text_data['text'] != translated_text.text or (editmode and (translated_text.pluralized != new_pluralized or current_string.context != new_context)):  # If there are changes
+        # If not new string and text has changed: save in history
+        if not new_translation and parsed_text_data['text'] != translated_text.text:
+            history = TrStringTextHistory(trstringtext=translated_text,
+                                pluralized=translated_text.pluralized,
+                                text=translated_text.text,
+                                translated_by=translated_text.translated_by)
+            history.save()
+
+        # Update the translation
         translated_text.state = TRANSLATION_STATE_TRANSLATED
         translated_text.translated_by = request.user
         translated_text.text = parsed_text_data['text']
@@ -157,3 +166,25 @@ def request_translator_permission(request, project_id):
         'button': button
     }
     return HttpResponse(json.dumps(response_dict, ensure_ascii=False))
+
+
+@login_required
+def get_history(request, trstringtext_id):
+    trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
+    if not is_allowed_to_translate(request.user, trstringtext.trstring.project, trstringtext.language):
+        return HttpResponse('')
+
+    old_versions = TrStringTextHistory.objects.filter(trstringtext=trstringtext).order_by('-create_date')
+
+    history = list(old_versions)
+    history.insert(0,  # Add the current version to the beginning in order to show comparisons
+                   TrStringTextHistory(text=trstringtext.text, translated_by=trstringtext.translated_by, create_date=trstringtext.last_change))
+    history[0].current = True
+
+    for i in range(len(history) - 1):
+        history[i].comparison = get_text_difference(html.escape(history[i+1].text), html.escape(history[i].text))
+
+    context = {
+        'versions': history
+    }
+    return render(request, "traduko/translation/stringtext-history.html", context)

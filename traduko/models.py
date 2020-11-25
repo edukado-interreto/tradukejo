@@ -154,7 +154,10 @@ class TrStringText(models.Model):
                                 default=TRANSLATION_STATE_TRANSLATED)
 
     def __str__(self):
-        return self.text
+        return str(self.trstring) + ' ‑ ' + self.language.code
+
+    def old_versions(self):
+        return self.trstringtexthistory_set.count()
 
     def pluralized_text_dictionary(self):
         try:
@@ -170,3 +173,17 @@ class TrStringText(models.Model):
             return textdict
         else:
             return {"1": texts[0]}
+
+
+class TrStringTextHistory(models.Model):
+    trstringtext = models.ForeignKey('TrStringText',
+                                     on_delete=models.CASCADE)
+    pluralized = models.BooleanField(default=False)
+    text = models.TextField(help_text="If not pluralized, store text directly. If pluralized, store as JSON array.")
+    translated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                      null=True,
+                                      on_delete=models.SET_NULL)
+    create_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text

@@ -1,0 +1,17 @@
+{% for version in versions %}
+<div class="old-version">
+	{% if version.comparison %}
+		<p>{{ version.comparison|safe }}</p>
+	{% else %}
+		<p>{{ version.text }}</p>
+	{% endif %}
+	<hr class="my-2">
+	{{ version.create_date }}
+	{% if version.current %}
+		(nuna versio)
+	{% endif %}
+	{% if version.translated_by %}
+		– <a href="{% url 'profile' version.translated_by.pk %}">{{ version.translated_by.username }}</a>
+	{% endif %}
+</div>
+{% endfor %}

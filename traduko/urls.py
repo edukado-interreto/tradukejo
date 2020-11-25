@@ -11,6 +11,7 @@ urlpatterns = [
     path("ajax/markoutdated/<int:trstringtext_id>/", ajax.markoutdated, name="markoutdated"),
     path("ajax/marktranslated/<int:trstringtext_id>/", ajax.marktranslated, name="marktranslated"),
     path("ajax/deletestring/<int:trstring_id>/", ajax.deletestring, name="deletestring"),
+    path("ajax/get-history/<int:trstringtext_id>/", ajax.get_history, name="get_history"),
     path("ajax/request-translator-permission/<int:project_id>/", ajax.request_translator_permission, name="request_translator_permission"),
     path("project/<int:project_id>/add-language-version/<str:language>/", views.add_language_version, name="add_language_version"),
     path("project/<int:project_id>/translator-requests/", views.translator_request_list, name="translator_request_list"),

@@ -95,6 +95,29 @@ function setup_translation_events() {
             });
         }
     });
+
+    $('.show-history').click(function(e){
+        e.preventDefault();
+        const historyElement = $(this).parents('.translation-history').find('.old-versions');
+
+        if (historyElement.is(':visible')) {
+            historyElement.hide();
+        }
+        else {
+            historyElement.removeClass('d-none').show();
+            if (historyElement.find('.old-version.load').length > 0) {
+                const href = $(this).attr('href');
+                $.ajax({
+                    url: href,
+                    method: "GET",
+                    dataType: "html",
+                    success: function(data) {
+                        historyElement.html(data);
+                    }
+                });
+            }
+        }
+    });
 }
 setup_translation_events();
 
