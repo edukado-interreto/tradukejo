@@ -40,10 +40,12 @@ def save_translation(request, trstring_id, language):
     if new_translation or parsed_text_data['text'] != translated_text.text or (editmode and (translated_text.pluralized != new_pluralized or current_string.context != new_context)):  # If there are changes
         # If not new string and text has changed: save in history
         if not new_translation and parsed_text_data['text'] != translated_text.text:
+            # Save as pluralized only if string has several forms
+            old_version_pluralized = translated_text.number_of_pluralized_texts() == translated_text.language.nplurals() and translated_text.language.nplurals() > 1
             history = TrStringTextHistory(trstringtext=translated_text,
-                                pluralized=translated_text.pluralized,
-                                text=translated_text.text,
-                                translated_by=translated_text.translated_by)
+                                          pluralized=old_version_pluralized,
+                                          text=translated_text.text,
+                                          translated_by=translated_text.translated_by)
             history.save()
 
         # Update the translation

@@ -1,12 +1,12 @@
 function setup_translation_events() {
-    $('.translate-button').click(function(e) {
+    $('.translate-button').off('click').click(function(e) {
         $(this).hide();
         const row = $(this).parents('.translation-row');
         row.find('.translation-form').removeClass('d-none').show();
         row.find('textarea').focus();
     });
 
-    $('.translated-text').click(function(e) {
+    $('.translated-text').off('click').click(function(e) {
         e.preventDefault();
         $(this).hide();
         const row = $(this).parents('.translation-row');
@@ -14,7 +14,7 @@ function setup_translation_events() {
         row.find('textarea').focus();
     });
 
-    $('.translate-cancel').click(function() {
+    $('.translate-cancel').off('click').click(function() {
         const row = $(this).parents('.translation-row');
         row.find('.translate-button').show();
         row.find('.translated-text').show();
@@ -22,7 +22,7 @@ function setup_translation_events() {
         row.find('.translate-button, .translate-text').focus();
     });
 
-    $('.translation-form').submit(function(e) {
+    $('.translation-form').off('submit').submit(function(e) {
         e.preventDefault();
         const form = $(this);
         if (form.find('textarea').val() == '') {
@@ -47,7 +47,7 @@ function setup_translation_events() {
         });
     });
 
-    $('.dropdown-language-menu a').click(function(e){
+    $('.dropdown-language-menu a').off('click').click(function(e){
         e.preventDefault();
         const original_text = $(this).parents('.translation-row').find('.original-text');
         original_text.css('opacity', '.7');
@@ -59,12 +59,11 @@ function setup_translation_events() {
             dataType: "html",
             success: function(data) {
                 original_text.replaceWith(data);
-//                original_text.css('opacity', '1');
             }
         });
     });
 
-    $('.markoutdated, .marktranslated').click(function(e){
+    $('.markoutdated, .marktranslated').off('click').click(function(e){
         e.preventDefault();
         const translated = $(this).hasClass('marktranslated');
         if (window.confirm('Ĉu vi certe volas marki ĉi tiun ĉenon kiel ' + (translated ? 'tradukitan' : 'retradukendan') + '?')) {
@@ -81,7 +80,7 @@ function setup_translation_events() {
         }
     });
 
-    $('.deletestring').click(function(e){
+    $('.deletestring').off('click').click(function(e){
         e.preventDefault();
         if (window.confirm('Ĉu vi certe volas forigi ĉi tiun ĉenon?')) {
             const row = $(this).parents('.translation-row');
@@ -96,7 +95,7 @@ function setup_translation_events() {
         }
     });
 
-    $('.show-history').click(function(e){
+    $('.show-history').off('click').click(function(e){
         e.preventDefault();
         const historyElement = $(this).parents('.translation-author').find('.old-versions');
 
@@ -113,9 +112,20 @@ function setup_translation_events() {
                     dataType: "html",
                     success: function(data) {
                         historyElement.html(data);
+                        setup_translation_events();
                     }
                 });
             }
+        }
+    });
+
+    $('.toggleDeletedText').off('click').click(function(e){
+        const historyElement = $(this).parents('.old-versions');
+        if (historyElement.find('del:visible').length > 0) {
+            historyElement.find('del').hide();
+        }
+        else {
+            historyElement.find('del').show();
         }
     });
 }
