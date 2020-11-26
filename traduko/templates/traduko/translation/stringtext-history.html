@@ -1,9 +1,13 @@
+{% load traduko_tags %}
 {% for version in versions %}
 <div class="old-version">
-	{% if version.comparison %}
-		<p>{{ version.comparison|safe }}</p>
+	{% if version.pluralized %}
+		{% for number, text in version.comparison.items %}
+			<div class="plural-number-explanation">Se la nombro estas {{ number }}:</div>
+			<p>{{ text|safe }}</p>
+		{% endfor %}
 	{% else %}
-		<p>{{ version.text }}</p>
+		<p>{{ version.comparison|dict_key:'1'|safe }}</p>
 	{% endif %}
 	<hr class="my-2">
 	{{ version.create_date }}

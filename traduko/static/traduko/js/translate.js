@@ -98,7 +98,7 @@ function setup_translation_events() {
 
     $('.show-history').click(function(e){
         e.preventDefault();
-        const historyElement = $(this).parents('.translation-history').find('.old-versions');
+        const historyElement = $(this).parents('.translation-author').find('.old-versions');
 
         if (historyElement.is(':visible')) {
             historyElement.hide();

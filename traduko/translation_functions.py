@@ -3,7 +3,7 @@ import difflib
 from django.db.models import Sum, Q
 from .models import *
 from collections import OrderedDict
-import json
+import json, html
 
 
 def is_project_admin(user, project):
@@ -215,3 +215,45 @@ def get_text_difference(text, n_text):
         else:
             raise RuntimeError
     return ''.join(output)
+
+
+def get_history_comparison(history):
+    """
+    Generates visual comparison of changes in the history of versions of a translated text.
+    It adds to history object an ordered dictionary. A simple string has only one element in this dictionary,
+    but it may be more if we are dealing with a pluralized string.
+    """
+    for i in range(len(history) - 1):
+        new = history[i]
+        new_texts = new.pluralized_text_dictionary()
+        old = history[i+1]
+        old_texts = old.pluralized_text_dictionary()
+
+        new.comparison = OrderedDict()
+
+        if len(new_texts) == 1 and len(old_texts) == 1:  # Non-pluralized string
+            new.comparison['1'] = get_text_difference(html.escape(old_texts['1']), html.escape(new_texts['1']))
+        elif len(new_texts) == len(old_texts):  # Pluralized string
+            for j in range(len(new_texts)):
+                keys = list(new_texts.keys())
+                new_values = list(new_texts.values())
+                old_values = list(old_texts.values())
+                new.comparison[keys[j]] = get_text_difference(html.escape(old_values[j]), html.escape(new_values[j]))
+        elif len(old_texts) == 1:  # Old string is not pluralized, new one is
+            old_values = list(old_texts.values())
+            old_text = old_values[0]
+            for number, text in new_texts.items():
+                new.comparison[number] = get_text_difference(html.escape(old_text), html.escape(text))
+        elif len(new_texts) == 1:  # Old string is pluralized, new one is not
+            new_values = list(new_texts.values())
+            new_text = new_values[0]
+            new.comparison['1'] = get_text_difference(html.escape(old_texts['1']), html.escape(new_text))
+        else:  # Pluralized but with different amounts of plural forms, no comparison shown because something is wrong
+            new.comparison = new_texts
+            for number, text in new_texts.items():
+                new.comparison[number] = html.escape(text)
+
+    # Last version: nothing to compare, just put the text
+    history[-1].comparison = history[-1].pluralized_text_dictionary()
+
+    return history

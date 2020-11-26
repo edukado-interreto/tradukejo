@@ -7,7 +7,7 @@ from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-import json, html
+import json
 
 
 @csrf_exempt
@@ -177,12 +177,14 @@ def get_history(request, trstringtext_id):
     old_versions = TrStringTextHistory.objects.filter(trstringtext=trstringtext).order_by('-create_date')
 
     history = list(old_versions)
-    history.insert(0,  # Add the current version to the beginning in order to show comparisons
-                   TrStringTextHistory(text=trstringtext.text, translated_by=trstringtext.translated_by, create_date=trstringtext.last_change))
+    history.insert(0, TrStringTextHistory(text=trstringtext.text,  # Add the current version to the beginning in order to show comparisons
+                                          translated_by=trstringtext.translated_by,
+                                          create_date=trstringtext.last_change,
+                                          pluralized=trstringtext.pluralized,
+                                          trstringtext=trstringtext))
     history[0].current = True
 
-    for i in range(len(history) - 1):
-        history[i].comparison = get_text_difference(html.escape(history[i+1].text), html.escape(history[i].text))
+    history = get_history_comparison(history)
 
     context = {
         'versions': history

@@ -187,3 +187,18 @@ class TrStringTextHistory(models.Model):
 
     def __str__(self):
         return self.text
+
+    def pluralized_text_dictionary(self):
+        try:
+            texts = json.loads(self.text)
+        except ValueError as e:
+            texts = [self.text]
+
+        if self.pluralized:
+            textdict = OrderedDict()
+            numbers = self.trstringtext.language.plural_examples_list()
+            for i in range(min(len(texts), len(numbers))):
+                textdict[numbers[i]] = texts[i]
+            return textdict
+        else:
+            return {"1": texts[0]}
