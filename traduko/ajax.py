@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
@@ -10,12 +11,9 @@ from django.utils import timezone
 import json
 
 
-@csrf_exempt
 @login_required
+@require_POST
 def save_translation(request, trstring_id, language):
-    if request.method != "POST":
-        return HttpResponse('')
-
     current_language = get_object_or_404(Language, code=language)
     current_string = get_object_or_404(TrString, pk=trstring_id)
     editmode = current_language == current_string.project.source_language
@@ -97,6 +95,8 @@ def get_string_translation(request, trstring_id, language):
     return render(request, "traduko/translation/original-text.html", context)
 
 
+@login_required
+@require_POST
 def change_translation_state(request, trstringtext_id, state):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
     if trstringtext.language == trstringtext.trstring.project.source_language:
@@ -122,17 +122,16 @@ def change_translation_state(request, trstringtext_id, state):
     return render(request, "traduko/translation/translation-row.html", context)
 
 
-@login_required
 def markoutdated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_OUTDATED)
 
 
-@login_required
 def marktranslated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_TRANSLATED)
 
 
 @login_required
+@require_POST
 def deletestring(request, trstring_id):
     trstring = get_object_or_404(TrString, pk=trstring_id)
     if is_project_admin(request.user, trstring.project):

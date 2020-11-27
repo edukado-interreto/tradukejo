@@ -1,3 +1,5 @@
+const csrf = $('#csrf').val();
+
 function setup_translation_events() {
     $('.translate-button').off('click').click(function(e) {
         $(this).hide();
@@ -36,6 +38,7 @@ function setup_translation_events() {
                 context: form.find('[name=context]').val(),
                 minor: form.find('.minor-change').is(':checked'),
                 pluralized: form.find('.pluralized').is(':checked'),
+                csrfmiddlewaretoken: csrf
             },
             method: "POST",
             dataType: "html",
@@ -70,7 +73,10 @@ function setup_translation_events() {
             const row = $(this).parents('.translation-row');
             $.ajax({
                 url: $(this).attr('data-url'),
-                method: "GET",
+                method: "POST",
+                data: {
+                    csrfmiddlewaretoken: csrf
+                },
                 dataType: "html",
                 success: function(data) {
                     row.replaceWith(data);
@@ -86,7 +92,10 @@ function setup_translation_events() {
             const row = $(this).parents('.translation-row');
             $.ajax({
                 url: $(this).attr('data-url'),
-                method: "GET",
+                method: "POST",
+                data: {
+                    csrfmiddlewaretoken: csrf
+                },
                 dataType: "html",
                 success: function(data) {
                     row.replaceWith('<div class="alert alert-success">' + data + '</div>');
