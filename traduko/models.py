@@ -46,6 +46,9 @@ class Language(models.Model):
                                        blank=True,
                                        help_text="Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5. Must have the same amount of numbers as nplural in the “Plural forms” field.")
 
+    class Meta:
+        ordering = ['code']
+
     def __str__(self):
         return "{} - {}".format(self.code, self.name)
 

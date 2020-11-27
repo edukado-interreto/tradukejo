@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% block title %}{{ project.name }} – redakti{% endblock %}
+
+{% block content %}
+<h1>Redakti la projekton <a href="{% url 'project' project.pk %}">{{ project.name }}</a></h1>
+
+<form action="" method="post">
+	{% csrf_token %}
+	{{ form|as_bootstrap }}
+	<input type="submit" value="Konservi" class="btn btn-primary">
+</form>
+
+{% endblock %}
+

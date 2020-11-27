@@ -26,6 +26,7 @@
 			<div class="col-12 col-md-6">
 				<ul class="mb-0">
 					{% if is_project_admin %}
+						<li><a href="{% url 'edit_project' project.pk %}">Redakti la projekton</a></li>
 						<li><a href="{% url 'translate' project.pk project.source_language.code %}">Redakti la tekstojn</a></li>
 						{% if translator_request_count > 0 %}
 							<li><strong><a href="{% url 'translator_request_list' project.pk %}">Petoj por traduki ({{ translator_request_count }})</a></strong></li>

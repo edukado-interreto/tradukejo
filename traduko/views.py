@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import *
 from .translation_functions import *
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import *
@@ -209,3 +210,26 @@ def add_string(request, project_id):
         update_string_count(project)
 
     return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)
+
+
+@login_required
+@user_is_project_admin
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'La ŝanĝoj estis konservitaj.')
+        else:
+            print(form.errors)
+            messages.error(request, 'caca')
+    else:
+        form = ProjectForm(instance=project)
+
+    context = {
+        'project': project,
+        'form': form
+    }
+    return render(request, "traduko/project-edit.html", context)

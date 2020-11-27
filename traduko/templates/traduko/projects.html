@@ -11,8 +11,8 @@ Bonvenon al la tradukejo de <a href="https://ikso.net">E@I</a>!
 		{% for project in projects %}
 		<li class="list-group-item project{% if not project.visible %} hidden{% endif %}">
 			<h3>
-				{% if not project.visible %}<i class="fas fa-eye-slash" title="Nevidebla projekto"></i>{% endif %}
-				{% if project.locked %}<i class="fas fa-lock" title="Ŝlosita projekto"></i>{% endif %}
+				{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
+				{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
 				<a href="{% url 'project' project.pk %}">{{ project.name }}</a>
 			</h3>
 			{% if project.url %}
