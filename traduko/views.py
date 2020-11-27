@@ -1,8 +1,10 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .decorators import *
 
 
 def projects(request):
@@ -35,20 +37,23 @@ def projectpage(request, project_id):
 
 
 @login_required
+@user_allowed_to_translate
 def translate(request, project_id, language):
     current_project = get_object_or_404(Project, pk=project_id)
     current_language = get_object_or_404(Language, code=language)
 
-    if not is_allowed_to_translate(request.user, current_project, current_language):
-        messages.error(request, 'Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
-        return redirect('project', project_id)
-
-    available_languages = get_project_languages_for_user(current_project, request.user)
-
     if current_language == current_project.source_language:
         editmode = True
     else:
+        try:
+            language_version = LanguageVersion.objects.get(project=current_project, language=current_language)
+        except ObjectDoesNotExist:
+            messages.error(request,
+                           'Ne ekzistas versio de ĉi tiu projekto en tiu lingvo (' + current_language.name + ').')
+            return redirect('project', project_id)
         editmode = False
+
+    available_languages = get_project_languages_for_user(current_project, request.user)
 
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
@@ -119,11 +124,9 @@ def add_language_version(request, project_id, language):
 
 
 @login_required
+@user_is_project_admin
 def translator_request_list(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    if not is_project_admin(request.user, project):
-        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
-        return redirect('project', project_id)
 
     requests = TranslatorRequest.objects.filter(language_version__project=project).order_by('-create_date')
 
@@ -135,12 +138,9 @@ def translator_request_list(request, project_id):
 
 
 @login_required
+@user_is_project_admin
 def accept_translator_request(request, request_id):
     translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
-    if not is_project_admin(request.user, translatorrequest.language_version.project):
-        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
-        return redirect('project', translatorrequest.language_version.project.pk)
-
     translatorrequest.language_version.translators.add(translatorrequest.user)
     translatorrequest.language_version.save()
     translatorrequest.delete()
@@ -151,11 +151,9 @@ def accept_translator_request(request, request_id):
 
 
 @login_required
+@user_is_project_admin
 def decline_translator_request(request, request_id):
     translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
-    if not is_project_admin(request.user, translatorrequest.language_version.project):
-        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
-        return redirect('project', translatorrequest.language_version.project.pk)
 
     # Delete the language version if no translations
     if TrStringText.objects.filter(trstring__project=translatorrequest.language_version.project, language=translatorrequest.language_version.language).count() == 0:
@@ -169,13 +167,11 @@ def decline_translator_request(request, request_id):
 
 
 @login_required
+@user_is_project_admin
 def add_string(request, project_id):
     # TODO: use Django forms
     # TODO: posting pluralized strings
     project = get_object_or_404(Project, pk=project_id)
-    if not is_project_admin(request.user, project):
-        messages.error(request, 'Vi ne rajtas vidi ĉi tiun paĝon.')
-        return redirect('project', project_id)
 
     name = request.POST.get('name').strip()
     pluralized = bool(request.POST.get('pluralized') == 'true')

@@ -5,14 +5,16 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from .models import *
+from .decorators import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 import json
 
 
-@login_required
 @require_POST
+@login_required
+@user_allowed_to_translate
 def save_translation(request, trstring_id, language):
     current_language = get_object_or_404(Language, code=language)
     current_string = get_object_or_404(TrString, pk=trstring_id)
@@ -20,9 +22,6 @@ def save_translation(request, trstring_id, language):
     if editmode:
         new_pluralized = bool(request.POST.get('pluralized') == 'true')
         new_context = request.POST.get('context')
-
-    if not is_allowed_to_translate(request.user, current_string.project, current_language):
-        return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + current_language.name + ').')
 
     try:
         translated_text = TrStringText.objects.get(language=current_language, trstring=current_string)
@@ -95,15 +94,10 @@ def get_string_translation(request, trstring_id, language):
     return render(request, "traduko/translation/original-text.html", context)
 
 
-@login_required
-@require_POST
 def change_translation_state(request, trstringtext_id, state):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
     if trstringtext.language == trstringtext.trstring.project.source_language:
         raise Http404('Malĝusta ĉeno')
-
-    if not is_allowed_to_translate(request.user, trstringtext.trstring.project, trstringtext.language):
-        return HttpResponse('Vi ne rajtas traduki al tiu lingvo (' + trstringtext.language.name + ').')
 
     trstringtext.state = state
     trstringtext.save()
@@ -122,24 +116,28 @@ def change_translation_state(request, trstringtext_id, state):
     return render(request, "traduko/translation/translation-row.html", context)
 
 
+@require_POST
+@login_required
+@user_allowed_to_translate
 def markoutdated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_OUTDATED)
 
 
+@require_POST
+@login_required
+@user_allowed_to_translate
 def marktranslated(request, trstringtext_id):
     return change_translation_state(request, trstringtext_id, TRANSLATION_STATE_TRANSLATED)
 
 
-@login_required
 @require_POST
+@login_required
+@user_is_project_admin
 def deletestring(request, trstring_id):
     trstring = get_object_or_404(TrString, pk=trstring_id)
-    if is_project_admin(request.user, trstring.project):
-        trstring.delete()
-        update_string_count(trstring.project)
-        return HttpResponse('La ĉeno estis forigita.')
-    else:
-        return HttpResponse('Vi ne rajtas forigi ĉenojn.')
+    trstring.delete()
+    update_string_count(trstring.project)
+    return HttpResponse('La ĉeno estis forigita.')
 
 
 @login_required
@@ -170,10 +168,9 @@ def request_translator_permission(request, project_id):
 
 
 @login_required
+@user_allowed_to_translate
 def get_history(request, trstringtext_id):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
-    if not is_allowed_to_translate(request.user, trstringtext.trstring.project, trstringtext.language):
-        return HttpResponse('')
 
     old_versions = TrStringTextHistory.objects.filter(trstringtext=trstringtext).order_by('-create_date')
 

@@ -44,7 +44,7 @@ class TrStringAdmin(admin.ModelAdmin):
 
 @admin.register(TrStringText)
 class TrStringTextAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'trstring', 'language', 'pluralized', 'text', 'state')
+    list_display = ('__str__', 'trstring','language', 'pluralized', 'text', 'state')
     ordering = ['trstring', 'language']
     search_fields = ['text']
     autocomplete_fields = ['trstring', 'language']
