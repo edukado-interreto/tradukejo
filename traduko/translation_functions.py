@@ -17,6 +17,9 @@ def is_allowed_to_translate(user, project, language):
     if is_project_admin(user, project):
         return True
 
+    if project.locked or not project.visible:
+        return False
+
     try:
         lv = LanguageVersion.objects.get(project=project, language=language)
     except LanguageVersion.DoesNotExist:

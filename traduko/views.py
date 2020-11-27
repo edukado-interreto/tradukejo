@@ -5,10 +5,18 @@ from .translation_functions import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import *
+from django.db.models import Q
 
 
 def projects(request):
-    projects_list = Project.objects.all()
+    if request.user.is_superuser:
+        projects_list = Project.objects.all()
+    elif request.user.is_authenticated:
+        projects_list = Project.objects.filter(Q(visible=True) | Q(admins=request.user))
+    else:
+        projects_list = Project.objects.filter(visible=True)
+
+    projects_list = projects_list.order_by('-pk')
     context = {
         'projects': projects_list
     }
@@ -18,15 +26,18 @@ def projects(request):
 @login_required
 def projectpage(request, project_id):
     current_project = get_object_or_404(Project, pk=project_id)
-    languages_with_stats = get_project_language_statistics(current_project, request.user)
+    project_admin = is_project_admin(request.user, current_project)
 
-    user_is_project_admin = is_project_admin(request.user, current_project)
+    if not current_project.visible and not project_admin:
+        raise PermissionDenied()
+
+    languages_with_stats = get_project_language_statistics(current_project, request.user)
 
     context = {
         'my_languages_with_stats': languages_with_stats['current_user'],
         'available_languages_with_stats': languages_with_stats['other_available'],
         'project': current_project,
-        'is_project_admin': user_is_project_admin,
+        'is_project_admin': project_admin,
         'addible_languages': addible_languages(current_project)
     }
 

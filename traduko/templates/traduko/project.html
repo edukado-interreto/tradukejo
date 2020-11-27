@@ -9,7 +9,11 @@
 {% block content %}
 <div class="card mb-4">
 	<div class="card-body">
-		<h5 class="card-title">{{ project.name }}</h5>
+		<h5 class="card-title">
+			{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
+			{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
+			{{ project.name }}
+		</h5>
 		<div class="row">
 			<div class="col">
 				{% if project.url %}
@@ -58,7 +62,7 @@
 </div>
 {% endif %}
 
-{% if addible_languages %}
+{% if addible_languages and not project.locked or addible_languages and is_project_admin %}
 <h2>Traduki al alia lingvo</h2>
 <select name="addLanguage" id="addLanguage" class="form-control">
 	<option>Elektu lingvon…</option>
@@ -69,7 +73,7 @@
 Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu kontakti nin. (TODO)
 {% endif %}
 
-{% if not is_project_admin %}
+{% if not is_project_admin and not project.locked %}
 <div class="modal fade" id="translatorRequestModal" tabindex="-1" aria-labelledby="translatorRequestModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">

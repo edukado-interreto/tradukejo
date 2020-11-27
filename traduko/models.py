@@ -63,7 +63,7 @@ class Language(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=80,
                             unique=True)
-    url = models.URLField()
+    url = models.URLField(blank=True)
     source_language = models.ForeignKey('Language',
                                         on_delete=models.PROTECT)
     # image

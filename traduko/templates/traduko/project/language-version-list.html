@@ -9,6 +9,7 @@
 						<div class="progress-bar bg-warning" role="progressbar" style="width: {{ lv.outdated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.outdated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Retradukendaj vortoj: {{ lv.outdated_words }} / {{ project.words }}"></div>
 					</div>
 				</div>
+				{% if not project.locked or is_project_admin %}
 				<div class="col-sm-3 col-md-2 col-lg-2 text-center text-md-right">
 					{% if can_translate %}
 					<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">Traduki</a>
@@ -18,6 +19,7 @@
 					<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#translatorRequestModal" data-code="{{ lv.language.code }}" data-language="{{ lv.language.name }}">Peti permeson</button>
 					{% endif %}
 				</div>
+				{% endif %}
 			</div>
 		</li>
 	{% endfor %}

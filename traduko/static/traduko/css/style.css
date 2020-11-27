@@ -3,6 +3,10 @@ main h1 {
     font-weight: bold;
 }
 
+.project.hidden {
+    opacity: .75;
+}
+
 .small-form {
     max-width: 600px;
     margin: auto;
