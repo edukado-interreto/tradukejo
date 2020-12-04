@@ -20,15 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xp#%lj+!+jed_v%so4lmm$#9j_2ee&bye*lys#z50mt$*1yvxx'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -74,18 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tradukejo.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -124,8 +103,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static-files'),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',  # Compatibility with Bootstrap
@@ -135,3 +116,15 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = "projects"
 LOGOUT_REDIRECT_URL = "projects"
 WEBSITE_NAME = "Tradukejo de E@I"
+
+from tradukejo.local_settings import *
+# Example of content of local_settings.py:
+# SECRET_KEY = '...'
+# DEBUG = True
+# ALLOWED_HOSTS = []
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
