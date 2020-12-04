@@ -91,7 +91,7 @@ def get_string_translation(request, trstring_id, language):
     context = {
         'str': str
     }
-    return render(request, "traduko/translation/original-text.html", context)
+    return render(request, "traduko/translation/original-string.html", context)
 
 
 def change_translation_state(request, trstringtext_id, state):
@@ -168,7 +168,6 @@ def request_translator_permission(request, project_id):
 
 
 @login_required
-@user_allowed_to_translate
 def get_history(request, trstringtext_id):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
 

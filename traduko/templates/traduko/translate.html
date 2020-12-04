@@ -57,11 +57,9 @@
 
 <nav aria-label="breadcrumb" class="my-4">
 	<ol class="breadcrumb p-1">
-		<li class="breadcrumb-item"><a href="#">
+		<li class="breadcrumb-item">
 			<span class="dropdown">
-				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageVersionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					{{ language.name }}
-				</a>
+				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageVersionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ language.name }}</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownLanguageVersionButton">
 					{% for l in available_languages %}
 					<a class="dropdown-item" href="{% url 'translate' project.pk l.code %}{% querystring 'dir' current_directory 'state' state_filter 'sort' sort 'q' q %}">{{ l.name }}</a>

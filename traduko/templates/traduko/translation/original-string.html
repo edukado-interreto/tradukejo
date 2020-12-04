@@ -1,0 +1,7 @@
+{% include 'traduko/translation/original-text.html' %}
+{% if str.context %}
+	<div class="context">
+		<i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> {{ str.context }}
+	</div>
+{% endif %}
+{% include 'traduko/translation/author-and-history.html' with string=str.original_text %}

@@ -52,8 +52,8 @@ function setup_translation_events() {
 
     $('.dropdown-language-menu a').off('click').click(function(e){
         e.preventDefault();
-        const original_text = $(this).parents('.translation-row').find('.original-text');
-        original_text.css('opacity', '.7');
+        const original_string = $(this).parents('.translation-row').find('.original-string');
+        original_string.css('opacity', '.7');
         $(this).parents('.dropdown').find('.dropdown-toggle').text($(this).text());
 
         $.ajax({
@@ -61,7 +61,9 @@ function setup_translation_events() {
             method: "GET",
             dataType: "html",
             success: function(data) {
-                original_text.replaceWith(data);
+                original_string.html(data);
+                original_string.css('opacity', '1');
+                setup_translation_events();
             }
         });
     });

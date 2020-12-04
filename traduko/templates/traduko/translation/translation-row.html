@@ -3,9 +3,7 @@
 		<div class="col-6">
 			<strong title="Titolo de la ĉeno, ne traduku ĝin">#{{ str.name }}</strong> –
 			<span class="dropdown">
-				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageButton{{ str.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					{{ str.project.source_language.name}}
-				</a>
+				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageButton{{ str.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ str.project.source_language.name }}</a>
 				<div class="dropdown-menu dropdown-language-menu" aria-labelledby="dropdownLanguageButton{{ str.pk }}">
 					{% for l in str.trstringtext_set.all|dictsort:"language.name" %}
 					<a class="dropdown-item" href="{% url 'get_string_translation' str.pk l.language.code %}">{{ l.language.name }}</a>
@@ -34,14 +32,8 @@
 		</div>
 	</div>
 	<div class="row mt-1">
-		<div class="col-md-6">
-			{% include 'traduko/translation/original-text.html' %}
-			{% if str.context %}
-				<div class="context">
-					<i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> {{ str.context }}
-				</div>
-			{% endif %}
-			{% include 'traduko/translation/author-and-history.html' with string=str.original_text %}
+		<div class="col-md-6 original-string">
+			{% include 'traduko/translation/original-string.html' %}
 		</div>
 		<div class="col-md-6 translation-widget">
 			{% if str.translated_text %}
