@@ -1,5 +1,5 @@
 {% load traduko_tags %}
-<a class="translated-text" tabindex="{{ forloop.counter }}" href="#">
+<div class="translated-text">
 	{% if str.original_text.pluralized %}
 		{% for i in language.nplurals|range %}
 			{% with plural_example=language.plural_examples_list|list_index:i %}
@@ -10,6 +10,9 @@
 	{% else %}
 		{{ str.translated_text.text }}
 	{% endif %}
-</a>
+</div>
+<div class="text-center">
+	<button class="btn btn-secondary translate-button" tabindex="{{ forloop.counter }}">Redakti</button>
+</div>
 {% include 'traduko/translation/translation-form.html' %}
 {% include 'traduko/translation/author-and-history.html' with string=str.translated_text %}

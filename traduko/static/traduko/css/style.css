@@ -48,16 +48,6 @@ main h1 {
     width: 100%;
 }
 
-a.translated-text {
-    color: inherit;
-    opacity: .76;
-}
-
-a.translated-text:hover {
-    opacity: 1;
-    text-decoration: none;
-}
-
 .subdirectory-list {
     list-style-type: none;
     padding: 0;
@@ -159,6 +149,6 @@ a.translated-text:hover {
 }
 
 .old-version del {
-  color: #721c24;;
+  color: #721c24;
   background-color: #f8d7da;
 }

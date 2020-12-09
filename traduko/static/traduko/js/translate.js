@@ -5,14 +5,7 @@ function setup_translation_events() {
         $(this).hide();
         const row = $(this).parents('.translation-row');
         row.find('.translation-form').removeClass('d-none').show();
-        row.find('textarea').focus();
-    });
-
-    $('.translated-text').off('click').click(function(e) {
-        e.preventDefault();
-        $(this).hide();
-        const row = $(this).parents('.translation-row');
-        row.find('.translation-form').removeClass('d-none').show();
+        row.find('.translated-text').hide();
         row.find('textarea').focus();
     });
 
@@ -21,7 +14,7 @@ function setup_translation_events() {
         row.find('.translate-button').show();
         row.find('.translated-text').show();
         row.find('.translation-form').hide();
-        row.find('.translate-button, .translate-text').focus();
+        row.find('.translate-button').focus();
     });
 
     $('.translation-form').off('submit').submit(function(e) {
@@ -30,6 +23,8 @@ function setup_translation_events() {
         if (form.find('textarea').val() == '') {
             return;
         }
+        const row = form.parents('.translation-row');
+        const tabindex = row.find('.translate-button').attr('tabindex');
         form.find('input').prop('disabled', true);
         $.ajax({
             url: form.attr('action'),
@@ -43,9 +38,9 @@ function setup_translation_events() {
             method: "POST",
             dataType: "html",
             success: function(data) {
-                form.parents('.translation-row').replaceWith(data);
+                const new_row = $(data).replaceAll(row);
                 setup_translation_events();
-                form.find('.translate-button, .translate-text').focus();
+                new_row.find('.translate-button').attr('tabindex', tabindex).focus();
             }
         });
     });
