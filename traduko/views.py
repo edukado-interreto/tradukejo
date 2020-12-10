@@ -70,7 +70,7 @@ def translate(request, project_id, language):
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
     state_filter = request.GET['state'] if 'state' in request.GET.keys() else STATE_FILTER_ALL
-    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_NAME
+    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_OLDEST
     search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
 
     all_strings = TrString.objects.filter(project=current_project)
@@ -79,8 +79,12 @@ def translate(request, project_id, language):
     strings = all_strings.filter(path=current_directory)
     if sort == SORT_STRINGS_BY_NEWEST:
         strings = strings.order_by('-last_change')
-    else:
+    elif sort == SORT_STRINGS_BY_NAME:
         strings = strings.order_by('name')
+    else:
+        strings = strings.order_by('last_change')
+    for s in strings:
+        print(s.last_change)
 
     subdirectories = get_subdirectories(all_strings, current_directory)
 
@@ -181,7 +185,7 @@ def decline_translator_request(request, request_id):
 @login_required
 @user_is_project_admin
 def add_string(request, project_id):
-    # TODO: use Django forms
+    # TODO: use Django forms?
     # TODO: posting pluralized strings
     project = get_object_or_404(Project, pk=project_id)
 

@@ -35,14 +35,17 @@
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="sortDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				{% if sort == SORT_STRINGS_BY_NEWEST %}
-				Ordigi laŭ lasta ŝanĝo
-				{% else %}
+				Ordigi laŭ plej novaj
+				{% elif sort == SORT_STRINGS_BY_NAME %}
 				Ordigi laŭ nomo
+				{% else %}
+				Ordigi laŭ plej malnovaj
 				{% endif %}
 			</a>
 			<div class="dropdown-menu" aria-labelledby="sortDropdown">
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_OLDEST 'q' q %}">Ordigi laŭ plej malnovaj</a>
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NEWEST 'q' q %}">Ordigi laŭ plej novaj</a>
 				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NAME 'q' q %}">Ordigi laŭ nomo</a>
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NEWEST 'q' q %}">Ordigi laŭ lasta ŝanĝo</a>
 			</div>
 		</li>
 	</ul>
