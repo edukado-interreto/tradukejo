@@ -152,3 +152,11 @@ main h1 {
   color: #721c24;
   background-color: #f8d7da;
 }
+
+.online-translators-links {
+    margin-left: .3rem;
+}
+
+.online-translators-links img {
+    height: 1rem;
+}

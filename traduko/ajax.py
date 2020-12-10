@@ -83,15 +83,23 @@ def save_translation(request, trstring_id, language):
     return render(request, "traduko/translation/translation-row.html", context)
 
 
+@require_POST
+@csrf_exempt
 @login_required
 def get_string_translation(request, trstring_id, language):
     translated_text = get_object_or_404(TrStringText, language=language, trstring=trstring_id)
+    language_to = get_object_or_404(Language, code=request.POST.get('language_to'))
     str = TrString()
     str.original_text = translated_text
-    context = {
-        'str': str
+
+    original_string = render_to_string("traduko/translation/original-string.html", {'str': str})
+    translator_links = render_to_string("traduko/translation/online_translators_links.html", {'text': translated_text, 'language_to': language_to})
+
+    response_dict = {
+        'text': original_string,
+        'translator_links': translator_links,
     }
-    return render(request, "traduko/translation/original-string.html", context)
+    return HttpResponse(json.dumps(response_dict, ensure_ascii=False))
 
 
 def change_translation_state(request, trstringtext_id, state):

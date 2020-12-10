@@ -37,6 +37,7 @@ def dict_key(d, k):
 @register.filter(name='list_index')
 def list_index(l, i):
     '''Returns the given element from a list.'''
+    l = list(l)
     if i < len(l):
         return l[i]
     else:

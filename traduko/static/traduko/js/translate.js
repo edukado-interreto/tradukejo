@@ -48,16 +48,21 @@ function setup_translation_events() {
     $('.dropdown-language-menu a').off('click').click(function(e){
         e.preventDefault();
         const original_string = $(this).parents('.translation-row').find('.original-string');
+        const translator_links = $(this).parents('.translation-row').find('.online-translators-links');
         original_string.css('opacity', '.7');
         $(this).parents('.dropdown').find('.dropdown-toggle').text($(this).text());
 
         $.ajax({
             url: $(this).attr('href'),
-            method: "GET",
-            dataType: "html",
+            method: "POST",
+            data: {
+                'language_to': $('#current_language').val()
+            },
+            dataType: "json",
             success: function(data) {
-                original_string.html(data);
+                original_string.html(data['text']);
                 original_string.css('opacity', '1');
+                translator_links.html(data['translator_links']);
                 setup_translation_events();
             }
         });

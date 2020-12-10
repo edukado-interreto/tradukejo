@@ -10,6 +10,7 @@
 					{% endfor %}
 				</div>
 			</span>
+			<span class="online-translators-links">{% include 'traduko/translation/online_translators_links.html' with text=str.original_text language_to=language %}</span>
 		</div>
 		<div class="col-6 text-right translation-state-bar">
 			{% if editmode %}
