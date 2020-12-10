@@ -24,6 +24,11 @@ SORT_STRINGS_BY_OLDEST = ''
 SORT_STRINGS_BY_NAME = 'name'
 
 
+def project_image_upload_location(instance, filename):
+    extension = filename.split('.')[-1]
+    return 'projects/%s.%s' % (instance.pk, extension)
+
+
 class Language(models.Model):
     DIRECTION_LTR = 'ltr'
     DIRECTION_RTL = 'rtl'
@@ -70,7 +75,7 @@ class Project(models.Model):
     url = models.URLField(blank=True)
     source_language = models.ForeignKey('Language',
                                         on_delete=models.PROTECT)
-    # image
+    image = models.ImageField(blank=True, upload_to=project_image_upload_location)
     description = models.TextField(blank=True)
     needed_languages = models.ManyToManyField('Language',
                                               blank=True,

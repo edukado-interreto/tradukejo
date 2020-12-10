@@ -19,6 +19,9 @@
 				{% if project.url %}
 					<p class="card-text"><a href="{{ project.url }}">{{ project.url }}</a></p>
 				{% endif %}
+				{% if project.image %}
+					<img src="{{ project.image.url }}" alt="" class="img-fluid d-block mb-2">
+				{% endif %}
 				{% if project.description %}
 					<p class="card-text">{{ project.description }}</p>
 				{% endif %}

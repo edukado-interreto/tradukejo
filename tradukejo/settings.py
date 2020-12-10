@@ -117,6 +117,9 @@ LOGIN_REDIRECT_URL = "projects"
 LOGOUT_REDIRECT_URL = "projects"
 WEBSITE_NAME = "Tradukejo de E@I"
 
+MEDIA_URL = '/upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
 from tradukejo.local_settings import *
 # Example of content of local_settings.py:
 # SECRET_KEY = '...'

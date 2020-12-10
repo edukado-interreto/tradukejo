@@ -222,7 +222,7 @@ def edit_project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
             messages.success(request, 'La ŝanĝoj estis konservitaj.')
