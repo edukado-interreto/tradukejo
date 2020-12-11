@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_forms_bootstrap',
     'django_cleanup.apps.CleanupConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +120,8 @@ WEBSITE_NAME = "Tradukejo de E@I"
 
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 from tradukejo.local_settings import *
 # Example of content of local_settings.py:
