@@ -211,7 +211,6 @@ def add_string(request, project_id):
                                     pluralized=pluralized,
                                     translated_by=request.user)
         trstringtext.save()
-        update_string_count(project)
 
     return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)
 

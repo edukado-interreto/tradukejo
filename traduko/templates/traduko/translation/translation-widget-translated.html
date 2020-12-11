@@ -12,7 +12,7 @@
 	{% endif %}
 </div>
 <div class="text-center">
-	<button class="btn btn-secondary translate-button mb-2" tabindex="{{ forloop.counter }}">Redakti</button>
+	<button class="btn btn-secondary translate-button mb-2 mt-3" tabindex="{{ forloop.counter }}">Redakti</button>
 </div>
 {% include 'traduko/translation/translation-form.html' %}
 {% include 'traduko/translation/author-and-history.html' with string=str.translated_text %}

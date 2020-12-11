@@ -56,7 +56,6 @@ def save_translation(request, trstring_id, language):
             current_string.words = parsed_text_data['words']
             current_string.characters = parsed_text_data['characters']
             current_string.save()
-            update_string_count(current_string.project)
 
             minor_change = bool(request.POST.get('minor') == 'true')  # Update translation status of translations
             if not minor_change:
@@ -144,7 +143,6 @@ def marktranslated(request, trstringtext_id):
 def deletestring(request, trstring_id):
     trstring = get_object_or_404(TrString, pk=trstring_id)
     trstring.delete()
-    update_string_count(trstring.project)
     return HttpResponse('La ĉeno estis forigita.')
 
 

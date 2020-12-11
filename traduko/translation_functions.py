@@ -51,7 +51,7 @@ def get_subdirectories(trstrings, current_directory):
     return OrderedDict(sorted(subdirectories.items()))
 
 
-def update_string_count(project):
+def update_project_count(project):
     trstrings = TrString.objects.filter(project=project).aggregate(Sum('words'), Sum('characters'))
     project.strings = project.trstring_set.count()
     project.words = trstrings['words__sum']
@@ -59,39 +59,39 @@ def update_string_count(project):
     project.save()
 
 
-def add_stats_to_language_version(languageversion):
-    for l in languageversion:
-        translated = TrStringText.objects.filter(trstring__project=l.project, language=l.language, state=TRANSLATION_STATE_TRANSLATED)
-        outdated = l.outdated_strings = TrStringText.objects.filter(trstring__project=l.project, language=l.language, state=TRANSLATION_STATE_OUTDATED)
+def update_all_language_versions_count(project):
+    languageversions = project.languageversion_set.all()
+    for lv in languageversions:
+        update_language_version_count(lv)
 
-        l.translated_strings = translated.count()
-        l.outdated_strings = outdated.count()
-        l.untranslated_strings = l.project.strings - l.translated_strings - l.outdated_strings
 
-        translated_aggregated = translated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
-        outdated_aggregated = outdated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
+def update_language_version_count(l):  # l: languageversion
+    translated = TrStringText.objects.filter(trstring__project=l.project, language=l.language,
+                                             state=TRANSLATION_STATE_TRANSLATED)
+    outdated = l.outdated_strings = TrStringText.objects.filter(trstring__project=l.project, language=l.language,
+                                                                state=TRANSLATION_STATE_OUTDATED)
 
-        l.translated_words = translated_aggregated['trstring__words__sum']
-        if l.translated_words is None:
-            l.translated_words = 0
-        l.outdated_words = outdated_aggregated['trstring__words__sum']
-        if l.outdated_words is None:
-            l.outdated_words = 0
-        l.untranslated_words = l.project.words - l.translated_words - l.outdated_words
+    l.translated_strings = translated.count()
+    l.outdated_strings = outdated.count()
 
-        l.translated_characters = translated_aggregated['trstring__characters__sum']
-        if l.translated_characters is None:
-            l.translated_characters = 0
-        l.outdated_characters = outdated_aggregated['trstring__characters__sum']
-        if l.outdated_characters is None:
-            l.outdated_characters = 0
-        l.untranslated_characters = l.project.characters - l.translated_characters - l.outdated_characters
+    translated_aggregated = translated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
+    outdated_aggregated = outdated.aggregate(Sum('trstring__words'), Sum('trstring__characters'))
 
-        l.translated_percent = l.translated_words / l.project.words * 100
-        l.outdated_percent = l.outdated_words / l.project.words * 100
-        l.untranslated_percent = l.untranslated_words / l.project.words * 100
+    l.translated_words = translated_aggregated['trstring__words__sum']
+    if l.translated_words is None:
+        l.translated_words = 0
+    l.outdated_words = outdated_aggregated['trstring__words__sum']
+    if l.outdated_words is None:
+        l.outdated_words = 0
 
-    return languageversion
+    l.translated_characters = translated_aggregated['trstring__characters__sum']
+    if l.translated_characters is None:
+        l.translated_characters = 0
+    l.outdated_characters = outdated_aggregated['trstring__characters__sum']
+    if l.outdated_characters is None:
+        l.outdated_characters = 0
+
+    l.save()
 
 
 def get_project_languages_for_user(project, user):
@@ -111,9 +111,6 @@ def get_project_language_statistics(project, user):
     else:
         current_user = project.languageversion_set.filter(translators=user)
         other_available = project.languageversion_set.exclude(translators=user)
-
-    current_user = add_stats_to_language_version(current_user)
-    other_available = add_stats_to_language_version(other_available)
 
     for lv in other_available:
         lv.translation_request_sent = lv.translatorrequest_set.filter(user=user).count() > 0

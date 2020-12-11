@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    'traduko',
+    'traduko.apps.TradukoConfig',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',

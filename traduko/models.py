@@ -105,11 +105,36 @@ class LanguageVersion(models.Model):
     translators = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                          blank=True)
 
+    translated_strings = models.IntegerField(default=0)
+    translated_words = models.IntegerField(default=0)
+    translated_characters = models.IntegerField(default=0)
+    outdated_strings = models.IntegerField(default=0)
+    outdated_words = models.IntegerField(default=0)
+    outdated_characters = models.IntegerField(default=0)
+
     class Meta:
         ordering = ['language']
 
     def __str__(self):
         return self.project.name + " - " + self.language.code
+    
+    def untranslated_strings(self):
+        return self.project.strings - self.translated_strings - self.outdated_strings
+    
+    def untranslated_words(self):
+        return self.project.words - self.translated_words - self.outdated_words
+    
+    def untranslated_characters(self):
+        return self.project.characters - self.translated_characters - self.outdated_characters
+    
+    def translated_percent(self):
+        return self.translated_words / self.project.words * 100
+    
+    def outdated_percent(self):
+        return self.outdated_words / self.project.words * 100
+
+    def untranslated_percent(self):
+        return self.untranslated_words() / self.project.words * 100
 
 
 class TranslatorRequest(models.Model):
