@@ -15,6 +15,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_FROM_EMAIL = 'test@test.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -25,6 +28,8 @@ DATABASES = {
     }
 }
 ```
+
+For production, don’t forget to update the email settings (see [Django documentation](https://docs.djangoproject.com/en/3.1/topics/email/), it’s also [possible to use `sendmail`](https://github.com/perenecabuto/django-sendmail-backend)).
 
 Here is an example of production configuration for MySQL:
 

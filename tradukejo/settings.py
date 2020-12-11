@@ -66,6 +66,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tradukejo.wsgi.application'
 
+AUTH_USER_MODEL = 'users.User'
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -128,6 +130,8 @@ from tradukejo.local_settings import *
 # SECRET_KEY = '...'
 # DEBUG = True
 # ALLOWED_HOSTS = []
+# DEFAULT_FROM_EMAIL = 'test@test.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
