@@ -6,4 +6,3 @@ from django.utils.translation import gettext_lazy
 class User(AbstractUser):
     email = models.EmailField(gettext_lazy('Email'), blank=False, unique=True)
     objects = UserManager()
-
