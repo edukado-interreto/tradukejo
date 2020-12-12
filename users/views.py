@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from users.forms import CustomUserCreationForm
 from django.core.mail import send_mail
+from django.utils.html import strip_tags
 
 User = get_user_model()
 
@@ -19,13 +20,15 @@ def register(request):
                 'username': user.username,
                 'url': request.build_absolute_uri('/'),
             }
-            message = render_to_string("users/email/registration-confirmation.html", context)
+            html_message = render_to_string("users/email/registration-confirmation.html", context)
+            plain_text_message = strip_tags(html_message)
 
             send_mail(
                 'Tradukejo de E@I: konfirmo de aliĝo',
-                message,
+                plain_text_message,
                 None,
-                [user.email]
+                [user.email],
+                html_message=html_message
             )
             return redirect(reverse("projects"))
     else:

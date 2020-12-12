@@ -5,13 +5,13 @@
 		<div class="form-group">
 			{% with plural_example=language.plural_examples_list|list_index:i %}
 			<div class="plural-number-explanation"><label for="textarea{{ str.pk }}_{{ i }}">Se la nombro estas {{ plural_example }}:</label></div>
-			<textarea name="text[{{ i }}]" id="textarea{{ str.pk }}_{{ i }}" rows="3" class="form-control" dir="{{ language.direction }}">{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example }}</textarea>
+			<textarea name="text[{{ i }}]" id="textarea{{ str.pk }}_{{ i }}" rows="3" class="form-control" dir="{{ language.direction }}" lang="{{ language.code }}">{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example }}</textarea>
 			{% endwith %}
 		</div>
 		{% endfor %}
 	{% else %}
 		<div class="form-group">
-			<textarea name="text[0]" id="textarea{{ str.pk }}" rows="6" class="form-control" dir="{{ language.direction }}">{{ str.translated_text.text }}</textarea>
+			<textarea name="text[0]" id="textarea{{ str.pk }}" rows="6" class="form-control" dir="{{ language.direction }}" lang="{{ language.code }}">{{ str.translated_text.text }}</textarea>
 		</div>
 	{% endif %}
 
