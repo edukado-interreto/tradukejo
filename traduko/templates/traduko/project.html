@@ -7,50 +7,54 @@
 {% endblock %}
 
 {% block content %}
-<div class="card mb-4">
-	<div class="card-body">
-		<h5 class="card-title">
-			{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
-			{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
-			{{ project.name }}
-		</h5>
-		<div class="row">
-			<div class="col">
-				{% if project.url %}
-					<p class="card-text"><a href="{{ project.url }}">{{ project.url }}</a></p>
-				{% endif %}
-				{% if project.image %}
-					<img src="{{ project.image.url }}" alt="" class="img-fluid d-block mb-2">
-				{% endif %}
-				{% if project.description %}
-					<p class="card-text">{{ project.description }}</p>
-				{% endif %}
-			</div>
-			<div class="col-12 col-md-6">
-				<ul class="mb-0">
-					{% if is_project_admin %}
-						<li><a href="{% url 'edit_project' project.pk %}">Redakti la projekton</a></li>
-						<li><a href="{% url 'translate' project.pk project.source_language.code %}">Redakti la tekstojn</a></li>
-						{% if translator_request_count > 0 %}
-							<li><strong><a href="{% url 'translator_request_list' project.pk %}">Petoj por traduki ({{ translator_request_count }})</a></strong></li>
-						{% endif %}
-						{% if user.is_superuser %}
-							<li><a href="{% url 'admin:traduko_project_change' project.pk %}">Redakti en la administrejo</a></li>
-						{% endif %}
-					{% endif %}
-					<li>Fontolingvo: {{ project.source_language.name }}</li>
-					<li>Ĉenoj: {{ project.strings }}</li>
-					<li>Vortoj: {{ project.words }}</li>
-					<li>Signoj: {{ project.characters }}</li>
-					<li>
-						Bezonataj lingvoj:
-						{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
-					</li>
-				</ul>
-			</div>
-		</div>
+<h1>
+	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
+	{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
+	{{ project.name }}
+</h1>
+
+{% if project.image %}
+<div class="project-logo text-center float-sm-right ml-sm-3">
+	<img src="{{ project.image.url }}" alt="" class="img-fluid d-block mb-2">
+</div>
+{% endif %}
+{% if project.description %}
+	<p>{{ project.description }}</p>
+{% endif %}
+
+<ul>
+	{% if project.url %}
+		<li>Adreso: <a href="{{ project.url }}">{{ project.url }}</a></li>
+{% endif %}
+	<li>Fontolingvo: {{ project.source_language.name }}</li>
+	<li>Ĉenoj: {{ project.strings }}</li>
+	<li>Vortoj: {{ project.words }}</li>
+	<li>Signoj: {{ project.characters }}</li>
+	<li>
+		Bezonataj lingvoj:
+		{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
+	</li>
+</ul>
+
+{% if is_project_admin %}
+<div class="card mb-4 project-admin-card">
+	<div class="card-body alert alert-dark m-0">
+		<h5 class="card-title">Administrado</h5>
+		<p class="text-center card-text">
+			{% if user.is_superuser %}
+				<a href="{% url 'admin:traduko_project_change' project.pk %}" class="btn btn-danger">Redakti en la administrejo</a>
+			{% endif %}
+			<a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">Redakti la projekton</a>
+			<a href="{% url 'translate' project.pk project.source_language.code %}" class="btn btn-success">Redakti la tekstojn</a>
+			{% if translator_request_count > 0 %}
+				<a href="{% url 'translator_request_list' project.pk %}" class="btn btn-warning"><strong>Petoj por traduki ({{ translator_request_count }})</strong></a>
+			{% endif %}
+			<a href="#" class="btn btn-primary">Importi</a>
+			<a href="#" class="btn btn-primary">Eksporti</a>
+		</p>
 	</div>
 </div>
+{% endif %}
 
 {% if my_languages_with_stats %}
 <h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>

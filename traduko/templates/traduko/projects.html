@@ -11,7 +11,7 @@ Bonvenon al la tradukejo de <a href="https://ikso.net">E@I</a>!
 		{% for project in projects %}
 		<li class="list-group-item project{% if not project.visible %} hidden{% endif %}">
 			<div class="row d-flex align-items-center">
-				<div class="d-none d-sm-block col-3 col-lg-2">
+				<div class="d-none d-sm-block col-3 col-lg-1">
 					{% if project.image %}
 						<a href="{% url 'project' project.pk %}"><img src="{{ project.image.url }}" alt="" class="img-fluid"></a>
 					{% endif %}
@@ -26,7 +26,6 @@ Bonvenon al la tradukejo de <a href="https://ikso.net">E@I</a>!
 					<a href="{{ project.url }}" target="_blank">{{ project.url }}</a> –
 					{% endif %}
 					<span lang="{{ project.source_language.code }}">{{ project.source_language.name }}</span>
-					<div class="mt-1">{{ project.description }}</div>
 				</div>
 			</div>
 		</li>
