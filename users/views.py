@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login, get_user_model
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
@@ -30,6 +31,8 @@ def register(request):
                 [user.email],
                 html_message=html_message
             )
+
+            messages.success(request, 'Via konto estis kreita kaj vi jam povas komenci traduki. Konfirma mesaĝo estis sendita al ' + user.email + '.')
             return redirect(reverse("projects"))
     else:
         form = CustomUserCreationForm()
