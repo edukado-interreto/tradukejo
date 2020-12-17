@@ -135,6 +135,7 @@ def add_language_version(request, project_id, language):
         if LanguageVersion.objects.filter(project=project, language=lang).count() == 0:
             LanguageVersion(project=project, language=lang).save()
             messages.success(request, 'La lingvo ' + lang.name + ' estis aldonita.')
+    update_project_admins(request.user, project)
 
     return redirect('project', project_id)
 
@@ -180,6 +181,7 @@ def accept_translator_request(request, request_id):
         html_message=html_message
     )
 
+    update_project_admins(request.user, translatorrequest.language_version.project)
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
 
@@ -211,6 +213,7 @@ def decline_translator_request(request, request_id):
         [translatorrequest.user.email],
         html_message=html_message
     )
+    update_project_admins(request.user, translatorrequest.language_version.project)
 
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
@@ -244,6 +247,7 @@ def add_string(request, project_id):
                                     pluralized=pluralized,
                                     translated_by=request.user)
         trstringtext.save()
+        update_project_admins(request.user, project)
 
     return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)
 
@@ -264,6 +268,7 @@ def edit_project(request, project_id):
     else:
         form = ProjectForm(instance=project)
 
+    update_project_admins(request.user, project)
     context = {
         'project': project,
         'form': form

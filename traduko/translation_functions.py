@@ -287,3 +287,21 @@ def send_email_to_admins_about_translation_request(request, translator_request):
                 [admin.email],
                 html_message=html_message
             )
+
+
+def update_translators_when_translating(user, project, language):
+    if language != project.source_language:
+        try:
+            lv = LanguageVersion.objects.get(project=project, language=language)
+        except LanguageVersion.DoesNotExist:  # Shouldn't happen
+            lv = LanguageVersion(project=project, language=language)
+            lv.save()
+        if user not in lv.translators.all():
+            lv.translators.add(user)
+            lv.save()
+
+
+def update_project_admins(user, project):
+    if user.is_superuser and user not in project.admins.all():
+        project.admins.add(user)
+        project.save()

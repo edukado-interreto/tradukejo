@@ -51,6 +51,7 @@ def save_translation(request, trstring_id, language):
         translated_text.text = parsed_text_data['text']
 
         if editmode:  # Update word and character count
+            update_project_admins(request.user, current_string.project)
             translated_text.pluralized = new_pluralized
             current_string.context = new_context
             current_string.words = parsed_text_data['words']
@@ -68,6 +69,8 @@ def save_translation(request, trstring_id, language):
             translated_text.last_change = timezone.now()
 
         translated_text.save()
+
+    update_translators_when_translating(request.user, current_string.project, current_language)
 
     # Adding parameters for template
     current_string.state = translated_text.state
@@ -115,6 +118,8 @@ def change_translation_state(request, trstringtext_id, state):
     current_string.original_text = TrStringText.objects.get(language=current_string.project.source_language,
                                                             trstring=current_string)
 
+    update_translators_when_translating(request.user, current_string.project, trstringtext.language)
+
     context = {
         'editmode': False,
         'str': current_string,
@@ -142,6 +147,7 @@ def marktranslated(request, trstringtext_id):
 @user_is_project_admin
 def deletestring(request, trstring_id):
     trstring = get_object_or_404(TrString, pk=trstring_id)
+    update_project_admins(request.user, trstring.project)
     trstring.delete()
     return HttpResponse('La ĉeno estis forigita.')
 
