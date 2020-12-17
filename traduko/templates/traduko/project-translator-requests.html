@@ -11,7 +11,7 @@
 	{% for r in requests %}
 		<li class="list-group-item">
 			<div>
-				<a href="{% url 'profile' user.pk %}">{{ r.user }}</a> – {{ r.language_version.language.name }} ({{ r.language_version.language.code }}) – {{ r.create_date }}
+				<a href="{% url 'profile' r.user.pk %}">{{ r.user }}</a> – {{ r.language_version.language.name }} ({{ r.language_version.language.code }}) – {{ r.create_date }}
 			</div>
 			<div class="my-3">
 				{{ r.explanation }}

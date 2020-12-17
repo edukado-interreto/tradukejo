@@ -161,7 +161,24 @@ def accept_translator_request(request, request_id):
     translatorrequest.language_version.save()
     translatorrequest.delete()
 
-    # TODO send mail confirmation
+    # Email confirmation to the user
+    mail_context = {
+        'translator': translatorrequest.user,
+        'project': translatorrequest.language_version.project,
+        'language': translatorrequest.language_version.language,
+        'url': request.build_absolute_uri(reverse('project', args=(translatorrequest.language_version.project.pk,))),
+    }
+
+    html_message = render_to_string("traduko/email/translator-request-accepted.html", mail_context)
+    plain_text_message = strip_tags(html_message)
+
+    send_mail(
+        'Tradukejo de E@I: tradukpeto por ' + translatorrequest.language_version.project.name + ' aprobita',
+        plain_text_message,
+        None,
+        [translatorrequest.user.email],
+        html_message=html_message
+    )
 
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
@@ -177,7 +194,23 @@ def decline_translator_request(request, request_id):
     else:
         translatorrequest.delete()
 
-    # TODO send mail confirmation
+    # Email confirmation to the user
+    mail_context = {
+        'translator': translatorrequest.user,
+        'project': translatorrequest.language_version.project,
+        'language': translatorrequest.language_version.language,
+    }
+
+    html_message = render_to_string("traduko/email/translator-request-rejected.html", mail_context)
+    plain_text_message = strip_tags(html_message)
+
+    send_mail(
+        'Tradukejo de E@I: tradukpeto por ' + translatorrequest.language_version.project.name + ' malaprobita',
+        plain_text_message,
+        None,
+        [translatorrequest.user.email],
+        html_message=html_message
+    )
 
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 

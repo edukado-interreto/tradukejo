@@ -162,8 +162,11 @@ def request_translator_permission(request, project_id):
     elif TranslatorRequest.objects.filter(user=request.user, language_version=lv).count() > 0:
         message = 'Vi jam sendis peton por ĉi tiu lingvo.'
     else:
-        TranslatorRequest(user=request.user, explanation=request.POST.get('explanation'), language_version=lv).save()
+        translator_request = TranslatorRequest(user=request.user, explanation=request.POST.get('explanation'), language_version=lv)
+        translator_request.save()
+        print(translator_request)
         message = 'La peto estis sendita.'
+        send_email_to_admins_about_translation_request(request, translator_request)
 
     button = render_to_string("traduko/project/translation_request_sent_button.html")
     response_dict = {
