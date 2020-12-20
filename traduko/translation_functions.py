@@ -210,13 +210,13 @@ def get_text_difference(text, n_text):
         if opcode == 'equal':
             output.append(seqm.a[a0:a1])
         elif opcode == 'insert':
-            output.append("<ins>" + seqm.b[b0:b1] + "</ins>")
+            output.append(f"<ins>{seqm.b[b0:b1]}</ins>")
         elif opcode == 'delete':
-            output.append("<del>" + seqm.a[a0:a1] + "</del>")
+            output.append(f"<del>{seqm.a[a0:a1]}</del>")
         elif opcode == 'replace':
             # seqm.a[a0:a1] -> seqm.b[b0:b1]
-            output.append("<del>" + seqm.a[a0:a1] + "</del>")
-            output.append("<ins>" + seqm.b[b0:b1] + "</ins>")
+            output.append(f"<del>{seqm.a[a0:a1]}</del>")
+            output.append(f"<ins>{seqm.b[b0:b1]}</ins>")
         else:
             raise RuntimeError
     return ''.join(output)

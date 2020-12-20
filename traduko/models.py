@@ -116,7 +116,7 @@ class LanguageVersion(models.Model):
         ordering = ['language']
 
     def __str__(self):
-        return self.project.name + " - " + self.language.code
+        return f"{self.project.name} - {self.language.code}"
     
     def untranslated_strings(self):
         return self.project.strings - self.translated_strings - self.outdated_strings
@@ -146,7 +146,7 @@ class TranslatorRequest(models.Model):
     explanation = models.TextField()
 
     def __str__(self):
-        return self.user.username + ' - ' + self.language_version.__str__()
+        return f"{self.user.username} - {self.language_version}"
 
 
 # I'd rather not call this class "String" to avoid problems
@@ -164,7 +164,7 @@ class TrString(models.Model):
     last_change = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.path + "#" + self.name
+        return f"{self.path} # {self.name}"
 
     class Meta:
         indexes = [
@@ -188,7 +188,7 @@ class TrStringText(models.Model):
                                 default=TRANSLATION_STATE_TRANSLATED)
 
     def __str__(self):
-        return str(self.trstring) + ' ‑ ' + self.language.code
+        return f"{self.trstring} ‑ {self.language.code}"
 
     def old_versions(self):
         return self.trstringtexthistory_set.count()

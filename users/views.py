@@ -32,7 +32,7 @@ def register(request):
                 html_message=html_message
             )
 
-            messages.success(request, 'Via konto estis kreita kaj vi jam povas komenci traduki. Konfirma mesaĝo estis sendita al ' + user.email + '.')
+            messages.success(request, f"Via konto estis kreita kaj vi jam povas komenci traduki. Konfirma mesaĝo estis sendita al {user.email}.")
             return redirect(reverse("projects"))
     else:
         form = CustomUserCreationForm()

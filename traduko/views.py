@@ -61,7 +61,7 @@ def translate(request, project_id, language):
             language_version = LanguageVersion.objects.get(project=current_project, language=current_language)
         except ObjectDoesNotExist:
             messages.error(request,
-                           'Ne ekzistas versio de ĉi tiu projekto en tiu lingvo (' + current_language.name + ').')
+                           f"Ne ekzistas versio de ĉi tiu projekto en tiu lingvo ({current_language.name}).")
             return redirect('project', project_id)
         editmode = False
 
@@ -134,7 +134,7 @@ def add_language_version(request, project_id, language):
         lang = get_object_or_404(Language, code=language)
         if LanguageVersion.objects.filter(project=project, language=lang).count() == 0:
             LanguageVersion(project=project, language=lang).save()
-            messages.success(request, 'La lingvo ' + lang.name + ' estis aldonita.')
+            messages.success(request, f"La lingvo {lang.name} estis aldonita.")
     update_project_admins(request.user, project)
 
     return redirect('project', project_id)
@@ -174,7 +174,7 @@ def accept_translator_request(request, request_id):
     plain_text_message = strip_tags(html_message)
 
     send_mail(
-        'Tradukejo de E@I: tradukpeto por ' + translatorrequest.language_version.project.name + ' aprobita',
+        "Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} aprobita",
         plain_text_message,
         None,
         [translatorrequest.user.email],
@@ -207,7 +207,7 @@ def decline_translator_request(request, request_id):
     plain_text_message = strip_tags(html_message)
 
     send_mail(
-        'Tradukejo de E@I: tradukpeto por ' + translatorrequest.language_version.project.name + ' malaprobita',
+        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} malaprobita",
         plain_text_message,
         None,
         [translatorrequest.user.email],
