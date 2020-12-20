@@ -32,7 +32,7 @@ def user_allowed_to_translate(function):
         if allowed:
             return function(request, *args, **kwargs)
         else:
-            messages.error(request, 'Vi ne rajtas traduki al tiu lingvo (' + language.name + ').')
+            messages.error(request, f"Vi ne rajtas traduki al tiu lingvo ({language.name}).")
             return redirect('project', project.pk)
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
