@@ -56,7 +56,7 @@ class Language(models.Model):
         ordering = ['code']
 
     def __str__(self):
-        return "{} - {}".format(self.code, self.name)
+        return f"{self.code} - {self.name}"
 
     def nplurals(self):
         return int(self.plural_forms[9])  # Doesn't work if there are 10 or more plural forms, but it should never happen.
@@ -86,6 +86,7 @@ class Project(models.Model):
     characters = models.IntegerField(default=0)
     visible = models.BooleanField(default=True)
     locked = models.BooleanField(default=False)
+    last_translator_notification = models.DateTimeField(blank=True, null=True, default=None)
     create_date = models.DateTimeField(auto_now_add=True)
     last_change = models.DateTimeField(auto_now=True)
 
@@ -164,7 +165,7 @@ class TrString(models.Model):
     last_change = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.path} # {self.name}"
+        return f"{self.path}#{self.name}"
 
     class Meta:
         indexes = [

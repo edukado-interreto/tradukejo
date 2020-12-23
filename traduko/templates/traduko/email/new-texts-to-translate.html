@@ -1,0 +1,11 @@
+<p>Kara {{ translator.username }},</p>
+<p>Aperis novaj tekstoj por traduki en la projekto {{ project.name }}.</p>
+<ul>
+	{% for lv in language_versions %}
+	<li>{{ lv.language.name }}: {{ lv.untranslated_words }} netradukitaj vortoj, {{ lv.outdated_words }} retradukendaj vortoj</li>
+	{% endfor %}
+</ul>
+<p>Vi povas traduki ĉi tie <a href="{{ translate_url }}">{{ translate_url }}</a></p>
+<p>Amike,</p>
+<p>La E@I-teamo</p>
+<p>PS: se vi ne volas ricevi ĉi tiujn mesaĝojn, eblas agordi tion en via profilo.</p>

@@ -19,4 +19,5 @@ urlpatterns = [
     path("project/accept-translator-request/<int:request_id>/", views.accept_translator_request, name="accept_translator_request"),
     path("project/decline-translator-request/<int:request_id>/", views.decline_translator_request, name="decline_translator_request"),
     path("project/<int:project_id>/add-string/", views.add_string, name="add_string"),
+    path("project/<int:project_id>/send-notifications/", views.translator_notifications, name="translator_notifications"),
 ]

@@ -1,5 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.utils import timezone
+
 from .models import *
 from .translation_functions import *
 from .forms import *
@@ -32,6 +35,15 @@ def projectpage(request, project_id):
     if not current_project.visible and not project_admin:
         raise PermissionDenied()
 
+    if project_admin:
+        if current_project.last_translator_notification is None:
+            show_translator_notifications_button = True
+        else:
+            new_texts = TrString.objects.filter(project=current_project, last_change__gte=current_project.last_translator_notification).count()
+            show_translator_notifications_button = new_texts > 0
+    else:
+        show_translator_notifications_button = False
+
     languages_with_stats = get_project_language_statistics(current_project, request.user)
 
     context = {
@@ -39,7 +51,8 @@ def projectpage(request, project_id):
         'available_languages_with_stats': languages_with_stats['other_available'],
         'project': current_project,
         'is_project_admin': project_admin,
-        'addible_languages': addible_languages(current_project)
+        'addible_languages': addible_languages(current_project),
+        'show_translator_notifications_button': show_translator_notifications_button,
     }
 
     if user_is_project_admin:
@@ -174,7 +187,7 @@ def accept_translator_request(request, request_id):
     plain_text_message = strip_tags(html_message)
 
     send_mail(
-        "Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} aprobita",
+        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} aprobita",
         plain_text_message,
         None,
         [translatorrequest.user.email],
@@ -234,7 +247,7 @@ def add_string(request, project_id):
     if name == '' or text_data['characters'] == 0:
         messages.error(request, 'Bonvolu plenigi ĉiujn kampojn.')
     elif TrString.objects.filter(project=project, path=path, name=name).count() > 0:
-        messages.error(request, 'Ĉi tiu nomo ({}#{}) jam estas uzata.'.format(path, name))
+        messages.error(request, f'Ĉi tiu nomo ({path}#{name}) jam estas uzata.')
     else:
         context = request.POST.get('context').strip()
         trstring = TrString(project=project, path=path, name=name, context=context,
@@ -274,3 +287,44 @@ def edit_project(request, project_id):
         'form': form
     }
     return render(request, "traduko/project-edit.html", context)
+
+
+@login_required
+@user_is_project_admin
+def translator_notifications(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        languages = request.POST.getlist('send[]')
+        language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(translated_strings=project.strings)
+        if len(language_versions) > 0:
+            translators = get_user_model().objects.filter(languageversion__in=language_versions).distinct().exclude(pk=request.user.pk)
+            for translator in translators:
+                lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(translated_strings=project.strings)
+                print(translator, lv)
+                # Email translator about new strings
+                mail_context = {
+                    'translator': translator,
+                    'project': project,
+                    'language_versions': lv,
+                    'translate_url': request.build_absolute_uri(reverse('project', args=(project.pk,))),
+                }
+                html_message = render_to_string("traduko/email/new-texts-to-translate.html", mail_context)
+                plain_text_message = strip_tags(html_message)
+
+                send_mail(
+                    f"Tradukejo de E@I: novaj tekstoj por traduki en {project.name}",
+                    plain_text_message,
+                    None,
+                    [translator.email],
+                    html_message=html_message
+                )
+
+            project.last_translator_notification = timezone.now()
+            project.save()
+            messages.success(request, "La sciigo estis sendita.")
+
+    context = {
+        'project': project,
+    }
+    return render(request, "traduko/translator-notifications.html", context)
