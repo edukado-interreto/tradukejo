@@ -16,7 +16,7 @@ def projects(request):
     if request.user.is_superuser:
         projects_list = Project.objects.all()
     elif request.user.is_authenticated:
-        projects_list = Project.objects.filter(Q(visible=True) | Q(admins=request.user))
+        projects_list = Project.objects.filter(Q(visible=True) | Q(admins=request.user)).distinct()
     else:
         projects_list = Project.objects.filter(visible=True)
 
