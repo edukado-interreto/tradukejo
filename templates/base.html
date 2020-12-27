@@ -18,9 +18,10 @@
 			<div class="col text-right">
 				{% if user.is_authenticated %}
 					<strong>{{ user.username }}</strong> ⋅
+					<a href="{% url 'user_settings' %}">Agordoj</a>	⋅
 					<a href="{% url 'logout' %}">Elsaluti</a>
 				{% else %}
-					<a href="{% url 'login' %}">Ensaluti</a> ⋅ <a href="{% url 'register' %}">Krei konton</a> ⋅ <a href="#">Agordoj</a>
+					<a href="{% url 'login' %}">Ensaluti</a> ⋅ <a href="{% url 'register' %}">Krei konton</a>
 				{% endif %}
 			</div>
 		</header>

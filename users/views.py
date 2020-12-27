@@ -3,9 +3,10 @@ from django.contrib.auth import login, get_user_model
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
-from users.forms import CustomUserCreationForm
+from users.forms import CustomUserCreationForm, UserSettingsForm
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -43,6 +44,7 @@ def register(request):
     )
 
 
+@login_required
 def profile(request, user_id):
     current_user = get_object_or_404(User, pk=user_id)
 
@@ -50,3 +52,22 @@ def profile(request, user_id):
         'current_user': current_user,
     }
     return render(request, "users/profile.html", context)
+
+
+@login_required
+def user_settings(request):
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'La ŝanĝoj estis konservitaj.')
+        else:
+            print(form.errors)
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+    else:
+        form = UserSettingsForm(instance=request.user)
+
+    context = {
+        'form': form
+    }
+    return render(request, "users/user-settings.html", context)

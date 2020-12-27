@@ -277,7 +277,7 @@ def edit_project(request, project_id):
             messages.success(request, 'La ŝanĝoj estis konservitaj.')
         else:
             print(form.errors)
-            messages.error(request, 'caca')
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
     else:
         form = ProjectForm(instance=project)
 
@@ -298,16 +298,16 @@ def translator_notifications(request, project_id):
         languages = request.POST.getlist('send[]')
         language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(translated_strings=project.strings)
         if len(language_versions) > 0:
-            translators = get_user_model().objects.filter(languageversion__in=language_versions).distinct().exclude(pk=request.user.pk)
+            translators = get_user_model().objects.filter(email_new_texts=True, languageversion__in=language_versions).distinct().exclude(pk=request.user.pk)
             for translator in translators:
                 lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(translated_strings=project.strings)
-                print(translator, lv)
                 # Email translator about new strings
                 mail_context = {
                     'translator': translator,
                     'project': project,
                     'language_versions': lv,
                     'translate_url': request.build_absolute_uri(reverse('project', args=(project.pk,))),
+                    'settings_url': request.build_absolute_uri(reverse('user_settings')),
                 }
                 html_message = render_to_string("traduko/email/new-texts-to-translate.html", mail_context)
                 plain_text_message = strip_tags(html_message)
