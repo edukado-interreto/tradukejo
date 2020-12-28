@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'normal-page.html' %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-<h2>Register</h2>
+{% block title %}Krei konton{% endblock %}
+{% block pagetitle %}Krei konton{% endblock %}
 
+{% block content %}
 <form method="post" class="small-form">
     {% csrf_token %}
     {{ form|crispy }}

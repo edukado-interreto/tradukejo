@@ -1,11 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'normal-page.html' %}
 
 {% block title %}Projektoj{% endblock %}
+{% block pagetitle %}Projektoj{% endblock %}
 
 {% block content %}
-Bonvenon al la tradukejo de <a href="https://ikso.net">E@I</a>!
-
-<h1 class="mt-3">Projektoj</h1>
 <div class="card mt-4">
 	<ul class="list-group list-group-flush">
 		{% for project in projects %}

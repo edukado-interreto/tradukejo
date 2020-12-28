@@ -12,10 +12,9 @@
 	<title>{% block title %}Bonvenon{% endblock %} – {{ WEBSITE_NAME }}</title>
 </head>
 <body>
-	<div class="container-fluid">
-		<header class="row d-flex align-items-center">
-			<h1 class="mt-2 mb-3 col-md-6 col-lg-8"><a href="{% url 'projects' %}">{{ WEBSITE_NAME }}</a></h1>
-			<div class="col text-right">
+	<header id="page-header">
+		<div class="inner-container row no-gutters">
+			<div class="col-sm-6 col-lg-4 text-right order-sm-last">
 				{% if user.is_authenticated %}
 					<strong>{{ user.username }}</strong> ⋅
 					<a href="{% url 'user_settings' %}">Agordoj</a>	⋅
@@ -24,27 +23,13 @@
 					<a href="{% url 'login' %}">Ensaluti</a> ⋅ <a href="{% url 'register' %}">Krei konton</a>
 				{% endif %}
 			</div>
-		</header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'projects' %}">Projektoj</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Instrukcioj</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Kontakto</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<main>
+			<h1 class="mt-2 mb-3 col"><a href="{% url 'projects' %}">{{ WEBSITE_NAME }}</a></h1>
+		</div>
+	</header>
+	<main>
+		<h1 class="page-title">{% block pagetitle %}{% endblock %}</h1>
+		{% if messages %}
+		<div class="inner-container">
 			{% for message in messages %}
 			<div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
 				{{ message }}
@@ -53,11 +38,26 @@
 				</button>
 			</div>
 			{% endfor %}
+		</div>
+		{% endif %}
 
-			{% block content %}
-			{% endblock %}
-		</main>
-	</div>
+		{% block maincontent %}
+		{% endblock %}
+	</main>
+	<footer id="page-footer">
+		<div class="inner-container row no-gutters">
+			<div class="col-12 col-sm-6">
+				<ul>
+					<li><a href="#">Instrukcioj</a></li>
+					<li><a href="#">Kontakto</a></li>
+					<li><a href="#">Privateco</a></li>
+				</ul>
+			</div>
+			<div class="col-12 col-sm-6">
+				Ĉi tiu tradukejo estas projekto de <a href="https://ikso.net" target="_blank">Edukado@Interreto</a>.
+			</div>
+		</div>
+	</footer>
 {% block js %}{% endblock %}
 </body>
 </html>

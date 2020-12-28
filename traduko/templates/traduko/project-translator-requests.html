@@ -1,9 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'normal-page.html' %}
 {% block title %}{{ project.name }} – petoj por traduki{% endblock %}
-
+{% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – petoj por traduki{% endblock %}
 {% block content %}
-<h1><a href="{% url 'project' project.pk %}">{{ project.name }}</a> – petoj por traduki</h1>
-
 {% if not requests %}
 <p class="alert alert-info mt-4">Nuntempe ne estas petoj.</p>
 {% else %}

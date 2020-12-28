@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'wide-page.html' %}
 {% load static %}
 {% load traduko_tags %}
 
 {% block title %}Traduko de {{ project.name }} ({{ language.name }}){% endblock %}
+{% block pagetitle %}Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a> (<span lang="{{ language.code }}" dir="{{ language.direction }}">{{ language.name }}</span>){% endblock %}
 
 {% block js %}
 <script src="{% static 'traduko/js/translate.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<h1>Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a></h1>
 <input type="hidden" id="csrf" value="{{ csrf_token }}">
 <input type="hidden" id="current_language" value="{{ language.code }}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

@@ -1,6 +1,69 @@
-main h1 {
+.inner-container {
+    margin: auto;
+    width: 96%;
+    max-width: 1300px;
+}
+
+.container-fluid {
+    max-width: 1800px;
+}
+
+a {
+    color: #254E58;
+}
+
+a:hover, a:active {
+    color: #112D32;
+}
+
+#page-header {
+    background: #88BDBC;
+    padding: 6px 0;
+}
+
+#page-header a {
+    color: #112D32;
+}
+
+#page-footer {
+    background: #88BDBC;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+#page-footer a {
+    color: #112D32;
+}
+
+#page-footer ul {
+    margin: 0;
+}
+
+main h1.page-title {
+    margin-top: 0;
+    background: #254E58;
+    color: white;
+    text-align: center;
+    margin-bottom: 1.3rem;
+    padding: 1rem 0;
+    font-size: 2.6rem;
+}
+
+main h1.page-title a {
+    color: white;
+    text-decoration: underline;
+}
+
+main h1.page-title a:hover, main h1.page-title a:active {
+    color: #CCC;
+}
+
+main h2 {
     font-size: 1.8rem;
-    font-weight: bold;
+    color: #254E58;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .project.hidden {
@@ -16,10 +79,6 @@ main h1 {
     font-size: .9em;
     margin-top: 4px;
     color: #454545;
-}
-
-.container-fluid {
-    max-width: 1600px;
 }
 
 .project-logo {
