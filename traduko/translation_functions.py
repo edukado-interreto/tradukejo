@@ -289,7 +289,7 @@ def send_email_to_admins_about_translation_request(request, translator_request):
 
 
 def update_translators_when_translating(user, project, language):
-    if language != project.source_language:
+    if language != project.source_language and user != None:
         try:
             lv = LanguageVersion.objects.get(project=project, language=language)
         except LanguageVersion.DoesNotExist:  # Shouldn't happen

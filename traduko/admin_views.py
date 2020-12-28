@@ -1,0 +1,229 @@
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.utils import timezone
+from .models import *
+from .translation_functions import *
+from .forms import *
+from .import_export_functions import *
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .decorators import *
+from django.db.models import Q
+
+
+@login_required
+@user_is_project_admin
+def translator_request_list(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    requests = TranslatorRequest.objects.filter(language_version__project=project).order_by('-create_date')
+
+    context = {
+        'project': project,
+        'requests': requests
+    }
+    return render(request, "traduko/project-translator-requests.html", context)
+
+
+@login_required
+@user_is_project_admin
+def accept_translator_request(request, request_id):
+    translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
+    translatorrequest.language_version.translators.add(translatorrequest.user)
+    translatorrequest.language_version.save()
+    translatorrequest.delete()
+
+    # Email confirmation to the user
+    mail_context = {
+        'translator': translatorrequest.user,
+        'project': translatorrequest.language_version.project,
+        'language': translatorrequest.language_version.language,
+        'url': request.build_absolute_uri(reverse('project', args=(translatorrequest.language_version.project.pk,))),
+    }
+
+    html_message = render_to_string("traduko/email/translator-request-accepted.html", mail_context)
+    plain_text_message = strip_tags(html_message)
+
+    send_mail(
+        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} aprobita",
+        plain_text_message,
+        None,
+        [translatorrequest.user.email],
+        html_message=html_message
+    )
+
+    update_project_admins(request.user, translatorrequest.language_version.project)
+    return redirect('translator_request_list', translatorrequest.language_version.project.pk)
+
+
+@login_required
+@user_is_project_admin
+def decline_translator_request(request, request_id):
+    translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
+
+    # Delete the language version if no translations
+    if TrStringText.objects.filter(trstring__project=translatorrequest.language_version.project, language=translatorrequest.language_version.language).count() == 0:
+        translatorrequest.language_version.delete()  # translatorrequest deleted by cascade
+    else:
+        translatorrequest.delete()
+
+    # Email confirmation to the user
+    mail_context = {
+        'translator': translatorrequest.user,
+        'project': translatorrequest.language_version.project,
+        'language': translatorrequest.language_version.language,
+    }
+
+    html_message = render_to_string("traduko/email/translator-request-rejected.html", mail_context)
+    plain_text_message = strip_tags(html_message)
+
+    send_mail(
+        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} malaprobita",
+        plain_text_message,
+        None,
+        [translatorrequest.user.email],
+        html_message=html_message
+    )
+    update_project_admins(request.user, translatorrequest.language_version.project)
+
+    return redirect('translator_request_list', translatorrequest.language_version.project.pk)
+
+
+@login_required
+@user_is_project_admin
+def add_string(request, project_id):
+    # TODO: use Django forms?
+    # TODO: posting pluralized strings
+    project = get_object_or_404(Project, pk=project_id)
+
+    name = request.POST.get('name').strip()
+    pluralized = bool(request.POST.get('pluralized') == 'true')
+    text_data = parse_submitted_text(request.POST.get('text'), pluralized, project.source_language.nplurals())
+    path = request.POST.get('path').strip('/ ')
+    querystring = '?dir=' + path if path != '' else ''
+
+    if name == '' or text_data['characters'] == 0:
+        messages.error(request, 'Bonvolu plenigi ĉiujn kampojn.')
+    elif TrString.objects.filter(project=project, path=path, name=name).count() > 0:
+        messages.error(request, f'Ĉi tiu nomo ({path}#{name}) jam estas uzata.')
+    else:
+        context = request.POST.get('context').strip()
+        trstring = TrString(project=project, path=path, name=name, context=context,
+                            words=text_data['words'],
+                            characters=text_data['characters'])
+        trstring.save()
+        trstringtext = TrStringText(trstring=trstring,
+                                    language=project.source_language,
+                                    text=text_data['text'],
+                                    pluralized=pluralized,
+                                    translated_by=request.user)
+        trstringtext.save()
+        update_project_admins(request.user, project)
+
+    return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)
+
+
+@login_required
+@user_is_project_admin
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'La ŝanĝoj estis konservitaj.')
+        else:
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = ProjectForm(instance=project)
+
+    context = {
+        'project': project,
+        'form': form
+    }
+    return render(request, "traduko/project-edit.html", context)
+
+
+@login_required
+@user_is_project_admin
+def translator_notifications(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        languages = request.POST.getlist('send[]')
+        language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(translated_strings=project.strings)
+        if len(language_versions) > 0:
+            translators = get_user_model().objects.filter(email_new_texts=True, languageversion__in=language_versions).distinct().exclude(pk=request.user.pk)
+            for translator in translators:
+                lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(translated_strings=project.strings)
+                # Email translator about new strings
+                mail_context = {
+                    'translator': translator,
+                    'project': project,
+                    'language_versions': lv,
+                    'translate_url': request.build_absolute_uri(reverse('project', args=(project.pk,))),
+                    'settings_url': request.build_absolute_uri(reverse('user_settings')),
+                }
+                html_message = render_to_string("traduko/email/new-texts-to-translate.html", mail_context)
+                plain_text_message = strip_tags(html_message)
+
+                send_mail(
+                    f"Tradukejo de E@I: novaj tekstoj por traduki en {project.name}",
+                    plain_text_message,
+                    None,
+                    [translator.email],
+                    html_message=html_message
+                )
+
+            project.last_translator_notification = timezone.now()
+            project.save()
+            messages.success(request, "La sciigo estis sendita.")
+
+    context = {
+        'project': project,
+    }
+    return render(request, "traduko/translator-notifications.html", context)
+
+
+@login_required
+@user_is_project_admin
+def import_export(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    context = {
+        'project': project,
+    }
+    return render(request, "traduko/import-export/import-export.html", context)
+
+
+@login_required
+@user_is_project_admin
+def import_csv(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = CSVImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = form.cleaned_data['file']
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request, 'Malĝusta formato de dosiero.')
+            else:
+                try:
+                    import_from_csv(project, csv_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
+                    messages.success(request, 'La ĉenoj estis importitaj.')
+                except WrongFormatError:
+                    messages.error(request, 'Malĝusta formato de dosiero.')
+        else:
+            pass
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = CSVImportForm()
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/import-csv.html", context)

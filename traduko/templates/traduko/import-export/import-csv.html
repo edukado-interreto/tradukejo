@@ -1,0 +1,21 @@
+{% extends 'normal-page.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ project.name }} – importi CSV{% endblock %}
+{% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – importi CSV{% endblock %}
+
+{% block content %}
+<p>La CSV-dosiero devas havi kolumnojn kun la jenaj titoloj:</p>
+<ul>
+	<li><code>path</code>,</li>
+	<li><code>name</code>,</li>
+	<li><code>context</code>,</li>
+	<li><code>{{ project.source_language.code }}</code>,</li>
+	<li>eventuale kodoj de aliaj lingvoj.</li>
+</ul>
+<form action="" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<input type="submit" value="Importi CSV" class="btn btn-primary">
+</form>
+{% endblock %}
+

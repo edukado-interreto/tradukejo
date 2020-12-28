@@ -1,0 +1,22 @@
+{% extends 'normal-page.html' %}
+{% block title %}{{ project.name }} – importi/eksporti{% endblock %}
+{% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – importi/eksporti{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-12 col-sm-6">
+		<h2>Importi</h2>
+		<ul>
+			<li><a href="{% url 'import_csv' project.pk %}">Importi CSV</a></li>
+			<li>Importi PO</li>
+			<li>Importi el alia projekto</li>
+		</ul>
+	</div>
+	<div class="col-12 col-sm-6">
+		<h2>Eksporti</h2>
+		<li>Eksporti kiel CSV</li>
+		<li>Eksporti kiel PO/MO</li>
+	</div>
+</div>
+{% endblock %}
+

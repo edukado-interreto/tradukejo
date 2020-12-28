@@ -51,8 +51,7 @@
 			{% if show_translator_notifications_button %}
 				<a href="{% url 'translator_notifications' project.pk %}" class="btn btn-primary">Sciigi la tradukantojn pri novaj tekstoj</a>
 			{% endif %}
-			<a href="#" class="btn btn-primary">Importi</a>
-			<a href="#" class="btn btn-primary">Eksporti</a>
+			<a href="{% url 'import_export' project.pk %}" class="btn btn-primary">Importi/eksporti</a>
 		</p>
 	</div>
 </div>

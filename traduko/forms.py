@@ -19,3 +19,9 @@ class ProjectForm(forms.ModelForm):
         help_texts = {
             'needed_languages': 'Lasi malplena, se ĉiuj lingvoj estas bezonataj'
         }
+
+
+class CSVImportForm(forms.Form):
+    file = forms.FileField(label="Dosiero", required=True)
+    update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn", required=False)
+    user_is_author = forms.BooleanField(label="Marki min kiel aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
