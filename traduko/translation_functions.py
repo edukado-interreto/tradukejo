@@ -267,26 +267,25 @@ def get_history_comparison(history):
 def send_email_to_admins_about_translation_request(request, translator_request):
     project = translator_request.language_version.project
     language = translator_request.language_version.language
-    administrators = project.admins.all()
+    administrators = project.admins.filter(email_translation_request=True)
     for admin in administrators:
-        if admin.email_translation_request:
-            mail_context = {
-                'admin': admin,
-                'project': project,
-                'language': language,
-                'translator_request': translator_request,
-                'url': request.build_absolute_uri(reverse('translator_request_list', args=(project.pk, ))),
-            }
-            html_message = render_to_string("traduko/email/new-translator-request.html", mail_context)
-            plain_text_message = strip_tags(html_message)
+        mail_context = {
+            'admin': admin,
+            'project': project,
+            'language': language,
+            'translator_request': translator_request,
+            'url': request.build_absolute_uri(reverse('translator_request_list', args=(project.pk, ))),
+        }
+        html_message = render_to_string("traduko/email/new-translator-request.html", mail_context)
+        plain_text_message = strip_tags(html_message)
 
-            send_mail(
-                'Tradukejo de E@I: peto de tradukrajto por ' + project.name,
-                plain_text_message,
-                None,
-                [admin.email],
-                html_message=html_message
-            )
+        send_mail(
+            'Tradukejo de E@I: peto de tradukrajto por ' + project.name,
+            plain_text_message,
+            None,
+            [admin.email],
+            html_message=html_message
+        )
 
 
 def update_translators_when_translating(user, project, language):
