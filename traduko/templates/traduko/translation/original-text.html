@@ -1,3 +1,5 @@
+{% load traduko_tags %}
+
 <div class="original-text">
 	{% if str.original_text.pluralized %}
 	<div class="context mt-1">
@@ -5,9 +7,9 @@
 	</div>
 	{% for number, text in str.original_text.pluralized_text_dictionary.items %}
 		<div class="plural-number-explanation">Se la nombro estas {{ number }}:</div>
-		<div>{{ text }}</div>
+		<div>{{ text|highlight_placeholders|safe|linebreaksbr }}</div>
 	{% endfor %}
 	{% else %}
-	{{ str.original_text.text }}
+	{{ str.original_text.text|highlight_placeholders|safe|linebreaksbr }}
 	{% endif %}
 </div>

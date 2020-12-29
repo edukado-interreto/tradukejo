@@ -11,7 +11,7 @@
 			<p>{{ text|safe }}</p>
 		{% endfor %}
 	{% else %}
-		<p>{{ version.comparison|dict_key:'1'|safe }}</p>
+		<p>{{ version.comparison|dict_key:'1'|safe|linebreaksbr }}</p>
 	{% endif %}
 	<hr class="my-2">
 	{{ version.create_date }}

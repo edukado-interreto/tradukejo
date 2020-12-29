@@ -1,4 +1,6 @@
 from django import template
+from django.utils import html
+import re
 
 register = template.Library()
 
@@ -42,3 +44,20 @@ def list_index(l, i):
         return l[i]
     else:
         return ""
+
+
+@register.filter(name='highlight_placeholders')
+def highlight_placeholders(str):
+    str = html.escape(str)
+    str = re.sub(
+        r'\{(([0-9a-z._:,=+^!/[\]-]|&lt;|&gt;)*)\}',
+        r'<code>{\1}</code>',
+        str
+    )
+    str = re.sub(
+        r'(%[a-z0-9.-]*[a-z])',
+        r'<code>\1</code>',
+        str
+    )
+
+    return str

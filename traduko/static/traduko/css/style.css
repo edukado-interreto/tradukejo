@@ -119,6 +119,13 @@ main h2 {
     width: 100%;
 }
 
+.translation-row code {
+    font-weight: bold;
+    color: #304060;
+    font-size: 1em;
+    line-height: 1em;
+}
+
 .subdirectory-list {
     list-style-type: none;
     padding: 0;
