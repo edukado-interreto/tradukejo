@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from .translation_functions import update_project_count, update_language_version_count, update_all_language_versions_count
 
 
+# See also import_export_functions where these functions are temporarily disabled
+
 @receiver(post_save, sender=TrStringText)
 def update_project_count_from_trstringtext(sender, instance, **kwargs):
     if instance.trstring.project.source_language != instance.language:

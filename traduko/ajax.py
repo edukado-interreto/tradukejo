@@ -22,6 +22,46 @@ def save_translation(request, trstring_id, language):
     if editmode:
         new_pluralized = bool(request.POST.get('pluralized') == 'true')
         new_context = request.POST.get('context')
+        minor_change = bool(request.POST.get('minor') == 'true')
+    else:
+        new_pluralized = False
+        new_context = ''
+        minor_change = False
+
+    saved_data = add_or_update_trstringtext(current_string.project,
+                                            current_string.path,
+                                            current_string.name,
+                                            current_language,
+                                            request.POST.get('text'),
+                                            request.user,
+                                            new_pluralized,
+                                            True,
+                                            new_context,
+                                            minor_change)
+
+    saved_data['trstring'].state = saved_data['trstringtext'].state
+    saved_data['trstring'].translated_text = saved_data['trstringtext']
+    saved_data['trstring'].original_text = TrStringText.objects.get(language=current_string.project.source_language,
+                                                            trstring=current_string)
+
+    context = {
+        'editmode': editmode,
+        'str': saved_data['trstring'],
+        'language': current_language,
+    }
+    return render(request, "traduko/translation/translation-row.html", context)
+
+
+@require_POST
+@login_required
+@user_allowed_to_translate
+def save_translation_old(request, trstring_id, language):
+    current_language = get_object_or_404(Language, code=language)
+    current_string = get_object_or_404(TrString, pk=trstring_id)
+    editmode = current_language == current_string.project.source_language
+    if editmode:
+        new_pluralized = bool(request.POST.get('pluralized') == 'true')
+        new_context = request.POST.get('context')
 
     try:
         translated_text = TrStringText.objects.get(language=current_language, trstring=current_string)

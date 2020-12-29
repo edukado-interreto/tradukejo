@@ -1,11 +1,11 @@
 import difflib
-
 from django.core.mail import send_mail
 from django.db.models import Sum, Q
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.html import strip_tags
-
 from .models import *
 from collections import OrderedDict
 import json, html
@@ -34,6 +34,95 @@ def is_allowed_to_translate(user, project, language):
         return True
 
     return False
+
+
+def mark_translations_as_outdated(trstring):
+    trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(state=TRANSLATION_STATE_OUTDATED)
+
+
+def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False):
+    """
+    Main function used to save strings. Translation right checks should be done before calling this function.
+    text: text to be parsed with parse_submitted_text
+    force_update: if existing texts should be replaced with new text
+    minor: whether changes made to texts in source language are minor (and translations shouldn't be marked as outdated)
+    context: context for the TrString, if we are editing it
+    """
+
+    editing_original = language == project.source_language
+
+    try:
+        current_string = TrString.objects.get(project=project, path=path, name=name)
+    except TrString.DoesNotExist:
+        if editing_original:
+            current_string = TrString(project=project, path=path, name=name)
+            current_string.save()
+
+    try:
+        translated_text = TrStringText.objects.get(language=language, trstring=current_string)
+        new_translation = False
+    except TrStringText.DoesNotExist:
+        translated_text = TrStringText(language=language, trstring=current_string)
+        new_translation = True
+
+    if not new_translation and not force_update:
+        return {
+            'trstring': None,
+            'trstringtext': None
+        }
+
+    if not editing_original:
+        pluralized = TrStringText.objects.get(trstring=current_string, language=current_string.project.source_language).pluralized
+
+    parsed_text_data = parse_submitted_text(text,
+                                            pluralized,
+                                            language.nplurals())
+
+    if new_translation or parsed_text_data['text'] != translated_text.text or (editing_original and (
+            translated_text.pluralized != pluralized or current_string.context != context)):  # If there are changes
+        # If not new string and text has changed: save in history
+        if not new_translation and parsed_text_data['text'] != translated_text.text:
+            # Save as pluralized only if string has several forms
+            old_version_pluralized = translated_text.number_of_pluralized_texts() == translated_text.language.nplurals() and translated_text.language.nplurals() > 1
+            history = TrStringTextHistory(trstringtext=translated_text,
+                                          pluralized=old_version_pluralized,
+                                          text=translated_text.text,
+                                          translated_by=translated_text.translated_by)
+            history.save()
+
+        # Update the translation
+        translated_text.state = TRANSLATION_STATE_TRANSLATED
+        translated_text.translated_by = author
+        translated_text.text = parsed_text_data['text']
+
+        # TrStringText has to be updated first, then TrString
+        # Otherwise signals fire in the wrong order and translated word count breaks
+
+        if editing_original:
+            translated_text.pluralized = pluralized
+            if not minor:  # Update translation status of translations
+                mark_translations_as_outdated(current_string)
+                translated_text.last_change = timezone.now()
+        else:
+            original_text = get_object_or_404(TrStringText, trstring=current_string,
+                                              language=current_string.project.source_language)
+            translated_text.pluralized = original_text.pluralized
+            translated_text.last_change = timezone.now()
+        translated_text.save()
+
+        if editing_original:  # Update word and character count
+            update_project_admins(author, current_string.project)
+            current_string.context = context
+            current_string.words = parsed_text_data['words']
+            current_string.characters = parsed_text_data['characters']
+            current_string.save()
+
+    update_translators_when_translating(author, current_string.project, language)
+
+    return {
+        'trstring': current_string,
+        'trstringtext': translated_text
+    }
 
 
 def get_subdirectories(trstrings, current_directory):
@@ -163,6 +252,7 @@ def filter_by_search(trstrings, current_language, search_string):
 
 
 # submitted_text has to be a JSON string like [{"name":"text[0]","value":"content here"},{"name":"text[1]","value":"content2 here"}]
+# TODO: can also be just a JSON array of string or a simple string
 # There should be several values for translations of pluralized strings, and one otherwise
 def parse_submitted_text(submitted_text, is_pluralized, nplurals):
     try:
@@ -289,7 +379,7 @@ def send_email_to_admins_about_translation_request(request, translator_request):
 
 
 def update_translators_when_translating(user, project, language):
-    if language != project.source_language and user != None:
+    if user is not None and language != project.source_language:
         try:
             lv = LanguageVersion.objects.get(project=project, language=language)
         except LanguageVersion.DoesNotExist:  # Shouldn't happen
@@ -301,6 +391,6 @@ def update_translators_when_translating(user, project, language):
 
 
 def update_project_admins(user, project):
-    if user.is_superuser and user not in project.admins.all():
+    if user is not None and user.is_superuser and user not in project.admins.all():
         project.admins.add(user)
         project.save()

@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
+from django.views.decorators.http import require_POST
+
 from .models import *
 from .translation_functions import *
 from .forms import *
@@ -90,6 +92,7 @@ def decline_translator_request(request, request_id):
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
 
+@require_POST
 @login_required
 @user_is_project_admin
 def add_string(request, project_id):
@@ -99,26 +102,27 @@ def add_string(request, project_id):
 
     name = request.POST.get('name').strip()
     pluralized = bool(request.POST.get('pluralized') == 'true')
-    text_data = parse_submitted_text(request.POST.get('text'), pluralized, project.source_language.nplurals())
+    text = request.POST.get('text').strip()
     path = request.POST.get('path').strip('/ ')
     querystring = '?dir=' + path if path != '' else ''
 
-    if name == '' or text_data['characters'] == 0:
+    if name == '' or text == '':
         messages.error(request, 'Bonvolu plenigi ĉiujn kampojn.')
     elif TrString.objects.filter(project=project, path=path, name=name).count() > 0:
         messages.error(request, f'Ĉi tiu nomo ({path}#{name}) jam estas uzata.')
     else:
         context = request.POST.get('context').strip()
-        trstring = TrString(project=project, path=path, name=name, context=context,
-                            words=text_data['words'],
-                            characters=text_data['characters'])
-        trstring.save()
-        trstringtext = TrStringText(trstring=trstring,
-                                    language=project.source_language,
-                                    text=text_data['text'],
-                                    pluralized=pluralized,
-                                    translated_by=request.user)
-        trstringtext.save()
+
+        add_or_update_trstringtext(project,
+                                   path,
+                                   name,
+                                   project.source_language,
+                                   text,
+                                   request.user,
+                                   pluralized,
+                                   True,
+                                   context,
+                                   False)
         update_project_admins(request.user, project)
 
     return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)
