@@ -252,7 +252,7 @@ def filter_by_search(trstrings, current_language, search_string):
 
 
 # submitted_text has to be a JSON string like [{"name":"text[0]","value":"content here"},{"name":"text[1]","value":"content2 here"}]
-# TODO: can also be just a JSON array of string or a simple string
+# Can also be just a JSON array of strings or a simple string
 # There should be several values for translations of pluralized strings, and one otherwise
 def parse_submitted_text(submitted_text, is_pluralized, nplurals):
     try:
@@ -261,8 +261,13 @@ def parse_submitted_text(submitted_text, is_pluralized, nplurals):
         json_data = [{'name': 'text[0]', 'value': submitted_text},]
 
     submitted_strings = {}
+    i = 0
     for s in json_data:
-        submitted_strings[s['name']] = s['value']
+        if isinstance(s, dict):
+            submitted_strings[s['name']] = s['value']
+        else:
+            submitted_strings[f'text[{i}]'] = s
+        i = i + 1
 
     if is_pluralized:
         words = 0

@@ -4,7 +4,7 @@
 		{% for i in language.nplurals|range %}
 			{% with plural_example=language.plural_examples_list|list_index:i %}
 			<div class="plural-number-explanation">Se la nombro estas {{ plural_example }}:</div>
-			<div>{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example|safe|highlight_placeholders|linebreaksbr }}</div>
+			<div>{{ str.translated_text.pluralized_text_dictionary|dict_key:plural_example|highlight_placeholders|safe|linebreaksbr }}</div>
 			{% endwith %}
 		{% endfor %}
 	{% else %}

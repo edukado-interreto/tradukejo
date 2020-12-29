@@ -6,11 +6,8 @@
 {% block content %}
 <p>La CSV-dosiero devas havi kolumnojn kun la jenaj titoloj:</p>
 <ul>
-	<li><code>path</code>,</li>
-	<li><code>name</code>,</li>
-	<li><code>context</code>,</li>
-	<li><code>{{ project.source_language.code }}</code>,</li>
-	<li>eventuale kodoj de aliaj lingvoj.</li>
+	<li>devigaj kampoj: <code>path</code>, <code>name</code>, <code>{{ project.source_language.code }}</code>,</li>
+	<li>nedevigaj kampoj: <code>context</code>, <code>pluralized</code>, kodoj de aliaj lingvoj.</li>
 </ul>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
