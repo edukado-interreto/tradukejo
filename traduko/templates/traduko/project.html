@@ -79,7 +79,7 @@
 		<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>
 	{% endfor %}
 </select>
-Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu kontakti nin. (TODO)
+Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu <a href="{% url 'contact' %}">kontakti nin</a>.
 {% endif %}
 
 {% if not is_project_admin and not project.locked %}
