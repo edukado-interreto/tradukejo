@@ -1,9 +1,15 @@
 {% load static %}
 {% load traduko_tags %}
 {% if text.language != language_to %}
-{% with str=text.pluralized_text_dictionary.values|list_index:0 %}
-<a href="https://translate.google.com/?sl={{ text.language.code }}&amp;tl={{ language_to.code }}&amp;text={{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/google.png' %}" alt="Traduki per Google" title="Traduki per Google"></a>
-<a href="https://translate.yandex.ru/?lang={{ text.language.code }}-{{ language_to.code }}&amp;text={{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/yandex.png' %}" alt="Traduki per Yandex" title="Traduki per Yandex"></a>
-<a href="https://www.deepl.com/translator#{{ text.language.code }}/{{ language_to.code }}/{{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/deepl.svg' %}" alt="Traduki per DeepL" title="Traduki per DeepL"></a>
-{% endwith %}
+	{% with str=text.pluralized_text_dictionary.values|list_index:0 %}
+	{% if text.language.google and language_to.google %}
+		<a href="https://translate.google.com/?sl={{ text.language.code }}&amp;tl={{ language_to.code }}&amp;text={{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/google.png' %}" alt="Traduki per Google" title="Traduki per Google"></a>
+	{% endif %}
+	{% if text.language.yandex and language_to.yandex %}
+		<a href="https://translate.yandex.ru/?lang={{ text.language.code }}-{{ language_to.code }}&amp;text={{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/yandex.png' %}" alt="Traduki per Yandex" title="Traduki per Yandex"></a>
+	{% endif %}
+	{% if text.language.deepl and language_to.deepl %}
+		<a href="https://www.deepl.com/translator#{{ text.language.code }}/{{ language_to.code }}/{{ str|urlencode }}" target="_blank"><img src="{% static 'traduko/img/icons/deepl.svg' %}" alt="Traduki per DeepL" title="Traduki per DeepL"></a>
+	{% endif %}
+	{% endwith %}
 {% endif %}

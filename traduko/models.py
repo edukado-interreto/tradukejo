@@ -51,6 +51,12 @@ class Language(models.Model):
     plural_examples = models.CharField(max_length=50,
                                        blank=True,
                                        help_text="Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5. Must have the same amount of numbers as nplural in the “Plural forms” field.")
+    google = models.BooleanField(default=False,
+                                 help_text="Is the language available in Google Translate?")
+    yandex = models.BooleanField(default=False,
+                                 help_text="Is the language available in Yandex.Translate?")
+    deepl = models.BooleanField(default=False,
+                                help_text="Is the language available in DeepL?")
 
     class Meta:
         ordering = ['code']
