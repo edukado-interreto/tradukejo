@@ -125,6 +125,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+MAX_LOADED_STRINGS = 3
+
 from tradukejo.local_settings import *
 # Example of content of local_settings.py:
 # SECRET_KEY = '...'

@@ -134,8 +134,8 @@ def get_string_translation(request, trstring_id, language):
     str = TrString()
     str.original_text = translated_text
 
-    original_string = render_to_string("traduko/translation/original-string.html", {'str': str})
-    translator_links = render_to_string("traduko/translation/online_translators_links.html", {'text': translated_text, 'language_to': language_to})
+    original_string = render_to_string("traduko/translation/original-string.html", {'str': str}, request)
+    translator_links = render_to_string("traduko/translation/online_translators_links.html", {'text': translated_text, 'language_to': language_to}, request)
 
     response_dict = {
         'text': original_string,
@@ -214,7 +214,7 @@ def request_translator_permission(request, project_id):
         message = 'La peto estis sendita.'
         send_email_to_admins_about_translation_request(request, translator_request)
 
-    button = render_to_string("traduko/project/translation_request_sent_button.html")
+    button = render_to_string("traduko/project/translation_request_sent_button.html", request)
     response_dict = {
         'message': message,
         'button': button
@@ -242,3 +242,36 @@ def get_history(request, trstringtext_id):
         'versions': history
     }
     return render(request, "traduko/translation/stringtext-history.html", context)
+
+
+@require_POST
+@csrf_exempt
+@login_required
+@user_allowed_to_translate
+def load_more(request, project_id, language):
+    current_project = get_object_or_404(Project, pk=project_id)
+    current_language = get_object_or_404(Language, pk=language)
+    editmode = current_language == current_project.source_language
+
+    start = int(request.POST['start']) if 'start' in request.POST.keys() else 0
+    current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
+    state_filter = request.GET['state'] if 'state' in request.GET.keys() else STATE_FILTER_ALL
+    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_OLDEST
+    search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
+
+    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
+    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort, start)
+
+    html = ''
+    for s in strings:
+        context = {
+            'editmode': editmode,
+            'str': s,
+            'language': current_language,
+        }
+        html = html + render_to_string("traduko/translation/translation-row.html", context, request)
+    response_dict = {
+        'html': html,
+        'can_load_more': 1 if can_load_more else 0,
+    }
+    return HttpResponse(json.dumps(response_dict, ensure_ascii=False))

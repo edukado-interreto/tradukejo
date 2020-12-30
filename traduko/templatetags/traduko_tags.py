@@ -55,7 +55,7 @@ def highlight_placeholders(str):
         str
     )
     str = re.sub(
-        r'(%[a-z0-9.-]*[a-z])',
+        r'(%[a-z0-9.-]*[a-zA-Z])',
         r'<code>\1</code>',
         str
     )

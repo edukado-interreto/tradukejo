@@ -143,6 +143,27 @@ function setup_translation_events() {
             historyElement.find('del').show();
         }
     });
+
+    $('#load-more').off('click').click(function(e){
+        $(this).prop('disabled', true);
+        const that = $(this);
+        $.ajax({
+            url: $(this).attr('data-url'),
+            method: "POST",
+            data: {
+                'start': $(that.attr('data-classes')).length
+            },
+            dataType: "json",
+            success: function(data) {
+                $('.translation-row:last').after(data['html']);
+                if (data['can_load_more'] != 1) {
+                    that.parent().hide();
+                }
+                setup_translation_events();
+                that.prop('disabled', false);
+            }
+        });
+    });
 }
 setup_translation_events();
 

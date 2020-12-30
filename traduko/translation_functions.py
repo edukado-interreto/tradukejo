@@ -145,6 +145,42 @@ def get_subdirectories(trstrings, current_directory):
     return OrderedDict(sorted(subdirectories.items()))
 
 
+def get_all_strings(project, language, state_filter, search_string=''):
+    all_strings = TrString.objects.filter(project=project)
+    all_strings = filter_by_state(all_strings, language, state_filter)
+    all_strings = filter_by_search(all_strings, language, search_string)
+    return all_strings
+
+
+def get_strings_to_translate(all_strings, language, path, sort, start=0):
+    strings = all_strings.filter(path=path)
+    total_strings = strings.count()
+    if sort == SORT_STRINGS_BY_NEWEST:
+        strings = strings.order_by('-last_change')
+    elif sort == SORT_STRINGS_BY_NAME:
+        strings = strings.order_by('name')
+    else:
+        strings = strings.order_by('last_change')
+
+    strings = strings[start:start+settings.MAX_LOADED_STRINGS]
+
+    for trstr in strings:
+        trstr.original_text = None
+        trstr.translated_text = None
+        for trans in trstr.trstringtext_set.all():
+            if trans.language == trstr.project.source_language:
+                trstr.original_text = trans
+            if trans.language == language:
+                trstr.translated_text = trans
+
+        if trstr.translated_text is None:
+            trstr.state = TRANSLATION_STATE_UNTRANSLATED
+        else:
+            trstr.state = trstr.translated_text.state
+
+    return [strings, strings.count() + start < total_strings]
+
+
 def update_project_count(project):
     trstrings = TrString.objects.filter(project=project).aggregate(Sum('words'), Sum('characters'))
     project.strings = project.trstring_set.count()

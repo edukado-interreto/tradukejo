@@ -35,7 +35,8 @@ def projectpage(request, project_id):
         if current_project.last_translator_notification is None:
             show_translator_notifications_button = True
         else:
-            new_texts = TrString.objects.filter(project=current_project, last_change__gte=current_project.last_translator_notification).count()
+            new_texts = TrString.objects.filter(project=current_project,
+                                                last_change__gte=current_project.last_translator_notification).count()
             show_translator_notifications_button = new_texts > 0
     else:
         show_translator_notifications_button = False
@@ -52,7 +53,8 @@ def projectpage(request, project_id):
     }
 
     if user_is_project_admin:
-        context['translator_request_count'] = TranslatorRequest.objects.filter(language_version__project=current_project).count()
+        context['translator_request_count'] = TranslatorRequest.objects.filter(
+            language_version__project=current_project).count()
 
     return render(request, "traduko/project.html", context)
 
@@ -82,19 +84,8 @@ def translate(request, project_id, language):
     sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_OLDEST
     search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
 
-    all_strings = TrString.objects.filter(project=current_project)
-    all_strings = filter_by_state(all_strings, language, state_filter)
-    all_strings = filter_by_search(all_strings, language, search_string)
-    strings = all_strings.filter(path=current_directory)
-    if sort == SORT_STRINGS_BY_NEWEST:
-        strings = strings.order_by('-last_change')
-    elif sort == SORT_STRINGS_BY_NAME:
-        strings = strings.order_by('name')
-    else:
-        strings = strings.order_by('last_change')
-    for s in strings:
-        print(s.last_change)
-
+    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
+    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort)
     subdirectories = get_subdirectories(all_strings, current_directory)
 
     current_path = []
@@ -105,20 +96,6 @@ def translate(request, project_id, language):
                 'name': directories[i],
                 'path': '/'.join(directories[0:i + 1])
             })
-
-    for trstr in strings:
-        trstr.original_text = None
-        trstr.translated_text = None
-        for trans in trstr.trstringtext_set.all():
-            if trans.language == current_project.source_language:
-                trstr.original_text = trans
-            if trans.language == current_language:
-                trstr.translated_text = trans
-
-        if trstr.translated_text is None:
-            trstr.state = TRANSLATION_STATE_UNTRANSLATED
-        else:
-            trstr.state = trstr.translated_text.state
 
     context = {
         'editmode': editmode,
@@ -132,6 +109,7 @@ def translate(request, project_id, language):
         'sort': sort,
         'q': search_string,
         'available_languages': available_languages,
+        'can_load_more': can_load_more,
     }
     return render(request, "traduko/translate.html", context)
 

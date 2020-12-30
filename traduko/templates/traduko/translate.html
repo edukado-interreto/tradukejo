@@ -121,6 +121,11 @@
 		<div class="alert alert-info">Neniu ĉeno estis trovita.</div>
 	{% endif %}
 {% endfor %}
+{% if can_load_more %}
+<div class="text-center">
+	<button data-url="{% url 'load_more' project.pk language.code %}{% querystring 'dir' current_directory 'state' state_filter 'sort' sort 'q' q %}" class="btn btn-lg btn-primary" id="load-more" tabindex="100000" data-classes=".translation-row{% if state_filter == STATE_FILTER_UNTRANSLATED %}.untranslated{% elif state_filter == STATE_FILTER_OUTDATED %}.outdated{% elif state_filter == STATE_FILTER_OUTDATED_UNTRANSLATED %}.outdated, .translation-row.untranslated{% endif %}">Ŝargi pli</button>
+</div>
+{% endif %}
 
 {% if editmode %}
 {% include 'traduko/translation/new-string-form.html' %}

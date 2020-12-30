@@ -14,6 +14,7 @@ urlpatterns = [
     path("ajax/deletestring/<int:trstring_id>/", ajax.deletestring, name="deletestring"),
     path("ajax/get-history/<int:trstringtext_id>/", ajax.get_history, name="get_history"),
     path("ajax/request-translator-permission/<int:project_id>/", ajax.request_translator_permission, name="request_translator_permission"),
+    path("ajax/load-more/<int:project_id>/<str:language>/", ajax.load_more, name="load_more"),
     path("project/<int:project_id>/add-language-version/<str:language>/", views.add_language_version, name="add_language_version"),
 
     path("project/<int:project_id>/edit/", admin_views.edit_project, name="edit_project"),
