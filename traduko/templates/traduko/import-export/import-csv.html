@@ -4,6 +4,14 @@
 {% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – importi CSV{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'import_export' project.pk %}">Importi/eksporti</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Importi CSV</li>
+	</ol>
+</nav>
 <p>La CSV-dosiero devas havi kolumnojn kun la jenaj titoloj:</p>
 <ul>
 	<li>devigaj kampoj: <code>path</code>, <code>name</code>, <code>{{ project.source_language.code }}</code>,</li>

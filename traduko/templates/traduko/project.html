@@ -12,6 +12,13 @@
 {% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
+	</ol>
+</nav>
+
 {% if project.image %}
 <div class="project-logo text-center float-sm-right ml-sm-3">
 	<img src="{{ project.image.url }}" alt="" class="img-fluid d-block mb-2">

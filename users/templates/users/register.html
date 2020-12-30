@@ -5,6 +5,12 @@
 {% block pagetitle %}Krei konton{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Krei konton</li>
+	</ol>
+</nav>
 <form method="post" class="small-form">
     {% csrf_token %}
     {{ form|crispy }}

@@ -3,6 +3,12 @@
 {% block pagetitle %}Kontakto{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Kontakto</li>
+	</ol>
+</nav>
 <p>La tradukejo estas projekto de E@I (<a href="https://ikso.net/" target="_blank">Edukado@Interreto</a>).</p>
 <p>Se vi havas demandon aŭ komenton, ne hezitu skribi al <a href="mailto:{{ DEFAULT_FROM_EMAIL }}">{{ DEFAULT_FROM_EMAIL }}</a>.</p>
 {% endblock %}

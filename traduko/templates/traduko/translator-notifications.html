@@ -3,6 +3,14 @@
 {% block pagetitle %}Sendi sciigojn pri novaj tekstoj en <a href="{% url 'project' project.pk %}">{{ project.name }}</a>{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Sciigoj pri novaj tekstoj</li>
+	</ol>
+</nav>
+
 <p>Al la tradukantoj de kiuj lingvoj vi volas sendi informon pri tio, ke novaj tradukendaj tekstoj estas disponeblaj?</p>
 {% if project.last_translator_notification %}
 <p>Lasta sciigo: {{ project.last_translator_notification }}.</p>

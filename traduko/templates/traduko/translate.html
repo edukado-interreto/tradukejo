@@ -10,6 +10,13 @@
 {% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Traduki</li>
+	</ol>
+</nav>
 <input type="hidden" id="csrf" value="{{ csrf_token }}">
 <input type="hidden" id="current_language" value="{{ language.code }}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,7 +67,7 @@
 </nav>
 
 <nav aria-label="breadcrumb" class="my-4">
-	<ol class="breadcrumb p-1">
+	<ol class="breadcrumb translation-path p-1">
 		<li class="breadcrumb-item">
 			<span class="dropdown">
 				<a class="dropdown-toggle" href="#" type="button" id="dropdownLanguageVersionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ language.name }}</a>
