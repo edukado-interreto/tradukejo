@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
@@ -231,3 +232,22 @@ def import_csv(request, project_id):
         'form': form,
     }
     return render(request, "traduko/import-export/import-csv.html", context)
+
+
+@login_required
+@user_is_project_admin
+def export_csv(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    # response = HttpResponse(content_type='text/html')
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="project.csv"'
+
+    data = export_to_csv(project)
+
+    writer = csv.DictWriter(response, fieldnames=data['fieldnames'])
+    writer.writeheader()
+    for row in data['csv_data']:
+        writer.writerow(row)
+
+    return response

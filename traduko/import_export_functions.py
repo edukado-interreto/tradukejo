@@ -132,3 +132,41 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user):
     post_save.connect(signals.update_project_count_from_trstring, sender=TrString)
 
     return imported_strings
+
+
+def export_to_csv(project):
+    fieldnames = ['path', 'name', 'pluralized', 'context', project.source_language.code]
+    csv_data = []
+
+    trstrings = project.trstring_set.all().order_by('path', 'name')
+    languageversions = project.languageversion_set.all().order_by('language__code')
+    trstringtexts = TrStringText.objects.filter(trstring__project=project)
+
+    translation_data = {}
+    for translation in trstringtexts:
+        if translation.trstring.pk not in translation_data.keys():
+            translation_data[translation.trstring.pk] = {}
+        translation_data[translation.trstring.pk][translation.language.code] = translation
+
+    for lv in languageversions:
+        fieldnames.append(lv.language.code)
+
+    for s in trstrings:
+        if s.pk not in translation_data.keys() or project.source_language.code not in translation_data[s.pk].keys():
+            continue
+        string_data = {
+            'path': s.path,
+            'name': s.name,
+            'context': s.context,
+            'pluralized': '1' if translation_data[s.pk][project.source_language.code].pluralized else '0',
+            project.source_language.code: translation_data[s.pk][project.source_language.code].text,
+        }
+        for lv in languageversions:
+            if lv.language.code in translation_data[s.pk].keys():
+                string_data[lv.language.code] = translation_data[s.pk][lv.language.code].text
+        csv_data.append(string_data)
+
+    return {
+        'fieldnames': fieldnames,
+        'csv_data': csv_data,
+    }

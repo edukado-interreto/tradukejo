@@ -21,8 +21,10 @@
 	</div>
 	<div class="col-12 col-sm-6">
 		<h2>Eksporti</h2>
-		<li>Eksporti kiel CSV</li>
-		<li>Eksporti kiel PO/MO</li>
+		<ul>
+			<li><a href="{% url 'export_csv' project.pk %}">Eksporti kiel CSV</a></li>
+			<li>Eksporti kiel PO/MO</li>
+		</ul>
 	</div>
 </div>
 {% endblock %}
