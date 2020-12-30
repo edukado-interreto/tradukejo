@@ -129,13 +129,13 @@ class LanguageVersion(models.Model):
         return self.project.characters - self.translated_characters - self.outdated_characters
     
     def translated_percent(self):
-        return self.translated_words / self.project.words * 100
+        return 0 if self.project.words == 0 else self.translated_words / self.project.words * 100
     
     def outdated_percent(self):
-        return self.outdated_words / self.project.words * 100
+        return 0 if self.project.words == 0 else self.outdated_words / self.project.words * 100
 
     def untranslated_percent(self):
-        return self.untranslated_words() / self.project.words * 100
+        return 0 if self.project.words == 0 else self.untranslated_words() / self.project.words * 100
 
 
 class TranslatorRequest(models.Model):

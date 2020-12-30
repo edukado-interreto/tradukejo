@@ -56,6 +56,8 @@ def quick_import(project, data, languages, user):
                 translated_text = parse_submitted_text(row[language.code].strip(),
                                                        pluralized,
                                                        language.nplurals())
+                if translated_text['characters'] == 0:
+                    continue
                 trstringtext = TrStringText(trstring=trstring,
                                             language=language,
                                             text=translated_text['text'],

@@ -148,8 +148,8 @@ def get_subdirectories(trstrings, current_directory):
 def update_project_count(project):
     trstrings = TrString.objects.filter(project=project).aggregate(Sum('words'), Sum('characters'))
     project.strings = project.trstring_set.count()
-    project.words = trstrings['words__sum']
-    project.characters = trstrings['characters__sum']
+    project.words = 0 if trstrings['words__sum'] is None else trstrings['words__sum']
+    project.characters = 0 if trstrings['characters__sum'] is None else trstrings['characters__sum']
     project.save()
 
 
