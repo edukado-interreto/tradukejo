@@ -1,5 +1,5 @@
 import csv, io
-from django.db.models import Case, When
+from django.db.models import Case, When, Q
 from django.db.models.signals import post_save
 from django.utils import timezone
 from .models import *
@@ -174,8 +174,16 @@ def export_to_csv(project):
     }
 
 
-def export_to_json(project):  # TODO: list of languages, path
+def export_to_json(project, path="", languages=[]):
+    """
+    :param project:
+    :param path:
+    :param languages: list of language codes or empty list for all languages.
+    :return: list of dictionaries
+    """
     trstrings = project.trstring_set.all().order_by('path', 'name')
+    if path != "":
+        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
     data = []
     for s in trstrings:
         stringdata = {
@@ -185,7 +193,11 @@ def export_to_json(project):  # TODO: list of languages, path
         }
         if s.context != "":
             stringdata['context'] = s.context
-        for t in s.trstringtext_set.all():
+        if len(languages) > 0:
+            trstringtexts = s.trstringtext_set.filter(language__code__in=languages)
+        else:
+            trstringtexts = s.trstringtext_set.all()
+        for t in trstringtexts:
             stringdata['translations'][t.language.code] = {
                 'text': t.text,
                 'state': t.state,
@@ -194,6 +206,6 @@ def export_to_json(project):  # TODO: list of languages, path
                 stringdata['pluralized'] = True
             if t.translated_by is not None:
                 stringdata['translations'][t.language.code]['translated_by'] = t.translated_by.username
-        if project.source_language.code in stringdata['translations'].keys():
+        if len(stringdata['translations']) > 0:
             data.append(stringdata)
     return data

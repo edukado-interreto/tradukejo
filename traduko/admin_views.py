@@ -258,7 +258,25 @@ def export_csv(request, project_id):
 @user_is_project_admin
 def export_json(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    data = export_to_json(project)
-    response = JsonResponse(data, safe=False)
-    response['Content-Disposition'] = 'attachment; filename="project.json"'
-    return response
+    languages = [
+        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
+    ]
+    languageversions = project.languageversion_set.all().order_by('language__code')
+    for lv in languageversions:
+        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+
+    if request.method == 'POST':
+        form = JSONExportForm(data=request.POST, language_choices=languages)
+        if form.is_valid():
+            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
+            response = JsonResponse(data, safe=False)
+            response['Content-Disposition'] = 'attachment; filename="project.json"'
+            return response
+    else:
+        form = JSONExportForm(language_choices=languages)
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/export-json.html", context)
+
