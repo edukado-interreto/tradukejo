@@ -14,14 +14,16 @@
 	<div class="col-12 col-sm-6">
 		<h2>Importi</h2>
 		<ul>
+			<li>Importi JSON</li>
 			<li><a href="{% url 'import_csv' project.pk %}">Importi CSV</a></li>
-			<li>Importi PO</li>
+			<li>Importi PO/POT</li>
 			<li>Importi el alia projekto</li>
 		</ul>
 	</div>
 	<div class="col-12 col-sm-6">
 		<h2>Eksporti</h2>
 		<ul>
+			<li><a href="{% url 'export_json' project.pk %}">Eksporti kiel JSON</a></li>
 			<li><a href="{% url 'export_csv' project.pk %}">Eksporti kiel CSV</a></li>
 			<li>Eksporti kiel PO/MO</li>
 		</ul>

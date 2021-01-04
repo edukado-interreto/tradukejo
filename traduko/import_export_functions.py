@@ -172,3 +172,28 @@ def export_to_csv(project):
         'fieldnames': fieldnames,
         'csv_data': csv_data,
     }
+
+
+def export_to_json(project):  # TODO: list of languages, path
+    trstrings = project.trstring_set.all().order_by('path', 'name')
+    data = []
+    for s in trstrings:
+        stringdata = {
+            'path': s.path,
+            'name': s.name,
+            'translations': {}
+        }
+        if s.context != "":
+            stringdata['context'] = s.context
+        for t in s.trstringtext_set.all():
+            stringdata['translations'][t.language.code] = {
+                'text': t.text,
+                'state': t.state,
+            }
+            if t.pluralized:
+                stringdata['pluralized'] = True
+            if t.translated_by is not None:
+                stringdata['translations'][t.language.code]['translated_by'] = t.translated_by.username
+        if project.source_language.code in stringdata['translations'].keys():
+            data.append(stringdata)
+    return data

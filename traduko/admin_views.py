@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
@@ -251,4 +251,14 @@ def export_csv(request, project_id):
     for row in data['csv_data']:
         writer.writerow(row)
 
+    return response
+
+
+@login_required
+@user_is_project_admin
+def export_json(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    data = export_to_json(project)
+    response = JsonResponse(data, safe=False)
+    response['Content-Disposition'] = 'attachment; filename="project.json"'
     return response
