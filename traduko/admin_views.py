@@ -123,7 +123,8 @@ def add_string(request, project_id):
                                    pluralized,
                                    True,
                                    context,
-                                   False)
+                                   False,
+                                   True)
         update_project_admins(request.user, project)
 
     return redirect(reverse('translate', args=[project.pk, project.source_language.code]) + querystring)

@@ -1,6 +1,6 @@
 import difflib
 from django.core.mail import send_mail
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, Count, Max
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -40,30 +40,40 @@ def mark_translations_as_outdated(trstring):
     trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(state=TRANSLATION_STATE_OUTDATED)
 
 
-def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False):
+def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False, new_string=False):
     """
     Main function used to save strings. Translation right checks should be done before calling this function.
     text: text to be parsed with parse_submitted_text
     force_update: if existing texts should be replaced with new text
     minor: whether changes made to texts in source language are minor (and translations shouldn't be marked as outdated)
     context: context for the TrString, if we are editing it
+    new_string: if we are adding a string (detected automatically otherwise)
     """
 
     editing_original = language == project.source_language
+    new_string = new_string and editing_original
 
-    try:
-        current_string = TrString.objects.get(project=project, path=path, name=name)
-    except TrString.DoesNotExist:
-        if editing_original:
-            current_string = TrString(project=project, path=path, name=name)
-            current_string.save()
+    # Checking if trstring and trstringtext exist (new_string parameter avoids unnecessary queries)
+    if not new_string:
+        try:
+            current_string = TrString.objects.get(project=project, path=path, name=name)
+        except TrString.DoesNotExist:
+            if editing_original:
+                is_add = True
 
-    try:
-        translated_text = TrStringText.objects.get(language=language, trstring=current_string)
-        new_translation = False
-    except TrStringText.DoesNotExist:
+    if new_string:
+        current_string = TrString(project=project, path=path, name=name)
+        current_string.save()
+
+    new_translation = new_string
+    if not new_translation:
+        try:
+            translated_text = TrStringText.objects.get(language=language, trstring=current_string)
+        except TrStringText.DoesNotExist:
+            new_translation = True
+
+    if new_translation:
         translated_text = TrStringText(language=language, trstring=current_string)
-        new_translation = True
 
     if not new_translation and not force_update:
         return {
@@ -116,6 +126,22 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
             current_string.words = parsed_text_data['words']
             current_string.characters = parsed_text_data['characters']
             current_string.save()
+
+        # Add activity to last activities
+        activity = StringActivity(trstringtext=translated_text,
+                                  language=language,
+                                  user=author)
+        if new_string:
+            activity.action = ACTION_TYPE_ADD
+            activity.words = current_string.words
+            activity.characters = current_string.characters
+        elif new_translation:
+            activity.action = ACTION_TYPE_TRANSLATE
+            activity.words = current_string.words
+            activity.characters = current_string.characters
+        else:
+            activity.action = ACTION_TYPE_EDIT
+        activity.save()
 
     update_translators_when_translating(author, current_string.project, language)
 
@@ -435,3 +461,15 @@ def update_project_admins(user, project):
     if user is not None and user.is_superuser and user not in project.admins.all():
         project.admins.add(user)
         project.save()
+
+
+def get_last_activities(project, limit=50):
+    activities = StringActivity.objects.filter(trstringtext__trstring__project=project).\
+        values('date', 'language__code', 'language__name', 'user__pk', 'user__username', 'action').\
+        annotate(last=Max('datetime') ,strings=Count('trstringtext'), words_sum=Sum('words')).order_by('-last')[0:limit]
+    last_activities = {}
+    for activity in activities:
+        if activity['date'] not in last_activities.keys():
+            last_activities[activity['date']] = []
+        last_activities[activity['date']].append(activity)
+    return last_activities

@@ -158,6 +158,14 @@ def change_translation_state(request, trstringtext_id, state):
     current_string.original_text = TrStringText.objects.get(language=current_string.project.source_language,
                                                             trstring=current_string)
 
+    # Add activity to last activities
+    activity = StringActivity(trstringtext=trstringtext,
+                              language=trstringtext.language,
+                              user=request.user,
+                              action=ACTION_TYPE_EDIT
+                              )
+    activity.save()
+
     update_translators_when_translating(request.user, current_string.project, trstringtext.language)
 
     context = {

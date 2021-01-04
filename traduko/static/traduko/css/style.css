@@ -126,6 +126,22 @@ main h2 {
     line-height: 1em;
 }
 
+.last-activities h4 {
+    color: #254E58;
+    font-size: 1.1rem;
+}
+
+.last-activities ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: .9rem;
+    margin-bottom: 0;
+}
+
+.last-activities li + li {
+    margin-top: .3rem;
+}
+
 .subdirectory-list {
     list-style-type: none;
     padding: 0;

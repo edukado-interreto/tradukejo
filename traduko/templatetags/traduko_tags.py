@@ -2,6 +2,10 @@ from django import template
 from django.utils import html
 import re
 
+from django.utils.html import format_html
+
+from tradukejo import settings
+
 register = template.Library()
 
 
@@ -61,3 +65,11 @@ def highlight_placeholders(str):
     )
 
     return str
+
+
+@register.simple_tag
+def user_link(user_id, username):
+    if not user_id or not username:
+        return settings.WEBSITE_NAME
+    else:
+        return format_html('<a href="#">{}</a>', username)

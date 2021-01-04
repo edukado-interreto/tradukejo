@@ -60,3 +60,6 @@ class TrStringTextAdmin(admin.ModelAdmin):
     list_filter = ('trstringtext__trstring__project',)
 
 
+@admin.register(StringActivity)
+class StringActivityAdmin(admin.ModelAdmin):
+    list_display = ('trstringtext', 'user', 'language', 'action', 'words', 'characters', 'date', 'datetime')

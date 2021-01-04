@@ -1,5 +1,6 @@
 {% extends 'wide-page.html' %}
 {% load static %}
+{% load traduko_tags %}
 {% block title %}{{ project.name }}{% endblock %}
 {% block pagetitle %}
 	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
@@ -64,30 +65,61 @@
 </div>
 {% endif %}
 
-{% if my_languages_with_stats %}
-<h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
-<div class="card my-4">
-	{% include 'traduko/project/language-version-list.html' with language_versions=my_languages_with_stats can_translate=True %}
-</div>
-{% endif %}
+<div class="row">
+	<div class="col-12 col-md-8 col-lg-9 col-xl-10">
+		{% if my_languages_with_stats %}
+		<h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
+		<div class="card my-4">
+			{% include 'traduko/project/language-version-list.html' with language_versions=my_languages_with_stats can_translate=True %}
+		</div>
+		{% endif %}
 
-{% if available_languages_with_stats %}
-<h2>Aliaj lingvoj</h2>
-<div class="card my-4">
-	{% include 'traduko/project/language-version-list.html' with language_versions=available_languages_with_stats can_translate=False %}
-</div>
-{% endif %}
+		{% if available_languages_with_stats %}
+		<h2>Aliaj lingvoj</h2>
+		<div class="card my-4">
+			{% include 'traduko/project/language-version-list.html' with language_versions=available_languages_with_stats can_translate=False %}
+		</div>
+		{% endif %}
 
-{% if addible_languages and not project.locked or addible_languages and is_project_admin %}
-<h2>Traduki al alia lingvo</h2>
-<select name="addLanguage" id="addLanguage" class="form-control">
-	<option>Elektu lingvon…</option>
-	{% for l in addible_languages %}
-		<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>
-	{% endfor %}
-</select>
-Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu <a href="{% url 'contact' %}">kontakti nin</a>.
-{% endif %}
+		{% if addible_languages and not project.locked or addible_languages and is_project_admin %}
+		<h2>Traduki al alia lingvo</h2>
+		<select name="addLanguage" id="addLanguage" class="form-control">
+			<option>Elektu lingvon…</option>
+			{% for l in addible_languages %}
+				<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>
+			{% endfor %}
+		</select>
+		Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu <a href="{% url 'contact' %}">kontakti nin</a>.
+		{% endif %}
+	</div>
+	<div class="col">
+		<h2>Lastaj agadoj</h2>
+		<div class="card mt-4">
+			<div class="card-body last-activities">
+				{% for date, activities in last_activities.items %}
+				<h4>{{ date }}</h4>
+				<ul>
+					{% for activity in activities %}
+					<li>
+						<b lang="{{ activity.language__code }}">{{ activity.language__name }}</b><br>
+						{% if activity.action == ACTION_TYPE_TRANSLATE %}
+							{% user_link activity.user__pk activity.user__username %} tradukis {{ activity.words_sum }} vorto(j)n.
+						{% elif activity.action == ACTION_TYPE_EDIT %}
+							{% user_link activity.user__pk activity.user__username %} redaktis {{ activity.strings }} ĉeno(j)n.
+						{% elif activity.action == ACTION_TYPE_ADD %}
+							{% user_link activity.user__pk activity.user__username %} aldonis {{ activity.words_sum }} vorto(j)n.
+						{% elif activity.action == ACTION_TYPE_IMPORT %}
+							{% user_link activity.user__pk activity.user__username %} importis {{ activity.words_sum }} vorto(j)n.
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
 
 {% if not is_project_admin and not project.locked %}
 <div class="modal fade" id="translatorRequestModal" tabindex="-1" aria-labelledby="translatorRequestModalLabel" aria-hidden="true">

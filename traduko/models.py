@@ -12,6 +12,18 @@ TRANSLATION_STATES = [
     (TRANSLATION_STATE_OUTDATED, 'Outdated'),
 ]
 
+ACTION_TYPE_TRANSLATE = 'trans'
+ACTION_TYPE_EDIT = 'edit'
+ACTION_TYPE_ADD = 'add'
+ACTION_TYPE_IMPORT = 'imp'
+
+ACTION_TYPES = [
+    (ACTION_TYPE_TRANSLATE, 'translated'),
+    (ACTION_TYPE_EDIT, 'edited'),
+    (ACTION_TYPE_ADD, 'added'),
+    (ACTION_TYPE_IMPORT, 'imported'),
+]
+
 STATE_FILTER_ALL = ''
 STATE_FILTER_UNTRANSLATED = 'untr'
 STATE_FILTER_OUTDATED = 'outd'
@@ -250,3 +262,20 @@ class TrStringTextHistory(models.Model):
             return textdict
         else:
             return {"1": texts[0]}
+
+
+class StringActivity(models.Model):
+    trstringtext = models.ForeignKey('TrStringText',
+                                     on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             blank=True,
+                             null=True,
+                             default=None)
+    language = models.ForeignKey('Language',
+                                 on_delete=models.PROTECT)
+    action = models.CharField(max_length=5, choices=ACTION_TYPES)
+    words = models.IntegerField(null=True, default=None)
+    characters = models.IntegerField(null=True, default=None)
+    date = models.DateField(auto_now_add=True)
+    datetime = models.DateTimeField(auto_now_add=True)

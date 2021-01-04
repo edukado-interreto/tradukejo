@@ -50,6 +50,7 @@ def projectpage(request, project_id):
         'is_project_admin': project_admin,
         'addible_languages': addible_languages(current_project),
         'show_translator_notifications_button': show_translator_notifications_button,
+        'last_activities': get_last_activities(current_project)
     }
 
     if user_is_project_admin:
