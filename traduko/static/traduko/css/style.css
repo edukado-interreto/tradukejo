@@ -131,6 +131,10 @@ main h2 {
     font-size: 1.1rem;
 }
 
+.last-activities ul + h4 {
+    margin-top: 1.6rem;
+}
+
 .last-activities ul {
     list-style-type: none;
     padding: 0;

@@ -1,7 +1,8 @@
-import json
+import json, re
 from collections import OrderedDict
 from django.db import models
 from django.conf import settings
+from .cpython_gettext import c2py
 
 TRANSLATION_STATE_TRANSLATED = 1
 TRANSLATION_STATE_UNTRANSLATED = 0
@@ -60,9 +61,6 @@ class Language(models.Model):
                                  default=DIRECTION_LTR)
     plural_forms = models.CharField(max_length=200,
                                     help_text="Plurals header in .po files. Must begin with “nplurals=n;” where n is the number of different plural forms. Do not touch if you don’t know what you’re doing.")
-    plural_examples = models.CharField(max_length=50,
-                                       blank=True,
-                                       help_text="Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5. Must have the same amount of numbers as nplural in the “Plural forms” field.")
     google = models.BooleanField(default=False,
                                  help_text="Is the language available in Google Translate?")
     yandex = models.BooleanField(default=False,
@@ -80,11 +78,29 @@ class Language(models.Model):
         return int(self.plural_forms[9])  # Doesn't work if there are 10 or more plural forms, but it should never happen.
 
     def plural_examples_list(self):
-        examples = self.plural_examples.split(',')
-        if len(examples) == self.nplurals():
-            return examples
-        else:
-            return ["1"]
+        p = re.sub(r'^.*plural=([^;]+);?$', r'\1', self.plural_forms)
+        print(p)
+
+        rule = c2py(p)
+
+        examples = []
+
+        for n in range(self.nplurals()):
+            examples.append([])
+
+        for i in range(105):  # Arabic should be the only one needing forms after 100
+            result = rule(i)
+            examples[result].append(str(i))
+
+        text_examples = []
+        for e in examples:
+            if len(e) > 5:
+                text_examples.append(', '.join(e[0:5]) + '…')
+            elif int(e[-1]) > 100:
+                text_examples.append(', '.join(e) + '…')
+            else:
+                text_examples.append(', '.join(e))
+        return text_examples
 
 
 class Project(models.Model):
