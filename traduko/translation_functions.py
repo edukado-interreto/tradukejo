@@ -152,8 +152,11 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
 
 
 def get_subdirectories(trstrings, current_directory):
-    string_subdirectories = trstrings.filter(path__startswith=current_directory)
-    # TODO: improve this (distinct not supported by SQLite)
+    if current_directory != "":
+        string_subdirectories = trstrings.filter(path__startswith=current_directory + "/")
+    else:
+        string_subdirectories = trstrings
+    print(string_subdirectories)
     subdirectories = {}
     for s in string_subdirectories:
         subdirectory = s.path[len(current_directory):].strip('/')
@@ -161,10 +164,10 @@ def get_subdirectories(trstrings, current_directory):
             subdirectory = subdirectory[0:subdirectory.find('/')]
         if subdirectory != '' and subdirectory not in subdirectories.keys():
             path = current_directory + ('/' if current_directory != '' else '') + subdirectory
-            wordcharcount = string_subdirectories.filter(path__startswith=path).aggregate(Sum('words'), Sum('characters'))
+            wordcharcount = string_subdirectories.filter(Q(path=path) | Q(path__startswith=path + "/")).aggregate(Sum('words'), Sum('characters'))
             subdirectories[subdirectory] = {
                 'path': path,
-                'strings': string_subdirectories.filter(path__startswith=path).count(),
+                'strings': string_subdirectories.filter(Q(path=path) | Q(path__startswith=path + "/")).count(),
                 'words': wordcharcount['words__sum'],
                 'characters': wordcharcount['characters__sum'],
             }
