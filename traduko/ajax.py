@@ -222,7 +222,7 @@ def request_translator_permission(request, project_id):
         message = 'La peto estis sendita.'
         send_email_to_admins_about_translation_request(request, translator_request)
 
-    button = render_to_string("traduko/project/translation_request_sent_button.html", request)
+    button = render_to_string("traduko/project/translation_request_sent_button.html")
     response_dict = {
         'message': message,
         'button': button
