@@ -210,7 +210,7 @@ def import_csv(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == 'POST':
-        form = CSVImportForm(request.POST, request.FILES)
+        form = ImportForm(request.POST, request.FILES)
         if form.is_valid():
             csv_file = form.cleaned_data['file']
             if not csv_file.name.endswith('.csv'):
@@ -226,13 +226,44 @@ def import_csv(request, project_id):
             messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
         update_project_admins(request.user, project)
     else:
-        form = CSVImportForm()
+        form = ImportForm()
 
     context = {
         'project': project,
         'form': form,
     }
     return render(request, "traduko/import-export/import-csv.html", context)
+
+
+@login_required
+@user_is_project_admin
+def import_json(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = ImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            json_file = form.cleaned_data['file']
+            if not json_file.name.endswith('.json'):
+                messages.error(request, 'Malĝusta formato de dosiero.')
+            else:
+                try:
+                    import_stats = import_from_json(project, json_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
+                    messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
+                except WrongFormatError:
+                    messages.error(request, 'Malĝusta formato de dosiero.')
+        else:
+            pass
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = ImportForm()
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/import-json.html", context)
 
 
 @login_required

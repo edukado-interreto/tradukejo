@@ -48,7 +48,7 @@ class TrStringTextAdmin(admin.ModelAdmin):
     ordering = ['trstring', 'language']
     search_fields = ['text']
     autocomplete_fields = ['trstring', 'language']
-    list_filter = ('language',)
+    list_filter = ('language','trstring__project')
 
 
 @admin.register(TrStringTextHistory)

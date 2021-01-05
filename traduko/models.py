@@ -248,6 +248,12 @@ class TrStringText(models.Model):
         except ValueError as e:
             return 1
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['trstring', 'language']),
+        ]
+        unique_together = [['trstring', 'language']]
+
 
 class TrStringTextHistory(models.Model):
     trstringtext = models.ForeignKey('TrStringText',
