@@ -17,5 +17,6 @@ def update_project_count_from_trstringtext(sender, instance, **kwargs):
 @receiver(post_save, sender=TrString)
 @receiver(post_delete, sender=TrString)
 def update_project_count_from_trstring(sender, instance, **kwargs):
-    update_project_count(instance.project)
-    update_all_language_versions_count(instance.project)
+    if 'created' not in kwargs.keys() or not kwargs['created']:  # The string is created, saved, changed and saved again, so no need for this to run twice
+        update_project_count(instance.project)
+        update_all_language_versions_count(instance.project)

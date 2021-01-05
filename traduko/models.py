@@ -79,8 +79,6 @@ class Language(models.Model):
 
     def plural_examples_list(self):
         p = re.sub(r'^.*plural=([^;]+);?$', r'\1', self.plural_forms)
-        print(p)
-
         rule = c2py(p)
 
         examples = []
