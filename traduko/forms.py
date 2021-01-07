@@ -29,7 +29,7 @@ class ImportForm(forms.Form):
     user_is_author = forms.BooleanField(label="Marki min kiel defaŭltan aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
 
 
-class JSONExportForm(forms.Form):
+class ExportForm(forms.Form):
     path = forms.CharField(label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)",
                            required=False)
     languages = forms.MultipleChoiceField(label="Lingvoj por eksporti (lasi malplena por eksporti ĉiujn)",
@@ -38,6 +38,6 @@ class JSONExportForm(forms.Form):
                                           widget=CheckboxSelectMultiple)
 
     def __init__(self, language_choices=None, *args, **kwargs):
-        super(JSONExportForm, self).__init__(*args, **kwargs)
+        super(ExportForm, self).__init__(*args, **kwargs)
         if language_choices:
             self.fields['languages'].choices = language_choices

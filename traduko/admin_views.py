@@ -270,19 +270,33 @@ def import_json(request, project_id):
 @user_is_project_admin
 def export_csv(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    languages = [
+        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
+    ]
+    languageversions = project.languageversion_set.all().order_by('language__code')
+    for lv in languageversions:
+        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
 
-    # response = HttpResponse(content_type='text/html')
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="project.csv"'
+    if request.method == 'POST':
+        form = ExportForm(data=request.POST, language_choices=languages)
+        if form.is_valid():
+            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="project.csv"'
 
-    data = export_to_csv(project)
+            writer = csv.DictWriter(response, fieldnames=data['fieldnames'])
+            writer.writeheader()
+            for row in data['csv_data']:
+                writer.writerow(row)
 
-    writer = csv.DictWriter(response, fieldnames=data['fieldnames'])
-    writer.writeheader()
-    for row in data['csv_data']:
-        writer.writerow(row)
-
-    return response
+            return response
+    else:
+        form = ExportForm(language_choices=languages)
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/export-csv.html", context)
 
 
 @login_required
@@ -297,14 +311,14 @@ def export_json(request, project_id):
         languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
 
     if request.method == 'POST':
-        form = JSONExportForm(data=request.POST, language_choices=languages)
+        form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
             data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
             response = JsonResponse(data, safe=False)
             response['Content-Disposition'] = 'attachment; filename="project.json"'
             return response
     else:
-        form = JSONExportForm(language_choices=languages)
+        form = ExportForm(language_choices=languages)
     context = {
         'project': project,
         'form': form,

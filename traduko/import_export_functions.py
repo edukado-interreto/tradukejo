@@ -286,13 +286,17 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user):
     return import_stats
 
 
-def export_to_csv(project):
-    fieldnames = ['path', 'name', 'pluralized', 'context', project.source_language.code]
+def export_to_csv(project, path="", languages=[]):
+    fieldnames = ['path', 'name', 'pluralized', 'context']
+    if project.source_language.code in languages:
+        fieldnames.append(project.source_language.code)
     csv_data = []
 
     trstrings = project.trstring_set.all().order_by('path', 'name')
-    languageversions = project.languageversion_set.all().order_by('language__code')
-    trstringtexts = TrStringText.objects.filter(trstring__project=project)
+    if path != "":
+        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    languageversions = project.languageversion_set.filter(language__in=languages).order_by('language__code')
+    trstringtexts = TrStringText.objects.filter(trstring__in=trstrings, language__in=languages)
 
     translation_data = {}
     for translation in trstringtexts:
