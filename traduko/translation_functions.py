@@ -40,7 +40,7 @@ def mark_translations_as_outdated(trstring):
     trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(state=TRANSLATION_STATE_OUTDATED)
 
 
-def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False, new_string=False):
+def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False, new_string=False, state=TRANSLATION_STATE_TRANSLATED, importing_user=None):
     """
     Main function used to save strings. Translation right checks should be done before calling this function.
     text: text to be parsed with parse_submitted_text
@@ -48,6 +48,8 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
     minor: whether changes made to texts in source language are minor (and translations shouldn't be marked as outdated)
     context: context for the TrString, if we are editing it
     new_string: if we are adding a string (detected automatically otherwise)
+    state: state of the added translation, by default translated
+    importing_user: if provided, the string activities are marked as imports
     """
 
     editing_original = language == project.source_language
@@ -58,8 +60,13 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
         try:
             current_string = TrString.objects.get(project=project, path=path, name=name)
         except TrString.DoesNotExist:
-            if editing_original:
-                is_add = True
+            new_string = True
+
+    if new_string and not editing_original:  # Trying to add translation of non-existing TrString:
+        return {
+            'trstring': None,
+            'trstringtext': None
+        }
 
     if new_string:
         current_string = TrString(project=project, path=path, name=name)
@@ -101,7 +108,9 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
             history.save()
 
         # Update the translation
-        translated_text.state = TRANSLATION_STATE_TRANSLATED
+        if not editing_original and state not in [TRANSLATION_STATE_TRANSLATED, TRANSLATION_STATE_OUTDATED]:
+            state = TRANSLATION_STATE_TRANSLATED
+        translated_text.state = state
         translated_text.translated_by = author
         translated_text.text = parsed_text_data['text']
 
@@ -130,13 +139,13 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
         # Add activity to last activities
         activity = StringActivity(trstringtext=translated_text,
                                   language=language,
-                                  user=author)
+                                  user=author if importing_user is None else importing_user)
         if new_string:
-            activity.action = ACTION_TYPE_ADD
+            activity.action = ACTION_TYPE_ADD if importing_user is None else ACTION_TYPE_IMPORT
             activity.words = current_string.words
             activity.characters = current_string.characters
         elif new_translation:
-            activity.action = ACTION_TYPE_TRANSLATE
+            activity.action = ACTION_TYPE_TRANSLATE if importing_user is None else ACTION_TYPE_IMPORT
             activity.words = current_string.words
             activity.characters = current_string.characters
         else:

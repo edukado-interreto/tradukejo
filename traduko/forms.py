@@ -25,8 +25,8 @@ class ProjectForm(forms.ModelForm):
 
 class ImportForm(forms.Form):
     file = forms.FileField(label="Dosiero", required=True)
-    update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn (malrapida!)", required=False)
-    user_is_author = forms.BooleanField(label="Marki min kiel aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
+    update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn (tre malrapida!)", required=False)
+    user_is_author = forms.BooleanField(label="Marki min kiel defaŭltan aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
 
 
 class JSONExportForm(forms.Form):

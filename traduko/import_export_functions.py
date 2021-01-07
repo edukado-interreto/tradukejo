@@ -150,6 +150,64 @@ def quick_import(project, data, user, fallback_author=None):
     }
 
 
+def slow_import(project, data, user, fallback_author=None):
+    imported_strings = 0
+    imported_translations = 0
+
+    # Temporarily disconnect signals, otherwise importing is horribly low
+    post_save.disconnect(signals.update_project_count_from_trstringtext, sender=TrStringText)
+    post_save.disconnect(signals.update_project_count_from_trstring, sender=TrString)
+
+    all_languages = get_all_languages_dictionary()
+    all_users = get_all_users_dictionary()
+
+    for string_data in data:
+        path = string_data['path'].strip('/ ')
+        name = string_data['name'].strip()
+        context = string_data['context'].strip() if 'context' in string_data.keys() else ''
+        pluralized = string_data['pluralized'] if 'pluralized' in string_data.keys() else False
+
+        if name == '':
+            continue
+
+        for language_code, translation in string_data['translations'].items():
+            translated_text = translation['text'].strip()
+            if translated_text == '' or language_code not in all_languages:
+                continue
+            language = all_languages[language_code]
+            state = translation['state'] if 'state' in translation.keys() else TRANSLATION_STATE_TRANSLATED
+            if 'translated_by' in translation.keys() and translation['translated_by'] in all_users:
+                author = all_users[translation['translated_by']]
+            else:
+                author = fallback_author
+
+            # Can fail if the source language is not the first one in the list
+            add_data = add_or_update_trstringtext(project,
+                                                  path,
+                                                  name,
+                                                  language,
+                                                  translated_text,
+                                                  author,
+                                                  pluralized=pluralized,
+                                                  force_update=True,
+                                                  context=context,
+                                                  state=state,
+                                                  importing_user=user)
+            if add_data['trstringtext'] is not None:
+                if language == project.source_language:
+                    imported_strings = imported_strings + 1
+                else:
+                    imported_translations = imported_translations + 1
+
+    post_save.connect(signals.update_project_count_from_trstringtext, sender=TrStringText)
+    post_save.connect(signals.update_project_count_from_trstring, sender=TrString)
+
+    return {
+        'imported_strings': imported_strings,
+        'imported_translations': imported_translations,
+    }
+
+
 # TODO: rewrite with quick_import
 def quick_import_csv(project, data, languages, user):
     imported_strings = 0
@@ -244,23 +302,13 @@ def import_from_json(project, json_file, update_texts, user_is_author, user):
     for l in languages:
         update_translators_when_translating(user, project, l)
 
-    # Temporarily disconnect signals, otherwise importing is horribly low
-    post_save.disconnect(signals.update_project_count_from_trstringtext, sender=TrStringText)
-    post_save.disconnect(signals.update_project_count_from_trstring, sender=TrString)
-
     if update_texts:
-        pass  # TODO
-        # imported_strings = len(all_data)
-        # for row in all_data:
-        #     import_string(project, languages, row, update_texts, user if user_is_author else None)
+        import_stats = slow_import(project, data, user, user if user_is_author else None)
     else:
         import_stats = quick_import(project, data, user, user if user_is_author else None)
 
     update_project_count(project)
     update_all_language_versions_count(project)
-
-    post_save.connect(signals.update_project_count_from_trstringtext, sender=TrStringText)
-    post_save.connect(signals.update_project_count_from_trstring, sender=TrString)
 
     return import_stats
 
