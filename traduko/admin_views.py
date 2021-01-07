@@ -217,8 +217,8 @@ def import_csv(request, project_id):
                 messages.error(request, 'Malĝusta formato de dosiero.')
             else:
                 try:
-                    imported_strings = import_from_csv(project, csv_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
-                    messages.success(request, f'{imported_strings} ĉenoj estis importitaj.')
+                    import_stats = import_from_csv(project, csv_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
+                    messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
