@@ -169,7 +169,6 @@ def get_subdirectories(trstrings, current_directory):
         string_subdirectories = trstrings.filter(path__startswith=current_directory + "/")
     else:
         string_subdirectories = trstrings
-    print(string_subdirectories)
     subdirectories = {}
     for s in string_subdirectories:
         subdirectory = s.path[len(current_directory):].strip('/')
