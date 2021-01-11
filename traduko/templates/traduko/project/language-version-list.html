@@ -21,6 +21,14 @@
 				</div>
 				{% endif %}
 			</div>
+			{% if lv.translator_stats %}
+			<div class="translator-list">
+				<strong>Tradukantoj:</strong>
+				{% for translator in lv.translator_stats %}
+					<a href="{% url 'profile' translator.user__pk %}" title="{{ translator.words_sum }} vortoj">{{ translator.user__username }}</a>{% if not forloop.last %},{% endif %}
+				{% endfor %}
+			</div>
+			{% endif %}
 		</li>
 	{% endfor %}
 </ul>

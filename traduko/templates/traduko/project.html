@@ -65,7 +65,7 @@
 </div>
 {% endif %}
 
-<div class="row">
+<div class="row" style="clear: both;">
 	<div class="col-12 col-md-8 col-lg-9 col-xl-10">
 		{% if my_languages_with_stats %}
 		<h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
@@ -119,7 +119,6 @@
 		</div>
 	</div>
 </div>
-
 
 {% if not is_project_admin and not project.locked %}
 <div class="modal fade" id="translatorRequestModal" tabindex="-1" aria-labelledby="translatorRequestModalLabel" aria-hidden="true">

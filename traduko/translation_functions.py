@@ -37,10 +37,13 @@ def is_allowed_to_translate(user, project, language):
 
 
 def mark_translations_as_outdated(trstring):
-    trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(state=TRANSLATION_STATE_OUTDATED)
+    trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(
+        state=TRANSLATION_STATE_OUTDATED)
 
 
-def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True, context='', minor=False, new_string=False, state=TRANSLATION_STATE_TRANSLATED, importing_user=None):
+def add_or_update_trstringtext(project, path, name, language, text, author, pluralized=False, force_update=True,
+                               context='', minor=False, new_string=False, state=TRANSLATION_STATE_TRANSLATED,
+                               importing_user=None):
     """
     Main function used to save strings. Translation right checks should be done before calling this function.
     text: text to be parsed with parse_submitted_text
@@ -89,7 +92,8 @@ def add_or_update_trstringtext(project, path, name, language, text, author, plur
         }
 
     if not editing_original:
-        pluralized = TrStringText.objects.get(trstring=current_string, language=current_string.project.source_language).pluralized
+        pluralized = TrStringText.objects.get(trstring=current_string,
+                                              language=current_string.project.source_language).pluralized
 
     parsed_text_data = parse_submitted_text(text,
                                             pluralized,
@@ -173,7 +177,8 @@ def get_subdirectories(trstrings, current_directory):
             subdirectory = subdirectory[0:subdirectory.find('/')]
         if subdirectory != '' and subdirectory not in subdirectories.keys():
             path = current_directory + ('/' if current_directory != '' else '') + subdirectory
-            wordcharcount = string_subdirectories.filter(Q(path=path) | Q(path__startswith=path + "/")).aggregate(Sum('words'), Sum('characters'))
+            wordcharcount = string_subdirectories.filter(Q(path=path) | Q(path__startswith=path + "/")).aggregate(
+                Sum('words'), Sum('characters'))
             subdirectories[subdirectory] = {
                 'path': path,
                 'strings': string_subdirectories.filter(Q(path=path) | Q(path__startswith=path + "/")).count(),
@@ -200,7 +205,7 @@ def get_strings_to_translate(all_strings, language, path, sort, start=0):
     else:
         strings = strings.order_by('last_change')
 
-    strings = strings[start:start+settings.MAX_LOADED_STRINGS]
+    strings = strings[start:start + settings.MAX_LOADED_STRINGS]
 
     for trstr in strings:
         trstr.original_text = None
@@ -265,22 +270,49 @@ def update_language_version_count(l):  # l: languageversion
 def get_project_languages_for_user(project, user):
     if is_project_admin(user, project):
         available_languages = (Language.objects.filter(code=project.source_language.code) |
-                              Language.objects.filter(languageversion__project=project))
+                               Language.objects.filter(languageversion__project=project))
     else:
-        available_languages = Language.objects.filter(languageversion__project=project, languageversion__translators=user)
+        available_languages = Language.objects.filter(languageversion__project=project,
+                                                      languageversion__translators=user)
 
     return available_languages.order_by('code')
 
 
 def get_project_language_statistics(project, user):
+    all_lv = project.languageversion_set.all()
+
+    # Getting list of translators for each language from the StringActivity table
+    activities = StringActivity.objects.filter(trstringtext__trstring__project=project, action=ACTION_TYPE_TRANSLATE). \
+        values('language__code', 'user__pk', 'user__username'). \
+        annotate(strings=Count('trstringtext'), words_sum=Sum('words')). \
+        order_by('-words_sum')
+
+    all_activities = {}
+    for activity in activities:
+        if activity['language__code'] not in all_activities.keys():
+            all_activities[activity['language__code']] = []
+        all_activities[activity['language__code']].append(activity)
+
+    # Now getting language versions for current user
     if is_project_admin(user, project):
-        current_user = project.languageversion_set.all()
+        current_user = all_lv
         other_available = LanguageVersion.objects.none()
     else:
-        current_user = project.languageversion_set.filter(translators=user)
-        other_available = project.languageversion_set.exclude(translators=user)
+        current_user = all_lv.filter(translators=user)
+        other_available = all_lv.exclude(translators=user)
+
+    # Add activities to language version objects (have to do it twice)
+    for lv in current_user:
+        if lv.language.code in all_activities.keys():
+            lv.translator_stats = all_activities[lv.language.code]
+        else:
+            lv.translator_stats = []
 
     for lv in other_available:
+        if lv.language.code in all_activities.keys():
+            lv.translator_stats = all_activities[lv.language.code]
+        else:
+            lv.translator_stats = []
         lv.translation_request_sent = lv.translatorrequest_set.filter(user=user).count() > 0
 
     return {
@@ -306,7 +338,8 @@ def filter_by_state(trstrings, current_language, state):
         return trstrings.filter(trstringtext__language=current_language, trstringtext__state=TRANSLATION_STATE_OUTDATED)
     elif state == STATE_FILTER_OUTDATED_UNTRANSLATED:
         untranslated = trstrings.exclude(trstringtext__language=current_language)
-        outdated = trstrings.filter(trstringtext__language=current_language, trstringtext__state=TRANSLATION_STATE_OUTDATED)
+        outdated = trstrings.filter(trstringtext__language=current_language,
+                                    trstringtext__state=TRANSLATION_STATE_OUTDATED)
         return (untranslated | outdated).distinct()  # Otherwise some strings appear several times, I don't know why
     else:
         return trstrings
@@ -317,12 +350,15 @@ def filter_by_search(trstrings, current_language, search_string):
     if search_string == '' or trstrings.count() == 0:
         return trstrings
     else:
-        in_source_language = trstrings.filter(trstringtext__language=trstrings[0].project.source_language, trstringtext__text__icontains=search_string)
+        in_source_language = trstrings.filter(trstringtext__language=trstrings[0].project.source_language,
+                                              trstringtext__text__icontains=search_string)
         if trstrings[0].project.source_language == current_language:
             return in_source_language
         else:
-            in_current_language = trstrings.filter(trstringtext__language=current_language, trstringtext__text__icontains=search_string)
-            return (in_current_language | in_source_language).distinct()  # Otherwise some strings appear several times, I don't know why
+            in_current_language = trstrings.filter(trstringtext__language=current_language,
+                                                   trstringtext__text__icontains=search_string)
+            return (
+                        in_current_language | in_source_language).distinct()  # Otherwise some strings appear several times, I don't know why
 
 
 # submitted_text has to be a JSON string like [{"name":"text[0]","value":"content here"},{"name":"text[1]","value":"content2 here"}]
@@ -332,7 +368,7 @@ def parse_submitted_text(submitted_text, is_pluralized, nplurals):
     try:
         json_data = json.loads(submitted_text)
     except ValueError as e:
-        json_data = [{'name': 'text[0]', 'value': submitted_text},]
+        json_data = [{'name': 'text[0]', 'value': submitted_text}, ]
 
     submitted_strings = {}
     i = 0
@@ -348,8 +384,8 @@ def parse_submitted_text(submitted_text, is_pluralized, nplurals):
         characters = 0
         strings = []
         i = 0
-        while i < nplurals and 'text['+str(i)+']' in submitted_strings.keys():
-            t = submitted_strings['text['+str(i)+']'].strip()
+        while i < nplurals and 'text[' + str(i) + ']' in submitted_strings.keys():
+            t = submitted_strings['text[' + str(i) + ']'].strip()
             words = words + len(t.split())
             characters = characters + len(t)
             strings.append(t)
@@ -374,7 +410,7 @@ def get_text_difference(text, n_text):
     SequenceMatcher instance whose a & b are strings
     """
     seqm = difflib.SequenceMatcher(None, text, n_text)
-    output= []
+    output = []
     for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
         if opcode == 'equal':
             output.append(seqm.a[a0:a1])
@@ -400,7 +436,7 @@ def get_history_comparison(history):
     for i in range(len(history) - 1):
         new = history[i]
         new_texts = new.pluralized_text_dictionary()
-        old = history[i+1]
+        old = history[i + 1]
         old_texts = old.pluralized_text_dictionary()
 
         new.comparison = OrderedDict()
@@ -443,7 +479,7 @@ def send_email_to_admins_about_translation_request(request, translator_request):
             'project': project,
             'language': language,
             'translator_request': translator_request,
-            'url': request.build_absolute_uri(reverse('translator_request_list', args=(project.pk, ))),
+            'url': request.build_absolute_uri(reverse('translator_request_list', args=(project.pk,))),
         }
         html_message = render_to_string("traduko/email/new-translator-request.html", mail_context)
         plain_text_message = strip_tags(html_message)
@@ -476,9 +512,10 @@ def update_project_admins(user, project):
 
 
 def get_last_activities(project, limit=50):
-    activities = StringActivity.objects.filter(trstringtext__trstring__project=project).\
-        values('date', 'language__code', 'language__name', 'user__pk', 'user__username', 'action').\
-        annotate(last=Max('datetime') ,strings=Count('trstringtext'), words_sum=Sum('words')).order_by('-last')[0:limit]
+    activities = StringActivity.objects.filter(trstringtext__trstring__project=project). \
+                     values('date', 'language__code', 'language__name', 'user__pk', 'user__username', 'action'). \
+                     annotate(last=Max('datetime'), strings=Count('trstringtext'), words_sum=Sum('words')).order_by(
+        '-last')[0:limit]
     last_activities = {}
     for activity in activities:
         if activity['date'] not in last_activities.keys():

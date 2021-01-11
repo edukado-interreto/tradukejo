@@ -93,6 +93,12 @@ main h2 {
     margin: .3rem;
 }
 
+.translator-list {
+    color: #333;
+    font-size: .9rem;
+    margin-top: 4px;
+}
+
 .translation-row {
     border: 1px solid black;
     border-radius: 5px;
@@ -271,4 +277,21 @@ main h2 {
 
 .online-translators-links img {
     height: 1rem;
+}
+
+.progress-bar.bg-success {
+    animation: progress .5s forwards;
+    transform-origin: top left;
+}
+
+.progress-bar.bg-warning {
+    transform: scaleX(0);
+    animation: progress .5s ease-out forwards;
+    animation-delay: .5s;
+    transform-origin: top left;
+}
+
+@keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
 }
