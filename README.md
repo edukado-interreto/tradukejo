@@ -31,6 +31,14 @@ DATABASES = {
 
 For production, don’t forget to update the email settings (see [Django documentation](https://docs.djangoproject.com/en/3.1/topics/email/), it’s also [possible to use `sendmail`](https://github.com/perenecabuto/django-sendmail-backend)).
 
+In production, add the following lines as well for SCSS compilation (see [here](https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/)):
+
+```python
+COMPRESS_OFFLINE = True
+LIBSASS_OUTPUT_STYLE = 'compressed'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorag
+```
+
 Here is an example of production configuration for MySQL:
 
 ```python
@@ -85,6 +93,7 @@ If there are changes in static files:
 
 ```console
 $ python manage.py collectstatic
+$ python manage.py compress --force
 ```
 
 ## Apache configuration

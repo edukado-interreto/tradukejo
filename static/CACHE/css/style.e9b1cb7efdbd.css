@@ -1,0 +1,295 @@
+@charset "UTF-8";
+/* line 5, traduko/static/traduko/css/style.scss */
+.inner-container {
+  margin: auto;
+  width: 96%;
+  max-width: 1300px; }
+
+/* line 11, traduko/static/traduko/css/style.scss */
+.container-fluid {
+  max-width: 1800px; }
+
+/* line 15, traduko/static/traduko/css/style.scss */
+a {
+  color: #254E58; }
+  /* line 18, traduko/static/traduko/css/style.scss */
+  a:hover, a:active {
+    color: #112D32; }
+
+/* line 23, traduko/static/traduko/css/style.scss */
+#page-header {
+  background: #88BDBC;
+  padding: 6px 0; }
+  /* line 27, traduko/static/traduko/css/style.scss */
+  #page-header a {
+    color: #112D32; }
+
+/* line 32, traduko/static/traduko/css/style.scss */
+#page-footer {
+  background: #88BDBC;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  margin-bottom: 0; }
+  /* line 38, traduko/static/traduko/css/style.scss */
+  #page-footer a {
+    color: #112D32; }
+  /* line 42, traduko/static/traduko/css/style.scss */
+  #page-footer ul {
+    margin: 0; }
+
+/* line 47, traduko/static/traduko/css/style.scss */
+main h1.page-title {
+  margin-top: 0;
+  background: #254E58;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.3rem;
+  padding: 1rem 0;
+  font-size: 2.6rem; }
+
+/* line 57, traduko/static/traduko/css/style.scss */
+main h1.page-title a {
+  color: white;
+  text-decoration: underline; }
+
+/* line 62, traduko/static/traduko/css/style.scss */
+main h1.page-title a:hover, main h1.page-title a:active {
+  color: #CCC; }
+
+/* line 66, traduko/static/traduko/css/style.scss */
+main h2 {
+  font-size: 1.8rem;
+  color: #254E58;
+  margin-top: 2rem;
+  margin-bottom: 1rem; }
+
+/* line 73, traduko/static/traduko/css/style.scss */
+.project.hidden {
+  opacity: .75; }
+
+/* line 77, traduko/static/traduko/css/style.scss */
+.small-form {
+  max-width: 600px;
+  margin: auto; }
+
+/* line 82, traduko/static/traduko/css/style.scss */
+.help-block {
+  font-size: .9em;
+  margin-top: 4px;
+  color: #454545; }
+
+/* line 88, traduko/static/traduko/css/style.scss */
+.project-logo {
+  max-width: 300px; }
+
+/* line 92, traduko/static/traduko/css/style.scss */
+.project-admin-card {
+  display: inline-block; }
+
+/* line 96, traduko/static/traduko/css/style.scss */
+.project-admin-card .btn {
+  margin: .3rem; }
+
+/* line 100, traduko/static/traduko/css/style.scss */
+.translator-list {
+  color: #333;
+  font-size: .9rem;
+  margin-top: 4px; }
+
+/* line 106, traduko/static/traduko/css/style.scss */
+.translation-row {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 1rem 0;
+  padding: .5rem .6rem; }
+
+/* line 113, traduko/static/traduko/css/style.scss */
+.translation-row.translated {
+  border-color: #155724;
+  background-color: #d4edda; }
+
+/* line 118, traduko/static/traduko/css/style.scss */
+.translation-row.untranslated {
+  border-color: #721c24;
+  background-color: #f8d7da; }
+
+/* line 123, traduko/static/traduko/css/style.scss */
+.translation-row.outdated {
+  border-color: #856404;
+  background-color: #fff3cd; }
+
+/* line 128, traduko/static/traduko/css/style.scss */
+.translation-row input[type=text] {
+  width: 100%; }
+
+/* line 132, traduko/static/traduko/css/style.scss */
+.translation-row code {
+  font-weight: bold;
+  color: #304060;
+  font-size: 1em;
+  line-height: 1em; }
+
+/* line 139, traduko/static/traduko/css/style.scss */
+.last-activities h4 {
+  color: #254E58;
+  font-size: 1.1rem; }
+
+/* line 144, traduko/static/traduko/css/style.scss */
+.last-activities ul + h4 {
+  margin-top: 1.6rem; }
+
+/* line 148, traduko/static/traduko/css/style.scss */
+.last-activities ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: .9rem;
+  margin-bottom: 0; }
+
+/* line 155, traduko/static/traduko/css/style.scss */
+.last-activities li + li {
+  margin-top: .3rem; }
+
+/* line 159, traduko/static/traduko/css/style.scss */
+.subdirectory-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 1rem; }
+
+/* line 165, traduko/static/traduko/css/style.scss */
+.subdirectory-list a {
+  text-decoration: none;
+  padding: 8px 0; }
+
+/* line 170, traduko/static/traduko/css/style.scss */
+.subdirectory-list li + li {
+  border-top: 1px solid #F0F0F0; }
+
+/* line 174, traduko/static/traduko/css/style.scss */
+.subdirectory-list a svg {
+  color: #333; }
+
+/* line 178, traduko/static/traduko/css/style.scss */
+.subdirectory-list a:hover {
+  background: #F1F1F1; }
+
+/* line 182, traduko/static/traduko/css/style.scss */
+.breadcrumb.main-breadcrumb {
+  background: none;
+  padding: 0;
+  font-size: .9rem;
+  margin-bottom: 1.4rem; }
+
+/* line 189, traduko/static/traduko/css/style.scss */
+.breadcrumb.main-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  content: '❯';
+  font-size: .7em;
+  line-height: 2.2em; }
+
+/* line 195, traduko/static/traduko/css/style.scss */
+.breadcrumb.translation-path {
+  background: none;
+  font-size: 1rem; }
+
+/* line 200, traduko/static/traduko/css/style.scss */
+.translation-row .context {
+  color: #555;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: .9rem; }
+
+/* line 207, traduko/static/traduko/css/style.scss */
+.translation-row .context svg {
+  cursor: help; }
+
+/* line 211, traduko/static/traduko/css/style.scss */
+.plural-number-explanation {
+  color: #555;
+  font-weight: bold;
+  margin-top: .8rem;
+  margin-bottom: .3rem;
+  font-size: .9rem; }
+
+/* line 219, traduko/static/traduko/css/style.scss */
+.plural-number-explanation:first-child {
+  margin-top: 0; }
+
+/* line 223, traduko/static/traduko/css/style.scss */
+.translation-form .plural-number-explanation {
+  margin-bottom: 0;
+  margin-top: 0; }
+
+/* line 228, traduko/static/traduko/css/style.scss */
+.translation-author {
+  font-size: .9em;
+  margin-top: .5rem;
+  padding-top: .5rem;
+  border-top: 1px solid rgba(200, 200, 200, 0.6); }
+
+/* line 235, traduko/static/traduko/css/style.scss */
+.translation-state-bar a {
+  font-size: .9rem;
+  top: 1px;
+  position: relative;
+  margin-right: 4px; }
+
+/* line 242, traduko/static/traduko/css/style.scss */
+#addLanguage {
+  width: auto;
+  margin: 1rem 0; }
+
+/* line 247, traduko/static/traduko/css/style.scss */
+#new-string-form .card {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px; }
+
+/* line 253, traduko/static/traduko/css/style.scss */
+.old-version {
+  background: white;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  margin-top: 1rem;
+  padding: .6rem .8rem; }
+
+/* line 261, traduko/static/traduko/css/style.scss */
+.old-version p {
+  font-size: 1rem;
+  margin-bottom: 0; }
+
+/* line 266, traduko/static/traduko/css/style.scss */
+.old-version ins {
+  color: #155724;
+  background-color: #d4edda;
+  text-decoration: none;
+  font-weight: bold; }
+
+/* line 273, traduko/static/traduko/css/style.scss */
+.old-version del {
+  color: #721c24;
+  background-color: #f8d7da; }
+
+/* line 278, traduko/static/traduko/css/style.scss */
+.online-translators-links {
+  margin-left: .3rem; }
+
+/* line 282, traduko/static/traduko/css/style.scss */
+.online-translators-links img {
+  height: 1rem; }
+
+/* line 286, traduko/static/traduko/css/style.scss */
+.progress-bar.bg-success {
+  animation: progress .5s forwards;
+  transform-origin: top left; }
+
+/* line 291, traduko/static/traduko/css/style.scss */
+.progress-bar.bg-warning {
+  transform: scaleX(0);
+  animation: progress .5s ease-out forwards;
+  animation-delay: .5s;
+  transform-origin: top left; }
+
+@keyframes progress {
+  from {
+    transform: scaleX(0); }
+  to {
+    transform: scaleX(1); } }

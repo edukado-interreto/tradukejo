@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
     'crispy_forms',
+    'compressor'
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static-files'),
 ]
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',  # Compatibility with Bootstrap
@@ -140,3 +151,7 @@ from tradukejo.local_settings import *
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# To use in production:
+# COMPRESS_OFFLINE = True
+# LIBSASS_OUTPUT_STYLE = 'compressed'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'

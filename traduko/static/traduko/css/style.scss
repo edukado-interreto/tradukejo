@@ -1,0 +1,310 @@
+$link-color: #254E58;
+$link-active-color: #112D32;
+$header-bgcolor: #88BDBC;
+
+/* Page structure */
+
+.inner-container {
+    margin: auto;
+    width: 96%;
+    max-width: 1300px;
+}
+
+.container-fluid {
+    max-width: 1800px;
+}
+
+a {
+    color: $link-color;
+
+    &:hover, &:active {
+        color: $link-active-color;
+    }
+}
+
+#page-header {
+    background: $header-bgcolor;
+    padding: 6px 0;
+
+    a {
+        color: $link-active-color;
+    }
+}
+
+#page-footer {
+    background: $header-bgcolor;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    margin-bottom: 0;
+
+    a {
+        color: $link-active-color;
+    }
+
+    ul {
+        margin: 0;
+    }
+}
+
+main {
+    h1.page-title {
+        margin-top: 0;
+        background: $link-color;
+        color: white;
+        text-align: center;
+        margin-bottom: 1.3rem;
+        padding: 1rem 0;
+        font-size: 2.6rem;
+
+        a {
+            color: white;
+            text-decoration: underline;
+
+            &:hover, &:active {
+                color: #CCC;
+            }
+        }
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        color: $link-color;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.breadcrumb.main-breadcrumb {
+    background: none;
+    padding: 0;
+    font-size: .9rem;
+    margin-bottom: 1.4rem;
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: '❯';
+        font-size: .7em;
+        line-height: 2.2em;
+    }
+}
+
+.small-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Project page */
+
+.project.hidden {
+    opacity: .75;
+}
+
+.project-logo {
+    max-width: 300px;
+}
+
+.project-admin-card {
+    display: inline-block;
+
+    .btn {
+        margin: .3rem;
+    }
+}
+
+.translator-list {
+    color: #333;
+    font-size: .9rem;
+    margin-top: 4px;
+}
+
+.progress-bar {
+    transform-origin: top left;
+
+    &.bg-success {
+        animation: progress .5s forwards;
+    }
+
+    &.bg-warning {
+        transform: scaleX(0);
+        animation: progress .5s ease-out forwards;
+        animation-delay: .5s;
+        transform-origin: top left;
+    }
+    
+}
+
+@keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.last-activities {
+    h4 {
+        color: $link-color;
+        font-size: 1.1rem;
+    }
+
+    ul + h4 {
+        margin-top: 1.6rem;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        font-size: .9rem;
+        margin-bottom: 0;
+    }
+
+    li + li {
+        margin-top: .3rem;
+    }
+}
+
+/* Translation interface */
+
+.translation-row {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 1rem 0;
+    padding: .5rem .6rem;
+
+    &.translated {
+        border-color: #155724;
+        background-color: #d4edda;
+    }
+    
+    &.untranslated {
+        border-color: #721c24;
+        background-color: #f8d7da;
+    }
+    
+    &.outdated {
+        border-color: #856404;
+        background-color: #fff3cd;
+    }
+
+    input[type=text] {
+        width: 100%;
+    }
+    
+    code {
+        font-weight: bold;
+        color: #304060;
+        font-size: 1em;
+        line-height: 1em;
+    }
+
+    .context {
+        color: #555;
+        font-weight: bold;
+        margin-top: 1rem;
+        font-size: .9rem;
+        
+        svg {
+            cursor: help;
+        }
+    }
+}
+
+.subdirectory-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 1rem;
+
+    a {
+        text-decoration: none;
+        padding: 8px 0;
+
+        svg {
+            color: #333;
+        }
+
+        &:hover {
+            background: #F1F1F1;
+        }
+    }
+
+    li + li {
+        border-top: 1px solid #F0F0F0;
+    }
+}
+
+.breadcrumb.translation-path {
+    background: none;
+    font-size: 1rem;
+}
+
+.plural-number-explanation {
+    color: #555;
+    font-weight: bold;
+    margin-top: .8rem;
+    margin-bottom: .3rem;
+    font-size: .9rem;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.translation-form .plural-number-explanation {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.translation-author {
+    font-size: .9em;
+    margin-top: .5rem;
+    padding-top: .5rem;
+    border-top: 1px solid rgba(200, 200, 200, .6);
+}
+
+.translation-state-bar a {
+    font-size: .9rem;
+    top: 1px;
+    position: relative;
+    margin-right: 4px;
+}
+
+#addLanguage {
+    width: auto;
+    margin: 1rem 0;
+}
+
+#new-string-form .card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 900px;
+}
+
+.old-version {
+    background: white;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-top: 1rem;
+    padding: .6rem .8rem;
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 0;
+      }
+      
+    ins {
+    color: #155724;
+    background-color: #d4edda;
+    text-decoration: none;
+    font-weight: bold;
+    }
+    
+    del {
+    color: #721c24;
+    background-color: #f8d7da;
+    }
+}
+
+.online-translators-links {
+    margin-left: .3rem;
+
+    img {
+        height: 1rem;
+    }
+    
+}
