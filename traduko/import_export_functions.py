@@ -1,5 +1,4 @@
-import csv, io
-
+import csv, io, polib
 from django.contrib.auth import get_user_model
 from django.db.models import Case, When, Q
 from django.db.models.signals import post_save
@@ -7,6 +6,7 @@ from django.utils import timezone
 from .models import *
 from .translation_functions import *
 from . import signals
+from zipfile import ZipFile, ZIP_DEFLATED, zlib
 
 
 class WrongFormatError(Exception):
@@ -366,3 +366,72 @@ def export_to_json(project, path="", languages=[]):
         if len(stringdata['translations']) > 0:
             data.append(stringdata)
     return data
+
+
+def export_to_po(response, project, path="", languages=[]):
+    """
+    :param response:
+    :param project:
+    :param path:
+    :param languages: list of language codes or empty list for all languages.
+    :return: list of dictionaries
+    """
+    trstrings = project.trstring_set.all().order_by('path', 'name')
+    if path != "":
+        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    for trstring in trstrings:
+        trstring.original_text = TrStringText.objects.get(trstring=trstring, language=project.source_language)
+
+    zf = ZipFile(response, 'w')
+
+    if len(languages) == 0:
+        languages = Language.objects.filter(languageversion__project=project)
+    else:
+        languages = Language.objects.filter(code__in=languages)
+
+    for language in languages:
+        print(language)
+        po = polib.POFile()
+        po.metadata = {
+            'Project-Id-Version': '1.0',
+            'Report-Msgid-Bugs-To': 'you@example.com',
+            'POT-Creation-Date': '2007-10-18 14:00+0100',
+            'PO-Revision-Date': '2007-10-18 14:00+0100',
+            'Last-Translator': '',
+            'Language-Team': '',
+            'Language': language.code,
+            'MIME-Version': '1.0',
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Content-Transfer-Encoding': '8bit',
+            'Plural-Forms': language.plural_forms,
+            'X-Generator': settings.WEBSITE_NAME,
+        }
+        for trstring in trstrings:
+            # Getting the translation of the current string
+            if language == project.source_language:
+                trstringtext = trstring.original_text
+            else:
+                try:
+                    trstringtext = TrStringText.objects.get(trstring=trstring, language=language)
+                except TrStringText.DoesNotExist:
+                    trstringtext = trstring.original_text
+
+            entry = polib.POEntry(msgid=f'{trstring.path}#{trstring.name}')
+
+            if trstring.original_text.pluralized:
+                entry.msgid_plural = entry.msgid
+                plurals = list(trstringtext.pluralized_text_dictionary().values())
+                entry.msgstr_plural = {}
+                for i in range(len(plurals)):
+                    entry.msgstr_plural[i] = plurals[i]
+            else:
+                entry.msgstr = trstringtext.text
+
+            if trstring.context:
+                entry.comment = trstring.context
+            po.append(entry)
+        print(po.__unicode__())
+        zf.writestr(f'{language.code}.po', po.__unicode__(), compress_type=ZIP_DEFLATED)
+        zf.writestr(f'{language.code}.mo', po.to_binary())
+
+    return zf
