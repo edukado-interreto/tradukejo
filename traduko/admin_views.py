@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
+from django.utils.text import slugify
 from django.views.decorators.http import require_POST
 
 from .models import *
@@ -217,7 +218,12 @@ def import_csv(request, project_id):
                 messages.error(request, 'Malĝusta formato de dosiero.')
             else:
                 try:
-                    import_stats = import_from_csv(project, csv_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
+                    import_stats = import_from_csv(project,
+                                                   csv_file,
+                                                   form.cleaned_data['update_texts'],
+                                                   form.cleaned_data['user_is_author'],
+                                                   request.user,
+                                                   import_to=form.cleaned_data['import_to'])
                     messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
@@ -248,7 +254,12 @@ def import_json(request, project_id):
                 messages.error(request, 'Malĝusta formato de dosiero.')
             else:
                 try:
-                    import_stats = import_from_json(project, json_file, form.cleaned_data['update_texts'], form.cleaned_data['user_is_author'], request.user)
+                    import_stats = import_from_json(project,
+                                                    json_file,
+                                                    form.cleaned_data['update_texts'],
+                                                    form.cleaned_data['user_is_author'],
+                                                    request.user,
+                                                    import_to=form.cleaned_data['import_to'])
                     messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
@@ -280,9 +291,10 @@ def export_csv(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
+            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'], remove_path=form.cleaned_data['remove_path'])
+            filename = slugify(project.name)
             response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="project.csv"'
+            response['Content-Disposition'] = f'attachment; filename="{filename}.csv"'
 
             writer = csv.DictWriter(response, fieldnames=data['fieldnames'])
             writer.writeheader()
@@ -313,9 +325,10 @@ def export_json(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
+            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'], remove_path=form.cleaned_data['remove_path'])
+            filename = slugify(project.name)
             response = JsonResponse(data, safe=False)
-            response['Content-Disposition'] = 'attachment; filename="project.json"'
+            response['Content-Disposition'] = f'attachment; filename="{filename}.json"'
             return response
     else:
         form = ExportForm(language_choices=languages)
@@ -341,8 +354,9 @@ def export_po(request, project_id):
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
             response = HttpResponse(content_type='application/zip')
-            data = export_to_po(response, project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'])
-            response['Content-Disposition'] = 'attachment; filename="project.zip"'
+            data = export_to_po(response, project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'], remove_path=form.cleaned_data['remove_path'])
+            filename = slugify(project.name)
+            response['Content-Disposition'] = f'attachment; filename="{filename}.zip"'
             return response
     else:
         form = ExportForm(language_choices=languages)

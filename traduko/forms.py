@@ -25,6 +25,8 @@ class ProjectForm(forms.ModelForm):
 
 class ImportForm(forms.Form):
     file = forms.FileField(label="Dosiero", required=True)
+    import_to = forms.CharField(label="Importi al la jena dosierujo:",
+                                required=False)
     update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn (tre malrapida!)", required=False)
     user_is_author = forms.BooleanField(label="Marki min kiel defaŭltan aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
 
@@ -32,6 +34,8 @@ class ImportForm(forms.Form):
 class ExportForm(forms.Form):
     path = forms.CharField(label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)",
                            required=False)
+    remove_path = forms.BooleanField(label="Forpreni la nomon de la dosiero",
+                                     required=False)
     languages = forms.MultipleChoiceField(label="Lingvoj por eksporti (lasi malplena por eksporti ĉiujn)",
                                           required=False,
                                           choices=[],

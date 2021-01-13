@@ -40,6 +40,19 @@ def add_language_versions(project, languages):
                 lv.save()
 
 
+def remove_path_start(path, path_start, remove_path):
+    if not remove_path or path_start == "":
+        new_path = path
+    elif remove_path:
+        if path == path_start:
+            new_path = ""
+        elif path.startswith(path_start + "/"):
+            new_path = path[(len(path_start) + 1):]
+        else:
+            new_path = path
+    return new_path
+
+
 def quick_import(project, data, user, fallback_author=None):
     imported_strings = 0
     imported_translations = 0
@@ -209,15 +222,22 @@ def slow_import(project, data, user, fallback_author=None):
     }
 
 
-def import_from_json(project, json_file, update_texts, user_is_author, user):
+def import_from_json(project, json_file, update_texts, user_is_author, user, import_to=''):
     json_file.seek(0)
     data = json.loads(json_file.read())
 
     language_codes = []
+    import_to = import_to.strip('/ ')
     for string in data:
+        if import_to != '':  # Add import path
+            if string['path'] == '':
+                string['path'] = import_to
+            else:
+                string['path'] = f'{import_to}/{string["path"]}'
         for l in string['translations'].keys():
             if l not in language_codes:
                 language_codes.append(l)
+
     languages = Language.objects.filter(code__in=language_codes).order_by(
         Case(When(code=project.source_language.code, then=0), default=1)  # The source language must be first
     )
@@ -236,7 +256,7 @@ def import_from_json(project, json_file, update_texts, user_is_author, user):
     return import_stats
 
 
-def import_from_csv(project, csv_file, update_texts, user_is_author, user):
+def import_from_csv(project, csv_file, update_texts, user_is_author, user, import_to=''):
     required_fields = ['path', 'name']
     csv_file.seek(0)
     dictreader = csv.DictReader(io.StringIO(csv_file.read().decode('utf-8')))
@@ -259,6 +279,11 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user):
         name = row['name'].strip()
         if name != '':
             path = row['path'].strip(' /')
+            if import_to != '':  # Add import path
+                if path == '':
+                    path = import_to
+                else:
+                    path = f'{import_to}/{path}'
             string = {
                 'path': path,
                 'name': name,
@@ -286,7 +311,7 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user):
     return import_stats
 
 
-def export_to_csv(project, path="", languages=[]):
+def export_to_csv(project, path="", languages=[], remove_path=False):
     fieldnames = ['path', 'name', 'pluralized', 'context']
     if project.source_language.code in languages:
         fieldnames.append(project.source_language.code)
@@ -310,8 +335,9 @@ def export_to_csv(project, path="", languages=[]):
     for s in trstrings:
         if s.pk not in translation_data.keys() or project.source_language.code not in translation_data[s.pk].keys():
             continue
+        new_path = remove_path_start(s.path, path, remove_path)
         string_data = {
-            'path': s.path,
+            'path': new_path,
             'name': s.name,
             'context': s.context,
             'pluralized': '1' if translation_data[s.pk][project.source_language.code].pluralized else '0',
@@ -328,11 +354,12 @@ def export_to_csv(project, path="", languages=[]):
     }
 
 
-def export_to_json(project, path="", languages=[]):
+def export_to_json(project, path="", languages=[], remove_path=False):
     """
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
+    :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
     :return: list of dictionaries
     """
     trstrings = project.trstring_set.all().order_by('path', 'name')
@@ -340,8 +367,9 @@ def export_to_json(project, path="", languages=[]):
         trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
     data = []
     for s in trstrings:
+        new_path = remove_path_start(s.path, path, remove_path)
         stringdata = {
-            'path': s.path,
+            'path': new_path,
             'name': s.name,
             'translations': {}
         }
@@ -368,13 +396,14 @@ def export_to_json(project, path="", languages=[]):
     return data
 
 
-def export_to_po(response, project, path="", languages=[]):
+def export_to_po(response, project, path="", languages=[], remove_path=False):
     """
     :param response:
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
-    :return: list of dictionaries
+    :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
+    :return: content of ZIP file
     """
     trstrings = project.trstring_set.all().order_by('path', 'name')
     if path != "":
@@ -416,7 +445,8 @@ def export_to_po(response, project, path="", languages=[]):
                 except TrStringText.DoesNotExist:
                     trstringtext = trstring.original_text
 
-            entry = polib.POEntry(msgid=f'{trstring.path}#{trstring.name}')
+            new_path = remove_path_start(trstring.path, path, remove_path)
+            entry = polib.POEntry(msgid=f'{new_path}#{trstring.name}')
 
             if trstring.original_text.pluralized:
                 entry.msgid_plural = entry.msgid
