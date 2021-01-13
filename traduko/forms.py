@@ -45,3 +45,13 @@ class ExportForm(forms.Form):
         super(ExportForm, self).__init__(*args, **kwargs)
         if language_choices:
             self.fields['languages'].choices = language_choices
+
+
+class POExportForm(ExportForm):
+    untranslated_as_source_language = forms.BooleanField(label="Netradukitaj ĉenoj estos anstataŭigitaj per la fontolingvo (se ne, ili estos lasitaj malplenaj)",
+                                                         required=False)
+    include_outdated = forms.BooleanField(label="Eksporti ankaŭ retradukendajn tradukojn",
+                                          required=False)
+    po_file_name = forms.CharField(label="Nomo de PO/MO-dosieroj",
+                                   required=False,
+                                   help_text="Se malplena, ĉiuj estos en la sama dosierujo kaj la nomo estos la kodo de la lingvo. Alie, ili estos ekzemple <code><i>lingvokodo</i>/LC_MESSAGES/<i>nomo</i>.po</code>. Do ekzemple por Django-projekto, la valoro devas esti <code>django</code>.")

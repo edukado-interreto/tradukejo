@@ -396,7 +396,7 @@ def export_to_json(project, path="", languages=[], remove_path=False):
     return data
 
 
-def export_to_po(response, project, path="", languages=[], remove_path=False):
+def export_to_po(response, project, path="", languages=[], remove_path=False, untranslated_as_source_language=True, include_outdated=False, po_file_name=''):
     """
     :param response:
     :param project:
@@ -441,9 +441,19 @@ def export_to_po(response, project, path="", languages=[], remove_path=False):
                 trstringtext = trstring.original_text
             else:
                 try:
-                    trstringtext = TrStringText.objects.get(trstring=trstring, language=language)
+                    if include_outdated:
+                        trstringtext = TrStringText.objects.get(trstring=trstring, language=language)
+                    else:
+                        trstringtext = TrStringText.objects.get(trstring=trstring, language=language, state=TRANSLATION_STATE_TRANSLATED)
                 except TrStringText.DoesNotExist:
-                    trstringtext = trstring.original_text
+                    if untranslated_as_source_language:
+                        trstringtext = trstring.original_text
+                    else:  # Blank translation
+                        trstringtext = TrStringText(trstring=trstring,
+                                                    language=language,
+                                                    state=TRANSLATION_STATE_TRANSLATED,
+                                                    pluralized=trstring.original_text.pluralized,
+                                                    text='')
 
             new_path = remove_path_start(trstring.path, path, remove_path)
             entry = polib.POEntry(msgid=f'{new_path}#{trstring.name}')
@@ -459,9 +469,18 @@ def export_to_po(response, project, path="", languages=[], remove_path=False):
 
             if trstring.context:
                 entry.comment = trstring.context
+
+            if trstringtext.state == TRANSLATION_STATE_OUTDATED:
+                entry.flags.append('fuzzy')
             po.append(entry)
-        print(po.__unicode__())
-        zf.writestr(f'{language.code}.po', po.__unicode__(), compress_type=ZIP_DEFLATED)
-        zf.writestr(f'{language.code}.mo', po.to_binary())
+        # print(po.__unicode__())
+
+        if po_file_name == '':
+            filepath = language.code
+        else:
+            filepath = f'{language.code}/LC_MESSAGES/{po_file_name}'
+
+        zf.writestr(f'{filepath}.po', po.__unicode__(), compress_type=ZIP_DEFLATED)
+        zf.writestr(f'{filepath}.mo', po.to_binary())
 
     return zf
