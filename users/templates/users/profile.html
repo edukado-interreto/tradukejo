@@ -11,9 +11,13 @@
 	</ol>
 </nav>
 <h2>Projektoj, en kiuj partoprenas la uzanto {{ current_user.username }}</h2>
+{% if projects %}
 <ul>
 	{% for project in projects %}
 		<li><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
 	{% endfor %}
 </ul>
+{% else %}
+<p>{{ current_user.username }} ankoraŭ ne komencis traduki.</p>
+{% endif %}
 {% endblock %}

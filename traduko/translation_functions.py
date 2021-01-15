@@ -513,7 +513,7 @@ def update_project_admins(user, project):
 def get_last_activities(project, limit=50):
     activities = StringActivity.objects.filter(trstringtext__trstring__project=project). \
                      values('date', 'language__code', 'language__name', 'user__pk', 'user__username', 'action'). \
-                     annotate(last=Max('datetime'), strings=Count('trstringtext'), words_sum=Sum('words')).order_by(
+                     annotate(last=Max('datetime'), strings=Count('trstringtext', distinct=True), words_sum=Sum('words')).order_by(
         '-last')[0:limit]
     last_activities = {}
     for activity in activities:
