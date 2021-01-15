@@ -30,5 +30,6 @@ urlpatterns = [
     path("project/<int:project_id>/export/json/", admin_views.export_json, name="export_json"),
     path("project/<int:project_id>/export/po/", admin_views.export_po, name="export_po"),
 
-    path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact")
+    path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),
+    path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions")
 ]

@@ -1,0 +1,15 @@
+{% extends 'normal-page.html' %}
+{% block title %}Instrukcioj{% endblock %}
+{% block pagetitle %}Instrukcioj{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Instrukcioj</li>
+	</ol>
+</nav>
+<div class="alert alert-info">
+	Instrukcioj baldaŭ aperos.
+</div>
+{% endblock %}

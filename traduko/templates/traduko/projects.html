@@ -1,9 +1,20 @@
 {% extends 'normal-page.html' %}
 
-{% block title %}Projektoj{% endblock %}
-{% block pagetitle %}Projektoj{% endblock %}
+{% block title %}Bonvenon{% endblock %}
+{% block pagetitle %}Bonvenon{% endblock %}
 
 {% block content %}
+<section class="jumbotron">
+	<h2 class="mt-0 display-4">Bonvenon al la nova tradukejo de E@I!</h2>
+	<p class="lead">Pli uzant-amika, pli efika kaj pli bela: ni reprogramis la tradukejon per modernaj teknologioj.</p>
+	<p>La malnova tradukejo daŭre estas <a href="https://tradukejo.ikso.net/" target="_blank">alirebla ĉi tie</a>, sed tradukaj projektoj estos iom post iom migrataj al la nova tradukejo.</p>
+	{% if not user.is_authenticated %}
+		<a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}">Krei konton</a>
+	{% endif %}
+	<a class="btn btn-secondary btn-lg" href="{% url 'instructions' %}">Legi la instrukciojn</a>
+</section>
+
+<h2>Projektoj</h2>
 <div class="card mt-4">
 	<ul class="list-group list-group-flush">
 		{% for project in projects %}

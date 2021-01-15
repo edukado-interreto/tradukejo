@@ -92,14 +92,14 @@ main {
     margin: auto;
 }
 
+main .jumbotron {
+    padding: 2rem;
+}
+
 /* Project page */
 
 .project.hidden {
     opacity: .75;
-}
-
-.project-logo {
-    max-width: 300px;
 }
 
 .card.project-admin-card {

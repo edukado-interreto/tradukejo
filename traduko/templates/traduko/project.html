@@ -20,33 +20,49 @@
 	</ol>
 </nav>
 
-{% if project.image %}
-<div class="project-logo text-center float-sm-right ml-sm-3">
-	<img src="{{ project.image.url }}" alt="" class="img-fluid d-block mb-2">
-</div>
-{% endif %}
-{% if project.description %}
-	<p>{{ project.description }}</p>
-{% endif %}
 
-<ul>
-	{% if project.url %}
-		<li>Adreso: <a href="{{ project.url }}">{{ project.url }}</a></li>
-{% endif %}
-	<li>Fontolingvo: {{ project.source_language.name }}</li>
-	<li>Ĉenoj: {{ project.strings }}</li>
-	<li>Vortoj: {{ project.words }}</li>
-	<li>Signoj: {{ project.characters }}</li>
-	<li>
-		Bezonataj lingvoj:
-		{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
-	</li>
-</ul>
+<div class="card mb-4">
+	<div class="card-header">
+		{{ project.name }}
+	</div>
+	<div class="row no-gutters">
+		<div class="col">
+			<div class="card-body">
+				<p class="card-text">{{ project.description }}</p>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card-body">
+				<ul>
+				{% if project.url %}
+					<li>Adreso: <a href="{{ project.url }}">{{ project.url }}</a></li>
+				{% endif %}
+					<li>Fontolingvo: {{ project.source_language.name }}</li>
+					<li>Ĉenoj: {{ project.strings }}</li>
+					<li>Vortoj: {{ project.words }}</li>
+					<li>Signoj: {{ project.characters }}</li>
+					<li>
+						Bezonataj lingvoj:
+						{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% if project.image %}
+		<div class="col-md-3 col-lg-2 order-first order-md-last">
+			<div class="card-body text-right">
+				<img src="{{ project.image.url }}" alt="" class="img-fluid d-block">
+			</div>
+		</div>
+		{% endif %}
+	</div>
+	<div class="card-footer">Konfuzita? <a href="{% url 'instructions' %}">Legu la instrukciojn!</a></div>
+</div>
 
 {% if is_project_admin %}
-<div class="card mb-4 project-admin-card">
-	<div class="card-body alert alert-dark m-0">
-		<h5 class="card-title">Administrado</h5>
+<div class="card mb-4 bg-secondary text-white project-admin-card">
+	<div class="card-header">Administrado</div>
+	<div class="card-body">
 		<p class="text-center card-text">
 			{% if user.is_superuser %}
 				<a href="{% url 'admin:traduko_project_change' project.pk %}" class="btn btn-danger">Redakti en la administrejo</a>
@@ -65,7 +81,7 @@
 </div>
 {% endif %}
 
-<div class="row" style="clear: both;">
+<div class="row">
 	<div class="col-12 col-md-8 col-lg-9 col-xl-10">
 		{% if my_languages_with_stats %}
 		<h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
