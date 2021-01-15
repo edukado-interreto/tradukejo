@@ -7,6 +7,7 @@ from users.forms import CustomUserCreationForm, UserSettingsForm
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
+from traduko.models import *
 
 User = get_user_model()
 
@@ -47,8 +48,10 @@ def register(request):
 @login_required
 def profile(request, user_id):
     current_user = get_object_or_404(User, pk=user_id)
+    projects = Project.objects.filter(visible=True, languageversion__translators=current_user).distinct().order_by('name')
 
     context = {
+        'projects': projects,
         'current_user': current_user,
     }
     return render(request, "users/profile.html", context)

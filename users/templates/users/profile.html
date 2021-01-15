@@ -10,5 +10,10 @@
 		<li class="breadcrumb-item active" aria-current="page">{{ current_user.username }}</li>
 	</ol>
 </nav>
-<div class="alert alert-info">Baldaŭ.</div>
+<h2>Projektoj, en kiuj partoprenas la uzanto {{ current_user.username }}</h2>
+<ul>
+	{% for project in projects %}
+		<li><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+	{% endfor %}
+</ul>
 {% endblock %}
