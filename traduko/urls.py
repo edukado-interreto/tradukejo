@@ -28,6 +28,7 @@ urlpatterns = [
     path("project/<int:project_id>/export/csv/", admin_views.export_csv, name="export_csv"),
     path("project/<int:project_id>/import/json/", admin_views.import_json, name="import_json"),
     path("project/<int:project_id>/export/json/", admin_views.export_json, name="export_json"),
+    path("project/<int:project_id>/import/po/", admin_views.import_po, name="import_po"),
     path("project/<int:project_id>/export/po/", admin_views.export_po, name="export_po"),
 
     path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),

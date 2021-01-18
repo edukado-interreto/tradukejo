@@ -67,7 +67,8 @@ def decline_translator_request(request, request_id):
     translatorrequest = get_object_or_404(TranslatorRequest, pk=request_id)
 
     # Delete the language version if no translations
-    if TrStringText.objects.filter(trstring__project=translatorrequest.language_version.project, language=translatorrequest.language_version.language).count() == 0:
+    if TrStringText.objects.filter(trstring__project=translatorrequest.language_version.project,
+                                   language=translatorrequest.language_version.language).count() == 0:
         translatorrequest.language_version.delete()  # translatorrequest deleted by cascade
     else:
         translatorrequest.delete()
@@ -161,11 +162,15 @@ def translator_notifications(request, project_id):
 
     if request.method == 'POST':
         languages = request.POST.getlist('send[]')
-        language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(translated_strings=project.strings)
+        language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(
+            translated_strings=project.strings)
         if len(language_versions) > 0:
-            translators = get_user_model().objects.filter(email_new_texts=True, languageversion__in=language_versions).distinct().exclude(pk=request.user.pk)
+            translators = get_user_model().objects.filter(email_new_texts=True,
+                                                          languageversion__in=language_versions).distinct().exclude(
+                pk=request.user.pk)
             for translator in translators:
-                lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(translated_strings=project.strings)
+                lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(
+                    translated_strings=project.strings)
                 # Email translator about new strings
                 mail_context = {
                     'translator': translator,
@@ -224,7 +229,8 @@ def import_csv(request, project_id):
                                                    form.cleaned_data['user_is_author'],
                                                    request.user,
                                                    import_to=form.cleaned_data['import_to'])
-                    messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
+                    messages.success(request,
+                                     f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
@@ -260,7 +266,8 @@ def import_json(request, project_id):
                                                     form.cleaned_data['user_is_author'],
                                                     request.user,
                                                     import_to=form.cleaned_data['import_to'])
-                    messages.success(request, f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
+                    messages.success(request,
+                                     f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
@@ -279,6 +286,43 @@ def import_json(request, project_id):
 
 @login_required
 @user_is_project_admin
+def import_po(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = ImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            po_file = form.cleaned_data['file']
+            if not po_file.name.endswith('.po') and not po_file.name.endswith('.pot'):
+                messages.error(request, 'Malĝusta formato de dosiero.')
+            else:
+                try:
+                    import_stats = import_from_po(project,
+                                                  po_file,
+                                                  form.cleaned_data['update_texts'],
+                                                  form.cleaned_data['user_is_author'],
+                                                  request.user,
+                                                  import_to=form.cleaned_data['import_to'])
+                    messages.success(request,
+                                     f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
+                except WrongFormatError:
+                    messages.error(request, 'Malĝusta formato de dosiero.')
+        else:
+            pass
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = ImportForm()
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/import-po.html", context)
+
+
+@login_required
+@user_is_project_admin
 def export_csv(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     languages = [
@@ -291,7 +335,8 @@ def export_csv(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'], remove_path=form.cleaned_data['remove_path'])
+            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'],
+                                 remove_path=form.cleaned_data['remove_path'])
             filename = slugify(project.name)
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = f'attachment; filename="{filename}.csv"'
@@ -325,7 +370,8 @@ def export_json(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'], remove_path=form.cleaned_data['remove_path'])
+            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'],
+                                  remove_path=form.cleaned_data['remove_path'])
             filename = slugify(project.name)
             response = JsonResponse(data, safe=False)
             response['Content-Disposition'] = f'attachment; filename="{filename}.json"'
@@ -373,4 +419,3 @@ def export_po(request, project_id):
         'form': form,
     }
     return render(request, "traduko/import-export/export-po.html", context)
-

@@ -58,7 +58,7 @@ def quick_import(project, data, user, fallback_author=None):
     imported_translations = 0
 
     # Get max ID of current TrStrings so we can identify newly added ones later
-    max_id = TrString.objects.filter(project=4).aggregate(Max('pk'))
+    max_id = TrString.objects.filter(project=project).aggregate(Max('pk'))
     max_id = max_id['pk__max']
     if max_id is None:
         max_id = 0
@@ -82,6 +82,7 @@ def quick_import(project, data, user, fallback_author=None):
         if string['path'] not in all_strings.keys() or string['name'] not in all_strings[string['path']].keys():
             # Only if there is a translation in the source language
             if project.source_language.code in string['translations'].keys():
+
                 source_language_text = parse_submitted_text(
                     string['translations'][project.source_language.code]['text'].strip(),
                     string['pluralized'] if 'pluralized' in string.keys() else False,
@@ -94,6 +95,7 @@ def quick_import(project, data, user, fallback_author=None):
                 if 'context' in string.keys():
                     trstring.context = string['context']
                 strings_to_add.append(trstring)
+    print(strings_to_add)
     TrString.objects.bulk_create(strings_to_add)
 
     # Now we query the newly added strings and add them to all_strings dictionary
@@ -107,7 +109,7 @@ def quick_import(project, data, user, fallback_author=None):
         }
 
     # Get max ID of current TrStrings so we can identify newly added ones later
-    max_translation_id = TrStringText.objects.filter(trstring__project=4).aggregate(Max('pk'))
+    max_translation_id = TrStringText.objects.filter(trstring__project=project).aggregate(Max('pk'))
     max_translation_id = max_translation_id['pk__max']
     if max_translation_id is None:
         max_translation_id = 0
@@ -115,9 +117,12 @@ def quick_import(project, data, user, fallback_author=None):
     trstringtexts_to_add = []
     all_languages = get_all_languages_dictionary()
     all_users = get_all_users_dictionary()
+
     # Now loop through all translations in data list and add them if they don't exist
     for string in data:
         for language_code, translation in string['translations'].items():
+            if string['path'] not in all_strings.keys() or string['name'] not in all_strings[string['path']].keys():  # Trying to import translation of non-existent string
+                continue
             if language_code not in all_strings[string['path']][string['name']]['translations']:
                 language = all_languages[language_code]
                 pluralized = string['pluralized'] if 'pluralized' in string.keys() else False
@@ -299,6 +304,69 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user, impor
             if len(translations) > 0:
                 string['translations'] = translations
                 data.append(string)
+
+    if update_texts:
+        import_stats = slow_import(project, data, user, user if user_is_author else None)
+    else:
+        import_stats = quick_import(project, data, user, user if user_is_author else None)
+
+    update_project_count(project)
+    update_all_language_versions_count(project)
+
+    return import_stats
+
+
+def import_from_po(project, po_file, update_texts, user_is_author, user, import_to=''):
+    po = polib.pofile(po_file.read().decode())
+
+    language = po.metadata['Language']
+
+    language_codes = [language]
+    languages = Language.objects.filter(code__in=language_codes)
+    add_language_versions(project, languages)
+    for l in languages:
+        update_translators_when_translating(user, project, l)
+
+    data = []
+
+    for msg in po:
+        if len(msg.msgstr_plural) == 0:
+            if msg.msgstr == '':  # Empty translation
+                continue
+            text = msg.msgstr
+        else:  # Plural string
+            if msg.msgstr_plural[0] == '':  # Empty translation
+                continue
+            text = json.dumps(list(msg.msgstr_plural.values()))
+
+        path_name = msg.msgid.split('#', 1)  # msgid is something like "path#name"
+        if len(path_name) == 1:
+            path = ''
+            name = msg.msgid
+        else:
+            path = path_name[0]
+            name = path_name[1]
+
+        if import_to != '':  # Add import path
+            if path == '':
+                path = import_to
+            else:
+                path = f'{import_to}/{path}'
+
+        string_data = {
+            'path': path,
+            'name': name,
+            'pluralized': msg.msgid_plural != '',
+            'translations': {
+                language: {
+                    'state': TRANSLATION_STATE_OUTDATED if msg.fuzzy else TRANSLATION_STATE_TRANSLATED,
+                    'text': text,
+                }
+            }
+        }
+        if msg.comment != '':
+            string_data['context'] = msg.comment
+        data.append(string_data)
 
     if update_texts:
         import_stats = slow_import(project, data, user, user if user_is_author else None)
