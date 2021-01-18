@@ -313,15 +313,23 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user, impor
 
 def export_to_csv(project, path="", languages=[], remove_path=False):
     fieldnames = ['path', 'name', 'pluralized', 'context']
-    if project.source_language.code in languages:
+    export_source_language = project.source_language.code in languages or len(languages) == 0
+    if export_source_language:
         fieldnames.append(project.source_language.code)
     csv_data = []
 
     trstrings = project.trstring_set.all().order_by('path', 'name')
     if path != "":
         trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
-    languageversions = project.languageversion_set.filter(language__in=languages).order_by('language__code')
-    trstringtexts = TrStringText.objects.filter(trstring__in=trstrings, language__in=languages)
+
+    if len(languages) > 0:
+        if project.source_language.code not in languages:  # If not exporting source language: getting it anyway because it is necessary for data
+            languages.append(project.source_language.code)
+        languageversions = project.languageversion_set.filter(language__in=languages).order_by('language__code')
+        trstringtexts = TrStringText.objects.filter(trstring__in=trstrings, language__in=languages)
+    else:  # No language specified = all languages
+        languageversions = project.languageversion_set.order_by('language__code')
+        trstringtexts = TrStringText.objects.filter(trstring__in=trstrings)
 
     translation_data = {}
     for translation in trstringtexts:
@@ -333,16 +341,17 @@ def export_to_csv(project, path="", languages=[], remove_path=False):
         fieldnames.append(lv.language.code)
 
     for s in trstrings:
-        if s.pk not in translation_data.keys() or project.source_language.code not in translation_data[s.pk].keys():
+        if s.pk not in translation_data.keys() or not export_source_language and len(translation_data[s.pk]) == 1:
             continue
         new_path = remove_path_start(s.path, path, remove_path)
         string_data = {
             'path': new_path,
             'name': s.name,
             'context': s.context,
-            'pluralized': '1' if translation_data[s.pk][project.source_language.code].pluralized else '0',
-            project.source_language.code: translation_data[s.pk][project.source_language.code].text,
+            'pluralized': '1' if translation_data[s.pk][project.source_language.code].pluralized else '0'
         }
+        if export_source_language:
+            string_data[project.source_language.code] = translation_data[s.pk][project.source_language.code].text
         for lv in languageversions:
             if lv.language.code in translation_data[s.pk].keys():
                 string_data[lv.language.code] = translation_data[s.pk][lv.language.code].text
@@ -414,12 +423,11 @@ def export_to_po(response, project, path="", languages=[], remove_path=False, un
     zf = ZipFile(response, 'w')
 
     if len(languages) == 0:
-        languages = Language.objects.filter(languageversion__project=project)
+        languages = Language.objects.filter(Q(languageversion__project=project) | Q(code=project.source_language.code))
     else:
         languages = Language.objects.filter(code__in=languages)
 
     for language in languages:
-        print(language)
         po = polib.POFile()
         po.metadata = {
             'Project-Id-Version': '1.0',

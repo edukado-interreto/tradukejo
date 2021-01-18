@@ -34,7 +34,7 @@ class ImportForm(forms.Form):
 class ExportForm(forms.Form):
     path = forms.CharField(label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)",
                            required=False)
-    remove_path = forms.BooleanField(label="Forpreni la nomon de la dosiero",
+    remove_path = forms.BooleanField(label="Forpreni la nomon de la dosierujo",
                                      required=False)
     languages = forms.MultipleChoiceField(label="Lingvoj por eksporti (lasi malplena por eksporti ĉiujn)",
                                           required=False,
