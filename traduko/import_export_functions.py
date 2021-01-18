@@ -7,6 +7,7 @@ from .models import *
 from .translation_functions import *
 from . import signals
 from zipfile import ZipFile, ZIP_DEFLATED, zlib
+from datetime import datetime
 
 
 class WrongFormatError(Exception):
@@ -499,9 +500,9 @@ def export_to_po(response, project, path="", languages=[], remove_path=False, un
         po = polib.POFile()
         po.metadata = {
             'Project-Id-Version': '1.0',
-            'Report-Msgid-Bugs-To': 'you@example.com',
-            'POT-Creation-Date': '2007-10-18 14:00+0100',
-            'PO-Revision-Date': '2007-10-18 14:00+0100',
+            'Report-Msgid-Bugs-To': settings.DEFAULT_FROM_EMAIL,
+            'POT-Creation-Date': datetime.now().astimezone().strftime('%Y-%m-%d %H:%M%z'),
+            'PO-Revision-Date': datetime.now().astimezone().strftime('%Y-%m-%d %H:%M%z'),
             'Last-Translator': '',
             'Language-Team': '',
             'Language': language.code,

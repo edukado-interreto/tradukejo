@@ -12,6 +12,9 @@
 		<li class="breadcrumb-item active" aria-current="page">Importi PO</li>
 	</ol>
 </nav>
+<div class="alert alert-info">
+	Importado kaj eksportaro de PO-dosiero nuntempe funkcias nur se <code>msgid</code> estas ŝlosilo de ĉeno (praktike: <code>path#name</code>), kaj ne teksto en la fontolingvo.
+</div>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{ form|crispy }}
