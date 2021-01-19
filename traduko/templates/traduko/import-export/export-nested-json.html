@@ -1,0 +1,21 @@
+{% extends 'normal-page.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ project.name }} – eksporti kiel nestitan JSON{% endblock %}
+{% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – eksporti kiel nestitan JSON{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'import_export' project.pk %}">Importi/eksporti</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Eksporti kiel nestitan JSON</li>
+	</ol>
+</nav>
+<form action="" method="post">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<input type="submit" value="Eksporti kiel nestitan JSON" class="btn btn-primary">
+</form>
+{% endblock %}
+

@@ -27,8 +27,10 @@ class ImportForm(forms.Form):
     file = forms.FileField(label="Dosiero", required=True)
     import_to = forms.CharField(label="Importi al la jena dosierujo:",
                                 required=False)
-    update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn (tre malrapida!)", required=False)
-    user_is_author = forms.BooleanField(label="Marki min kiel defaŭltan aŭtoron de importitaj tekstoj kaj tradukoj", required=False)
+    update_texts = forms.BooleanField(label="Ĝisdatigi jam ekzistantajn ĉenojn kaj tradukojn (tre malrapida!)",
+                                      required=False)
+    user_is_author = forms.BooleanField(label="Marki min kiel defaŭltan aŭtoron de importitaj tekstoj kaj tradukoj",
+                                        required=False)
 
 
 class ExportForm(forms.Form):
@@ -48,10 +50,35 @@ class ExportForm(forms.Form):
 
 
 class POExportForm(ExportForm):
-    untranslated_as_source_language = forms.BooleanField(label="Netradukitaj ĉenoj estos anstataŭigitaj per la fontolingvo (se ne, ili estos lasitaj malplenaj)",
-                                                         required=False)
+    untranslated_as_source_language = forms.BooleanField(
+        label="Netradukitaj ĉenoj estos anstataŭigitaj per la fontolingvo (se ne, ili estos lasitaj malplenaj)",
+        required=False)
     include_outdated = forms.BooleanField(label="Eksporti ankaŭ retradukendajn tradukojn",
                                           required=False)
     po_file_name = forms.CharField(label="Nomo de PO/MO-dosieroj",
                                    required=False,
                                    help_text="Se malplena, ĉiuj estos en la sama dosierujo kaj la nomo estos la kodo de la lingvo. Alie, ili estos ekzemple <code><i>lingvokodo</i>/LC_MESSAGES/<i>nomo</i>.po</code>. Do ekzemple por Django-projekto, la valoro devas esti <code>django</code>.")
+
+
+class NestedJSONExportForm(ExportForm):
+    untranslated_as_source_language = forms.BooleanField(
+        label="Netradukitaj ĉenoj estos anstataŭigitaj per la fontolingvo (se ne, ili estos lasitaj malplenaj)",
+        required=False)
+    include_outdated = forms.BooleanField(label="Eksporti ankaŭ retradukendajn tradukojn",
+                                          required=False)
+    export_empty = forms.BooleanField(label="Eksporti malplenajn tradukojn (se ne, ili estos ignoritaj)",
+                                      required=False)
+    export_default = forms.BooleanField(label="Aldoni <code>export default</code> antaŭ la JSON-objekton",
+                                        required=False)
+    export_language_name = forms.CharField(label="Eksporti la nomon de la lingvo inter tradukoj ĉe la jena ŝlosilo",
+                                           widget=forms.TextInput(attrs={'placeholder': "language_name"}),
+                                           required=False,
+                                           help_text="Ĝi ne estos eksportita, se ĉi tiu kampo estas malplena.")
+    export_plural_rules = forms.CharField(label="Eksporti la pluralajn regulojn inter tradukoj ĉe la jena ŝlosilo",
+                                          widget=forms.TextInput(attrs={'placeholder': "plural_rules"}),
+                                          required=False,
+                                          help_text="Ĝi ne estos eksportita, se ĉi tiu kampo estas malplena.")
+    file_name = forms.CharField(label="Nomo de la dosieroj",
+                                widget=forms.TextInput(attrs={'placeholder': "{lang}.json"}),
+                                required=False,
+                                help_text="<code>{lang}</code> estos la nomo de la lingvo.")

@@ -419,3 +419,42 @@ def export_po(request, project_id):
         'form': form,
     }
     return render(request, "traduko/import-export/export-po.html", context)
+
+
+@login_required
+@user_is_project_admin
+def export_nested_json(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    languages = [
+        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
+    ]
+    languageversions = project.languageversion_set.all().order_by('language__code')
+    for lv in languageversions:
+        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+
+    if request.method == 'POST':
+        form = NestedJSONExportForm(data=request.POST, language_choices=languages)
+        if form.is_valid():
+            response = HttpResponse(content_type='application/zip')
+            data = export_to_nested_json(response, project,
+                                         path=form.cleaned_data['path'],
+                                         languages=form.cleaned_data['languages'],
+                                         remove_path=form.cleaned_data['remove_path'],
+                                         untranslated_as_source_language=form.cleaned_data['untranslated_as_source_language'],
+                                         include_outdated=form.cleaned_data['include_outdated'],
+                                         export_empty=form.cleaned_data['export_empty'],
+                                         export_default=form.cleaned_data['export_default'],
+                                         export_language_name=form.cleaned_data['export_language_name'],
+                                         export_plural_rules=form.cleaned_data['export_plural_rules'],
+                                         file_name=form.cleaned_data['file_name'],
+                                         )
+            filename = slugify(project.name)
+            response['Content-Disposition'] = f'attachment; filename="{filename}.zip"'
+            return response
+    else:
+        form = NestedJSONExportForm(language_choices=languages)
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/export-nested-json.html", context)

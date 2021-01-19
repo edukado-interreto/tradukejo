@@ -561,3 +561,126 @@ def export_to_po(response, project, path="", languages=[], remove_path=False, un
         zf.writestr(f'{filepath}.mo', po.to_binary())
 
     return zf
+
+
+def export_to_nested_json(response, project, **kwargs):
+    """
+    :param response:
+    :param project:
+    :param path:
+    :param languages: list of language codes or empty list for all languages.
+    :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
+    :param untranslated_as_source_language: boolean
+    :param include_outdated: boolean
+    :param file_name: how exported files should be called
+    :param export_default: add "export default" before the JSON object?
+    :param export_empty: boolean
+    :param export_language_name: name of key where the language name should be exported
+    :param export_plural_rules: name of key where the plural rules should be exported
+    :return: content of ZIP file
+    """
+    path = kwargs.get('path', '')
+    remove_path = kwargs.get('remove_path', False)
+    languages = kwargs.get('languages', [])
+    untranslated_as_source_language = kwargs.get('untranslated_as_source_language', True)
+    include_outdated = kwargs.get('include_outdated', False)
+    file_name = kwargs.get('file_name', '{lang}.json')
+    export_default = kwargs.get('export_default', False)
+    export_empty = kwargs.get('export_empty', False)
+    export_language_name = kwargs.get('export_language_name', '')
+    export_plural_rules = kwargs.get('export_plural_rules', '')
+
+    if '{lang}' not in file_name:
+        file_name = '{lang}.json'
+
+    trstrings = project.trstring_set.all().order_by('path', 'name')
+    if path != "":
+        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    for trstring in trstrings:
+        trstring.original_text = TrStringText.objects.get(trstring=trstring, language=project.source_language)
+
+    zf = ZipFile(response, 'w')
+
+    if len(languages) == 0:
+        languages = Language.objects.filter(Q(languageversion__project=project) | Q(code=project.source_language.code))
+    else:
+        languages = Language.objects.filter(code__in=languages)
+
+    for language in languages:
+        current_language_data = {}
+
+        # Export language name?
+        if export_language_name != '':
+            language_name_path = export_language_name.split('/')
+            current_key = current_language_data
+            for i in range(len(language_name_path)):
+                if i == len(language_name_path) - 1:
+                    current_key[language_name_path[i]] = language.name
+                else:
+                    if language_name_path[i] not in current_key.keys():
+                        current_key[language_name_path[i]] = {}
+                    current_key = current_key[language_name_path[i]]
+
+        # Export plural rules?
+        if export_plural_rules != '':
+            plural_rules_path = export_plural_rules.split('/')
+            current_key = current_language_data
+            for i in range(len(plural_rules_path)):
+                if i == len(plural_rules_path) - 1:
+                    current_key[plural_rules_path[i]] = language.plural_forms
+                else:
+                    if plural_rules_path[i] not in current_key.keys():
+                        current_key[plural_rules_path[i]] = {}
+                    current_key = current_key[plural_rules_path[i]]
+
+        # Export translations
+        for trstring in trstrings:
+            # Getting the translation of the current string
+            if language == project.source_language:
+                trstringtext = trstring.original_text
+            else:
+                try:
+                    if include_outdated:
+                        trstringtext = TrStringText.objects.get(trstring=trstring, language=language)
+                    else:
+                        trstringtext = TrStringText.objects.get(trstring=trstring, language=language,
+                                                                state=TRANSLATION_STATE_TRANSLATED)
+                except TrStringText.DoesNotExist:
+                    if untranslated_as_source_language:
+                        trstringtext = trstring.original_text
+                    else:  # Blank translation
+                        trstringtext = TrStringText(trstring=trstring,
+                                                    language=language,
+                                                    state=TRANSLATION_STATE_TRANSLATED,
+                                                    pluralized=trstring.original_text.pluralized,
+                                                    text='')
+
+            text = trstringtext.text
+            if trstringtext.pluralized:
+                try:
+                    pluralized_text = json.loads(text)
+                    text = ' | '.join(pluralized_text)
+                except ValueError:
+                    pass
+            if text == '' and not export_empty:
+                continue
+
+            # Getting the nested path
+            new_path = remove_path_start(trstring.path, path, remove_path)
+            current_key = current_language_data
+            if new_path != '':
+                new_path = new_path.split('/')
+                for p in new_path:
+                    if p not in current_key.keys():
+                        current_key[p] = {}
+                    current_key = current_key[p]
+
+            current_key[trstring.name] = text
+
+        json_data = json.dumps(current_language_data, ensure_ascii=False, indent=2)
+        if export_default:
+            json_data = 'export default ' + json_data
+        current_file_name = file_name.format(lang=language.code)
+        zf.writestr(current_file_name, json_data, compress_type=ZIP_DEFLATED)
+
+    return zf
