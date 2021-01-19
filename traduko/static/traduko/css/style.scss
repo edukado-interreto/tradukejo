@@ -72,6 +72,10 @@ main {
         margin-top: 2rem;
         margin-bottom: 1rem;
     }
+
+    .jumbotron {
+        padding: 2rem;
+    }
 }
 
 .breadcrumb.main-breadcrumb {
@@ -92,8 +96,8 @@ main {
     margin: auto;
 }
 
-main .jumbotron {
-    padding: 2rem;
+.alert p:last-child {
+    margin-bottom: 0;
 }
 
 /* Project page */

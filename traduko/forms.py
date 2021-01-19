@@ -7,13 +7,15 @@ from traduko.models import Project
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'url', 'image', 'source_language', 'description', 'needed_languages', 'visible', 'locked']
+        fields = ['name', 'url', 'image', 'source_language', 'description', 'update_explanations', 'export_explanations', 'needed_languages', 'visible', 'locked']
         labels = {
             'name': 'Nomo',
             'url': 'URL',
             'image': 'Bildo',
             'source_language': 'Fontolingvo',
             'description': 'Priskribo',
+            'update_explanations': 'Klarigoj pri tio, kiel tradukoj estas ĝisdatigataj en la projekto',
+            'export_explanations': 'Klarigoj pri tio, kiel eksporti la projekton',
             'needed_languages': 'Bezonataj lingvoj',
             'visible': 'Videbla',
             'locked': 'Ŝlosita',

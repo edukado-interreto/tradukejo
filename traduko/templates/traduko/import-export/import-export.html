@@ -10,6 +10,12 @@
 		<li class="breadcrumb-item active" aria-current="page">Importi/eksporti</li>
 	</ol>
 </nav>
+{% if project.export_explanations %}
+<div class="alert alert-info">
+	<h4 class="alert-heading">Klarigoj por importado/eksportado de la projekto</h4>
+	{{ project.export_explanations|linebreaks }}
+</div>
+{% endif %}
 <div class="row">
 	<div class="col-12 col-sm-6">
 		<h2>Importi</h2>

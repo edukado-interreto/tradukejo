@@ -109,6 +109,10 @@ class Project(models.Model):
                                         on_delete=models.PROTECT)
     image = models.ImageField(blank=True, upload_to=project_image_upload_location)
     description = models.TextField(blank=True)
+    update_explanations = models.TextField(blank=True,
+                                           help_text='Explanations for translators: how are translations updated in the website?')
+    export_explanations = models.TextField(blank=True,
+                                           help_text='Explanations for project admins: how to export the translations?')
     needed_languages = models.ManyToManyField('Language',
                                               blank=True,
                                               related_name='needed_languages',

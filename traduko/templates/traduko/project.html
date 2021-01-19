@@ -28,7 +28,12 @@
 	<div class="row no-gutters">
 		<div class="col">
 			<div class="card-body">
-				<p class="card-text">{{ project.description }}</p>
+				<p class="card-text">{{ project.description|linebreaks }}</p>
+				{% if project.update_explanations %}
+				<div class="alert alert-info">
+					{{ project.update_explanations }}
+				</div>
+				{% endif %}
 			</div>
 		</div>
 		<div class="col-md-4">
