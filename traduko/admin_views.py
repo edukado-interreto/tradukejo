@@ -234,7 +234,6 @@ def import_csv(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            pass
             messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
         update_project_admins(request.user, project)
     else:
@@ -271,7 +270,6 @@ def import_json(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            pass
             messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
         update_project_admins(request.user, project)
     else:
@@ -308,7 +306,6 @@ def import_po(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            pass
             messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
         update_project_admins(request.user, project)
     else:
@@ -323,14 +320,44 @@ def import_po(request, project_id):
 
 @login_required
 @user_is_project_admin
+def import_nested_json(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    languages = get_languages_for_export(project)
+
+    if request.method == 'POST':
+        form = ImportFormWithLanguage(data=request.POST, files=request.FILES, language_choices=languages)
+        if form.is_valid():
+            json_file = form.cleaned_data['file']
+            try:
+                import_stats = import_from_nested_json(project,
+                                                       json_file,
+                                                       form.cleaned_data['language'],
+                                                       form.cleaned_data['update_texts'],
+                                                       form.cleaned_data['user_is_author'],
+                                                       request.user,
+                                                       import_to=form.cleaned_data['import_to'])
+                messages.success(request,
+                                 f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
+            except WrongFormatError:
+                messages.error(request, 'Malĝusta formato de dosiero.')
+        else:
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = ImportFormWithLanguage(language_choices=languages)
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/import-nested-json.html", context)
+
+
+@login_required
+@user_is_project_admin
 def export_csv(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    languages = [
-        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
-    ]
-    languageversions = project.languageversion_set.all().order_by('language__code')
-    for lv in languageversions:
-        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+    languages = get_languages_for_export(project)
 
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
@@ -360,12 +387,7 @@ def export_csv(request, project_id):
 @user_is_project_admin
 def export_json(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    languages = [
-        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
-    ]
-    languageversions = project.languageversion_set.all().order_by('language__code')
-    for lv in languageversions:
-        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+    languages = get_languages_for_export(project)
 
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
@@ -389,12 +411,7 @@ def export_json(request, project_id):
 @user_is_project_admin
 def export_po(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    languages = [
-        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
-    ]
-    languageversions = project.languageversion_set.all().order_by('language__code')
-    for lv in languageversions:
-        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+    languages = get_languages_for_export(project)
 
     if request.method == 'POST':
         form = POExportForm(data=request.POST, language_choices=languages)
@@ -425,12 +442,7 @@ def export_po(request, project_id):
 @user_is_project_admin
 def export_nested_json(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    languages = [
-        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
-    ]
-    languageversions = project.languageversion_set.all().order_by('language__code')
-    for lv in languageversions:
-        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+    languages = get_languages_for_export(project)
 
     if request.method == 'POST':
         form = NestedJSONExportForm(data=request.POST, language_choices=languages)
@@ -440,7 +452,8 @@ def export_nested_json(request, project_id):
                                          path=form.cleaned_data['path'],
                                          languages=form.cleaned_data['languages'],
                                          remove_path=form.cleaned_data['remove_path'],
-                                         untranslated_as_source_language=form.cleaned_data['untranslated_as_source_language'],
+                                         untranslated_as_source_language=form.cleaned_data[
+                                             'untranslated_as_source_language'],
                                          include_outdated=form.cleaned_data['include_outdated'],
                                          export_empty=form.cleaned_data['export_empty'],
                                          export_default=form.cleaned_data['export_default'],

@@ -14,18 +14,19 @@
 	<div class="col-12 col-sm-6">
 		<h2>Importi</h2>
 		<ul>
-			<li><a href="{% url 'import_json' project.pk %}">Importi JSON</a> (formato specifa por ĉi tiu tradukejo)</li>
-			<li><a href="{% url 'import_csv' project.pk %}">Importi CSV</a></li>
+			<li><a href="{% url 'import_json' project.pk %}">Importi JSON</a> (formaton specifan por ĉi tiu tradukejo)</li>
+			<li><a href="{% url 'import_csv' project.pk %}">Importi CSV</a> (formaton specifan por ĉi tiu tradukejo)</li>
 			<li><a href="{% url 'import_po' project.pk %}">Importi PO</a></li>
+			<li><a href="{% url 'import_nested_json' project.pk %}">Importi nestitan JSON</a> (uzatan ekzemple de Vue.js)</li>
 		</ul>
 	</div>
 	<div class="col-12 col-sm-6">
 		<h2>Eksporti</h2>
 		<ul>
-			<li><a href="{% url 'export_json' project.pk %}">Eksporti kiel JSON</a> (formato specifa por ĉi tiu tradukejo)</li>
-			<li><a href="{% url 'export_csv' project.pk %}">Eksporti kiel CSV</a></li>
+			<li><a href="{% url 'export_json' project.pk %}">Eksporti kiel JSON</a> (formaton specifan por ĉi tiu tradukejo)</li>
+			<li><a href="{% url 'export_csv' project.pk %}">Eksporti kiel CSV</a> (formaton specifan por ĉi tiu tradukejo)</li>
 			<li><a href="{% url 'export_po' project.pk %}">Eksporti kiel PO/MO</a></li>
-			<li><a href="{% url 'export_nested_json' project.pk %}">Eksporti kiel nestitan JSON</a> (uzata ekzemple de Vue.js)</li>
+			<li><a href="{% url 'export_nested_json' project.pk %}">Eksporti kiel nestitan JSON</a> (uzatan ekzemple de Vue.js)</li>
 		</ul>
 	</div>
 </div>

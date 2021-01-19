@@ -30,6 +30,7 @@ urlpatterns = [
     path("project/<int:project_id>/export/json/", admin_views.export_json, name="export_json"),
     path("project/<int:project_id>/import/po/", admin_views.import_po, name="import_po"),
     path("project/<int:project_id>/export/po/", admin_views.export_po, name="export_po"),
+    path("project/<int:project_id>/import/nested-json/", admin_views.import_nested_json, name="import_nested_json"),
     path("project/<int:project_id>/export/nested-json/", admin_views.export_nested_json, name="export_nested_json"),
 
     path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),

@@ -2,12 +2,12 @@ import csv, io, polib
 from django.contrib.auth import get_user_model
 from django.db.models import Case, When, Q
 from django.db.models.signals import post_save
-from django.utils import timezone
 from .models import *
 from .translation_functions import *
 from . import signals
-from zipfile import ZipFile, ZIP_DEFLATED, zlib
+from zipfile import ZipFile, ZIP_DEFLATED
 from datetime import datetime
+import demjson
 
 
 class WrongFormatError(Exception):
@@ -31,6 +31,16 @@ def get_all_users_dictionary():
     return dictionary
 
 
+def get_languages_for_export(project):
+    languages = [
+        (project.source_language.code, f'{project.source_language.code} - {project.source_language.name}')
+    ]
+    languageversions = project.languageversion_set.all().order_by('language__code')
+    for lv in languageversions:
+        languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
+    return languages
+
+
 def add_language_versions(project, languages):
     for l in languages:
         if l != project.source_language:
@@ -52,6 +62,39 @@ def remove_path_start(path, path_start, remove_path):
         else:
             new_path = path
     return new_path
+
+
+def recursive_dictionary_parse(dictionary, path='', merged_dictionary={}):
+    """
+    Transforms a dictionary like this:
+    {
+        "directory": {
+            "subdirectory": {
+                "string": "value",
+                "string2": "value",
+            }
+        }
+    }
+    Into a dictionary like this:
+    {
+        "directory/subdirectory": {
+            "string": "value",
+            "string2": "value",
+        }
+    }
+    """
+    for key, value in dictionary.items():
+        if isinstance(value, dict):
+            if path == '':
+                new_path = key
+            else:
+                new_path = f'{path}/{key}'
+            merged_dictionary = recursive_dictionary_parse(value, new_path)
+        else:
+            if path not in merged_dictionary.keys():
+                merged_dictionary[path] = {}
+            merged_dictionary[path][key] = value
+    return merged_dictionary
 
 
 def quick_import(project, data, user, fallback_author=None):
@@ -96,7 +139,6 @@ def quick_import(project, data, user, fallback_author=None):
                 if 'context' in string.keys():
                     trstring.context = string['context']
                 strings_to_add.append(trstring)
-    print(strings_to_add)
     TrString.objects.bulk_create(strings_to_add)
 
     # Now we query the newly added strings and add them to all_strings dictionary
@@ -230,7 +272,10 @@ def slow_import(project, data, user, fallback_author=None):
 
 def import_from_json(project, json_file, update_texts, user_is_author, user, import_to=''):
     json_file.seek(0)
-    data = json.loads(json_file.read())
+    try:
+        data = json.loads(json_file.read())
+    except ValueError:
+        raise WrongFormatError()
 
     language_codes = []
     import_to = import_to.strip('/ ')
@@ -338,7 +383,7 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
         else:  # Plural string
             if msg.msgstr_plural[0] == '':  # Empty translation
                 continue
-            text = json.dumps(list(msg.msgstr_plural.values()))
+            text = json.dumps(list(msg.msgstr_plural.values()), ensure_ascii=False)
 
         path_name = msg.msgid.split('#', 1)  # msgid is something like "path#name"
         if len(path_name) == 1:
@@ -368,6 +413,59 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
         if msg.comment != '':
             string_data['context'] = msg.comment
         data.append(string_data)
+
+    if update_texts:
+        import_stats = slow_import(project, data, user, user if user_is_author else None)
+    else:
+        import_stats = quick_import(project, data, user, user if user_is_author else None)
+
+    update_project_count(project)
+    update_all_language_versions_count(project)
+
+    return import_stats
+
+
+def import_from_nested_json(project, json_file, language_code, update_texts, user_is_author, user, import_to=''):
+    json_file.seek(0)
+    try:
+        # The file could be improper JSON (e.g. no double quotes around keys), demjson accepts this but json doesn't
+        json_data = demjson.decode(json_file.read())
+    except demjson.JSONDecodeError as e:
+        print(e)
+        raise WrongFormatError()
+
+    language = Language.objects.get(code=language_code)
+    add_language_versions(project, [language])
+    update_translators_when_translating(user, project, language)
+
+    strings_to_import = recursive_dictionary_parse(json_data)
+
+    data = []  # The list of dictionaries that will be imported
+
+    for path, strings in strings_to_import.items():
+        if import_to != '':  # Add import path
+            if path == '':
+                path = import_to
+            else:
+                path = f'{import_to}/{path}'
+        for name, text in strings.items():
+            # Pluralized strings are stored like this: "singular | plural ( | more forms)"
+            pluralized = language.nplurals() > 1 and text.count(' | ') == (language.nplurals() - 1)
+            if pluralized:
+                text = json.dumps(text.split(' | '), ensure_ascii=False)
+
+            string_data = {
+                'path': path,
+                'name': name,
+                'pluralized': pluralized,
+                'translations': {
+                    language.code: {
+                        'state': TRANSLATION_STATE_TRANSLATED,
+                        'text': text,
+                    }
+                }
+            }
+            data.append(string_data)
 
     if update_texts:
         import_stats = slow_import(project, data, user, user if user_is_author else None)

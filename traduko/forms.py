@@ -33,6 +33,17 @@ class ImportForm(forms.Form):
                                         required=False)
 
 
+class ImportFormWithLanguage(ImportForm):
+    language = forms.ChoiceField(label="Lingvo de la dosiero",
+                                 required=True,
+                                 choices=[])
+
+    def __init__(self, language_choices=None, *args, **kwargs):
+        super(ImportFormWithLanguage, self).__init__(*args, **kwargs)
+        if language_choices:
+            self.fields['language'].choices = language_choices
+
+
 class ExportForm(forms.Form):
     path = forms.CharField(label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)",
                            required=False)
