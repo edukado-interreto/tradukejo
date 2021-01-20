@@ -82,7 +82,7 @@ def translate(request, project_id, language):
     # Data from query string
     current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
     state_filter = request.GET['state'] if 'state' in request.GET.keys() else STATE_FILTER_ALL
-    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_OLDEST
+    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_NAME
     search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
 
     all_strings = get_all_strings(current_project, current_language, state_filter, search_string)

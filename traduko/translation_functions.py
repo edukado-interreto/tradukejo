@@ -36,6 +36,19 @@ def is_allowed_to_translate(user, project, language):
     return False
 
 
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+
+def natural_keys(text):
+    """
+    alist.sort(key=natural_keys) sorts in human order
+    http://nedbatchelder.com/blog/200712/human_sorting.html
+    (See Toothy's implementation in the comments)
+    """
+    return [atoi(c) for c in re.split(r'(\d+)', text)]
+
+
 def mark_translations_as_outdated(trstring):
     trstring.trstringtext_set.exclude(language=trstring.project.source_language).update(
         state=TRANSLATION_STATE_OUTDATED)
@@ -199,10 +212,10 @@ def get_strings_to_translate(all_strings, language, path, sort, start=0):
     total_strings = strings.count()
     if sort == SORT_STRINGS_BY_NEWEST:
         strings = strings.order_by('-last_change')
-    elif sort == SORT_STRINGS_BY_NAME:
-        strings = strings.order_by('name')
-    else:
+    elif sort == SORT_STRINGS_BY_OLDEST:
         strings = strings.order_by('last_change')
+    else:
+        strings = sorted(strings, key=lambda i: natural_keys(i.name))
 
     strings = strings[start:start + settings.MAX_LOADED_STRINGS]
 
@@ -220,7 +233,7 @@ def get_strings_to_translate(all_strings, language, path, sort, start=0):
         else:
             trstr.state = trstr.translated_text.state
 
-    return [strings, strings.count() + start < total_strings]
+    return [strings, len(strings) + start < total_strings]
 
 
 def update_project_count(project):

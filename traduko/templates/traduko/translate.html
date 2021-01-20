@@ -51,9 +51,9 @@
 				{% endif %}
 			</a>
 			<div class="dropdown-menu" aria-labelledby="sortDropdown">
+				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NAME 'q' q %}">Ordigi laŭ nomo</a>
 				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_OLDEST 'q' q %}">Ordigi laŭ plej malnovaj</a>
 				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NEWEST 'q' q %}">Ordigi laŭ plej novaj</a>
-				<a class="dropdown-item" href="./{% querystring 'dir' current_directory 'state' state_filter 'sort' SORT_STRINGS_BY_NAME 'q' q %}">Ordigi laŭ nomo</a>
 			</div>
 		</li>
 	</ul>
