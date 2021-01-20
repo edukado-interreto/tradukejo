@@ -25,6 +25,10 @@ class ProjectForm(forms.ModelForm):
         }
 
 
+class BasicImportForm(forms.Form):
+    file = forms.FileField(label="Dosiero", required=True)
+
+
 class ImportForm(forms.Form):
     file = forms.FileField(label="Dosiero", required=True)
     import_to = forms.CharField(label="Importi al la jena dosierujo:",

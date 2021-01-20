@@ -352,6 +352,32 @@ def import_nested_json(request, project_id):
     }
     return render(request, "traduko/import-export/import-nested-json.html", context)
 
+@login_required
+@user_is_project_admin
+def import_history(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == 'POST':
+        form = BasicImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            json_file = form.cleaned_data['file']
+            try:
+                number_imported = import_history_from_json(project, json_file)
+                messages.success(request, f"{number_imported} malnovaj ĉenoj estis importitaj.")
+            except WrongFormatError:
+                messages.error(request, 'Malĝusta formato de dosiero.')
+        else:
+            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+        update_project_admins(request.user, project)
+    else:
+        form = BasicImportForm()
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+    return render(request, "traduko/import-export/import-history.html", context)
+
 
 @login_required
 @user_is_project_admin

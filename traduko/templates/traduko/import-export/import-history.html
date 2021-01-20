@@ -1,0 +1,35 @@
+{% extends 'normal-page.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ project.name }} – importi historion de ĉenoj{% endblock %}
+{% block pagetitle %}<a href="{% url 'project' project.pk %}">{{ project.name }}</a> – importi historion de ĉenoj{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'import_export' project.pk %}">Importi/eksporti</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Importi historion de ĉenoj</li>
+	</ol>
+</nav>
+<p>Necesas alŝuti JSON-dosieron kun la jena formato:</p>
+<pre>
+[
+  {
+    "name": "1913-2",
+    "path": "kronologio",
+    "language": "fr",
+    "text": "24-31 août : 9e congrès mondial à Berne.",
+    "datetime": "2017-04-10 10:09:43",
+    "translated_by": "Matthieu"
+  }
+]
+
+</pre>
+<form action="" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<input type="submit" value="Importi JSON" class="btn btn-primary">
+</form>
+{% endblock %}
+

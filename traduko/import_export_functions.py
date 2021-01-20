@@ -2,6 +2,9 @@ import csv, io, polib
 from django.contrib.auth import get_user_model
 from django.db.models import Case, When, Q
 from django.db.models.signals import post_save
+from django.utils.dateparse import parse_datetime
+from django.utils.timezone import make_aware
+
 from .models import *
 from .translation_functions import *
 from . import signals
@@ -305,6 +308,49 @@ def import_from_json(project, json_file, update_texts, user_is_author, user, imp
     update_all_language_versions_count(project)
 
     return import_stats
+
+
+def import_history_from_json(project, json_file):
+    json_file.seek(0)
+    try:
+        data = json.loads(json_file.read())
+    except ValueError:
+        raise WrongFormatError()
+
+    all_users = get_all_users_dictionary()
+
+    imported = 0
+    history_to_add = []
+    for string in data:
+        try:  # Check if the translated string exists
+            trstringtext = TrStringText.objects.get(trstring__project=project,
+                                                    trstring__path=string['path'],
+                                                    trstring__name=string['name'],
+                                                    language=string['language']
+                                                    )
+        except TrStringText.DoesNotExist:
+            continue
+
+        # Check if the old string already exists
+        stringtime = make_aware(parse_datetime(string['datetime']))
+        history = TrStringTextHistory.objects.filter(trstringtext=trstringtext, create_date=stringtime).count()
+        if history > 0:
+            continue
+
+        print(trstringtext)
+        stringtime = make_aware(parse_datetime(string['datetime']))
+        new_history = TrStringTextHistory(trstringtext=trstringtext,
+                                          create_date=str(stringtime),
+                                          text=string['text'])
+
+        if string['translated_by'] in list(all_users.keys()):
+            new_history.translated_by = all_users[string['translated_by']]
+
+        history_to_add.append(new_history)
+        imported += 1
+
+    TrStringTextHistory.objects.bulk_create(history_to_add)
+    return imported
 
 
 def import_from_csv(project, csv_file, update_texts, user_is_author, user, import_to=''):

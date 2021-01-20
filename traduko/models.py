@@ -2,6 +2,8 @@ import json, re
 from collections import OrderedDict
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+
 from .cpython_gettext import c2py
 
 TRANSLATION_STATE_TRANSLATED = 1
@@ -267,7 +269,7 @@ class TrStringTextHistory(models.Model):
     translated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                       null=True,
                                       on_delete=models.SET_NULL)
-    create_date = models.DateTimeField(auto_now_add=True)
+    create_date = models.DateTimeField(default=timezone.now)  # Not auto_now_add because set manually when importing
 
     def __str__(self):
         return self.text

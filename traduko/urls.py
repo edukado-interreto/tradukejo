@@ -32,7 +32,9 @@ urlpatterns = [
     path("project/<int:project_id>/export/po/", admin_views.export_po, name="export_po"),
     path("project/<int:project_id>/import/nested-json/", admin_views.import_nested_json, name="import_nested_json"),
     path("project/<int:project_id>/export/nested-json/", admin_views.export_nested_json, name="export_nested_json"),
+    path("project/<int:project_id>/import/history/", admin_views.import_history, name="import_history"),
 
     path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),
     path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions")
 ]
+
