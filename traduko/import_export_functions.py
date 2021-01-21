@@ -102,7 +102,7 @@ def recursive_dictionary_parse(dictionary, path='', merged_dictionary={}):
                 new_path = key
             else:
                 new_path = f'{path}/{key}'
-            merged_dictionary = recursive_dictionary_parse(value, new_path)
+            merged_dictionary = recursive_dictionary_parse(value, new_path, dict(merged_dictionary))  # Python passes dictionary as references, dict() is here to avoid strange behavior when calling the function several times in a row
         else:
             if path not in merged_dictionary.keys():
                 merged_dictionary[path] = {}
@@ -473,7 +473,6 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
         if msg.comment != '':
             string_data['context'] = msg.comment
         data.append(string_data)
-
     if update_texts:
         import_stats = slow_import(project, data, user, user if user_is_author else None)
     else:
