@@ -282,11 +282,10 @@ def update_language_version_count(l):  # l: languageversion
 def get_project_languages_for_user(project, user):
     if is_project_admin(user, project):
         available_languages = (Language.objects.filter(code=project.source_language.code) |
-                               Language.objects.filter(languageversion__project=project))
+                               Language.objects.filter(languageversion__project=project)).distinct()
     else:
         available_languages = Language.objects.filter(languageversion__project=project,
                                                       languageversion__translators=user)
-
     return available_languages.order_by('code')
 
 
