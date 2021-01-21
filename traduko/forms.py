@@ -72,6 +72,8 @@ class POExportForm(ExportForm):
         required=False)
     include_outdated = forms.BooleanField(label="Eksporti ankaŭ retradukendajn tradukojn",
                                           required=False)
+    original_text_as_key = forms.BooleanField(label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)",
+                                              required=False)
     po_file_name = forms.CharField(label="Nomo de PO/MO-dosieroj",
                                    required=False,
                                    help_text="Se malplena, ĉiuj estos en la sama dosierujo kaj la nomo estos la kodo de la lingvo. Alie, ili estos ekzemple <code><i>lingvokodo</i>/LC_MESSAGES/<i>nomo</i>.po</code>. Do ekzemple por Django-projekto, la valoro devas esti <code>django</code>.")

@@ -618,15 +618,24 @@ def export_to_json(project, path="", languages=[], remove_path=False):
     return data
 
 
-def export_to_po(response, project, path="", languages=[], remove_path=False, untranslated_as_source_language=True, include_outdated=False, po_file_name=''):
+def export_to_po(response, project, **kwargs):
     """
     :param response:
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
     :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
-    :return: content of ZIP file
+    :return: nothing, the content of the zip file is written to response
     """
+    path = kwargs.get('path', '')
+    remove_path = kwargs.get('remove_path', False)
+    languages = kwargs.get('languages', [])
+    untranslated_as_source_language = kwargs.get('untranslated_as_source_language', True)
+    include_outdated = kwargs.get('include_outdated', False)
+    po_file_name = kwargs.get('po_file_name', '')
+    original_text_as_key = kwargs.get('original_text_as_key', '')
+
+
     trstrings = project.trstring_set.all().order_by('path', 'name')
     if path != "":
         trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
@@ -676,11 +685,21 @@ def export_to_po(response, project, path="", languages=[], remove_path=False, un
                                                     pluralized=trstring.original_text.pluralized,
                                                     text='')
 
-            new_path = remove_path_start(trstring.path, path, remove_path)
-            entry = polib.POEntry(msgid=f'{new_path}#{trstring.name}')
+            entry = polib.POEntry()
+            if original_text_as_key:
+                if trstring.original_text.pluralized:
+                    forms = list(trstring.original_text.pluralized_text_dictionary().values())
+                    entry.msgid = forms[0]
+                    entry.msgid_plural = forms[1] if len(forms) > 0 else forms[0]
+                else:
+                    entry.msgid = trstring.original_text.text
+            else:
+                new_path = remove_path_start(trstring.path, path, remove_path)
+                entry.msgid = f'{new_path}#{trstring.name}'
+                if trstring.original_text.pluralized:
+                    entry.msgid_plural = f'{new_path}#{trstring.name}'
 
             if trstring.original_text.pluralized:
-                entry.msgid_plural = entry.msgid
                 plurals = list(trstringtext.pluralized_text_dictionary().values())
                 entry.msgstr_plural = {}
                 for i in range(len(plurals)):
@@ -703,8 +722,6 @@ def export_to_po(response, project, path="", languages=[], remove_path=False, un
 
         zf.writestr(f'{filepath}.po', po.__unicode__(), compress_type=ZIP_DEFLATED)
         zf.writestr(f'{filepath}.mo', po.to_binary())
-
-    return zf
 
 
 def export_to_nested_json(response, project, **kwargs):

@@ -352,6 +352,7 @@ def import_nested_json(request, project_id):
     }
     return render(request, "traduko/import-export/import-nested-json.html", context)
 
+
 @login_required
 @user_is_project_admin
 def import_history(request, project_id):
@@ -443,15 +444,16 @@ def export_po(request, project_id):
         form = POExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
             response = HttpResponse(content_type='application/zip')
-            data = export_to_po(response,
-                                project,
-                                path=form.cleaned_data['path'],
-                                languages=form.cleaned_data['languages'],
-                                remove_path=form.cleaned_data['remove_path'],
-                                untranslated_as_source_language=form.cleaned_data['untranslated_as_source_language'],
-                                include_outdated=form.cleaned_data['include_outdated'],
-                                po_file_name=form.cleaned_data['po_file_name'],
-                                )
+            export_to_po(response,
+                         project,
+                         path=form.cleaned_data['path'],
+                         languages=form.cleaned_data['languages'],
+                         remove_path=form.cleaned_data['remove_path'],
+                         untranslated_as_source_language=form.cleaned_data['untranslated_as_source_language'],
+                         include_outdated=form.cleaned_data['include_outdated'],
+                         original_text_as_key=form.cleaned_data['original_text_as_key'],
+                         po_file_name=form.cleaned_data['po_file_name'],
+                         )
             filename = slugify(project.name)
             response['Content-Disposition'] = f'attachment; filename="{filename}.zip"'
             return response
