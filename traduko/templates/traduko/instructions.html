@@ -1,4 +1,5 @@
 {% extends 'normal-page.html' %}
+{% load static %}
 {% block title %}Instrukcioj{% endblock %}
 {% block pagetitle %}Instrukcioj{% endblock %}
 
@@ -9,7 +10,118 @@
 		<li class="breadcrumb-item active" aria-current="page">Instrukcioj</li>
 	</ol>
 </nav>
-<div class="alert alert-info">
-	Instrukcioj baldaŭ aperos.
+
+<p>Bonvenon al la tradukejo de <a href="https://ikso.net/" target="_blank">E@I</a>! Ĝi estas sistemo, kiu ebligas facile traduki la enhavon de multlingvaj retejoj (aŭ de aliaj projektoj).</p>
+<p>La tradukejo estas nuntempe programata kaj plibonigata, do la funkciado kaj interfaco ankoraŭ povas ŝanĝiĝi.</p>
+<p>Por komenci traduki, vi bezonas <a href="{% url 'register' %}">havi konton</a>. Se vi iam uzis la malnovan tradukejon (antaŭ 2021), malnovaj kontoj ne funkcias kun ĉi tiu tradukejo.</p>
+
+<h2>Projektoj</h2>
+<p>“Projektoj” estas apartaj aroj de tradukoj, kiuj koncernas unu retejon.</p>
+
+<h3>Paĝo de projekto</h3>
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/project.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekranbildo de paĝo de projekto.">
+		<figcaption class="figure-caption">Ekranbildo de paĝo de projekto.</figcaption>
+	</figure>
 </div>
+
+<p>Supre troviĝas ĝeneralaj informoj pri la projekto. En la kolora kadro estas klarigoj pri tio, kiel la tradukoj estas uzataj: ĉe kelkaj retejoj ili estas tuj videblaj, ĉe aliaj la retejestro devas permane aldoni la tradukojn – tio dependas de la konkreta retejo, ne de la tradukejo.</p>
+<p>Sube troviĝas la listo de lingvoj, en kiuj la projekto estas tradukata, kun la elcentaĵo de tradukitaj tekstoj. Apude estas listo de lastaj agadoj.</p>
+
+<h3>Tradukpermesoj</h3>
+<p>Por traduki al konkreta lingvo, vi bezonas ricevi permeson de administranto de la projekto. Klaku sur la butonon “Peti permeson” apud la nomo de lingvo, kaj skribu mallongan klarigon. Kiam administranto aprobos vian peton, vi estos informita retpoŝte kaj vi povos komenci traduki.</p>
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/ask_permission.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Peto de tradukpermeso.">
+		<figcaption class="figure-caption">Peto de tradukpermeso.</figcaption>
+	</figure>
+</div>
+<p>Se la lingvo, al kiu vi volas traduki, ankoraŭ ne estas aldonita al la projekto, vi trovos menuon kun listo de lingvoj sube, sub la titolo “Traduki al alia lingvo”. Se la lingvo, kiun vi volas, ne estas en tiu listo, tiam <a href="{% url 'contact' %}">kontaktu nin</a>.</p>
+
+<h2>Traduka interfaco</h2>
+<p>La tradukinterfaco aspektas tiel:</p>
+
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/translation_interface.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="La tradukinterfaco.">
+		<figcaption class="figure-caption">La tradukinterfaco.</figcaption>
+	</figure>
+</div>
+
+<p>Troviĝas kvar elementoj, de supro ĝis subo:</p>
+<ul>
+	<li>breto kun diversaj filtriloj,</li>
+	<li>linio, kiu montras, al kiu lingvo vi tradukas, kaj en kiu dosiero vi troviĝas,</li>
+	<li>listo de dosierujoj,</li>
+	<li>la ĉefa traduka interfaco.</li>
+</ul>
+
+<p>La tradukendaj tekstoj estas organizataj en <strong>ĉenoj</strong>: eroj de tekstoj, kiuj povas esti tuta alineo, elemento de menuo, titolo de sekcio, ktp. Ĉiu kolora kadro estas unu ĉeno, kiun oni povas traduki sendepende de aliaj.</p>
+<p>La ĉenoj povas esti organizataj en dosierujoj, por grupigi ĉenoj laŭ temo por pli da klareco.</p>
+<p>Se la nuna dosierujo enhavas multajn ĉenojn (ekzemple dosierujo “landoj” kun 200 nomoj de landoj), ne ĉiuj estos ŝargitaj, sed tute sube estos granda butono “Ŝargi pli”.</p>
+
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/string_translation.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Traduko de ĉeno.">
+		<figcaption class="figure-caption">Traduko de ĉeno.</figcaption>
+	</figure>
+</div>
+
+<p>La maldekstra duono estas la teksto en la fontolingvo, la dekstra duono estas la traduko. La elementoj estas la jenaj:</p>
+<ol>
+	<li>Nomo de la ĉeno. Ĝi estas unika identigilo ĉefe utila por administrantion de la projekto, vi ne devas traduki ĝin.</li>
+	<li>La fontolingvo. Per la menuo vi povas ŝanĝi por vidi tradukon en alia lingvo.</li>
+	<li>Ligiloj por vidi tradukon en aŭtomata tradukilo (tio povas helpi vin traduki).</li>
+	<li>La teksto, kiun vi devas traduki.</li>
+	<li>Eventuala helpa teksto, ĝi povas esti ekzemple klarigo pri la kunteksto.</li>
+	<li>Stato de la traduko.</li>
+	<li>La nuna traduko.</li>
+	<li>Dato kaj aŭtoro de la teksto aŭ de la traduko. Se la teksto estis redaktita plurfoje, vi povas vidi la historion de ŝanĝoj.</li>
+</ol>
+
+<h3>Stato de tradukoj</h3>
+<p>Tradukoj povas havi tri statojn: netradukitan (aperas ruĝe), retradukendan (aperas flave) kaj tradukitan (aperas verde). “Retradukenda” necesas, ke la teksto en la fontolingvo estis ŝanĝita, kio povas postuli ŝanĝon en la traduko. Se vi pensas, ke ne necesas ŝanĝi la tradukon, vi povas klaki sur “Marki kiel tradukendan”.</p>
+
+<h3>Serĉado kaj ordigo</h3>
+<p>La plej supra breto havas diversajn filtrilojn:</p>
+<ul>
+	<li>la unua ebligas filtri laŭ stato (utile por vidi nur la ĉenojn, kiujn necesas traduki),</li>
+	<li>la dua ebligas ordigi: defaŭlte laŭ nomo, sed vi povas ordigi laŭ plej nove aŭ plej malnove aldonitaj tekstoj,</li>
+	<li>la serĉilo serĉas tekston en tradukoj kaj tekstoj en la fontolingvo.</li>
+</ul>
+
+<h3>Specialaj simboloj</h3>
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/special_symbols.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ĉeno kun strangaj simboloj.">
+		<figcaption class="figure-caption">Ĉeno kun strangaj simboloj.</figcaption>
+	</figure>
+</div>
+<p>Kelkaj ĉenoj povas enhavi strangajn simbolojn. Tio estas specialaj signoj, kiujn la retejo anstataŭigos per io alia: ligilo, nomo de uzanto, nombro… Bonvolu kopii ilin senŝanĝe en vian tradukon (kaj se ili enhavas vortojn, ne traduku ilin): se vi forgesas aŭ ŝanĝas ilin, la tekstoj ne aperos ĝuste en la retejo.</p>
+<p>Tiuj specialaj simboloj aperas kolore en la tradukejo, kaj ili povas aspekti ekzemple ĉi tiel:</p>
+<ul>
+	<li><code>{1}</code>…<code>{/1}</code>,</li>
+	<li><code>{0}</code>,</li>
+	<li><code>{number_of_users}</code>,</li>
+	<li><code>%d</code>,</li>
+	<li><code>%(username)s</code>…</li>
+</ul>
+
+<p>Kelkaj projektoj uzas duoblajn (<code>''</code>) kaj trioblajn apostrofojn (<code>'''</code>) por kursivan aŭ grasan tekston, tiam atentu pri tio.</p>
+
+<h3>Pluralaj ĉenoj</h3>
+<p>Se en retejo estas frazo kiel “Ni havas <i>x</i> uzantojn”, povas aperi problemo: se estas nur unu uzanto, aperos “Ni havas 1 uzantojn”, kaj en lingvoj kun kompleksaj reguloj kiel la rusa, la frazo estos gramatike malĝusta en multaj kazoj, depende de la nombro de uzantoj.</p>
+<p>La solvo estas ĉenoj kun malsama teksto depende de nombro:</p>
+
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/plural_string.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ĉeno kun pluralaj formoj.">
+		<figcaption class="figure-caption">Ĉeno kun pluralaj formoj.</figcaption>
+	</figure>
+</div>
+
+<p>Tiam por ĉiu eblo traduku laŭ la ekzemplaj nombroj. En ĉi tiu konkreta ekzemplo, rusa tradukanto imagu, kiel devas esti tiu frazo se anstataŭ <code>{n}</code> estas 1, 2 aŭ 5.</p>
+<p>Estas normale, se estas malsama kvanto da tradukoj: multaj lingvoj bezonas nur du formojn, sed kelkaj (plej multaj slavaj lingvoj) bezonas tri, la slovena kvar kaj kelkaj (irlanda, araba) eĉ pli.</p>
+
 {% endblock %}

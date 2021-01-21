@@ -73,6 +73,13 @@ main {
         margin-bottom: 1rem;
     }
 
+    h3 {
+        font-size: 1.5rem;
+        color: $link-color;
+        margin-top: 1.7rem;
+        margin-bottom: .8rem;
+    }
+
     .jumbotron {
         padding: 2rem;
     }
@@ -104,6 +111,12 @@ main {
 
 .project.hidden {
     opacity: .75;
+}
+
+.project h3 {
+    margin-top: 0;
+    font-size: 1.75rem;
+    margin-bottom: .5rem;
 }
 
 .card.project-admin-card {
