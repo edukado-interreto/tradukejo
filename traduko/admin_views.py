@@ -288,7 +288,7 @@ def import_po(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == 'POST':
-        form = ImportForm(request.POST, request.FILES)
+        form = POImportForm(request.POST, request.FILES)
         if form.is_valid():
             po_file = form.cleaned_data['file']
             if not po_file.name.endswith('.po') and not po_file.name.endswith('.pot'):
@@ -300,7 +300,8 @@ def import_po(request, project_id):
                                                   form.cleaned_data['update_texts'],
                                                   form.cleaned_data['user_is_author'],
                                                   request.user,
-                                                  import_to=form.cleaned_data['import_to'])
+                                                  import_to=form.cleaned_data['import_to'],
+                                                  original_text_as_key=form.cleaned_data['original_text_as_key'])
                     messages.success(request,
                                      f"{import_stats['imported_strings']} ĉenoj kaj {import_stats['imported_translations']} tradukoj estis importitaj.")
                 except WrongFormatError:
@@ -309,7 +310,7 @@ def import_po(request, project_id):
             messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
         update_project_admins(request.user, project)
     else:
-        form = ImportForm()
+        form = POImportForm()
 
     context = {
         'project': project,

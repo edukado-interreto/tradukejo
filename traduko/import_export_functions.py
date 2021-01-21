@@ -1,8 +1,11 @@
 import csv, io, polib
+import hashlib
+
 from django.contrib.auth import get_user_model
 from django.db.models import Case, When, Q
 from django.db.models.signals import post_save
 from django.utils.dateparse import parse_datetime
+from django.utils.text import slugify
 from django.utils.timezone import make_aware
 
 from .models import *
@@ -65,6 +68,13 @@ def remove_path_start(path, path_start, remove_path):
         else:
             new_path = path
     return new_path
+
+
+# Returns a unique key for PO file import
+def text_to_key(text):
+    hash = hashlib.md5(text.encode('utf-8')).hexdigest()
+    slug = slugify(text)
+    return slug[0:30] + hash[0:5]
 
 
 def recursive_dictionary_parse(dictionary, path='', merged_dictionary={}):
@@ -408,7 +418,7 @@ def import_from_csv(project, csv_file, update_texts, user_is_author, user, impor
     return import_stats
 
 
-def import_from_po(project, po_file, update_texts, user_is_author, user, import_to=''):
+def import_from_po(project, po_file, update_texts, user_is_author, user, import_to='', original_text_as_key=False):
     po = polib.pofile(po_file.read().decode())
 
     language = po.metadata['Language']
@@ -431,13 +441,17 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
                 continue
             text = json.dumps(list(msg.msgstr_plural.values()), ensure_ascii=False)
 
-        path_name = msg.msgid.split('#', 1)  # msgid is something like "path#name"
-        if len(path_name) == 1:
+        if original_text_as_key:
             path = ''
-            name = msg.msgid
+            name = text_to_key(msg.msgid)
         else:
-            path = path_name[0]
-            name = path_name[1]
+            path_name = msg.msgid.split('#', 1)  # msgid is something like "path#name"
+            if len(path_name) == 1:
+                path = ''
+                name = msg.msgid
+            else:
+                path = path_name[0]
+                name = path_name[1]
 
         if import_to != '':  # Add import path
             if path == '':

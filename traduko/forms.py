@@ -50,6 +50,10 @@ class ImportFormWithLanguage(ImportForm):
             self.fields['language'].choices = language_choices
 
 
+class POImportForm(ImportForm):
+    original_text_as_key = forms.BooleanField(label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)", required=False)
+
+
 class ExportForm(forms.Form):
     path = forms.CharField(label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)",
                            required=False)
