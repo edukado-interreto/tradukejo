@@ -390,8 +390,11 @@ def export_csv(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_csv(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'],
-                                 remove_path=form.cleaned_data['remove_path'])
+            data = export_to_csv(project,
+                                 path=form.cleaned_data['path'],
+                                 languages=form.cleaned_data['languages'],
+                                 remove_path=form.cleaned_data['remove_path'],
+                                 strings_to_export=form.cleaned_data['strings_to_export'])
             filename = slugify(project.name)
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = f'attachment; filename="{filename}.csv"'
@@ -420,8 +423,12 @@ def export_json(request, project_id):
     if request.method == 'POST':
         form = ExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            data = export_to_json(project, path=form.cleaned_data['path'], languages=form.cleaned_data['languages'],
-                                  remove_path=form.cleaned_data['remove_path'])
+            data = export_to_json(project,
+                                  path=form.cleaned_data['path'],
+                                  languages=form.cleaned_data['languages'],
+                                  remove_path=form.cleaned_data['remove_path'],
+                                  strings_to_export=form.cleaned_data['strings_to_export']
+                                  )
             filename = slugify(project.name)
             response = JsonResponse(data, safe=False)
             response['Content-Disposition'] = f'attachment; filename="{filename}.json"'
@@ -454,6 +461,7 @@ def export_po(request, project_id):
                          include_outdated=form.cleaned_data['include_outdated'],
                          original_text_as_key=form.cleaned_data['original_text_as_key'],
                          po_file_name=form.cleaned_data['po_file_name'],
+                         strings_to_export=form.cleaned_data['strings_to_export']
                          )
             filename = slugify(project.name)
             response['Content-Disposition'] = f'attachment; filename="{filename}.zip"'
@@ -489,6 +497,7 @@ def export_nested_json(request, project_id):
                                          export_language_name=form.cleaned_data['export_language_name'],
                                          export_plural_rules=form.cleaned_data['export_plural_rules'],
                                          file_name=form.cleaned_data['file_name'],
+                                         strings_to_export=form.cleaned_data['strings_to_export']
                                          )
             filename = slugify(project.name)
             response['Content-Disposition'] = f'attachment; filename="{filename}.zip"'

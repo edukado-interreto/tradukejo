@@ -52,12 +52,12 @@ def list_index(l, i):
 def highlight_placeholders(str):
     str = html.escape(str)
     str = re.sub(
-        r'\{(([0-9a-z._:,=+^!/[\]-]|&lt;|&gt;)*)\}',
+        r'\{(([0-9a-zA-Z._:,=+^!/[\]-]|&lt;|&gt;)*)\}',
         r'<code>{\1}</code>',
         str
     )
     str = re.sub(
-        r'(%[a-z0-9().-]*[a-zA-Z])',
+        r'(%[0-9a-zA-Z().-]*[a-zA-Z])',
         r'<code>\1</code>',
         str
     )

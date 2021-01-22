@@ -2,7 +2,8 @@ import csv, io, polib
 import hashlib
 
 from django.contrib.auth import get_user_model
-from django.db.models import Case, When, Q
+from django.db.models import Case, When, Q, Value as V
+from django.db.models.functions import Concat
 from django.db.models.signals import post_save
 from django.utils.dateparse import parse_datetime
 from django.utils.text import slugify
@@ -45,6 +46,20 @@ def get_languages_for_export(project):
     for lv in languageversions:
         languages.append((lv.language.code, f'{lv.language.code} - {lv.language.name}'))
     return languages
+
+
+def get_filtered_strings(project, strings_to_export, path):
+    trstrings = project.trstring_set.all().order_by('path', 'name')
+
+    if strings_to_export != '':  # Export only the given strings
+        strings_to_export = strings_to_export.split("\n")
+        strings_to_export = [el.strip() for el in strings_to_export]
+        trstrings = trstrings.annotate(pathname=Concat('path', V('#'), 'name')).filter(pathname__in=strings_to_export)
+
+    if path != "":  # Export only strings in path
+        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+
+    return trstrings
 
 
 def add_language_versions(project, languages):
@@ -102,7 +117,7 @@ def recursive_dictionary_parse(dictionary, path='', merged_dictionary={}):
                 new_path = key
             else:
                 new_path = f'{path}/{key}'
-            merged_dictionary = recursive_dictionary_parse(value, new_path, dict(merged_dictionary))  # Python passes dictionary as references, dict() is here to avoid strange behavior when calling the function several times in a row
+            merged_dictionary = recursive_dictionary_parse(value, new_path, dict(merged_dictionary))  # Python passes dictionaries as references, dict() is here to avoid strange behavior when calling the function several times in a row
         else:
             if path not in merged_dictionary.keys():
                 merged_dictionary[path] = {}
@@ -486,9 +501,12 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
 
 def import_from_nested_json(project, json_file, language_code, update_texts, user_is_author, user, import_to=''):
     json_file.seek(0)
+    file_content = json_file.read().decode('UTF-8')
+    file_content = re.sub(r'^.*export default ?{', '{', file_content, flags=re.DOTALL)
+
     try:
         # The file could be improper JSON (e.g. no double quotes around keys), demjson accepts this but json doesn't
-        json_data = demjson.decode(json_file.read())
+        json_data = demjson.decode(file_content)
     except demjson.JSONDecodeError as e:
         print(e)
         raise WrongFormatError()
@@ -537,16 +555,14 @@ def import_from_nested_json(project, json_file, language_code, update_texts, use
     return import_stats
 
 
-def export_to_csv(project, path="", languages=[], remove_path=False):
+def export_to_csv(project, path="", languages=[], remove_path=False, strings_to_export=''):
     fieldnames = ['path', 'name', 'pluralized', 'context']
     export_source_language = project.source_language.code in languages or len(languages) == 0
     if export_source_language:
         fieldnames.append(project.source_language.code)
     csv_data = []
 
-    trstrings = project.trstring_set.all().order_by('path', 'name')
-    if path != "":
-        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    trstrings = get_filtered_strings(project, strings_to_export, path)
 
     if len(languages) > 0:
         if project.source_language.code not in languages:  # If not exporting source language: getting it anyway because it is necessary for data
@@ -589,17 +605,17 @@ def export_to_csv(project, path="", languages=[], remove_path=False):
     }
 
 
-def export_to_json(project, path="", languages=[], remove_path=False):
+def export_to_json(project, path="", languages=[], remove_path=False, strings_to_export=''):
     """
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
     :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
+    :param strings_to_export: each string (path#name) on a new line; all strings if empty
     :return: list of dictionaries
     """
-    trstrings = project.trstring_set.all().order_by('path', 'name')
-    if path != "":
-        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    trstrings = get_filtered_strings(project, strings_to_export, path)
+
     data = []
     for s in trstrings:
         new_path = remove_path_start(s.path, path, remove_path)
@@ -638,6 +654,7 @@ def export_to_po(response, project, **kwargs):
     :param path:
     :param languages: list of language codes or empty list for all languages.
     :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
+    :param strings_to_export: each string (path#name) on a new line; all strings if empty
     :return: nothing, the content of the zip file is written to response
     """
     path = kwargs.get('path', '')
@@ -647,11 +664,9 @@ def export_to_po(response, project, **kwargs):
     include_outdated = kwargs.get('include_outdated', False)
     po_file_name = kwargs.get('po_file_name', '')
     original_text_as_key = kwargs.get('original_text_as_key', '')
+    strings_to_export = kwargs.get('strings_to_export', '')
 
-
-    trstrings = project.trstring_set.all().order_by('path', 'name')
-    if path != "":
-        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    trstrings = get_filtered_strings(project, strings_to_export, path)
     for trstring in trstrings:
         trstring.original_text = TrStringText.objects.get(trstring=trstring, language=project.source_language)
 
@@ -751,6 +766,7 @@ def export_to_nested_json(response, project, **kwargs):
     :param export_empty: boolean
     :param export_language_name: name of key where the language name should be exported
     :param export_plural_rules: name of key where the plural rules should be exported
+    :param strings_to_export: each string (path#name) on a new line; all strings if empty
     :return: content of ZIP file
     """
     path = kwargs.get('path', '')
@@ -763,13 +779,12 @@ def export_to_nested_json(response, project, **kwargs):
     export_empty = kwargs.get('export_empty', False)
     export_language_name = kwargs.get('export_language_name', '')
     export_plural_rules = kwargs.get('export_plural_rules', '')
+    strings_to_export = kwargs.get('strings_to_export', '')
 
     if '{lang}' not in file_name:
         file_name = '{lang}.json'
 
-    trstrings = project.trstring_set.all().order_by('path', 'name')
-    if path != "":
-        trstrings = trstrings.filter(Q(path=path) | Q(path__startswith=path + "/"))
+    trstrings = get_filtered_strings(project, strings_to_export, path)
     for trstring in trstrings:
         trstring.original_text = TrStringText.objects.get(trstring=trstring, language=project.source_language)
 

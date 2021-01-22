@@ -7,7 +7,8 @@ from traduko.models import Project
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'url', 'image', 'source_language', 'description', 'update_explanations', 'export_explanations', 'needed_languages', 'visible', 'locked']
+        fields = ['name', 'url', 'image', 'source_language', 'description', 'update_explanations',
+                  'export_explanations', 'needed_languages', 'visible', 'locked']
         labels = {
             'name': 'Nomo',
             'url': 'URL',
@@ -51,7 +52,9 @@ class ImportFormWithLanguage(ImportForm):
 
 
 class POImportForm(ImportForm):
-    original_text_as_key = forms.BooleanField(label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)", required=False)
+    original_text_as_key = forms.BooleanField(
+        label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)",
+        required=False)
 
 
 class ExportForm(forms.Form):
@@ -59,6 +62,12 @@ class ExportForm(forms.Form):
                            required=False)
     remove_path = forms.BooleanField(label="Forpreni la nomon de la dosierujo",
                                      required=False)
+    strings_to_export = forms.CharField(label="Eksporti nur la jenajn ĉenojn",
+                                        widget=forms.Textarea(attrs={
+                                            'placeholder': "#name1\ndirectory#name2\ndirectory/subdirectory#name3\n…",
+                                            'rows': 5}),
+                                        required=False,
+                                        help_text="Lasu malplena por eksporti ĉiujn")
     languages = forms.MultipleChoiceField(label="Lingvoj por eksporti (lasi malplena por eksporti ĉiujn)",
                                           required=False,
                                           choices=[],
@@ -76,8 +85,9 @@ class POExportForm(ExportForm):
         required=False)
     include_outdated = forms.BooleanField(label="Eksporti ankaŭ retradukendajn tradukojn",
                                           required=False)
-    original_text_as_key = forms.BooleanField(label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)",
-                                              required=False)
+    original_text_as_key = forms.BooleanField(
+        label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)",
+        required=False)
     po_file_name = forms.CharField(label="Nomo de PO/MO-dosieroj",
                                    required=False,
                                    help_text="Se malplena, ĉiuj estos en la sama dosierujo kaj la nomo estos la kodo de la lingvo. Alie, ili estos ekzemple <code><i>lingvokodo</i>/LC_MESSAGES/<i>nomo</i>.po</code>. Do ekzemple por Django-projekto, la valoro devas esti <code>django</code>.")

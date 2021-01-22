@@ -12,7 +12,7 @@
 		<li class="breadcrumb-item active" aria-current="page">Importi nestitan JSON</li>
 	</ol>
 </nav>
-<p>Funkcias ankaŭ, se la dosiero enhavas JavaScript-objekton (kun ŝlosiloj sen citiloj, aŭ unuoblaj citiloj anstataŭ duoblaj, kio ne estas bone formita JSON).</p>
+<p>Funkcias ankaŭ, se la dosiero enhavas JavaScript-objekton (kun ŝlosiloj sen citiloj, aŭ unuoblaj citiloj anstataŭ duoblaj, kio ne estas bone formita JSON). Se ĝi enhavas <code>export default</code> antaŭ la objekto mem, ĝi kaj ĉio antaŭ ĝi estos forigita.</p>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{ form|crispy }}
