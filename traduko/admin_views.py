@@ -9,7 +9,8 @@ from django.views.decorators.http import require_POST
 from .models import *
 from .translation_functions import *
 from .forms import *
-from .import_export_functions import *
+from .import_functions import *
+from .export_functions import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import *
