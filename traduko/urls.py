@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from traduko import views, ajax, admin_views
+from traduko import views, ajax, admin_views, vue_translation
 
 urlpatterns = [
     path("", views.projects, name="projects"),
@@ -35,6 +35,10 @@ urlpatterns = [
     path("project/<int:project_id>/import/history/", admin_views.import_history, name="import_history"),
 
     path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),
-    path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions")
+    path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions"),
+
+    path("translate-vue/<int:project_id>/", views.translate_vue, name="translate_vue"),
+    path("translate-vue/<int:project_id>/<str:language>/", views.translate_vue, name="translate_vue_language"),
+    path("vue/get-strings/<int:project_id>/<str:language>/", vue_translation.vue_get_strings, name="vue_get_strings"),
 ]
 

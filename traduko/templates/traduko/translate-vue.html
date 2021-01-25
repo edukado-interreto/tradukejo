@@ -1,0 +1,38 @@
+{% extends 'wide-page.html' %}
+{% load static %}
+
+{% block title %}Traduko de {{ project.name }}{% endblock %}
+{% block pagetitle %}Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a>{% endblock %}
+
+{% block js %}
+<script src="{% static 'traduko/vue-translation-interface/js/app.js' %}"></script>
+<script src="{% static 'traduko/vue-translation-interface/js/chunk-vendors.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Traduki</li>
+	</ol>
+</nav>
+
+<div id="app">
+	<div class="loader">…</div>
+</div>
+
+<script>
+window.vueTranslationInterface = {
+	projectId: {{ project.pk }},
+	baseURL: '{% url 'translate_vue' project.pk %}',
+	availableLanguages: {{ available_languages|safe }},
+	globals: {
+		TRANSLATION_STATE_TRANSLATED: {{ TRANSLATION_STATE_TRANSLATED }},
+		TRANSLATION_STATE_UNTRANSLATED: {{ TRANSLATION_STATE_UNTRANSLATED }},
+		TRANSLATION_STATE_OUTDATED: {{ TRANSLATION_STATE_OUTDATED }},
+	}
+};
+</script>
+{% endblock %}
+

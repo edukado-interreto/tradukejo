@@ -76,6 +76,18 @@ class Language(models.Model):
     def __str__(self):
         return f"{self.code} - {self.name}"
 
+    def to_dict(self):
+        d = {
+            'code': self.code,
+            'name': self.name,
+            'direction': self.direction,
+            'google': self.google,
+            'yandex': self.yandex,
+            'deepl': self.deepl,
+            'plural_examples_list': self.plural_examples_list(),
+        }
+        return d
+
     def nplurals(self):
         return int(self.plural_forms[9])  # Doesn't work if there are 10 or more plural forms, but it should never happen.
 
@@ -205,6 +217,19 @@ class TrString(models.Model):
     def __str__(self):
         return f"{self.path}#{self.name}"
 
+    def to_dict(self, original_text=None, translated_text=None):
+        d = {
+            'id': self.pk,
+            'name': self.name,
+            'context': self.context,
+        }
+        if original_text:
+            d['original_text'] = original_text.to_dict()
+        if translated_text:
+            d['translated_text'] = original_text.to_dict()
+            d['state'] = original_text.state
+        return d
+
     class Meta:
         indexes = [
             models.Index(fields=['project', 'path', 'name']),
@@ -228,6 +253,16 @@ class TrStringText(models.Model):
 
     def __str__(self):
         return f"{self.trstring} ‑ {self.language.code}"
+
+    def to_dict(self):
+        d = {
+            'id': self.pk,
+            'language': self.language.to_dict(),
+            'pluralized': self.pluralized,
+            'text': self.text,
+            'last_change': str(self.last_change),
+        }
+        return d
 
     def old_versions(self):
         return self.trstringtexthistory_set.count()

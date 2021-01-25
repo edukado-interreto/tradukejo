@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import *
@@ -113,6 +114,19 @@ def translate(request, project_id, language):
         'can_load_more': can_load_more,
     }
     return render(request, "traduko/translate.html", context)
+
+
+@login_required
+def translate_vue(request, project_id, language=""):
+    current_project = get_object_or_404(Project, pk=project_id)
+    available_languages = get_project_languages_for_user(current_project, request.user)
+    serialized_languages = serializers.serialize('json', available_languages, fields=('name', 'direction'))
+
+    context = {
+        'project': current_project,
+        'available_languages': serialized_languages,
+    }
+    return render(request, "traduko/translate-vue.html", context)
 
 
 @login_required
