@@ -1,33 +1,27 @@
 <template>
-  <div
-    class="translation-row"
-    :class="translationRowClasses"
-  >
-    <div class="row">
-      <div class="col-6">
-        <strong title="Titolo de la ĉeno, ne traduku ĝin"
-          >#{{ string.name }}</strong
-        >
-        –
-      </div>
-      <div class="col-6 text-right translation-state-bar"></div>
+  <article class="translation-row" :class="translationRowClasses">
+    <translation-row-header :string="string"></translation-row-header>
+    <div class="row mt-1" :class="rowAlignClasses">
+      <text-from v-if="!languageFromLoading" :stringtext="string.original_text" :context="string.context"></text-from>
+      <loading-spinner v-else small></loading-spinner>
+      <text-to :stringtext="string.translated_text"></text-to>
     </div>
-    <div
-      class="row mt-1{% if str.state == TRANSLATION_STATE_UNTRANSLATED %} d-flex align-items-center{% endif %}"
-    >
-      <div class="col-md-6 original-string">
-        {{ string.original_text.text }}
-      </div>
-      <div class="col-md-6 translation-widget">
-        {{ string.translated_text.text }}
-      </div>
-    </div>
-  </div>
+  </article>
 </template>
 
 <script>
+import TranslationRowHeader from './TranslationRowHeader';
+import TextFrom from './translatingFrom/TextFrom';
+import TextTo from './translatingTo/TextTo';
+
 export default {
-  props: ['string'],
+  components: { TranslationRowHeader, TextFrom, TextTo },
+  props: ["string"],
+  data() {
+    return {
+      languageFromLoading: false,
+    };
+  },
   computed: {
     translationRowClasses() {
       return {
@@ -35,7 +29,34 @@ export default {
         outdated: this.string.state === this.globals.TRANSLATION_STATE_OUTDATED,
         untranslated: this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
       };
+    },
+    rowAlignClasses() {
+      return {
+        "d-flex": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
+        "align-items-center": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
+      };
+    },
+  },
+  methods: {
+    async loadLanguageFrom(code) {
+      this.languageFromLoading = true;
+      await this.postCsrf('/vue/get-string-translation/', {
+          trstring_id: this.string.id,
+          language: code,
+        })
+        .then((response) => {
+          this.originalText = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      this.languageFromLoading = false;
+    },
+  },
+  provide() {
+    return {
+      loadLanguageFrom: this.loadLanguageFrom,
     }
-  }
-}
+  },
+};
 </script>

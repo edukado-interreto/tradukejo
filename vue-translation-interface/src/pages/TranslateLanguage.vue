@@ -2,13 +2,14 @@
   <filter-bar></filter-bar>
   <navigation-bar></navigation-bar>
   <translation-zone
-    :strings="trstrings"
+    v-if="!isLoading"
+    :strings="strings"
     >
   </translation-zone>
+  <loading-spinner v-else></loading-spinner>
 </template>
 
 <script>
-import axios from "axios";
 import FilterBar from "../components/FilterBar";
 import NavigationBar from "../components/NavigationBar";
 import TranslationZone from "../components/TranslationZone";
@@ -21,24 +22,25 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       currentDirectory: "",
       searchString: "",
       stateFilter: "",
       sort: "",
-      trstrings: [],
     };
   },
   computed: {
     paramLang() {
       return this.$route.params.lang;
     },
-    currentLanguage() {
-      return this.$store.getters.currentLanguage;
-    },
+    strings() {
+      return this.$store.getters.strings;
+    }
   },
   watch: {
     paramLang(newValue) {
       this.setLanguage(newValue);
+      this.fetchStrings();
     },
   },
   methods: {
@@ -46,19 +48,14 @@ export default {
       this.$store.dispatch("setLanguage", code);
     },
     async fetchStrings() {
-      await axios
-        .post(`/vue/get-strings/${this.projectId}/${this.currentLanguage.pk}/`, {
+      this.isLoading = true;
+      await this.$store.dispatch('fetchStrings', {
           dir: this.currentDirectory,
           q: this.searchString,
           state: this.stateFilter,
           sort: this.sort,
-        })
-        .then((response) => {
-          this.trstrings = response.data.strings;
-        })
-        .catch(function (error) {
-          console.log(error);
         });
+      this.isLoading = false;
     },
   },
   created() {

@@ -39,10 +39,6 @@
 
 <script>
 export default {
-  computed: {
-    currentLanguage() {
-      return this.$store.getters.currentLanguage;
-    },
-  },
+
 };
 </script>

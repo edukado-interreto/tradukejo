@@ -1,5 +1,6 @@
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.middleware import csrf
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import *
 from .translation_functions import *
@@ -125,6 +126,7 @@ def translate_vue(request, project_id, language=""):
     context = {
         'project': current_project,
         'available_languages': serialized_languages,
+        'csrf': csrf.get_token(request),
     }
     return render(request, "traduko/translate-vue.html", context)
 

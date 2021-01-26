@@ -1,29 +1,18 @@
 import { createStore } from 'vuex';
-
-const availableLanguages = window.vueTranslationInterface.availableLanguages;
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 
 const store = createStore({
   state() {
     return {
       currentLanguage: null,
+      loadedStrings: [],
     };
   },
-  getters: {
-    currentLanguage(state) {
-      return state.currentLanguage;
-    },
-  },
-  mutations: {
-    setLanguage(state, payload) {
-      state.currentLanguage = payload;
-    }
-  },
-  actions: {
-    setLanguage(context, payload) {
-      const language = availableLanguages.find(element => element.pk === payload);
-      context.commit('setLanguage', language);
-    }
-  },
+  getters,
+  mutations,
+  actions,
 });
 
 export default store;

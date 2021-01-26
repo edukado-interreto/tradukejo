@@ -2,9 +2,11 @@ import json, re
 from collections import OrderedDict
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
-
+from django.utils.formats import date_format
 from .cpython_gettext import c2py
+from .templatetags.traduko_tags import highlight_placeholders
 
 TRANSLATION_STATE_TRANSLATED = 1
 TRANSLATION_STATE_UNTRANSLATED = 0
@@ -168,19 +170,19 @@ class LanguageVersion(models.Model):
 
     def __str__(self):
         return f"{self.project.name} - {self.language.code}"
-    
+
     def untranslated_strings(self):
         return self.project.strings - self.translated_strings - self.outdated_strings
-    
+
     def untranslated_words(self):
         return self.project.words - self.translated_words - self.outdated_words
-    
+
     def untranslated_characters(self):
         return self.project.characters - self.translated_characters - self.outdated_characters
-    
+
     def translated_percent(self):
         return 0 if self.project.words == 0 else self.translated_words / self.project.words * 100
-    
+
     def outdated_percent(self):
         return 0 if self.project.words == 0 else self.outdated_words / self.project.words * 100
 
@@ -226,8 +228,15 @@ class TrString(models.Model):
         if original_text:
             d['original_text'] = original_text.to_dict()
         if translated_text:
-            d['translated_text'] = original_text.to_dict()
-            d['state'] = original_text.state
+            d['translated_text'] = translated_text.to_dict()
+            d['state'] = translated_text.state
+        else:
+            d['translated_text'] = None
+            d['state'] = TRANSLATION_STATE_UNTRANSLATED
+
+        d['translated_languages'] = {}
+        for l in self.trstringtext_set.all().order_by('language__name'):
+            d['translated_languages'][l.language.code] = l.language.name
         return d
 
     class Meta:
@@ -259,9 +268,18 @@ class TrStringText(models.Model):
             'id': self.pk,
             'language': self.language.to_dict(),
             'pluralized': self.pluralized,
-            'text': self.text,
-            'last_change': str(self.last_change),
+            'text': self.pluralized_text_dictionary(),
+            'last_change': date_format(self.last_change, 'DATETIME_FORMAT'),
+            'old_versions': self.old_versions(),
         }
+        for k, v in d['text'].items():
+            d['text'][k] = highlight_placeholders(v)  # TODO: directly in pluralized_text_dictionary()
+        if self.translated_by:
+            d['translated_by'] = {
+                'id': self.translated_by.pk,
+                'username': self.translated_by.username,
+                'profile_url': reverse('profile', args=[self.translated_by.pk])
+            }
         return d
 
     def old_versions(self):
