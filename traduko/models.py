@@ -5,6 +5,8 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.formats import date_format
+from django.utils.html import linebreaks
+
 from .cpython_gettext import c2py
 from .templatetags.traduko_tags import highlight_placeholders
 
@@ -273,7 +275,7 @@ class TrStringText(models.Model):
             'old_versions': self.old_versions(),
         }
         for k, v in d['text'].items():
-            d['text'][k] = highlight_placeholders(v)  # TODO: directly in pluralized_text_dictionary()
+            d['text'][k] = linebreaks(highlight_placeholders(v))  # TODO: directly in pluralized_text_dictionary()
         if self.translated_by:
             d['translated_by'] = {
                 'id': self.translated_by.pk,

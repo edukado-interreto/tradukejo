@@ -5,10 +5,21 @@ const mutations = {
   setStrings(state, payload) {
     state.loadedStrings = payload;
   },
+  setDirectories(state, payload) {
+    state.loadedDirectories = payload;
+  },
   updateStringState(state, payload) {
     const index = state.loadedStrings.findIndex((element) => element.translated_text.id === payload.id);
     state.loadedStrings[index].state = payload.state;
-  }
+  },
+  markDeleted(state, payload) {
+    const index = state.loadedStrings.findIndex((element) => element.id === payload);
+    state.loadedStrings[index].deleted = true;
+  },
+  undoDelete(state, payload) {
+    const index = state.loadedStrings.findIndex((element) => element.id === payload);
+    state.loadedStrings[index].deleted = false;
+  },
 }
 
 export default mutations

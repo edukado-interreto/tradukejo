@@ -6,6 +6,9 @@ const getters = {
       code: state.currentLanguage.pk,
     };
   },
+  directories(state) {
+    return state.loadedDirectories;
+  },
   strings(state) {
     return state.loadedStrings;
   }

@@ -47,14 +47,20 @@ def user_allowed_to_translate(function):
 
 def user_is_project_admin(function):
     def wrap(request, *args, **kwargs):
-        if 'project_id' in kwargs.keys():
-            project = get_object_or_404(Project, pk=kwargs['project_id'])
-        elif 'trstring_id' in kwargs.keys():
-            project = get_object_or_404(TrString, pk=kwargs['trstring_id']).project
-        elif 'trstringtext_id' in kwargs.keys():
-            project = get_object_or_404(TrStringText, pk=kwargs['trstringtext_id']).trstring.project
-        elif 'request_id' in kwargs.keys():
-            project = get_object_or_404(TranslatorRequest, pk=kwargs['request_id']).language_version.project
+        try:
+            json_postdata = json.loads(request.body.decode('utf-8'))
+            all_arguments = {**kwargs, **json_postdata}
+        except json.JSONDecodeError:
+            all_arguments = kwargs
+            
+        if 'project_id' in all_arguments.keys():
+            project = get_object_or_404(Project, pk=all_arguments['project_id'])
+        elif 'trstring_id' in all_arguments.keys():
+            project = get_object_or_404(TrString, pk=all_arguments['trstring_id']).project
+        elif 'trstringtext_id' in all_arguments.keys():
+            project = get_object_or_404(TrStringText, pk=all_arguments['trstringtext_id']).trstring.project
+        elif 'request_id' in all_arguments.keys():
+            project = get_object_or_404(TranslatorRequest, pk=all_arguments['request_id']).language_version.project
         else:
             raise Http404()
 

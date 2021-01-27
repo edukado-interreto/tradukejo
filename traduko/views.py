@@ -2,6 +2,8 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware import csrf
 from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.templatetags.static import static
+
 from .models import *
 from .translation_functions import *
 from django.contrib.auth.decorators import login_required
@@ -121,12 +123,13 @@ def translate(request, project_id, language):
 def translate_vue(request, project_id, language=""):
     current_project = get_object_or_404(Project, pk=project_id)
     available_languages = get_project_languages_for_user(current_project, request.user)
-    serialized_languages = serializers.serialize('json', available_languages, fields=('name', 'direction'))
+    serialized_languages = serializers.serialize('json', available_languages, fields=('name', 'direction', 'google', 'yandex', 'deepl'))
 
     context = {
         'project': current_project,
         'available_languages': serialized_languages,
         'csrf': csrf.get_token(request),
+        'imgURL': static('traduko/img'),
     }
     return render(request, "traduko/translate-vue.html", context)
 

@@ -1,10 +1,10 @@
 <template>
   <article class="translation-row" :class="translationRowClasses">
-    <translation-row-header :string="string"></translation-row-header>
+    <translation-row-header :string="stringToShow"></translation-row-header>
     <div class="row mt-1" :class="rowAlignClasses">
-      <text-from v-if="!languageFromLoading" :stringtext="string.original_text" :context="string.context"></text-from>
+      <text-from v-if="!languageFromLoading" :stringtext="currentOriginalText" :context="string.context"></text-from>
       <loading-spinner v-else small></loading-spinner>
-      <text-to :stringtext="string.translated_text"></text-to>
+      <text-to :string="stringToShow"></text-to>
     </div>
   </article>
 </template>
@@ -20,9 +20,16 @@ export default {
   data() {
     return {
       languageFromLoading: false,
+      currentOriginalText: this.string.original_text
     };
   },
   computed: {
+    stringToShow() {
+      return {
+        ...this.string,
+        original_text: this.currentOriginalText,
+      };
+    },
     translationRowClasses() {
       return {
         translated: this.string.state === this.globals.TRANSLATION_STATE_TRANSLATED,
@@ -45,7 +52,7 @@ export default {
           language: code,
         })
         .then((response) => {
-          this.originalText = response.data;
+          this.currentOriginalText = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -56,6 +63,7 @@ export default {
   provide() {
     return {
       loadLanguageFrom: this.loadLanguageFrom,
+      stringId: this.stringToShow.id,
     }
   },
 };

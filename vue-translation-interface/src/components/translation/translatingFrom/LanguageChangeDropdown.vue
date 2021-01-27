@@ -8,7 +8,7 @@
       data-toggle="dropdown"
       aria-haspopup="true"
       aria-expanded="false"
-      >{{ currentLanguage.fields.name }}</a
+      >{{ string.original_text.language.name }}</a
     >
     <div
       class="dropdown-menu dropdown-language-menu"

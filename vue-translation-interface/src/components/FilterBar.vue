@@ -3,42 +3,82 @@
 	<ul class="navbar-nav mr-auto">
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="stringStateDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				
-				Ĉiuj ĉenoj
-				
+				{{ currentStateFilter }}
 			</a>
 			<div class="dropdown-menu" aria-labelledby="stringStateDropdown">
-				<a class="dropdown-item" href="./">Ĉiuj ĉenoj</a>
-				<a class="dropdown-item" href="./?state=untr">Nur netradukitaj</a>
-				<a class="dropdown-item" href="./?state=outd">Nur retradukendaj</a>
-				<a class="dropdown-item" href="./?state=unout">Netradukitaj kaj retradukendaj</a>
+				<router-link
+					v-for="(name, key) in stateFilters"
+					:key="key"
+					class="dropdown-item"
+					:to="translateLink({state: key})"
+					>
+					{{ name }}
+				</router-link>
 			</div>
 		</li>
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="sortDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				
-				Ordigi laŭ nomo
-				
+				{{ currentSortFilter }}
 			</a>
 			<div class="dropdown-menu" aria-labelledby="sortDropdown">
-				<a class="dropdown-item" href="./">Ordigi laŭ nomo</a>
-				<a class="dropdown-item" href="./?sort=old">Ordigi laŭ plej malnovaj</a>
-				<a class="dropdown-item" href="./?sort=new">Ordigi laŭ plej novaj</a>
+				<router-link
+					v-for="(name, key) in sortFilters"
+					:key="key"
+					class="dropdown-item"
+					:to="translateLink({sort: key})"
+					>
+					{{ name }}
+				</router-link>
 			</div>
 		</li>
 	</ul>
-	<form class="form-inline my-2 my-lg-0" action="/translate/7/eo/" method="get">
-		
-		
-		
-		<input class="form-control mr-sm-2" type="search" placeholder="Serĉi…" aria-label="Serĉi" value="" name="q">
+	<form class="form-inline my-2 my-lg-0" @submit.prevent="search">
+		<input class="form-control mr-sm-2" type="search" placeholder="Serĉi…" aria-label="Serĉi" v-model="searchString">
 		<button class="btn btn-secondary" type="submit">Serĉi</button>
-    </form>
+  </form>
 </nav>
 </template>
 
 <script>
 export default {
-
+	data() {
+		return {
+			searchString: '',
+			stateFilters: {
+				[this.globals.STATE_FILTER_ALL]: 'Ĉiuj ĉenoj',
+				[this.globals.STATE_FILTER_UNTRANSLATED]: 'Nur netradukitaj',
+				[this.globals.STATE_FILTER_OUTDATED]: 'Nur retradukendaj',
+				[this.globals.STATE_FILTER_OUTDATED_UNTRANSLATED]: 'Netradukitaj kaj retradukendaj',
+			},
+			sortFilters: {
+				[this.globals.SORT_STRINGS_BY_NAME]: 'Ordigi laŭ nomo',
+				[this.globals.SORT_STRINGS_BY_OLDEST]: 'Ordigi laŭ plej malnovaj',
+				[this.globals.SORT_STRINGS_BY_NEWEST]: 'Ordigi laŭ plej novaj',
+			},
+		};
+	},
+	computed: {
+		currentStateFilter() {
+			if (this.queryStringState in this.stateFilters) {
+				return this.stateFilters[this.queryStringState];
+			}
+			else {
+				return this.stateFilters[Object.keys(this.stateFilters)[0]]
+			}
+		},
+		currentSortFilter() {
+			if (this.queryStringSort in this.sortFilters) {
+				return this.sortFilters[this.queryStringSort];
+			}
+			else {
+				return this.sortFilters[Object.keys(this.sortFilters)[0]]
+			}
+		},
+	},
+	methods: {
+		search() {
+			this.$router.push(this.translateLink({q: this.searchString}));
+		}
+	}
 }
 </script>

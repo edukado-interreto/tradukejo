@@ -20,7 +20,7 @@
             <router-link
               v-for="language in availableLanguages"
               :key="language"
-              :to="{ name: 'translateLanguage', params: { lang: language.pk } }"
+              :to="translateLink({ lang: language.pk })"
               class="dropdown-item"
               >{{ language.fields.name }}</router-link
             >
@@ -29,16 +29,49 @@
       </li>
 
       <li class="breadcrumb-item">
-        <a href="/translate/7/eo/"><i class="fas fa-home"></i></a>
+        <router-link :to="translateLink({ dir: '' })"><i class="fas fa-home"></i></router-link>
       </li>
-
-      <li class="breadcrumb-item" aria-current="page">contact</li>
+      <li
+        v-for="(directory, index) in pathWithLinks"
+        :key="index"
+        :aria-current="index === pathWithLinks.length - 1 ? 'page' : null"
+        class="breadcrumb-item"
+        >
+        <router-link
+          v-if="index < pathWithLinks.length - 1"
+          :to="translateLink({ dir: directory.path })"
+          >
+          {{ directory.name }}
+        </router-link>
+        <template v-else>{{ directory.name }}</template>
+      </li>
     </ol>
   </nav>
 </template>
 
 <script>
 export default {
-
+  computed: {
+    path() {
+      return this.queryStringDir.split('/');
+    },
+    pathWithLinks() {
+      let currentPath = '';
+      const items = [];
+      this.path.forEach((item) => {
+        if (currentPath === '') {
+          currentPath = item;
+        }
+        else {
+          currentPath += '/' + item;
+        }
+        items.push({
+          name: item,
+          path: currentPath
+        });
+      });
+      return items;
+    }
+  }
 };
 </script>

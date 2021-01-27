@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!pluralized" class="original-text" v-html="texts['1']">
+  <div v-if="!pluralized" class="original-text" v-html="firstText">
   </div>
   <div v-else class="original-text">
     <div class="context mt-1">
@@ -25,5 +25,10 @@ export default {
       default: false,
     },
   },
+  computed: {
+    firstText() {
+      return this.texts[Object.keys(this.texts)[0]];
+    }
+  }
 };
 </script>

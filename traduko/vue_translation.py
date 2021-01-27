@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from traduko.decorators import user_allowed_to_translate
+from traduko.decorators import user_allowed_to_translate, user_is_project_admin
 from traduko.models import *
 from traduko.translation_functions import *
 
@@ -33,6 +33,32 @@ def get_strings(request):
 
     context = {
         'strings': strings_data,
+    }
+    response = JsonResponse(context)
+    return response
+
+
+@login_required
+@user_allowed_to_translate
+@require_POST
+def get_directories(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+    print(postdata)
+
+    current_project = get_object_or_404(Project, pk=postdata['project_id'])
+    current_language = get_object_or_404(Language, code=postdata['language'])
+
+    # Search and filter data
+    current_directory = postdata['dir'].strip('/') if 'dir' in postdata.keys() else ''
+    state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
+    search_string = postdata['q'] if 'q' in postdata.keys() else ''
+
+    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
+    subdirectories = get_subdirectories(all_strings, current_directory)
+    print(subdirectories)
+
+    context = {
+        'directories': subdirectories,
     }
     response = JsonResponse(context)
     return response
@@ -92,3 +118,14 @@ def markoutdated(request):
 def marktranslated(request):
     postdata = json.loads(request.body.decode('utf-8'))
     return change_translation_state(request, postdata['trstringtext_id'], TRANSLATION_STATE_TRANSLATED)
+
+
+@require_POST
+@login_required
+@user_is_project_admin
+def delete_string(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+    trstring = get_object_or_404(TrString, pk=postdata['trstring_id'])
+    update_project_admins(request.user, trstring.project)
+    trstring.delete()
+    return JsonResponse({'deleted': True})

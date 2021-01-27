@@ -40,8 +40,10 @@ urlpatterns = [
     path("translate-vue/<int:project_id>/", views.translate_vue, name="translate_vue"),
     path("translate-vue/<int:project_id>/<str:language>/", views.translate_vue, name="translate_vue_language"),
     path("vue/get-strings/", vue_translation.get_strings, name="vue_get_strings"),
+    path("vue/get-directories/", vue_translation.get_directories, name="vue_get_directories"),
     path("vue/get-string-translation/", vue_translation.get_string_translation, name="vue_get_string_translation"),
     path("vue/mark-outdated/", vue_translation.markoutdated, name="vue_markoutdated"),
     path("vue/mark-translated/", vue_translation.marktranslated, name="vue_marktranslated"),
+    path("vue/delete-string/", vue_translation.delete_string, name="vue_deletestring"),
 ]
 

@@ -9,11 +9,12 @@
       <online-translator-links
         :language-from="string.original_text.language"
         :language-to="currentLanguage"
+        :texts="string.original_text.text"
       ></online-translator-links>
     </div>
     <div class="col-6 text-right translation-state-bar">
       <template v-if="!stateLoading">
-        <button v-if="editMode" class="btn btn-danger btn-sm">Forigi</button>
+        <button v-if="editMode" @click="deleteString(string.id)" class="btn btn-danger btn-sm">Forigi</button>
         <template v-else>
           <a
             v-if="string.state === globals.TRANSLATION_STATE_TRANSLATED"
@@ -58,17 +59,17 @@ export default {
       stateLoading: false,
     };
   },
-  computed: {
-    editMode() {
-      return this.projectLanguage === this.currentLanguage.code;
-    },
-  },
   methods: {
     async updateState(id, newState) {
       this.stateLoading = true;
       await this.$store.dispatch('updateStringState', { id: id, translated: newState === this.globals.TRANSLATION_STATE_TRANSLATED });
       this.stateLoading = false;
     },
+    deleteString(id) {
+      if (confirm('Ĉu vi certe volas forigi ĉi tiun ĉenon?')) {
+        this.$store.dispatch('deleteString', id);
+      }
+    }
   },
 };
 </script>

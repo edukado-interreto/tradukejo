@@ -14,6 +14,7 @@ app.mixin(mixins);
 
 app.config.globalProperties.availableLanguages = window.vueTranslationInterface.availableLanguages;
 app.config.globalProperties.csrf = window.vueTranslationInterface.csrf;
+app.config.globalProperties.imgURL = window.vueTranslationInterface.imgURL;
 app.config.globalProperties.projectLanguage = window.vueTranslationInterface.projectLanguage;
 app.config.globalProperties.globals = window.vueTranslationInterface.globals;
 
