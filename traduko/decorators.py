@@ -52,7 +52,7 @@ def user_is_project_admin(function):
             all_arguments = {**kwargs, **json_postdata}
         except json.JSONDecodeError:
             all_arguments = kwargs
-            
+
         if 'project_id' in all_arguments.keys():
             project = get_object_or_404(Project, pk=all_arguments['project_id'])
         elif 'trstring_id' in all_arguments.keys():

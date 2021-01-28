@@ -4,14 +4,14 @@
     <div
       class="col-6 col-sm-4 col-md-3 col-lx-2 py-2 vue-language-selector"
       v-for="language in availableLanguages"
-      :key="language.pk"
-      :lang="language.pk"
-      :dir="language.fields.direction"
+      :key="language.code"
+      :lang="language.code"
+      :dir="language.direction"
     >
       <router-link
-        :to="{ name: 'translateLanguage', params: { lang: language.pk } }"
+        :to="{ name: 'translateLanguage', params: { lang: language.code } }"
       >
-        {{ language.fields.name }}
+        {{ language.name }}
       </router-link>
     </div>
   </div>

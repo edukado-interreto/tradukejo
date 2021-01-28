@@ -45,5 +45,7 @@ urlpatterns = [
     path("vue/mark-outdated/", vue_translation.markoutdated, name="vue_markoutdated"),
     path("vue/mark-translated/", vue_translation.marktranslated, name="vue_marktranslated"),
     path("vue/delete-string/", vue_translation.delete_string, name="vue_deletestring"),
+    path("vue/save-translation/", vue_translation.save_translation, name="vue_save_translation"),
+    path("vue/add-string/", vue_translation.add_string, name="vue_add_string"),
 ]
 

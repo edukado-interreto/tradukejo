@@ -19,8 +19,9 @@ export default {
   props: ["string"],
   data() {
     return {
+      translationIsBeingEdited: false,
       languageFromLoading: false,
-      currentOriginalText: this.string.original_text
+      currentOriginalText: this.string.original_text,
     };
   },
   computed: {
@@ -39,8 +40,8 @@ export default {
     },
     rowAlignClasses() {
       return {
-        "d-flex": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
-        "align-items-center": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
+        "d-flex": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED && !this.translationIsBeingEdited,
+        "align-items-center": this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED && !this.translationIsBeingEdited,
       };
     },
   },
@@ -59,11 +60,15 @@ export default {
         });
       this.languageFromLoading = false;
     },
+    setTranslationIsBeingEdited(status) {
+      this.translationIsBeingEdited = status;
+    },
   },
   provide() {
     return {
       loadLanguageFrom: this.loadLanguageFrom,
       stringId: this.stringToShow.id,
+      setTranslationIsBeingEdited: this.setTranslationIsBeingEdited,
     }
   },
 };

@@ -123,11 +123,14 @@ def translate(request, project_id, language):
 def translate_vue(request, project_id, language=""):
     current_project = get_object_or_404(Project, pk=project_id)
     available_languages = get_project_languages_for_user(current_project, request.user)
-    serialized_languages = serializers.serialize('json', available_languages, fields=('name', 'direction', 'google', 'yandex', 'deepl'))
+
+    serialized_languages = []
+    for l in available_languages:
+        serialized_languages.append(l.to_dict())
 
     context = {
         'project': current_project,
-        'available_languages': serialized_languages,
+        'available_languages': json.dumps(serialized_languages, ensure_ascii=False),
         'csrf': csrf.get_token(request),
         'imgURL': static('traduko/img'),
     }

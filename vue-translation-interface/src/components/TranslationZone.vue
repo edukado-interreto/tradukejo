@@ -1,4 +1,7 @@
 <template>
+  <add-string
+    v-if="editMode"
+  ></add-string>
   <transition v-for="string in strings" :key="string.id" name="fade" mode="out-in">
     <translation-row v-if="!string.deleted" :string="string"></translation-row>
     <deleted-string v-else :string="string"></deleted-string>
@@ -8,11 +11,13 @@
 <script>
 import TranslationRow from "./translation/TranslationRow";
 import DeletedString from "./translation/DeletedString";
+import AddString from './translation/AddString';
 
 export default {
   components: {
     TranslationRow,
     DeletedString,
+    AddString
   },
   props: ["strings"],
 };

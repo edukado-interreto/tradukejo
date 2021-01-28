@@ -1,5 +1,5 @@
 <template>
-  <div v-if="inline" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  <div v-if="inline" class="lds-ellipsis" :class="{white: white}"><div></div><div></div><div></div><div></div></div>
   <div v-else class="loader" :class="{small: small}"></div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
       default: false,
     },
     inline: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    white: {
       type: Boolean,
       required: false,
       default: false,
@@ -40,6 +45,9 @@ export default {
   border-radius: 50%;
   background: #254E58;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis.white div {
+  background: white;
 }
 .lds-ellipsis div:nth-child(1) {
   left: 8px;

@@ -11,7 +11,7 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            >{{ currentLanguage.fields.name }}</a
+            >{{ currentLanguage.name }}</a
           >
           <div
             class="dropdown-menu"
@@ -20,9 +20,9 @@
             <router-link
               v-for="language in availableLanguages"
               :key="language"
-              :to="translateLink({ lang: language.pk })"
+              :to="translateLink({ lang: language.code })"
               class="dropdown-item"
-              >{{ language.fields.name }}</router-link
+              >{{ language.name }}</router-link
             >
           </div>
         </span>

@@ -220,7 +220,7 @@ def get_strings_to_translate(all_strings, language, path, sort, start=0):
     strings = strings[start:start + settings.MAX_LOADED_STRINGS]
 
     for trstr in strings:
-        trstr.original_text = None
+        trstr.original_text = TrStringText(trstring=trstr, language=trstr.project.source_language, text="", last_change=timezone.now())
         trstr.translated_text = None
         for trans in trstr.trstringtext_set.all():
             if trans.language == trstr.project.source_language:

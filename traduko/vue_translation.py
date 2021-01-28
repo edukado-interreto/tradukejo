@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import JsonResponse, Http404
+from django.db import IntegrityError
+from django.http import JsonResponse, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -43,7 +44,6 @@ def get_strings(request):
 @require_POST
 def get_directories(request):
     postdata = json.loads(request.body.decode('utf-8'))
-    print(postdata)
 
     current_project = get_object_or_404(Project, pk=postdata['project_id'])
     current_language = get_object_or_404(Language, code=postdata['language'])
@@ -55,7 +55,6 @@ def get_directories(request):
 
     all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
     subdirectories = get_subdirectories(all_strings, current_directory)
-    print(subdirectories)
 
     context = {
         'directories': subdirectories,
@@ -129,3 +128,91 @@ def delete_string(request):
     update_project_admins(request.user, trstring.project)
     trstring.delete()
     return JsonResponse({'deleted': True})
+
+
+@require_POST
+@login_required
+@user_allowed_to_translate
+def save_translation(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    current_language = get_object_or_404(Language, code=postdata['language'])
+    current_string = get_object_or_404(TrString, pk=postdata['trstring_id'])
+    editmode = current_language == current_string.project.source_language
+    if editmode:
+        new_pluralized = bool(postdata['pluralized'])
+        new_context = postdata['context']
+        minor_change = bool(postdata['minor'])
+
+        new_name = postdata['name'].strip()
+        new_path = postdata['path'].strip(' /')
+        if new_name != current_string.name or new_path != current_string.path:
+            current_string.name = new_name
+            current_string.path = new_path
+            try:
+                current_string.save()
+            except IntegrityError:
+                response = HttpResponse('Jam ekzistas ĉeno kun ĉi tiu nomo.')
+                response.status_code = 409
+                return response
+
+    else:
+        new_pluralized = False
+        new_context = ''
+        minor_change = False
+
+    saved_data = add_or_update_trstringtext(current_string.project,
+                                            current_string.path,
+                                            current_string.name,
+                                            current_language,
+                                            json.dumps(postdata['text']),
+                                            request.user,
+                                            new_pluralized,
+                                            True,
+                                            new_context,
+                                            minor_change)
+
+    current_string.state = saved_data['trstringtext'].state
+    original_text = TrStringText.objects.get(language=current_string.project.source_language,
+                                             trstring=current_string)
+
+    saved_string = current_string.to_dict(original_text, saved_data['trstringtext'])
+
+    return JsonResponse(saved_string)
+
+
+@require_POST
+@login_required
+@user_is_project_admin
+def add_string(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    project = get_object_or_404(Project, pk=postdata['project_id'])
+
+    name = postdata['name'].strip()
+    pluralized = bool(postdata['pluralized'])
+    path = postdata['path'].strip(' /')
+    context = postdata['context'].strip()
+
+    try:
+        saved_data = add_or_update_trstringtext(project,
+                                                path,
+                                                name,
+                                                project.source_language,
+                                                json.dumps(postdata['text']),
+                                                request.user,
+                                                pluralized,
+                                                True,
+                                                context,
+                                                False,
+                                                True)
+    except IntegrityError:
+        response = HttpResponse('Jam ekzistas ĉeno kun ĉi tiu nomo.')
+        response.status_code = 409
+        return response
+
+    update_project_admins(request.user, project)
+
+    saved_string = saved_data['trstring'].to_dict(saved_data['trstringtext'], saved_data['trstringtext'])
+
+    return JsonResponse(saved_string)

@@ -8,7 +8,7 @@ async function postCsrf(url, data) {
 
 const actions = {
   setLanguage(context, payload) {
-    const language = availableLanguages.find(element => element.pk === payload);
+    const language = availableLanguages.find(element => element.code === payload);
     context.commit('setLanguage', language);
   },
   async fetchStrings(context, payload) {
@@ -63,7 +63,34 @@ const actions = {
         console.log(error);
         context.commit('undoDelete', payload);
       });
-  }
+  },
+  async saveTranslation(context, payload) {
+    await postCsrf('/vue/save-translation/', {
+      language: context.getters.currentLanguage.code,
+      ...payload
+    })
+      .then((response) => {
+        context.commit('updateString', response.data);
+      })
+      .catch(function (error) {
+        throw new Error(error.response.data);
+      });
+  },
+  async addString(context, payload) {
+    let data = null;
+    await postCsrf('/vue/add-string/', {
+      project_id: window.vueTranslationInterface.projectId,
+      ...payload
+    })
+      .then((response) => {
+        context.commit('addStringFirst', response.data);
+        data = response.data;
+      })
+      .catch(function (error) {
+        throw new Error(error.response.data);
+      });
+    return data;
+  },
 }
 
 export default actions

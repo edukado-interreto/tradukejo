@@ -225,6 +225,7 @@ class TrString(models.Model):
         d = {
             'id': self.pk,
             'name': self.name,
+            'path': self.path,
             'context': self.context,
         }
         if original_text:
@@ -270,11 +271,12 @@ class TrStringText(models.Model):
             'id': self.pk,
             'language': self.language.to_dict(),
             'pluralized': self.pluralized,
-            'text': self.pluralized_text_dictionary(),
+            'raw_text': self.pluralized_text_dictionary(),
+            'text': {},
             'last_change': date_format(self.last_change, 'DATETIME_FORMAT'),
             'old_versions': self.old_versions(),
         }
-        for k, v in d['text'].items():
+        for k, v in d['raw_text'].items():
             d['text'][k] = linebreaks(highlight_placeholders(v))  # TODO: directly in pluralized_text_dictionary()
         if self.translated_by:
             d['translated_by'] = {
