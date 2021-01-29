@@ -9,6 +9,7 @@ const store = createStore({
       currentLanguage: null,
       loadedStrings: [],
       loadedDirectories: {},
+      canLoadMore: false,
     };
   },
   getters,

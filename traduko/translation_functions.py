@@ -207,8 +207,9 @@ def get_all_strings(project, language, state_filter, search_string=''):
     return all_strings
 
 
-def get_strings_to_translate(all_strings, language, path, sort, start=0):
-    strings = all_strings.filter(path=path)
+# TODO: remove start when the translation interface is migrated to Vue
+def get_strings_to_translate(all_strings, language, path, sort, start=0, previous_ids=[]):
+    strings = all_strings.filter(path=path).exclude(pk__in=previous_ids)
     total_strings = strings.count()
     if sort == SORT_STRINGS_BY_NEWEST:
         strings = strings.order_by('-last_change')

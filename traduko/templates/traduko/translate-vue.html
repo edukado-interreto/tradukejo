@@ -4,9 +4,16 @@
 {% block title %}Traduko de {{ project.name }}{% endblock %}
 {% block pagetitle %}Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a>{% endblock %}
 
+{% block head %}
+{% for file in css_files %}
+	<link rel="stylesheet" href="{% static 'traduko/vue-translation-interface/css/'|add:file %}" type="text/css">
+{% endfor %}
+{% endblock %}
+
 {% block js %}
-<script src="{% static 'traduko/vue-translation-interface/js/app.js' %}"></script>
-<script src="{% static 'traduko/vue-translation-interface/js/chunk-vendors.js' %}"></script>
+{% for file in js_files %}
+	<script src="{% static 'traduko/vue-translation-interface/js/'|add:file %}"></script>
+{% endfor %}
 {% endblock %}
 
 {% block content %}

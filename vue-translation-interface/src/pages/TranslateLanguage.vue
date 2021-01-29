@@ -20,7 +20,7 @@
 import FilterBar from "../components/FilterBar";
 import NavigationBar from "../components/NavigationBar";
 import DirectoriesList from "../components/DirectoriesList";
-import TranslationZone from "../components/TranslationZone";
+import TranslationZone from "../components/translation/TranslationZone";
 
 export default {
   components: {

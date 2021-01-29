@@ -62,6 +62,10 @@ export default {
     },
     setTranslationIsBeingEdited(status) {
       this.translationIsBeingEdited = status;
+
+      if (this.currentLanguage.id === this.currentOriginalText.language.id) {
+        this.currentOriginalText = this.string.original_text; // Update original if it is being modified
+      }
     },
   },
   provide() {

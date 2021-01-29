@@ -25,15 +25,17 @@ def get_strings(request):
     state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
     sort = postdata['sort'] if 'sort' in postdata.keys() else SORT_STRINGS_BY_NAME
     search_string = postdata['q'] if 'q' in postdata.keys() else ''
+    previous_ids = postdata['previous_ids'] if 'previous_ids' in postdata.keys() else []
 
     all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
-    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort)
+    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort, start=0, previous_ids=previous_ids)
     strings_data = []
     for s in strings:
         strings_data.append(s.to_dict(s.original_text, s.translated_text))
 
     context = {
         'strings': strings_data,
+        'can_load_more': can_load_more,
     }
     response = JsonResponse(context)
     return response
@@ -172,9 +174,11 @@ def save_translation(request):
                                             new_context,
                                             minor_change)
 
-    current_string.state = saved_data['trstringtext'].state
-    original_text = TrStringText.objects.get(language=current_string.project.source_language,
-                                             trstring=current_string)
+    if editmode:
+        original_text = saved_data['trstringtext']
+    else:
+        original_text = TrStringText.objects.get(language=current_string.project.source_language,
+                                                 trstring=current_string)
 
     saved_string = current_string.to_dict(original_text, saved_data['trstringtext'])
 
@@ -216,3 +220,28 @@ def add_string(request):
     saved_string = saved_data['trstring'].to_dict(saved_data['trstringtext'], saved_data['trstringtext'])
 
     return JsonResponse(saved_string)
+
+
+@require_POST
+@login_required
+def get_history(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    trstringtext = get_object_or_404(TrStringText, pk=postdata['trstringtext_id'])
+
+    old_versions = TrStringTextHistory.objects.filter(trstringtext=trstringtext).order_by('-create_date')
+
+    history = list(old_versions)
+    history.insert(0, TrStringTextHistory(text=trstringtext.text,  # Add the current version to the beginning in order to show comparisons
+                                          translated_by=trstringtext.translated_by,
+                                          create_date=trstringtext.last_change,
+                                          pluralized=trstringtext.pluralized,
+                                          trstringtext=trstringtext))
+    history[0].current = True
+
+    history = get_history_comparison(history)
+    data = []
+    for h in history:
+        data.append(h.to_dict(h.comparison))
+
+    return JsonResponse(data, safe=False)

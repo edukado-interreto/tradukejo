@@ -1,12 +1,13 @@
 <template>
   <div class="col-md-6">
     <display-text
+      ref="zizi"
       v-if="string.translated_text && !editing"
       :texts="string.translated_text.text"
       :pluralized="string.translated_text.pluralized"
     ></display-text>
 
-    <div class="text-center" v-if="!editing">
+    <div class="text-center" v-if="!editing" ref="buttonWrapper">
       <button
         v-if="string.translated_text"
         class="btn btn-secondary mb-2 mt-3"
@@ -88,7 +89,9 @@ export default {
     hideForm() {
       this.editing = false;
       this.setTranslationIsBeingEdited(false);
-      setTimeout(() => this.$refs.translate.focus(), 100); // Without setTimeout() it fails, I don't know why
+      this.$nextTick(() => {
+        this.$refs.translate.focus();
+      });
     },
     async saveTranslation(data) {
       this.loading = true;
@@ -102,13 +105,11 @@ export default {
             this.$router.push(this.translateLink({ dir: this.string.path }));
             return;
           }
-
           this.hideForm();
         })
         .catch((e) => {
           this.error = e.message;
         });
-
       this.loading = false;
     },
   },

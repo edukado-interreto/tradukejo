@@ -22,6 +22,7 @@ const actions = {
     })
       .then((response) => {
         context.commit('setStrings', response.data.strings);
+        context.commit('setCanLoadMore', response.data.can_load_more);
       })
       .catch(function (error) {
         console.log(error);
@@ -90,6 +91,24 @@ const actions = {
         throw new Error(error.response.data);
       });
     return data;
+  },
+  async loadMore(context, payload) {
+    await postCsrf('/vue/get-strings/', {
+      project_id: window.vueTranslationInterface.projectId,
+      language: context.getters.currentLanguage.code,
+      dir: payload.dir,
+      q: payload.q,
+      state: payload.state,
+      sort: payload.sort,
+      previous_ids: context.getters.allStringIds
+    })
+      .then((response) => {
+        context.commit('addStrings', response.data.strings);
+        context.commit('setCanLoadMore', response.data.can_load_more);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 }
 

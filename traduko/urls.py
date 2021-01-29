@@ -47,5 +47,6 @@ urlpatterns = [
     path("vue/delete-string/", vue_translation.delete_string, name="vue_deletestring"),
     path("vue/save-translation/", vue_translation.save_translation, name="vue_save_translation"),
     path("vue/add-string/", vue_translation.add_string, name="vue_add_string"),
+    path("vue/get-history/", vue_translation.get_history, name="vue_get_history"),
 ]
 

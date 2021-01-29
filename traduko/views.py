@@ -1,4 +1,8 @@
-from django.core import serializers
+import os
+
+from compressor.utils.staticfiles import finders
+from django.contrib.staticfiles.storage import StaticFilesStorage
+from django.contrib.staticfiles.utils import get_files
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware import csrf
 from django.shortcuts import render, get_object_or_404, redirect, reverse
@@ -124,6 +128,20 @@ def translate_vue(request, project_id, language=""):
     current_project = get_object_or_404(Project, pk=project_id)
     available_languages = get_project_languages_for_user(current_project, request.user)
 
+    js_files = []
+    result = finders.find('traduko/vue-translation-interface/js')
+    for root, dirs, files in os.walk(result):
+        for filename in files:
+            if filename.endswith('.js'):
+                js_files.append(filename)
+    css_files = []
+    result = finders.find('traduko/vue-translation-interface/css')
+    if result:
+        for root, dirs, files in os.walk(result):
+            for filename in files:
+                if filename.endswith('.css'):
+                    css_files.append(filename)
+
     serialized_languages = []
     for l in available_languages:
         serialized_languages.append(l.to_dict())
@@ -133,6 +151,8 @@ def translate_vue(request, project_id, language=""):
         'available_languages': json.dumps(serialized_languages, ensure_ascii=False),
         'csrf': csrf.get_token(request),
         'imgURL': static('traduko/img'),
+        'js_files': js_files,
+        'css_files': css_files,
     }
     return render(request, "traduko/translate-vue.html", context)
 

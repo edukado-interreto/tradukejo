@@ -1,5 +1,7 @@
 import json, re
 from collections import OrderedDict
+from html import unescape
+
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
@@ -330,6 +332,24 @@ class TrStringTextHistory(models.Model):
 
     def __str__(self):
         return self.text
+
+    def to_dict(self, comparison):
+        d = {
+            'id': self.pk,
+            'pluralized': self.pluralized,
+            'create_date': date_format(self.create_date, 'DATETIME_FORMAT'),
+            'comparison': {}
+        }
+        for k, v in comparison.items():
+
+            d['comparison'][k] = linebreaks(unescape(highlight_placeholders(v)))  # TODO: remove unescape by not escaping... somewhere
+        if self.translated_by:
+            d['translated_by'] = {
+                'id': self.translated_by.pk,
+                'username': self.translated_by.username,
+                'profile_url': reverse('profile', args=[self.translated_by.pk])
+            }
+        return d
 
     def pluralized_text_dictionary(self):
         try:

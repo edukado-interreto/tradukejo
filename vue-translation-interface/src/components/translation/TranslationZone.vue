@@ -6,20 +6,28 @@
     <translation-row v-if="!string.deleted" :string="string"></translation-row>
     <deleted-string v-else :string="string"></deleted-string>
   </transition>
+  <load-more-strings v-if="canLoadMore"></load-more-strings>
 </template>
 
 <script>
-import TranslationRow from "./translation/TranslationRow";
-import DeletedString from "./translation/DeletedString";
-import AddString from './translation/AddString';
+import TranslationRow from "./TranslationRow";
+import DeletedString from "./DeletedString";
+import AddString from './AddString';
+import LoadMoreStrings from './LoadMoreStrings';
 
 export default {
   components: {
     TranslationRow,
     DeletedString,
-    AddString
+    AddString,
+    LoadMoreStrings
   },
   props: ["strings"],
+  computed: {
+    canLoadMore() {
+      return this.$store.getters.canLoadMore;
+    }
+  },
 };
 </script>
 
