@@ -139,19 +139,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MAX_LOADED_STRINGS = 30
 
 from tradukejo.local_settings import *
-# Example of content of local_settings.py:
-# SECRET_KEY = '...'
-# DEBUG = True
-# ALLOWED_HOSTS = []
-# DEFAULT_FROM_EMAIL = 'test@test.com'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-# To use in production:
-# COMPRESS_OFFLINE = True
-# LIBSASS_OUTPUT_STYLE = 'compressed'
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'

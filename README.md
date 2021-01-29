@@ -2,42 +2,11 @@
 
 ## How to install locally
 
-Create a file `tradukejo/local_settings` with the following content:
-
-```python
-from tradukejo.settings import BASE_DIR
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '...'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-DEFAULT_FROM_EMAIL = 'test@test.com'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-```
+Rename the file `tradukejo/local_settings.py.template` to `local_settings.py` and set up your configuration there.
 
 For production, don’t forget to update the email settings (see [Django documentation](https://docs.djangoproject.com/en/3.1/topics/email/), it’s also [possible to use `sendmail`](https://github.com/perenecabuto/django-sendmail-backend)).
 
-In production, add the following lines as well for SCSS compilation (see [here](https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/)):
-
-```python
-COMPRESS_OFFLINE = True
-LIBSASS_OUTPUT_STYLE = 'compressed'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorag
-```
+In production, uncomment the last three lines for SCSS compilation (see [here](https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/)):
 
 Here is an example of production configuration for MySQL:
 
@@ -95,6 +64,28 @@ If there are changes in static files:
 $ python manage.py collectstatic
 $ python manage.py compress --force
 ```
+
+## Vue.js
+
+Vue.js is used for the translation interface (on only one page of the Django website). The Vue application is already compiled, but if you need to change it, go to `vue-translation-interface` and do:
+
+```console
+$ npm install
+```
+
+Instead of `npm run serve`, use:
+
+```console
+$ npm run build-watch
+```
+
+The application is recompiled on each change and the JS files are automatically exported to `traduko/static/traduko/vue-translation-interface`. Before deploying, do:
+
+```console
+$ npm run build
+```
+
+The whole `vue-translation-interface` is unnecessary in production.
 
 ## Apache configuration
 
