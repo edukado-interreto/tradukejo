@@ -49,8 +49,9 @@ def list_index(l, i):
 
 
 @register.filter(name='highlight_placeholders')
-def highlight_placeholders(str):
-    str = html.escape(str)
+def highlight_placeholders(str, escape=True):
+    if escape:
+        str = html.escape(str)
     str = re.sub(
         r'\{(([0-9a-zA-Z._:,=+^!/[\]-]|&lt;|&gt;)*)\}',
         r'<code>{\1}</code>',

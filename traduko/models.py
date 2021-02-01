@@ -279,7 +279,7 @@ class TrStringText(models.Model):
             'old_versions': self.old_versions(),
         }
         for k, v in d['raw_text'].items():
-            d['text'][k] = linebreaks(highlight_placeholders(v))  # TODO: directly in pluralized_text_dictionary()
+            d['text'][k] = linebreaks(highlight_placeholders(v))
         if self.translated_by:
             d['translated_by'] = {
                 'id': self.translated_by.pk,
@@ -342,7 +342,7 @@ class TrStringTextHistory(models.Model):
         }
         for k, v in comparison.items():
 
-            d['comparison'][k] = linebreaks(unescape(highlight_placeholders(v)))  # TODO: remove unescape by not escaping... somewhere
+            d['comparison'][k] = linebreaks(highlight_placeholders(v, escape=False))
         if self.translated_by:
             d['translated_by'] = {
                 'id': self.translated_by.pk,

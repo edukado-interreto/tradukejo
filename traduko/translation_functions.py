@@ -477,6 +477,8 @@ def get_history_comparison(history):
 
     # Last version: nothing to compare, just put the text
     history[-1].comparison = history[-1].pluralized_text_dictionary()
+    for k, v in history[-1].comparison.items():
+        history[-1].comparison[k] = html.escape(v)
 
     return history
 

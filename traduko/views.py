@@ -69,62 +69,7 @@ def projectpage(request, project_id):
 
 
 @login_required
-@user_allowed_to_translate
-def translate(request, project_id, language):
-    current_project = get_object_or_404(Project, pk=project_id)
-    current_language = get_object_or_404(Language, code=language)
-
-    if current_language == current_project.source_language:
-        editmode = True
-    else:
-        try:
-            language_version = LanguageVersion.objects.get(project=current_project, language=current_language)
-        except ObjectDoesNotExist:
-            messages.error(request,
-                           f"Ne ekzistas versio de ĉi tiu projekto en tiu lingvo ({current_language.name}).")
-            return redirect('project', project_id)
-        editmode = False
-
-    available_languages = get_project_languages_for_user(current_project, request.user)
-
-    # Data from query string
-    current_directory = request.GET['dir'].strip('/') if 'dir' in request.GET.keys() else ''
-    state_filter = request.GET['state'] if 'state' in request.GET.keys() else STATE_FILTER_ALL
-    sort = request.GET['sort'] if 'sort' in request.GET.keys() else SORT_STRINGS_BY_NAME
-    search_string = request.GET['q'] if 'q' in request.GET.keys() else ''
-
-    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
-    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort)
-    subdirectories = get_subdirectories(all_strings, current_directory)
-
-    current_path = []
-    if current_directory != '':
-        directories = current_directory.split('/')
-        for i in range(len(directories)):
-            current_path.append({
-                'name': directories[i],
-                'path': '/'.join(directories[0:i + 1])
-            })
-
-    context = {
-        'editmode': editmode,
-        'project': current_project,
-        'strings': strings,
-        'language': current_language,
-        'subdirectories': subdirectories,
-        'current_path': current_path,
-        'current_directory': current_directory,
-        'state_filter': state_filter,
-        'sort': sort,
-        'q': search_string,
-        'available_languages': available_languages,
-        'can_load_more': can_load_more,
-    }
-    return render(request, "traduko/translate.html", context)
-
-
-@login_required
-def translate_vue(request, project_id, language=""):
+def translate(request, project_id, language=""):
     current_project = get_object_or_404(Project, pk=project_id)
     available_languages = get_project_languages_for_user(current_project, request.user)
 
@@ -160,7 +105,7 @@ def translate_vue(request, project_id, language=""):
         'js_files': js_files,
         'css_files': css_files,
     }
-    return render(request, "traduko/translate-vue.html", context)
+    return render(request, "traduko/translate.html", context)
 
 
 @login_required

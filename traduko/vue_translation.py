@@ -212,7 +212,7 @@ def add_string(request):
                                                 True)
     except IntegrityError:
         response = HttpResponse('Jam ekzistas ĉeno kun ĉi tiu nomo.')
-        response.status_code = 409
+        response.status_code = 409  # 409 Conflict
         return response
 
     update_project_admins(request.user, project)
@@ -240,6 +240,7 @@ def get_history(request):
     history[0].current = True
 
     history = get_history_comparison(history)
+
     data = []
     for h in history:
         data.append(h.to_dict(h.comparison))
