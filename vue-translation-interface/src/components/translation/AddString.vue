@@ -48,12 +48,14 @@ export default {
       await this.$store
         .dispatch("addString", data)
         .then((response) => {
-          if (response.path != this.queryStringDir) {
-            this.$router.push(this.translateLink({ dir: response.path }));
-            return;
-          }
-
           this.hideForm();
+
+          setTimeout(() => {
+            if (response.path != this.queryStringDir) {
+              this.$router.push(this.translateLink({ dir: response.path }));
+              return;
+            }
+          }, 200); // Wait until end of transition
         })
         .catch((e) => {
           console.log(e);

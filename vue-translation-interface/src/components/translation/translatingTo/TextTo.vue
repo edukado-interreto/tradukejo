@@ -5,6 +5,8 @@
       v-if="string.translated_text && !editing"
       :texts="string.translated_text.text"
       :pluralized="string.translated_text.pluralized"
+      :click-to-edit="true"
+      @click="showForm"
     ></display-text>
 
     <div class="text-center" v-if="!editing" ref="buttonWrapper">
@@ -101,11 +103,14 @@ export default {
       await this.$store
         .dispatch("saveTranslation", data)
         .then(() => {
-          if (this.string.path != oldPath) {
-            this.$router.push(this.translateLink({ dir: this.string.path }));
-            return;
-          }
           this.hideForm();
+
+          setTimeout(() => {
+            if (this.string.path != oldPath) {
+              this.$router.push(this.translateLink({ dir: this.string.path, params: { force: true } }));
+              return;
+            }
+          }, 200); // Wait until end of transition
         })
         .catch((e) => {
           this.error = e.message;

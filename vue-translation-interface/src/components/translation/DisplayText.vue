@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!pluralized" class="original-text" v-html="firstText">
+  <div v-if="!pluralized" class="original-text" :class="{ 'click-to-edit': clickToEdit }" v-html="firstText">
   </div>
-  <div v-else class="original-text">
+  <div v-else class="original-text" :class="{ 'click-to-edit': clickToEdit }">
     <div class="context mt-1">
       <i class="fas fa-question-circle" title="Klarigoj pri la ĉeno"></i> Ĉi tiu ĉeno havas diversajn formojn depende de nombro.
     </div>
@@ -24,6 +24,11 @@ export default {
       required: false,
       default: false,
     },
+    clickToEdit: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: {
     firstText() {
@@ -32,3 +37,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.click-to-edit {
+  cursor: pointer !important;
+  transition: opacity 100ms;
+
+  &:hover {
+    opacity: .86;
+  }
+}
+</style>

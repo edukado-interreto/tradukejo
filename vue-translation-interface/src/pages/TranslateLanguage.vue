@@ -8,10 +8,10 @@
   <loading-spinner v-else-if="!isLoading"></loading-spinner>
 
   <loading-spinner v-if="isLoading"></loading-spinner>
-  <translation-zone v-else-if="strings.length > 0" :strings="strings">
+  <translation-zone v-else :strings="strings">
   </translation-zone>
   <div
-    v-else-if="Object.keys(directories).length === 0 && !directoriesLoading"
+    v-if="strings.length === 0 && Object.keys(directories).length === 0 && !directoriesLoading"
     class="alert alert-info"
   >
     Neniu ĉeno estis trovita.
