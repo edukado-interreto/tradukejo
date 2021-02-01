@@ -31,3 +31,16 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.online-translators-links {
+  margin-left: 0.3rem;
+
+  img {
+    height: 1rem;
+  }
+  a {
+    margin-left: 0.25rem;
+  }
+}
+</style>

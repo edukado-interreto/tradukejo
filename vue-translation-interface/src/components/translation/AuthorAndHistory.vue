@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import StringHistory from "./StringHistory";
+import { defineAsyncComponent } from 'vue';
+const StringHistory = defineAsyncComponent(() => import('./StringHistory'));
 
 export default {
   props: ["stringtext"],
@@ -68,3 +69,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.translation-author {
+  font-size: .9em;
+  margin-top: .5rem;
+  padding-top: .5rem;
+  border-top: 1px solid rgba(200, 200, 200, .6);
+}
+</style>

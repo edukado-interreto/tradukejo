@@ -6,13 +6,28 @@
 
 {% block head %}
 {% for file in css_files %}
-	<link rel="stylesheet" href="{% static 'traduko/vue-translation-interface/css/'|add:file %}" type="text/css">
+	{% if file.prefetch %}
+	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="prefetch">
+	{% else %}
+	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="preload" as="style">
+	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="stylesheet">
+	{% endif %}
+{% endfor %}
+
+{% for file in js_files %}
+	{% if file.prefetch %}
+	<link href="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}" rel="prefetch">
+	{% else %}
+	<link href="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}" rel="preload" as="script">
+	{% endif %}
 {% endfor %}
 {% endblock %}
 
 {% block js %}
 {% for file in js_files %}
-	<script src="{% static 'traduko/vue-translation-interface/js/'|add:file %}"></script>
+	{% if not file.prefetch %}
+	<script src="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}"></script>
+	{% endif %}
 {% endfor %}
 {% endblock %}
 
@@ -25,6 +40,9 @@
 	</ol>
 </nav>
 
+<noscript>
+	JavScript devas esti ŝaltita por funkciigi la tradukinterfacon.
+</noscript>
 <div id="app">
 	<div class="loader">…</div>
 </div>

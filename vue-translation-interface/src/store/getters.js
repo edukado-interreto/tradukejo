@@ -1,6 +1,6 @@
 const getters = {
   currentLanguage(state) {
-    return state.currentLanguage;
+    return state.currentLanguage || null;
   },
   directories(state) {
     return state.loadedDirectories;

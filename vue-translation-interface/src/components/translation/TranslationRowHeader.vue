@@ -9,7 +9,7 @@
       <online-translator-links
         :language-from="string.original_text.language"
         :language-to="currentLanguage"
-        :texts="string.original_text.text"
+        :texts="string.original_text.raw_text"
       ></online-translator-links>
     </div>
     <div class="col-6 text-right translation-state-bar">
@@ -73,3 +73,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.translation-state-bar a {
+  font-size: .9rem;
+  top: 1px;
+  position: relative;
+  margin-right: 9px;
+}
+</style>

@@ -272,3 +272,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.translation-form .plural-number-explanation {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+</style>

@@ -85,7 +85,7 @@ The application is recompiled on each change and the JS files are automatically 
 $ npm run build
 ```
 
-The whole `vue-translation-interface` is unnecessary in production.
+The whole `vue-translation-interface` folder is unnecessary in production.
 
 ## Apache configuration
 

@@ -133,14 +133,20 @@ def translate_vue(request, project_id, language=""):
     for root, dirs, files in os.walk(result):
         for filename in files:
             if filename.endswith('.js'):
-                js_files.append(filename)
+                js_files.append({
+                    'filename': filename,
+                    'prefetch': not filename.startswith('app.') and not filename.startswith('chunk-vendors.'),
+                })
     css_files = []
     result = finders.find('traduko/vue-translation-interface/css')
     if result:
         for root, dirs, files in os.walk(result):
             for filename in files:
                 if filename.endswith('.css'):
-                    css_files.append(filename)
+                    css_files.append({
+                        'filename': filename,
+                        'prefetch': not filename.startswith('app.') and not filename.startswith('chunk-vendors.'),
+                    })
 
     serialized_languages = []
     for l in available_languages:

@@ -10,10 +10,11 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
 import TranslationRow from "./TranslationRow";
 import DeletedString from "./DeletedString";
-import AddString from './AddString';
-import LoadMoreStrings from './LoadMoreStrings';
+const AddString = defineAsyncComponent(() => import('./AddString'));
+const LoadMoreStrings = defineAsyncComponent(() => import('./LoadMoreStrings'));
 
 export default {
   components: {

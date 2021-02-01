@@ -29,7 +29,8 @@
       </li>
 
       <li class="breadcrumb-item">
-        <router-link :to="translateLink({ dir: '' })"><i class="fas fa-home"></i></router-link>
+        <router-link v-if="path.length > 0 && path[0] != ''" :to="translateLink({ dir: '' })"><i class="fas fa-home"></i></router-link>
+        <span v-else><i class="fas fa-home"></i></span>
       </li>
       <li
         v-for="(directory, index) in pathWithLinks"
@@ -75,3 +76,12 @@ export default {
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.breadcrumb.translation-path {
+  background: none;
+  font-size: 1rem;
+}
+
+</style>
