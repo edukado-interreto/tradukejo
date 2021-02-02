@@ -82,6 +82,18 @@ export default {
         return {};
       }
     },
+    specialTokens() { // Returns things in <code> tags in the original text
+      const tokens = [];
+      Object.values(this.string.original_text.text).forEach((text) => {
+        const codes = [...text.matchAll(/<code>([^<]*?)<\/code>/g)];
+        codes.forEach((code) => {
+          if (!tokens.includes(code[1])) {
+            tokens.push(code[1]);
+          }
+        });
+      });
+      return tokens;
+    }
   },
   methods: {
     showForm() {
@@ -96,6 +108,27 @@ export default {
       });
     },
     async saveTranslation(data) {
+      if (!this.editMode && this.specialTokens.length > 0) {
+        const unusedTokens = [];
+        this.specialTokens.forEach(token => {
+          let found = false;
+          data.text.forEach(t => {
+            if (t.includes(token)) {
+              found = true;
+            }
+          });
+          if (!found) {
+            unusedTokens.push(token);
+          }
+        });
+        if (unusedTokens.length > 0) {
+          const sure = confirm('Via traduko ne enhavas la jenajn specialajn simbolojn:\n\n' + unusedTokens.join('\n') + '\n\nĈu vi certas, ke vi volas konservi ĉi tiun tradukon?');
+          if (!sure) {
+            return false;
+          }
+        }
+      }
+
       this.loading = true;
       this.error = null;
       const oldPath = this.string.path;
