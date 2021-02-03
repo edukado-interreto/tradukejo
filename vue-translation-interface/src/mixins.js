@@ -20,6 +20,12 @@ const mixins = {
     queryStringQ() {
       return this.$route.query.q || '';
     },
+    chosenStringId() { // The chosen string ID is the anchor at the end of the URL
+      if (this.$route.hash) {
+        return parseInt(this.$route.hash.substring(1)); // Remove first #
+      }
+      return null;
+    }
   },
   methods: {
     async postCsrf(url, data) {

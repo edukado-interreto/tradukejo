@@ -84,6 +84,7 @@ export default {
         q: this.queryStringQ,
         state: this.queryStringState,
         sort: this.queryStringSort,
+        chosen_string: this.chosenStringId,
       });
       this.isLoading = false;
     },

@@ -207,18 +207,28 @@ def get_all_strings(project, language, state_filter, search_string=''):
     return all_strings
 
 
-# TODO: remove start when the translation interface is migrated to Vue
-def get_strings_to_translate(all_strings, language, path, sort, start=0, previous_ids=[]):
+def get_strings_to_translate(all_strings, language, path, sort, previous_ids=[], chosen_string_id=None):
     strings = all_strings.filter(path=path).exclude(pk__in=previous_ids)
+    if get_strings_to_translate is not None:
+        chosen_string = all_strings.filter(pk=chosen_string_id)
+        if chosen_string.count() > 0:
+            chosen_string = chosen_string[0]
+        else:
+            chosen_string = None
+        strings = strings.exclude(pk=chosen_string_id)
     total_strings = strings.count()
     if sort == SORT_STRINGS_BY_NEWEST:
         strings = strings.order_by('-last_change')
+        strings = list(strings)
     elif sort == SORT_STRINGS_BY_OLDEST:
         strings = strings.order_by('last_change')
+        strings = list(strings)
     else:
-        strings = sorted(strings, key=lambda i: natural_keys(i.name))
+        strings = sorted(strings, key=lambda i: natural_keys(i.name))  # Turns it into a list
 
-    strings = strings[start:start + settings.MAX_LOADED_STRINGS]
+    if get_strings_to_translate is not None and chosen_string is not None:
+        strings.insert(0, chosen_string)
+    strings = strings[0:settings.MAX_LOADED_STRINGS]
 
     for trstr in strings:
         trstr.original_text = TrStringText(trstring=trstr, language=trstr.project.source_language, text="", last_change=timezone.now())
@@ -234,7 +244,7 @@ def get_strings_to_translate(all_strings, language, path, sort, start=0, previou
         else:
             trstr.state = trstr.translated_text.state
 
-    return [strings, len(strings) + start < total_strings]
+    return [strings, len(strings) + len(previous_ids) < total_strings]
 
 
 def update_project_count(project):

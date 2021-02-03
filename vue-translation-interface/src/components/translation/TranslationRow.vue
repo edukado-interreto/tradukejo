@@ -1,5 +1,5 @@
 <template>
-  <article class="translation-row" :class="translationRowClasses">
+  <article class="translation-row" :class="translationRowClasses" :id="string.id" ref="row">
     <translation-row-header :string="stringToShow"></translation-row-header>
     <div class="row mt-1" :class="rowAlignClasses">
       <text-from
@@ -42,6 +42,7 @@ export default {
         outdated: this.string.state === this.globals.TRANSLATION_STATE_OUTDATED,
         untranslated:
           this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
+        selected: this.isSelected
       };
     },
     rowAlignClasses() {
@@ -54,6 +55,9 @@ export default {
           !this.translationIsBeingEdited,
       };
     },
+    isSelected() {
+      return this.chosenStringId === this.string.id;
+    }
   },
   methods: {
     async loadLanguageFrom(code) {
@@ -91,6 +95,11 @@ export default {
       setTranslationIsBeingEdited: this.setTranslationIsBeingEdited,
     };
   },
+  mounted() {
+    if (this.isSelected) {
+      this.$refs.row.scrollIntoView({behavior: 'smooth'})
+    }
+  }
 };
 </script>
 
@@ -114,6 +123,11 @@ export default {
   &.outdated {
     border-color: #c5ad64;
     background-color: #fff3cd;
+  }
+
+  &.selected {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 5px #333;
   }
 
   input[type="text"] {

@@ -19,6 +19,7 @@ const actions = {
       q: payload.q,
       state: payload.state,
       sort: payload.sort,
+      chosen_string: payload.chosen_string,
     })
       .then((response) => {
         context.commit('setStrings', response.data.strings);

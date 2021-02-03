@@ -1,8 +1,8 @@
 <template>
   <header class="row">
     <div class="col-6">
-      <strong title="Titolo de la ĉeno, ne traduku ĝin">
-        #{{ string.name }}
+      <strong>
+        <a :href="'#' + string.id" class="string-anchor" title="Rekta ligilo al ĉi tiu ĉeno">#{{ string.name }}</a>
       </strong>
       –
       <language-change-dropdown :string="string"></language-change-dropdown>
@@ -80,5 +80,14 @@ export default {
   top: 1px;
   position: relative;
   margin-right: 9px;
+}
+
+.string-anchor {
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: #484848;
+  }
 }
 </style>

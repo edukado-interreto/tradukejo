@@ -25,10 +25,16 @@ def get_strings(request):
     state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
     sort = postdata['sort'] if 'sort' in postdata.keys() else SORT_STRINGS_BY_NAME
     search_string = postdata['q'] if 'q' in postdata.keys() else ''
+    chosen_string_id = postdata['chosen_string'] if 'chosen_string' in postdata.keys() else None
     previous_ids = postdata['previous_ids'] if 'previous_ids' in postdata.keys() else []
 
     all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
-    strings, can_load_more = get_strings_to_translate(all_strings, current_language, current_directory, sort, start=0, previous_ids=previous_ids)
+    strings, can_load_more = get_strings_to_translate(all_strings,
+                                                      current_language,
+                                                      current_directory,
+                                                      sort,
+                                                      previous_ids=previous_ids,
+                                                      chosen_string_id=chosen_string_id)
     strings_data = []
     for s in strings:
         strings_data.append(s.to_dict(s.original_text, s.translated_text))

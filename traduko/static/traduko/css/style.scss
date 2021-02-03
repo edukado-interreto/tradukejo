@@ -4,6 +4,10 @@ $header-bgcolor: #88BDBC;
 
 /* Page structure */
 
+html {
+    scroll-behavior: smooth;
+}
+
 .inner-container {
     margin: auto !important;
     width: 96%;

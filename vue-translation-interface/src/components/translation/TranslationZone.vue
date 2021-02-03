@@ -28,7 +28,7 @@ export default {
     canLoadMore() {
       return this.$store.getters.canLoadMore;
     }
-  },
+  }
 };
 </script>
 
