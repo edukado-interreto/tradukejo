@@ -111,17 +111,17 @@ export default {
   padding: 0.5rem 0.6rem;
 
   &.translated {
-    border-color: #699273;
+    border-color: #90bda0;
     background-color: #d4edda;
   }
 
   &.untranslated {
-    border-color: #a8777a;
+    border-color: #bd9090;
     background-color: #f8d7da;
   }
 
   &.outdated {
-    border-color: #c5ad64;
+    border-color: #bdb590;
     background-color: #fff3cd;
   }
 

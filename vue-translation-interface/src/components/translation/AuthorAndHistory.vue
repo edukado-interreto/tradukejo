@@ -6,13 +6,16 @@
       <a :href="stringtext.translated_by.profile_url">{{
         stringtext.translated_by.username
       }}</a>
+      |
     </template>
+    <a href="#" @click.prevent="toggleComments" class="toggle" :class="{open: showComments}">
+      {{ commentCount == 0 ? 'Komenti' : commentCount == 1 ? 'Unu komento' : commentCount + ' komentoj' }}
+    </a>
     <template v-if="stringtext.old_versions > 0">
       |
-
-      <a href="#" @click.prevent="toggleHistory">
-        Historio ({{ stringtext.old_versions + 1 }} versioj)
-      </a>
+      <a href="#" @click.prevent="toggleHistory" class="toggle" :class="{open: showHistory}">
+        Historio ({{ stringtext.old_versions + 1 }} versioj)<!--
+      --></a>
 
       <loading-spinner
           small
@@ -25,27 +28,60 @@
         ></string-history>
       </transition>
     </template>
+
+    <loading-spinner
+        small
+        v-if="showComments && commentsLoading"
+      ></loading-spinner>
+    <transition name="slide">
+      <string-comments
+        v-if="showComments && !commentsLoading"
+        :comments="comments"
+        :language="stringtext.language"
+        :loading="commentBeingSaved"
+        @save="saveComment($event)"
+      ></string-comments>
+    </transition>
   </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue';
 const StringHistory = defineAsyncComponent(() => import('./StringHistory'));
+// const StringComments = defineAsyncComponent(() => import('./StringComments'));
+import StringComments from './StringComments';
 
 export default {
   props: ["stringtext"],
-  components: { StringHistory },
+  components: { StringHistory, StringComments },
   data() {
     return {
       showHistory: false,
       historyLoading: false,
       history: null,
+      showComments: false,
+      commentsLoading: false,
+      comments: null,
+      commentBeingSaved: false,
     };
   },
   watch: {
     stringtext() {
       if (this.showHistory) {
         this.loadHistory();
+      }
+      if (this.showComments) {
+        this.loadComments();
+      }
+    }
+  },
+  computed: {
+    commentCount() {
+      if (this.comments === null) {
+        return this.stringtext.comments;
+      }
+      else {
+        return this.comments.length;
       }
     }
   },
@@ -57,6 +93,13 @@ export default {
         this.loadHistory();
       }
     },
+    toggleComments() {
+      this.showComments = !this.showComments;
+
+      if (this.showComments && this.comments === null && this.stringtext.comments > 0) {
+        this.loadComments();
+      }
+    },
     async loadHistory() {
       this.historyLoading = true;
       await this.postCsrf("/vue/get-history/", {
@@ -66,6 +109,29 @@ export default {
       });
       this.historyLoading = false;
     },
+    async loadComments() {
+      this.commentsLoading = true;
+      await this.postCsrf("/vue/get-comments/", {
+        trstringtext_id: this.stringtext.id,
+      }).then((response) => {
+        this.comments = response.data;
+      });
+      this.commentsLoading = false;
+    },
+    async saveComment(text) {
+      this.commentBeingSaved = true;
+      await this.postCsrf("/vue/save-comment/", {
+        trstringtext_id: this.stringtext.id,
+        text: text,
+      }).then((response) => {
+        if (this.comments === null) {
+          this.comments = [response.data];
+        } else {
+          this.comments.push(response.data);
+        }
+      });
+      this.commentBeingSaved = false;
+    }
   },
 };
 </script>
@@ -76,5 +142,22 @@ export default {
   margin-top: .5rem;
   padding-top: .5rem;
   border-top: 1px solid rgba(200, 200, 200, .6);
+}
+
+.toggle::after {
+  display: inline-block;
+  margin-left: 0.35em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+  transform: rotate(0);
+  transition: transform .2s;
+}
+
+.toggle.open::after {
+  transform: rotate(180deg);
 }
 </style>

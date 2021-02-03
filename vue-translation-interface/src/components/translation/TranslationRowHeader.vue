@@ -1,5 +1,5 @@
 <template>
-  <header class="row">
+  <header class="row mb-2">
     <div class="col-6">
       <strong>
         <a :href="'#' + string.id" class="string-anchor" title="Rekta ligilo al ĉi tiu ĉeno">#{{ string.name }}</a>

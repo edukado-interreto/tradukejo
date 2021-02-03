@@ -109,6 +109,7 @@
     <div class="form-group">
       <button
         class="btn btn-primary mr-2 text-center"
+        :class="{'can-submit': canSubmit}"
         :disabled="loading || !canSubmit"
       >
         <loading-spinner v-if="loading" inline white></loading-spinner>
@@ -277,5 +278,9 @@ export default {
 .translation-form .plural-number-explanation {
   margin-bottom: 0;
   margin-top: 0;
+}
+
+:invalid {
+    box-shadow: none;
 }
 </style>

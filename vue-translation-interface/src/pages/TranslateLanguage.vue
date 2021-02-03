@@ -98,8 +98,8 @@ export default {
       this.directoriesLoading = false;
     },
     isAllowedToLeave() {
-      const textareas = document.querySelectorAll("#app textarea");
-      if (textareas.length > 0) {
+      const saveButtons = document.querySelectorAll("#app .can-submit");
+      if (saveButtons.length > 0) {
         return window.confirm(
           "Vi havas nekonservitajn ŝanĝojn, ĉu vi certe volas eliri el ĉi tiu paĝo?"
         );

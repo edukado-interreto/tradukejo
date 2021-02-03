@@ -63,3 +63,10 @@ class TrStringTextAdmin(admin.ModelAdmin):
 @admin.register(StringActivity)
 class StringActivityAdmin(admin.ModelAdmin):
     list_display = ('trstringtext', 'user', 'language', 'action', 'words', 'characters', 'date', 'datetime')
+    autocomplete_fields = ['trstringtext', 'language', 'user']
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('trstringtext', 'author', 'text', 'create_date')
+    autocomplete_fields = ['trstringtext', 'author']

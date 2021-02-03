@@ -95,7 +95,8 @@ class Language(models.Model):
         return d
 
     def nplurals(self):
-        return int(self.plural_forms[9])  # Doesn't work if there are 10 or more plural forms, but it should never happen.
+        return int(
+            self.plural_forms[9])  # Doesn't work if there are 10 or more plural forms, but it should never happen.
 
     def plural_examples_list(self):
         p = re.sub(r'^.*plural=([^;]+);?$', r'\1', self.plural_forms)
@@ -277,6 +278,7 @@ class TrStringText(models.Model):
             'text': {},
             'last_change': date_format(self.last_change, 'DATETIME_FORMAT'),
             'old_versions': self.old_versions(),
+            'comments': self.comments(),
         }
         for k, v in d['raw_text'].items():
             d['text'][k] = linebreaks(highlight_placeholders(v))
@@ -290,6 +292,9 @@ class TrStringText(models.Model):
 
     def old_versions(self):
         return self.trstringtexthistory_set.count()
+
+    def comments(self):
+        return self.comment_set.count()
 
     def pluralized_text_dictionary(self):
         try:
@@ -306,7 +311,8 @@ class TrStringText(models.Model):
         else:
             return {"1": texts[0]}
 
-    def number_of_pluralized_texts(self):  # Unlike pluralized_text_dictionary(), can return more than 1 even if the string is not pluralized
+    def number_of_pluralized_texts(
+            self):  # Unlike pluralized_text_dictionary(), can return more than 1 even if the string is not pluralized
         try:
             texts = json.loads(self.text)
             return len(texts)
@@ -341,7 +347,6 @@ class TrStringTextHistory(models.Model):
             'comparison': {}
         }
         for k, v in comparison.items():
-
             d['comparison'][k] = linebreaks(highlight_placeholders(v, escape=False))
         if self.translated_by:
             d['translated_by'] = {
@@ -382,3 +387,27 @@ class StringActivity(models.Model):
     characters = models.IntegerField(null=True, default=None)
     date = models.DateField(auto_now_add=True)
     datetime = models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+    trstringtext = models.ForeignKey('TrStringText',
+                                     on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               null=True,
+                               on_delete=models.SET_NULL)
+    text = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+
+    def to_dict(self):
+        d = {
+            'id': self.pk,
+            'text': self.text,
+            'create_date': date_format(self.create_date, 'DATETIME_FORMAT'),
+        }
+        if self.author:
+            d['author'] = {
+                'id': self.author.pk,
+                'username': self.author.username,
+                'profile_url': reverse('profile', args=[self.author.pk])
+            }
+        return d

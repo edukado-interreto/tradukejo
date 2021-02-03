@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from traduko.decorators import user_allowed_to_translate, user_is_project_admin
+from traduko.decorators import user_allowed_to_translate, user_is_project_admin, user_has_any_right_for_project
 from traduko.models import *
 from traduko.translation_functions import *
 
@@ -230,6 +230,7 @@ def add_string(request):
 
 @require_POST
 @login_required
+@user_has_any_right_for_project
 def get_history(request):
     postdata = json.loads(request.body.decode('utf-8'))
 
@@ -252,3 +253,36 @@ def get_history(request):
         data.append(h.to_dict(h.comparison))
 
     return JsonResponse(data, safe=False)
+
+
+@require_POST
+@login_required
+@user_has_any_right_for_project
+def get_comments(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    trstringtext = get_object_or_404(TrStringText, pk=postdata['trstringtext_id'])
+
+    comments = Comment.objects.filter(trstringtext=trstringtext).order_by('create_date')
+
+    data = []
+    for c in comments:
+        data.append(c.to_dict())
+
+    return JsonResponse(data, safe=False)
+
+
+@require_POST
+@login_required
+@user_has_any_right_for_project
+def save_comment(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    trstringtext = get_object_or_404(TrStringText, pk=postdata['trstringtext_id'])
+
+    text = postdata['text'].strip()
+
+    comment = Comment(trstringtext=trstringtext, author=request.user, text=text)
+    comment.save()
+
+    return JsonResponse(comment.to_dict(), safe=False)

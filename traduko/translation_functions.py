@@ -36,6 +36,18 @@ def is_allowed_to_translate(user, project, language):
     return False
 
 
+# Returns True if the user is a project admin or has translation rights for any language
+def user_has_translation_right(user, project):
+    if is_project_admin(user, project):
+        return True
+
+    if project.locked or not project.visible:
+        return False
+
+    count = LanguageVersion.objects.filter(project=project, translators=user).count()
+    return count > 0
+
+
 def atoi(text):
     return int(text) if text.isdigit() else text
 
