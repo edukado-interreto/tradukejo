@@ -4,18 +4,18 @@
     <div v-if="context" class="context">
       <i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> {{ context }}
     </div>
-    <author-and-history
+    <string-info
       :stringtext="stringtext"
-    ></author-and-history>
+    ></string-info>
   </div>
 </template>
 
 <script>
-import AuthorAndHistory from '../AuthorAndHistory';
+import StringInfo from '../bottom/StringInfo';
 import DisplayText from '../DisplayText';
 
 export default {
   props: ['stringtext', 'context'],
-  components: { AuthorAndHistory, DisplayText },
+  components: { StringInfo, DisplayText },
 }
 </script>

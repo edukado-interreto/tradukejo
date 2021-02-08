@@ -41,5 +41,6 @@ urlpatterns = [
     path("vue/get-history/", vue_translation.get_history, name="vue_get_history"),
     path("vue/get-comments/", vue_translation.get_comments, name="vue_get_comments"),
     path("vue/save-comment/", vue_translation.save_comment, name="vue_save_comment"),
+    path("vue/delete-comment/", vue_translation.delete_comment, name="vue_delete_comment"),
 ]
 

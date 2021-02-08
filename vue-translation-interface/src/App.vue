@@ -22,7 +22,8 @@ export default {
 }
 
 .slide-enter-active,
-.slide-leave-active {
+.slide-leave-active,
+.slide-move {
   transition: all .15s ease-out;
   transform-origin: top;
 }

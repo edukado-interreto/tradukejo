@@ -286,3 +286,19 @@ def save_comment(request):
     comment.save()
 
     return JsonResponse(comment.to_dict(), safe=False)
+
+
+@require_POST
+@login_required
+@user_has_any_right_for_project
+def delete_comment(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    comment = get_object_or_404(Comment, pk=postdata['comment_id'])
+    if is_project_admin(request.user, comment.trstringtext.trstring.project) or request.user == comment.author:
+        comment.delete()
+    else:
+        response = HttpResponse('Vi ne rajtas forigi ĉi tiun komenton.')
+        response.status_code = 403
+
+    return JsonResponse({'ok': True}, safe=False)

@@ -16,6 +16,8 @@ app.config.globalProperties.availableLanguages = window.vueTranslationInterface.
 app.config.globalProperties.csrf = window.vueTranslationInterface.csrf;
 app.config.globalProperties.imgURL = window.vueTranslationInterface.imgURL;
 app.config.globalProperties.projectLanguage = window.vueTranslationInterface.projectLanguage;
+app.config.globalProperties.userId = window.vueTranslationInterface.userId;
+app.config.globalProperties.isAdmin = window.vueTranslationInterface.isAdmin;
 app.config.globalProperties.globals = window.vueTranslationInterface.globals;
 
 app.component('loading-spinner', LoadingSpinner);

@@ -1,8 +1,8 @@
 <template>
   <div class="translation-author">
     {{ stringtext.last_change }}
+    –
     <template v-if="stringtext.translated_by">
-      –
       <a :href="stringtext.translated_by.profile_url">{{
         stringtext.translated_by.username
       }}</a>
@@ -34,13 +34,13 @@
         v-if="showComments && commentsLoading"
       ></loading-spinner>
     <transition name="slide">
-      <string-comments
+      <comments-list
         v-if="showComments && !commentsLoading"
         :comments="comments"
         :language="stringtext.language"
         :loading="commentBeingSaved"
         @save="saveComment($event)"
-      ></string-comments>
+      ></comments-list>
     </transition>
   </div>
 </template>
@@ -48,18 +48,18 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 const StringHistory = defineAsyncComponent(() => import('./StringHistory'));
-// const StringComments = defineAsyncComponent(() => import('./StringComments'));
-import StringComments from './StringComments';
+const CommentsList = defineAsyncComponent(() => import('./CommentsList'));
 
 export default {
+  inject: ['rowIsSelected'],
   props: ["stringtext"],
-  components: { StringHistory, StringComments },
+  components: { StringHistory, CommentsList },
   data() {
     return {
       showHistory: false,
       historyLoading: false,
       history: null,
-      showComments: false,
+      showComments: this.rowIsSelected && this.stringtext.comments > 0,
       commentsLoading: false,
       comments: null,
       commentBeingSaved: false,
@@ -131,8 +131,25 @@ export default {
         }
       });
       this.commentBeingSaved = false;
+    },
+    async deleteComment(id) {
+      await this.postCsrf("/vue/delete-comment/", {
+        comment_id: id,
+      }).then(response => {
+        if (response.data.ok) {
+          const index = this.comments.findIndex(el => el.id === id);
+          this.comments.splice(index, 1);
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   },
+  provide() {
+    return {
+      deleteComment: this.deleteComment
+    }
+  }
 };
 </script>
 

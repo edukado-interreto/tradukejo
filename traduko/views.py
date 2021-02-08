@@ -104,6 +104,7 @@ def translate(request, project_id, language=""):
         'imgURL': static('traduko/img'),
         'js_files': js_files,
         'css_files': css_files,
+        'is_admin': 'true' if is_project_admin(request.user, current_project) else 'false',
     }
     return render(request, "traduko/translate.html", context)
 

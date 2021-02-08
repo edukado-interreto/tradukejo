@@ -45,22 +45,22 @@
       ></translate-form>
     </transition>
 
-    <author-and-history
+    <string-info
       v-if="string.translated_text"
       :stringtext="string.translated_text"
-    ></author-and-history>
+    ></string-info>
   </div>
 </template>
 
 <script>
-import AuthorAndHistory from "../AuthorAndHistory";
+import StringInfo from '../bottom/StringInfo';
 import DisplayText from "../DisplayText";
 import TranslateForm from "./TranslateForm";
 
 export default {
   inject: ["setTranslationIsBeingEdited"],
   props: ["string"],
-  components: { AuthorAndHistory, DisplayText, TranslateForm },
+  components: { StringInfo, DisplayText, TranslateForm },
   data() {
     return {
       editing: false,

@@ -1,23 +1,9 @@
 <template>
   <div class="comments">
     <h5>Komentoj</h5>
-    <article
-      v-for="comment in comments"
-      :key="comment.id">
-      <blockquote :lang="language.code" :dir="language.direction">
-        {{ comment.text }}
-      </blockquote>
-
-      <hr class="my-2" />
-
-      {{ comment.create_date }}
-      <template v-if="comment.author">
-        –
-        <a :href="comment.author.profile_url">{{
-          comment.author.username
-        }}</a>
-      </template>
-    </article>
+    <transition-group name="slide">
+      <string-comment v-for="comment in comments" :key="comment.id" :comment="comment" :language="language" />
+    </transition-group>
 
     <form @submit.prevent="saveComment">
       <div class="form-group">
@@ -47,9 +33,12 @@
 </template>
 
 <script>
+import StringComment from './StringComment';
+
 export default {
-  emits: ['save'],
+  emits: ['save', 'delete-comment'],
   props: ["comments", "language", "loading"],
+  components: { StringComment },
   data() {
     return {
       enteredComment: ''
@@ -70,6 +59,9 @@ export default {
   methods: {
     saveComment() {
       this.$emit('save', this.enteredComment);
+    },
+    deleteComment(id) {
+      this.$emit('delete-comment', id);
     }
   },
 };

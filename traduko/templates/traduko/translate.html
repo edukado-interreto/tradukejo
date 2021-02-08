@@ -55,6 +55,8 @@ window.vueTranslationInterface = {
 	imgURL: '{{ imgURL }}',
 	projectLanguage: '{{ project.source_language.code }}',
 	availableLanguages: {{ available_languages|safe }},
+	userId: {{ user.id }},
+	isAdmin: {{ is_admin }},
 	globals: {
 		TRANSLATION_STATE_TRANSLATED: {{ TRANSLATION_STATE_TRANSLATED }},
 		TRANSLATION_STATE_UNTRANSLATED: {{ TRANSLATION_STATE_UNTRANSLATED }},

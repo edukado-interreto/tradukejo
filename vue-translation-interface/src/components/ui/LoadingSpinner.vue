@@ -1,5 +1,5 @@
 <template>
-  <div v-if="inline" class="lds-ellipsis" :class="{white: white}"><div></div><div></div><div></div><div></div></div>
+  <div v-if="inline" class="lds-ellipsis" :class="{white: white, small: small}"><div></div><div></div><div></div><div></div></div>
   <div v-else class="loader" :class="{small: small}"></div>
 </template>
 
@@ -29,6 +29,11 @@ export default {
 .small {
   transform: scale(.5);
   margin: 2rem auto;
+}
+
+.lds-ellipsis.small {
+  margin: 0 auto;
+  top: 2px;
 }
 
 .lds-ellipsis {

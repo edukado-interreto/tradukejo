@@ -17,6 +17,8 @@ def find_project_from_params(all_arguments):
             project = get_object_or_404(TrString, pk=all_arguments['trstring_id']).project
         elif 'request_id' in all_arguments.keys():
             project = get_object_or_404(TranslatorRequest, pk=all_arguments['request_id']).language_version.project
+        elif 'comment_id' in all_arguments.keys():
+            project = get_object_or_404(Comment, pk=all_arguments['comment_id']).trstringtext.trstring.project
         else:
             raise Http404()
     return project

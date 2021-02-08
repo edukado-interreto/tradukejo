@@ -93,6 +93,7 @@ export default {
       loadLanguageFrom: this.loadLanguageFrom,
       stringId: this.stringToShow.id,
       setTranslationIsBeingEdited: this.setTranslationIsBeingEdited,
+      rowIsSelected: this.isSelected
     };
   },
   mounted() {
