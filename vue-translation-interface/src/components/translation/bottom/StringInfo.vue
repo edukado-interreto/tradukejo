@@ -59,7 +59,7 @@ export default {
       showHistory: false,
       historyLoading: false,
       history: null,
-      showComments: this.rowIsSelected && this.stringtext.comments > 0,
+      showComments: false,
       commentsLoading: false,
       comments: null,
       commentBeingSaved: false,
@@ -148,6 +148,11 @@ export default {
   provide() {
     return {
       deleteComment: this.deleteComment
+    }
+  },
+  mounted() {
+    if (this.rowIsSelected && this.commentCount > 0 && !this.showComments) {
+      this.toggleComments();
     }
   }
 };

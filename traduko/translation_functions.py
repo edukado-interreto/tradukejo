@@ -547,7 +547,7 @@ def update_project_admins(user, project):
         project.save()
 
 
-def get_last_activities(project, limit=50):
+def get_last_activities(project, limit=40):
     activities = StringActivity.objects.filter(trstringtext__trstring__project=project). \
                      values('date', 'language__code', 'language__name', 'user__pk', 'user__username', 'action'). \
                      annotate(last=Max('datetime'), strings=Count('trstringtext', distinct=True), words_sum=Sum('words')).order_by(
@@ -558,3 +558,13 @@ def get_last_activities(project, limit=50):
             last_activities[activity['date']] = []
         last_activities[activity['date']].append(activity)
     return last_activities
+
+
+def get_last_comments(project, limit=20):
+    comments = Comment.objects.filter(trstringtext__trstring__project=project).order_by('-create_date')[0:limit]
+    last_comments = {}
+    for comment in comments:
+        if comment.date() not in last_comments.keys():
+            last_comments[comment.date()] = []
+        last_comments[comment.date()].append(comment)
+    return last_comments

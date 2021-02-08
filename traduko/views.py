@@ -50,6 +50,7 @@ def projectpage(request, project_id):
         show_translator_notifications_button = False
 
     languages_with_stats = get_project_language_statistics(current_project, request.user)
+    current_user_languages = [x.language for x in languages_with_stats['current_user']]
 
     context = {
         'my_languages_with_stats': languages_with_stats['current_user'],
@@ -58,7 +59,9 @@ def projectpage(request, project_id):
         'is_project_admin': project_admin,
         'addible_languages': addible_languages(current_project),
         'show_translator_notifications_button': show_translator_notifications_button,
-        'last_activities': get_last_activities(current_project)
+        'last_activities': get_last_activities(current_project),
+        'last_comments': get_last_comments(current_project),
+        'current_user_languages': current_user_languages
     }
 
     if user_is_project_admin:

@@ -398,6 +398,9 @@ class Comment(models.Model):
     text = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
 
+    def date(self):
+        return self.create_date.date()
+
     def to_dict(self):
         d = {
             'id': self.pk,

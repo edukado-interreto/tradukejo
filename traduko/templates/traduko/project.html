@@ -114,6 +114,40 @@
 		{% endif %}
 	</div>
 	<div class="col">
+		{% if last_comments %}
+		<h2>Lastaj komentoj</h2>
+		<div class="card mt-4">
+			<div class="card-body last-activities">
+				{% for date, comments in last_comments.items %}
+				<h4>{{ date }}</h4>
+				<ul>
+					{% for comment in comments %}
+					<li>
+						{% ifchanged comment.trstringtext.language %}
+							<b lang="{{ comment.trstringtext.language.code }}">{{ comment.trstringtext.language.name }}</b><br>
+						{% endifchanged %}
+						{% user_link comment.author.pk comment.author.username %}
+						–
+						{% if is_project_admin or comment.trstringtext.language in current_user_languages %}
+							<a href="{% url 'translate' project.pk comment.trstringtext.language.code %}?dir={{ comment.trstringtext.trstring.path|urlencode }}#{{ comment.trstringtext.trstring.pk }}">
+								{{ comment.trstringtext.trstring.path }}#{{ comment.trstringtext.trstring.name }}
+							</a>
+						{% elif comment.trstringtext.language == project.source_language and current_user_languages %}
+							{% with current_user_languages|list_index:0 as lang %}
+							<a href="{% url 'translate' project.pk lang.code %}?dir={{ comment.trstringtext.trstring.path|urlencode }}#{{ comment.trstringtext.trstring.pk }}">
+								{{ comment.trstringtext.trstring.path }}#{{ comment.trstringtext.trstring.name }}
+							</a>
+							{% endwith %}
+						{% else %}
+							{{ comment.trstringtext.trstring.path }}#{{ comment.trstringtext.trstring.name }}
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
 		<h2>Lastaj agadoj</h2>
 		<div class="card mt-4">
 			<div class="card-body last-activities">
@@ -122,7 +156,9 @@
 				<ul>
 					{% for activity in activities %}
 					<li>
-						<b lang="{{ activity.language__code }}">{{ activity.language__name }}</b><br>
+						{% ifchanged activity.language__code %}
+							<b lang="{{ activity.language__code }}">{{ activity.language__name }}</b><br>
+						{% endifchanged %}
 						{% if activity.action == ACTION_TYPE_TRANSLATE %}
 							{% user_link activity.user__pk activity.user__username %} tradukis {{ activity.words_sum }} vorto(j)n.
 						{% elif activity.action == ACTION_TYPE_EDIT %}
