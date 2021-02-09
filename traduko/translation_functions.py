@@ -212,6 +212,72 @@ def get_subdirectories(trstrings, current_directory):
     return OrderedDict(sorted(subdirectories.items()))
 
 
+def get_recursive_directories(all_strings):
+    unique_paths = all_strings.values('path').distinct()
+    unique_paths = [x['path'] for x in unique_paths]
+    if '' not in unique_paths:
+        unique_paths.append('')
+    for p in unique_paths:
+        directories = p.split('/')
+        for i in range(len(directories)):
+            current_path = '/'.join(directories[0:i])
+            if current_path not in unique_paths:
+                unique_paths.append(current_path)
+
+    all_directories = {}
+
+    for d in unique_paths:
+        strings_in_directory = all_strings.filter(path=d).aggregate(Count('name'), Sum('words'), Sum('characters'))
+        if d == '':
+            strings_in_children = all_strings.aggregate(Count('name'), Sum('words'), Sum('characters'))
+        else:
+            strings_in_children = all_strings.filter(path__startswith=d + "/").aggregate(Count('name'), Sum('words'), Sum('characters'))
+        all_directories[d] = {
+            'strings': {
+                'count': strings_in_directory['name__count'],
+                'words': int(strings_in_directory['words__sum'] or 0),
+                'characters': int(strings_in_directory['characters__sum'] or 0),
+            },
+            'strings_in_children': {
+                'count': strings_in_children['name__count'],
+                'words': int(strings_in_children['words__sum'] or 0),
+                'characters': int(strings_in_children['characters__sum'] or 0),
+            },
+            'children': []
+        }
+
+    for path in all_directories.keys():
+        if '/' not in path:
+            if path != '':
+                all_directories['']['children'].append(path)
+            continue
+        parent = path[0:path.rfind('/')]
+        directory_name = path[path.rfind('/') + 1:]
+        if directory_name not in all_directories[parent]['children']:
+            all_directories[parent]['children'].append(directory_name)
+
+    recursive_directories = OrderedDict()
+    recursive_directories[''] = add_recursive_children_directory('', all_directories)
+
+    return recursive_directories
+
+
+def add_recursive_children_directory(path, all_directories):
+    if path not in all_directories.keys():
+        return None
+    current_directory = all_directories[path]
+    children = sorted(current_directory['children'])
+    new_children = OrderedDict()
+
+    for dir in children:
+        complete_path = dir if path == '' else f'{path}/{dir}'
+        if complete_path != path:
+            new_children[dir] = add_recursive_children_directory(complete_path, all_directories)
+
+    current_directory['children'] = new_children
+    return current_directory
+
+
 def get_all_strings(project, language, state_filter, search_string=''):
     all_strings = TrString.objects.filter(project=project)
     all_strings = filter_by_state(all_strings, language, state_filter)

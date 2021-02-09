@@ -71,6 +71,30 @@ def get_directories(request):
     return response
 
 
+@login_required
+@user_allowed_to_translate
+@require_POST
+def get_directories_tree(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+
+    current_project = get_object_or_404(Project, pk=postdata['project_id'])
+    current_language = get_object_or_404(Language, code=postdata['language'])
+
+    # Search and filter data
+    current_directory = postdata['dir'].strip('/') if 'dir' in postdata.keys() else ''
+    state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
+    search_string = postdata['q'] if 'q' in postdata.keys() else ''
+
+    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
+    directories_tree = get_recursive_directories(all_strings, current_directory)
+
+    context = {
+        'directories_tree': directories_tree,
+    }
+    response = JsonResponse(context)
+    return response
+
+
 @require_POST
 @login_required
 def get_string_translation(request):
