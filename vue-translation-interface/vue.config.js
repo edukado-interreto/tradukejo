@@ -7,5 +7,6 @@ module.exports = {
         additionalData: '@import "@/assets/scss/_variables.scss";'
       }
     }
-  }
+  },
+  productionSourceMap: false
 }

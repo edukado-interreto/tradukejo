@@ -5,8 +5,8 @@ const mutations = {
   setStrings(state, payload) {
     state.loadedStrings = payload;
   },
-  setDirectories(state, payload) {
-    state.loadedDirectories = payload;
+  setDirectoriesTree(state, payload) {
+    state.directoriesTree = payload;
   },
   setCanLoadMore(state, payload) {
     state.canLoadMore = payload;

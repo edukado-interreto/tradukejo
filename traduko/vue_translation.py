@@ -50,30 +50,6 @@ def get_strings(request):
 @login_required
 @user_allowed_to_translate
 @require_POST
-def get_directories(request):
-    postdata = json.loads(request.body.decode('utf-8'))
-
-    current_project = get_object_or_404(Project, pk=postdata['project_id'])
-    current_language = get_object_or_404(Language, code=postdata['language'])
-
-    # Search and filter data
-    current_directory = postdata['dir'].strip('/') if 'dir' in postdata.keys() else ''
-    state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
-    search_string = postdata['q'] if 'q' in postdata.keys() else ''
-
-    all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
-    subdirectories = get_subdirectories(all_strings, current_directory)
-
-    context = {
-        'directories': subdirectories,
-    }
-    response = JsonResponse(context)
-    return response
-
-
-@login_required
-@user_allowed_to_translate
-@require_POST
 def get_directories_tree(request):
     postdata = json.loads(request.body.decode('utf-8'))
 
@@ -81,12 +57,11 @@ def get_directories_tree(request):
     current_language = get_object_or_404(Language, code=postdata['language'])
 
     # Search and filter data
-    current_directory = postdata['dir'].strip('/') if 'dir' in postdata.keys() else ''
     state_filter = postdata['state'] if 'state' in postdata.keys() else STATE_FILTER_ALL
     search_string = postdata['q'] if 'q' in postdata.keys() else ''
 
     all_strings = get_all_strings(current_project, current_language, state_filter, search_string)
-    directories_tree = get_recursive_directories(all_strings, current_directory)
+    directories_tree = get_recursive_directories(all_strings)
 
     context = {
         'directories_tree': directories_tree,

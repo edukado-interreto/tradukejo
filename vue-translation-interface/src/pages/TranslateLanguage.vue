@@ -1,20 +1,31 @@
 <template>
   <filter-bar></filter-bar>
   <navigation-bar></navigation-bar>
-  <directories-list
-    v-if="!directoriesLoading"
-    :directories="directories"
-  ></directories-list>
-  <loading-spinner v-else-if="!isLoading"></loading-spinner>
 
-  <loading-spinner v-if="isLoading"></loading-spinner>
-  <translation-zone v-else :strings="strings">
-  </translation-zone>
-  <div
-    v-if="strings.length === 0 && Object.keys(directories).length === 0 && !directoriesLoading"
-    class="alert alert-info"
-  >
-    Neniu ĉeno estis trovita.
+  <div class="row">
+    <div class="col-12 col-lg-3 col-xl-2">
+      <div class="card">
+        <div class="card-body">
+          <loading-spinner v-if="directoriesTreeLoading"></loading-spinner>
+          <directories-tree v-else :tree="directoriesTree"></directories-tree>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <directories-list
+        v-if="!directoriesTreeLoading"
+        :directories="directories"
+      ></directories-list>
+      <loading-spinner v-if="isLoading"></loading-spinner>
+      <translation-zone v-else :strings="strings">
+      </translation-zone>
+      <div
+        v-if="strings.length === 0 && !isLoading && !directoriesTreeLoading && Object.keys(directories).length === 0"
+        class="alert alert-info"
+      >
+        Neniu ĉeno estis trovita.
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,6 +33,7 @@
 import FilterBar from "../components/FilterBar";
 import NavigationBar from "../components/NavigationBar";
 import DirectoriesList from "../components/DirectoriesList";
+import DirectoriesTree from "../components/DirectoriesTree";
 import TranslationZone from "../components/translation/TranslationZone";
 
 export default {
@@ -29,12 +41,14 @@ export default {
     FilterBar,
     NavigationBar,
     DirectoriesList,
+    DirectoriesTree,
     TranslationZone,
   },
   data() {
     return {
       isLoading: false,
       directoriesLoading: false,
+      directoriesTreeLoading: false,
     };
   },
   computed: {
@@ -44,30 +58,50 @@ export default {
     strings() {
       return this.$store.getters.strings;
     },
-    directories() {
-      return this.$store.getters.directories;
+    directoriesTree() {
+      return this.$store.getters.directoriesTree;
     },
+    directories() {
+      let currentDir = this.directoriesTree[""];
+
+      if (this.queryStringDir != '') {
+        const directories = this.queryStringDir.split('/');
+        let notFound = false;
+        directories.forEach((d) => {
+          if (d in currentDir.children) {
+            currentDir = currentDir.children[d];
+          }
+          else {
+            notFound = true;
+          }
+        });
+        if (notFound) {
+          return {};
+        }
+      }
+
+      return currentDir.children;
+    }
   },
   watch: {
     paramLang(newValue) {
       this.setLanguage(newValue);
       this.fetchStrings();
-      this.fetchDirectories();
+      this.fetchDirectoriesTree();
     },
     queryStringState() {
       this.fetchStrings();
-      this.fetchDirectories();
+      this.fetchDirectoriesTree();
     },
     queryStringSort() {
       this.fetchStrings();
     },
     queryStringDir() {
       this.fetchStrings();
-      this.fetchDirectories();
     },
     queryStringQ() {
       this.fetchStrings();
-      this.fetchDirectories();
+      this.fetchDirectoriesTree();
     },
   },
   methods: {
@@ -88,14 +122,13 @@ export default {
       });
       this.isLoading = false;
     },
-    async fetchDirectories() {
-      this.directoriesLoading = true;
-      await this.$store.dispatch("fetchDirectories", {
-        dir: this.queryStringDir,
+    async fetchDirectoriesTree() {
+      this.directoriesTreeLoading = true;
+      await this.$store.dispatch("fetchDirectoriesTree", {
         q: this.queryStringQ,
         state: this.queryStringState,
       });
-      this.directoriesLoading = false;
+      this.directoriesTreeLoading = false;
     },
     isAllowedToLeave() {
       const saveButtons = document.querySelectorAll("#app .can-submit");
@@ -119,7 +152,7 @@ export default {
   created() {
     this.setLanguage(this.paramLang);
     this.fetchStrings();
-    this.fetchDirectories();
+    this.fetchDirectoriesTree();
 
     window.addEventListener("beforeunload", this.handlerClose);
   },

@@ -31,7 +31,6 @@ urlpatterns = [
     path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions"),
 
     path("vue/get-strings/", vue_translation.get_strings, name="vue_get_strings"),
-    path("vue/get-directories/", vue_translation.get_directories, name="vue_get_directories"),
     path("vue/get-directories-tree/", vue_translation.get_directories_tree, name="vue_get_directories_tree"),
     path("vue/get-string-translation/", vue_translation.get_string_translation, name="vue_get_string_translation"),
     path("vue/mark-outdated/", vue_translation.markoutdated, name="vue_markoutdated"),

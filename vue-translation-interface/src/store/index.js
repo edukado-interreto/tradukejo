@@ -8,7 +8,7 @@ const store = createStore({
     return {
       currentLanguage: null,
       loadedStrings: [],
-      loadedDirectories: {},
+      directoriesTree: {},
       canLoadMore: false,
     };
   },

@@ -41,16 +41,15 @@ const actions = {
         console.log(error);
       });
   },
-  async fetchDirectories(context, payload) {
-    await postCsrf('/vue/get-directories/', {
+  async fetchDirectoriesTree(context, payload) {
+    await postCsrf('/vue/get-directories-tree/', {
       project_id: window.vueTranslationInterface.projectId,
       language: context.getters.currentLanguage.code,
-      dir: payload.dir,
       q: payload.q,
       state: payload.state,
     })
       .then((response) => {
-        context.commit('setDirectories', response.data.directories);
+        context.commit('setDirectoriesTree', response.data.directories_tree);
       })
       .catch(function (error) {
         console.log(error);

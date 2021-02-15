@@ -2,8 +2,8 @@ const getters = {
   currentLanguage(state) {
     return state.currentLanguage || null;
   },
-  directories(state) {
-    return state.loadedDirectories;
+  directoriesTree(state) {
+    return state.directoriesTree;
   },
   strings(state) {
     return state.loadedStrings;

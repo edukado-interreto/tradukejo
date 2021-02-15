@@ -108,7 +108,8 @@ export default {
 .translation-row {
   border: 1px solid black;
   border-radius: 5px;
-  margin: 1rem 0;
+  margin: 0;
+  margin-bottom: 1rem;
   padding: 0.5rem 0.6rem;
 
   &.translated {
