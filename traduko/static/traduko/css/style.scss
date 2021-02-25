@@ -1,6 +1,8 @@
-$link-color: #254E58;
-$link-active-color: #112D32;
+$title-color: #254E58;
+$title-dark-color: #112D32;
 $header-bgcolor: #88BDBC;
+$link-color: #3173BB;
+$link-hover-color: #425870;
 
 /* Page structure */
 
@@ -18,11 +20,21 @@ html {
     max-width: 1800px;
 }
 
-a {
+main a {
     color: $link-color;
 
     &:hover, &:active {
-        color: $link-active-color;
+        color: $link-hover-color;
+    }
+}
+
+.btn.btn-primary {
+    background-color: $link-color;
+    border-color: $link-color;
+
+    &:hover, &:active {
+        background-color: $link-hover-color;
+        border-color: $link-hover-color;
     }
 }
 
@@ -31,7 +43,7 @@ a {
     padding: 6px 0;
 
     a {
-        color: $link-active-color;
+        color: $title-dark-color;
     }
 }
 
@@ -42,7 +54,7 @@ a {
     margin-bottom: 0;
 
     a {
-        color: $link-active-color;
+        color: $title-dark-color;
     }
 
     ul {
@@ -53,7 +65,7 @@ a {
 main {
     h1.page-title {
         margin-top: 0;
-        background: $link-color;
+        background: $title-color;
         color: white;
         text-align: center;
         margin-bottom: 1.3rem;
@@ -72,14 +84,14 @@ main {
 
     h2 {
         font-size: 1.8rem;
-        color: $link-color;
+        color: $title-color;
         margin-top: 2rem;
         margin-bottom: 1rem;
     }
 
     h3 {
         font-size: 1.5rem;
-        color: $link-color;
+        color: $title-color;
         margin-top: 1.7rem;
         margin-bottom: .8rem;
     }
@@ -164,7 +176,7 @@ main {
 
 .last-activities {
     h4 {
-        color: $link-color;
+        color: $title-color;
         font-size: 1.1rem;
     }
 
@@ -185,7 +197,7 @@ main {
 }
 
 .loader {
-  color: $link-color;
+  color: $title-color;
   font-size: 20px;
   margin: 100px auto;
   width: 1em;
