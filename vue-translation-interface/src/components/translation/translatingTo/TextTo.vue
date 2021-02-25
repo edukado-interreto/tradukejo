@@ -1,7 +1,6 @@
 <template>
   <div class="col-md-6">
     <display-text
-      ref="zizi"
       v-if="string.translated_text && !editing"
       :texts="string.translated_text.text"
       :pluralized="string.translated_text.pluralized"

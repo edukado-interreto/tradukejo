@@ -189,15 +189,11 @@ export default {
     },
     textsWithPluralExamples() {
       if (!this.newTranslation) {
-        if (!this.editMode) {
-          return this.texts;
-        } else {
-          const texts = {};
-          this.currentLanguage.plural_examples_list.forEach((example) => {
-            texts[example] = this.texts[example] || "";
-          });
-          return texts;
-        }
+        const texts = {};
+        this.currentLanguage.plural_examples_list.forEach((example) => {
+          texts[example] = this.texts[example] || "";
+        });
+        return texts;
       } else {
         const texts = {};
         this.currentLanguage.plural_examples_list.forEach((example) => {

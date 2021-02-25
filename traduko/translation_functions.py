@@ -519,7 +519,7 @@ def get_history_comparison(history):
         new.comparison = OrderedDict()
 
         if len(new_texts) == 1 and len(old_texts) == 1:  # Non-pluralized string
-            new.comparison['1'] = get_text_difference(html.escape(old_texts['1']), html.escape(new_texts['1']))
+            new.comparison['1'] = get_text_difference(html.escape(list(old_texts.values())[0]), html.escape(list(new_texts.values())[0]))
         elif len(new_texts) == len(old_texts):  # Pluralized string
             for j in range(len(new_texts)):
                 keys = list(new_texts.keys())
