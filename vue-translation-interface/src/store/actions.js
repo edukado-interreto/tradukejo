@@ -42,6 +42,7 @@ const actions = {
       });
   },
   async fetchDirectoriesTree(context, payload) {
+    context.commit('setDirectoriesTreeLoading', true);
     await postCsrf('/vue/get-directories-tree/', {
       project_id: window.vueTranslationInterface.projectId,
       language: context.getters.currentLanguage.code,
@@ -54,6 +55,7 @@ const actions = {
       .catch(function (error) {
         console.log(error);
       });
+    context.commit('setDirectoriesTreeLoading', false);
   },
   async deleteString(context, payload) {
     context.commit('markDeleted', payload);

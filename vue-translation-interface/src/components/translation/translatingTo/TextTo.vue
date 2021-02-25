@@ -141,6 +141,7 @@ export default {
           setTimeout(() => {
             if (this.string.path != oldPath) {
               this.$router.push(this.translateLink({ dir: this.string.path, params: { force: true } }));
+              this.fetchDirectoriesTree();
               return;
             }
           }, 200); // Wait until end of transition
@@ -148,6 +149,10 @@ export default {
         .catch((e) => {
           this.error = e.message;
         });
+      
+      if (this.queryStringState !== this.globals.STATE_FILTER_ALL) {
+        this.fetchDirectoriesTree();
+      }
       this.loading = false;
     },
   },

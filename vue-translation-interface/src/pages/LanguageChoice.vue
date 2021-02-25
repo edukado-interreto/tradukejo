@@ -22,7 +22,7 @@
 .vue-language-selector {
   text-align: center;
   a {
-    background: $link-color;
+    background: $title-color;
     color: white;
     padding: 10px;
     display: block;
@@ -32,7 +32,7 @@
 
     &:hover {
       background: $header-bgcolor;
-      color: $link-active-color;
+      color: $title-dark-color;
       text-decoration: none;
     }
   }

@@ -5,6 +5,9 @@ const getters = {
   directoriesTree(state) {
     return state.directoriesTree;
   },
+  directoriesTreeLoading(state) {
+    return state.directoriesTreeLoading;
+  },
   strings(state) {
     return state.loadedStrings;
   },

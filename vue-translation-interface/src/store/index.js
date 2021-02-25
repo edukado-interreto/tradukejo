@@ -10,6 +10,7 @@ const store = createStore({
       loadedStrings: [],
       directoriesTree: {},
       canLoadMore: false,
+      directoriesTreeLoading: false,
     };
   },
   getters,

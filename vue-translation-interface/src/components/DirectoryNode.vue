@@ -118,7 +118,7 @@ a {
 
   &.active {
     font-weight: bold;
-    background: #007bff;
+    background: $link-color;
     color: white;
     padding: 2px 4px;
     margin: 1px 0;
@@ -126,7 +126,7 @@ a {
     font-size: .9rem;
 
     &:hover {
-      background: $link-color;
+      background: $link-hover-color;
       text-decoration: none;
     }
   }

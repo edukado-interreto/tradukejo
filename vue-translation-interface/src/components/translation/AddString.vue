@@ -49,6 +49,7 @@ export default {
         .dispatch("addString", data)
         .then((response) => {
           this.hideForm();
+          this.fetchDirectoriesTree();
 
           setTimeout(() => {
             if (response.path != this.queryStringDir) {

@@ -52,7 +52,13 @@ const mixins = {
         }
       });
       return obj;
-    }
+    },
+    async fetchDirectoriesTree() {
+      await this.$store.dispatch("fetchDirectoriesTree", {
+        q: this.queryStringQ,
+        state: this.queryStringState,
+      });
+    },
   }
 };
 

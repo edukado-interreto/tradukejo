@@ -48,7 +48,6 @@ export default {
     return {
       isLoading: false,
       directoriesLoading: false,
-      directoriesTreeLoading: false,
     };
   },
   computed: {
@@ -81,6 +80,9 @@ export default {
       }
 
       return currentDir.children;
+    },
+    directoriesTreeLoading() {
+      return this.$store.getters.directoriesTreeLoading;
     }
   },
   watch: {
@@ -121,14 +123,6 @@ export default {
         chosen_string: this.chosenStringId,
       });
       this.isLoading = false;
-    },
-    async fetchDirectoriesTree() {
-      this.directoriesTreeLoading = true;
-      await this.$store.dispatch("fetchDirectoriesTree", {
-        q: this.queryStringQ,
-        state: this.queryStringState,
-      });
-      this.directoriesTreeLoading = false;
     },
     isAllowedToLeave() {
       const saveButtons = document.querySelectorAll("#app .can-submit");

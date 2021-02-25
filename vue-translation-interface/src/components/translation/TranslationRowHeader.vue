@@ -64,10 +64,14 @@ export default {
       this.stateLoading = true;
       await this.$store.dispatch('updateStringState', { id: id, translated: newState === this.globals.TRANSLATION_STATE_TRANSLATED });
       this.stateLoading = false;
+      if (this.queryStringState !== this.globals.STATE_FILTER_ALL) {
+        this.fetchDirectoriesTree();
+      }
     },
-    deleteString(id) {
+    async deleteString(id) {
       if (confirm('Ĉu vi certe volas forigi ĉi tiun ĉenon?')) {
-        this.$store.dispatch('deleteString', id);
+        await this.$store.dispatch('deleteString', id);
+        this.fetchDirectoriesTree();
       }
     }
   },

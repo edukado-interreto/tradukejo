@@ -32,6 +32,9 @@ const mutations = {
   },
   addStringFirst(state, payload) {
     state.loadedStrings.unshift(payload);
+  },
+  setDirectoriesTreeLoading(state, payload) {
+    state.directoriesTreeLoading = payload;
   }
 }
 
