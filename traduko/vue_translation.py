@@ -301,3 +301,26 @@ def delete_comment(request):
         response.status_code = 403
 
     return JsonResponse({'ok': True}, safe=False)
+
+
+@require_POST
+@login_required
+@user_has_any_right_for_project
+def get_translation_suggestions(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+    trstring = get_object_or_404(TrString, pk=postdata['trstring_id'])
+    trstringtext = get_object_or_404(TrStringText, trstring=trstring, language=trstring.project.source_language)
+    current_language = get_object_or_404(Language, code=postdata['language'])
+
+    same_texts = TrStringText.objects.filter(language=trstring.project.source_language, text=trstringtext.text).exclude(pk=trstringtext.pk)
+    trstring_ids = [s.trstring.pk for s in same_texts]
+    possible_translations = TrStringText.objects.filter(language=current_language, trstring__in=trstring_ids)
+
+    translations = []
+    translation_lists = []
+    for s in possible_translations:
+        if s.pk not in translations:
+            translations.append(s.pk)
+            translation_lists.append(list(s.pluralized_text_dictionary().values()))
+
+    return JsonResponse(translation_lists, safe=False)

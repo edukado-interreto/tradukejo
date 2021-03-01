@@ -106,6 +106,12 @@
       </div>
     </template>
 
+    <proposed-translations
+      v-if="proposedTranslations.length > 0"
+      :translations="proposedTranslations"
+      @pick-translation="setTranslation($event)"
+      />
+
     <div class="form-group">
       <button
         class="btn btn-primary mr-2 text-center"
@@ -127,7 +133,11 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
+const ProposedTranslations = defineAsyncComponent(() => import('./ProposedTranslations'));
+
 export default {
+  components: { ProposedTranslations },
   emits: ["save-translation", "cancel"],
   inject: ["stringId"],
   props: {
@@ -181,6 +191,7 @@ export default {
       enteredName: this.name,
       enteredPath: this.path,
       minor: false,
+      proposedTranslations: [],
     };
   },
   computed: {
@@ -263,6 +274,21 @@ export default {
     cancel() {
       this.$emit("cancel");
     },
+    setTranslation(texts) {
+      for (let i = 0; i < texts.length; i++) {
+        this.enteredTexts[i] = texts[i];
+      }
+    }
+  },
+  async created() {
+    if (!this.newString && Object.keys(this.texts).length === 0) {
+      await this.postCsrf("/vue/get-translation-suggestions/", {
+        trstring_id: this.stringId,
+        language: this.currentLanguage.code,
+      }).then((response) => {
+        this.proposedTranslations = response.data;
+      });
+    }
   },
   mounted() {
     this.$refs.textarea.focus();

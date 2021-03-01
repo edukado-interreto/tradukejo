@@ -311,8 +311,7 @@ class TrStringText(models.Model):
         else:
             return {"1": texts[0]}
 
-    def number_of_pluralized_texts(
-            self):  # Unlike pluralized_text_dictionary(), can return more than 1 even if the string is not pluralized
+    def number_of_pluralized_texts(self):  # Unlike pluralized_text_dictionary(), can return more than 1 even if the string is not pluralized
         try:
             texts = json.loads(self.text)
             return len(texts)
