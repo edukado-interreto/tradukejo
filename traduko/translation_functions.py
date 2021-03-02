@@ -206,7 +206,7 @@ def get_recursive_directories(all_strings):
     for d in unique_paths:
         strings_in_directory = all_strings.filter(path=d).aggregate(Count('name'), Sum('words'), Sum('characters'))
         if d == '':
-            strings_in_children = all_strings.aggregate(Count('name'), Sum('words'), Sum('characters'))
+            strings_in_children = all_strings.exclude(path="").aggregate(Count('name'), Sum('words'), Sum('characters'))
         else:
             strings_in_children = all_strings.filter(path__startswith=d + "/").aggregate(Count('name'), Sum('words'), Sum('characters'))
         all_directories[d] = {
@@ -232,7 +232,8 @@ def get_recursive_directories(all_strings):
         directory_name = path[path.rfind('/') + 1:]
         if directory_name not in all_directories[parent]['children']:
             all_directories[parent]['children'].append(directory_name)
-
+    for dd, kk in all_directories.items():
+        print(dd, kk)
     recursive_directories = OrderedDict()
     recursive_directories[''] = add_recursive_children_directory('', all_directories)
 

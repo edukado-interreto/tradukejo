@@ -3,7 +3,7 @@
   <navigation-bar></navigation-bar>
 
   <div class="row">
-    <div class="col-12 col-lg-3 col-xl-2">
+    <div class="col-12 col-lg-3 col-xl-2" v-if="!noDirectories">
       <div class="card">
         <div class="card-body">
           <loading-spinner v-if="directoriesTreeLoading"></loading-spinner>
@@ -83,6 +83,9 @@ export default {
     },
     directoriesTreeLoading() {
       return this.$store.getters.directoriesTreeLoading;
+    },
+    noDirectories() {
+      return this.directoriesTreeLoading || Object.keys(this.directoriesTree[""].children).length === 0;
     }
   },
   watch: {
