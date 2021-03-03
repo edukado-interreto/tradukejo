@@ -1,4 +1,6 @@
 import difflib
+
+from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.db.models import Sum, Q, Count, Max
 from django.shortcuts import get_object_or_404
@@ -232,8 +234,7 @@ def get_recursive_directories(all_strings):
         directory_name = path[path.rfind('/') + 1:]
         if directory_name not in all_directories[parent]['children']:
             all_directories[parent]['children'].append(directory_name)
-    for dd, kk in all_directories.items():
-        print(dd, kk)
+
     recursive_directories = OrderedDict()
     recursive_directories[''] = add_recursive_children_directory('', all_directories)
 
@@ -612,3 +613,39 @@ def get_last_comments(project, limit=20):
             last_comments[comment.date()] = []
         last_comments[comment.date()].append(comment)
     return last_comments
+
+
+def send_email_about_new_comment(request, trstringtext, user):
+    project = trstringtext.trstring.project
+    authors = Comment.objects.filter(trstringtext=trstringtext).exclude(author=user)
+    authors_list = []
+    for a in authors:
+        if a.author not in authors_list:
+            authors_list.append(a.author)
+
+    for author in authors_list:
+        if trstringtext.language != project.source_language or is_project_admin(author, project):
+            url = request.build_absolute_uri(reverse('translate', args=(project.pk, trstringtext.language.code)))
+        else:
+            lang = LanguageVersion.objects.filter(project=project, translators=author)
+            if lang.count() == 0:
+                continue
+            url = request.build_absolute_uri(reverse('translate', args=(project.pk, lang[0].language.code)))
+        url += f'?dir={trstringtext.trstring.path}#{trstringtext.trstring.pk}'
+
+        mail_context = {
+            'translator': author,
+            'project': project,
+            'url': url,
+            'settings_url': request.build_absolute_uri(reverse('user_settings')),
+        }
+        html_message = render_to_string("traduko/email/comment-reply.html", mail_context)
+        plain_text_message = strip_tags(html_message)
+
+        send_mail(
+            'Tradukejo de E@I: respondo al via komento en ' + project.name,
+            plain_text_message,
+            None,
+            [author.email],
+            html_message=html_message
+        )

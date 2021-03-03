@@ -284,6 +284,8 @@ def save_comment(request):
     comment = Comment(trstringtext=trstringtext, author=request.user, text=text)
     comment.save()
 
+    send_email_about_new_comment(request, trstringtext, request.user)
+
     return JsonResponse(comment.to_dict(), safe=False)
 
 
