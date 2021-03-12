@@ -47,6 +47,7 @@
     <string-info
       v-if="string.translated_text"
       :stringtext="string.translated_text"
+      :is-translation="true"
     ></string-info>
   </div>
 </template>

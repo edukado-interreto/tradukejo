@@ -52,7 +52,7 @@ const CommentsList = defineAsyncComponent(() => import('./CommentsList'));
 
 export default {
   inject: ['rowIsSelected'],
-  props: ["stringtext"],
+  props: ["stringtext", "isTranslation"],
   components: { StringHistory, CommentsList },
   data() {
     return {
@@ -151,7 +151,7 @@ export default {
     }
   },
   mounted() {
-    if (this.rowIsSelected && this.commentCount > 0 && !this.showComments) {
+    if (this.rowIsSelected && this.commentCount > 0 && !this.showComments && !(this.isTranslation && this.editMode)) {
       this.toggleComments();
     }
   }

@@ -6,6 +6,7 @@
     </div>
     <string-info
       :stringtext="stringtext"
+      :is-translation="false"
     ></string-info>
   </div>
 </template>
