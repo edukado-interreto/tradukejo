@@ -11,3 +11,5 @@ class User(AbstractUser):
                                           default=True)
     email_translation_request = models.BooleanField('Informi min retpoŝte, kiam iu petas rajton traduki projekton, kiun mi administras',
                                                     default=True)
+    email_new_comments = models.BooleanField('Informi min retpoŝte, kiam iu respondis mian komenton',
+                                             default=True)

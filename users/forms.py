@@ -12,4 +12,4 @@ class CustomUserCreationForm(UserCreationForm):
 class UserSettingsForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ['email_new_texts', 'email_translation_request']
+        fields = ['email_new_texts', 'email_translation_request', 'email_new_comments']

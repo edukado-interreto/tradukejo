@@ -617,7 +617,7 @@ def get_last_comments(project, limit=20):
 
 def send_email_about_new_comment(request, trstringtext, user):
     project = trstringtext.trstring.project
-    authors = Comment.objects.filter(trstringtext=trstringtext).exclude(author=user)
+    authors = Comment.objects.filter(trstringtext=trstringtext, author__email_new_comments=True).exclude(author=user)
     authors_list = []
     for a in authors:
         if a.author not in authors_list:
