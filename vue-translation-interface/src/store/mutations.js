@@ -15,7 +15,7 @@ const mutations = {
     state.loadedStrings = state.loadedStrings.concat(payload);
   },
   updateStringState(state, payload) {
-    const index = state.loadedStrings.findIndex((element) => element.translated_text.id === payload.id);
+    const index = state.loadedStrings.findIndex((element) => element.translated_text !== null && element.translated_text.id === payload.id);
     state.loadedStrings[index].state = payload.state;
   },
   markDeleted(state, payload) {
