@@ -321,8 +321,9 @@ def get_translation_suggestions(request):
     translations = []
     translation_lists = []
     for s in possible_translations:
-        if s.pk not in translations:
-            translations.append(s.pk)
-            translation_lists.append(list(s.pluralized_text_dictionary().values()))
+        current_translation = list(s.pluralized_text_dictionary().values())
+        if str(current_translation) not in translations:
+            translations.append(str(current_translation))
+            translation_lists.append(current_translation)
 
     return JsonResponse(translation_lists, safe=False)
