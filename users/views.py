@@ -22,6 +22,7 @@ def register(request):
             context = {
                 'username': user.username,
                 'url': request.build_absolute_uri('/'),
+                'instructions_url': request.build_absolute_uri(reverse('instructions')),
             }
             html_message = render_to_string("users/email/registration-confirmation.html", context)
             plain_text_message = strip_tags(html_message)
