@@ -27,7 +27,7 @@
 </div>
 
 <p>Supre troviĝas ĝeneralaj informoj pri la projekto. En la kolora kadro estas klarigoj pri tio, kiel la tradukoj estas uzataj: ĉe kelkaj retejoj ili estas tuj videblaj, ĉe aliaj la retejestro devas permane aldoni la tradukojn – tio dependas de la konkreta retejo, ne de la tradukejo.</p>
-<p>Sube troviĝas la listo de lingvoj, en kiuj la projekto estas tradukata, kun la elcentaĵo de tradukitaj tekstoj. Apude estas listo de lastaj agadoj.</p>
+<p>Sube troviĝas la listo de lingvoj, en kiuj la projekto estas tradukata, kun la elcentaĵo de tradukitaj tekstoj. Apude estas listo de lastaj komentoj kaj de lastaj agadoj.</p>
 
 <h3>Tradukpermesoj</h3>
 <p>Por traduki al konkreta lingvo, vi bezonas ricevi permeson de administranto de la projekto. Klaku sur la butonon “Peti permeson” apud la nomo de lingvo, kaj skribu mallongan klarigon. Kiam administranto aprobos vian peton, vi estos informita retpoŝte kaj vi povos komenci traduki.</p>
@@ -49,11 +49,12 @@
 	</figure>
 </div>
 
-<p>Troviĝas kvar elementoj, de supro ĝis subo:</p>
+<p>Troviĝas kvin elementoj, de supro ĝis subo:</p>
 <ul>
 	<li>breto kun diversaj filtriloj,</li>
 	<li>linio, kiu montras, al kiu lingvo vi tradukas, kaj en kiu dosiero vi troviĝas,</li>
-	<li>listo de dosierujoj,</li>
+	<li>maldekstre: listo de ĉiuj dosierujoj en la projekto,</li>
+	<li>dekstre: detala listo de dosierujoj en la nuna dosierujo,</li>
 	<li>la ĉefa traduka interfaco.</li>
 </ul>
 
@@ -77,11 +78,29 @@
 	<li>Eventuala helpa teksto, ĝi povas esti ekzemple klarigo pri la kunteksto.</li>
 	<li>Stato de la traduko.</li>
 	<li>La nuna traduko.</li>
-	<li>Dato kaj aŭtoro de la teksto aŭ de la traduko. Se la teksto estis redaktita plurfoje, vi povas vidi la historion de ŝanĝoj.</li>
+	<li>Dato kaj aŭtoro de la teksto aŭ de la traduko. Se la teksto estis redaktita plurfoje, vi povas vidi la historion de ŝanĝoj. Tie troviĝas ankaŭ eblo komenti.</li>
 </ol>
 
 <h3>Stato de tradukoj</h3>
 <p>Tradukoj povas havi tri statojn: netradukitan (aperas ruĝe), retradukendan (aperas flave) kaj tradukitan (aperas verde). “Retradukenda” necesas, ke la teksto en la fontolingvo estis ŝanĝita, kio povas postuli ŝanĝon en la traduko. Se vi pensas, ke ne necesas ŝanĝi la tradukon, vi povas klaki sur “Marki kiel tradukendan”.</p>
+
+<h3>Komentoj</h3>
+<p>Vi havas la eblon komenti ĉiun lingvan version de ĉiu ĉeno. Tio donas al vi eblon peti klarigojn pri la tradukenda teksto, priparoli pli bonajn tradukojn kun alia tradukanto, ktp. Vi povas elekti <a href="{% url 'user_settings' %}">en viaj agordoj</a>, ĉu vi volas esti informata retpoŝte, kiam iu respondas vian komenton.</p>
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/comments.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekzemploj de komentoj.">
+		<figcaption class="figure-caption">Ekzemploj de komentoj.</figcaption>
+	</figure>
+</div>
+
+<h3>Proponitaj tradukoj</h3>
+<p>Kelkfoje, kiam vi tradukas novan ĉenon, povas aperi proponitaj tradukoj. Tiuj proponoj venas de aliaj tradukoj de la sama teksto, kiuj jam estas en la tradukejo (povas esti en la sama projekto aŭ en alia). Simple alklaku la proponon, kiun vi ŝatas, kaj ĝi estos enmetita en la tradukan kampon.</p>
+<div class="text-center">
+	<figure class="figure">
+		<img src="{% static 'traduko/img/instructions/suggested_translations.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekzemploj de proponitaj tradukoj.">
+		<figcaption class="figure-caption">Ekzemploj de proponitaj tradukoj.</figcaption>
+	</figure>
+</div>
 
 <h3>Serĉado kaj ordigo</h3>
 <p>La plej supra breto havas diversajn filtrilojn:</p>
@@ -121,7 +140,7 @@
 	</figure>
 </div>
 
-<p>Tiam por ĉiu eblo traduku laŭ la ekzemplaj nombroj. En ĉi tiu konkreta ekzemplo, rusa tradukanto imagu, kiel devas esti tiu frazo se anstataŭ <code>{n}</code> estas 1, 2 aŭ 5.</p>
+<p>Tiam por ĉiu eblo traduku laŭ la ekzemplaj nombroj. En ĉi tiu konkreta ekzemplo, rusa tradukanto imagu, kia devas esti tiu frazo se anstataŭ <code>{n}</code> estas 1, 2 aŭ 5.</p>
 <p>Estas normale, se estas malsama kvanto da tradukoj: multaj lingvoj bezonas nur du formojn, sed kelkaj (plej multaj slavaj lingvoj) bezonas tri, la slovena kvar kaj kelkaj (irlanda, araba) eĉ pli.</p>
 
 {% endblock %}
