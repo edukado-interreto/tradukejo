@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404, RawPostDataException
 from django.shortcuts import get_object_or_404, redirect
 from .models import *
 from .translation_functions import *
@@ -80,10 +80,13 @@ def user_has_any_right_for_project(function):
 
 def user_is_project_admin(function):
     def wrap(request, *args, **kwargs):
+        print('cacaaa')
         try:
             json_postdata = json.loads(request.body.decode('utf-8'))
             all_arguments = {**kwargs, **json_postdata}
         except json.JSONDecodeError:
+            all_arguments = kwargs
+        except RawPostDataException:
             all_arguments = kwargs
 
         project = find_project_from_params(all_arguments)
