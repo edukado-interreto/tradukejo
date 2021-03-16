@@ -29,7 +29,7 @@ const mixins = {
   },
   methods: {
     async postCsrf(url, data) {
-      return await axios.post(url, data, {headers: {'X-CSRFToken': this.csrf}});
+      return await axios.post(this.URLprefix + url, data, {headers: {'X-CSRFToken': this.csrf}});
     },
     translateLink(parameters) {
       const obj = {

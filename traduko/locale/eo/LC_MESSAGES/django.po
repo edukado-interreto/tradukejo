@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-16 15:45+0100\n"
+"PO-Revision-Date: 2021-03-16 15:59+0100\n"
+"Last-Translator: Non\n"
+"Language-Team: \n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: templates/base.html:16
+msgid "structure#welcome"
+msgstr "Bonvenon"
+
+#: templates/base.html:16 templates/base.html:30
+msgid "structure#website-name"
+msgstr "Tradukejo de E@I"
+
+#: templates/base.html:24
+msgid "structure#settings"
+msgstr "Agordoj"
+
+#: templates/base.html:25
+msgid "structure#sign-out"
+msgstr "Elsaluti"
+
+#: templates/base.html:27
+msgid "structure#sign-in"
+msgstr "Ensaluti"
+
+#: templates/base.html:27
+msgid "structure#sign-up"
+msgstr "Krei konton"
+
+#: templates/base.html:55
+msgid "structure#instructions"
+msgstr "Instrukcioj"
+
+#: templates/base.html:56
+msgid "structure#contact"
+msgstr "Kontakto"
+
+#: templates/base.html:57
+msgid "structure#privacy"
+msgstr "Privateco"
+
+#: templates/base.html:63
+msgid "structure#project-by"
+msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
+
+#, fuzzy
+#~| msgid "structure#website-name"
+#~ msgid "structure#edukado-interreto"
+#~ msgstr "Tradukejo de E@I"

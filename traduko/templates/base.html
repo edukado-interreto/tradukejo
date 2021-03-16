@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static compress i18n traduko_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+	<meta charset="UTF-8">
+	{% compress css %}
+		<link rel="stylesheet" type="text/x-scss" href="{% static 'traduko/css/style.scss' %}">
+		<link rel="stylesheet" type="text/x-scss" href="{% static 'traduko/css/bootstrap/bootstrap.scss' %}">
+	{% endcompress %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/45c176c1bb.js" crossorigin="anonymous"></script>
+	{% block head %}{% endblock %}
+	<title>{% block title %}{% translate 'structure#welcome' %}{% endblock %} – {% translate 'structure#website-name' %}</title>
+	{% for code, language in LANGUAGES %}
+    <link rel="alternate" href="{% translate_abs_url code %}" hreflang="{{ code }}">
+    {% endfor %}
+</head>
+<body>
+	<header id="page-header">
+		<div class="inner-container row no-gutters">
+			<div class="col-sm-6 col-lg-4 text-right order-sm-last">
+				{% if user.is_authenticated %}
+					<strong>{{ user.username }}</strong> ⋅
+					<a href="{% url 'user_settings' %}">{% translate 'structure#settings' %}</a> ⋅
+					<a href="{% url 'logout' %}">{% translate 'structure#sign-out' %}</a>
+				{% else %}
+					<a href="{% url 'login' %}">{% translate 'structure#sign-in' %}</a> ⋅ <a href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
+				{% endif %}
+			</div>
+			<h1 class="mt-2 mb-3 col"><a href="{% url 'projects' %}">{% translate 'structure#website-name' %}</a></h1>
+		</div>
+	</header>
+	<main>
+		<h1 class="page-title">{% block pagetitle %}{% endblock %}</h1>
+		{% if messages %}
+		<div class="inner-container">
+			{% for message in messages %}
+			<div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+				{{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+
+		{% block maincontent %}
+		{% endblock %}
+	</main>
+	<footer id="page-footer">
+		<div class="inner-container row no-gutters">
+			<div class="col-12 col-sm-6">
+				<ul>
+					<li><a href="{% url 'instructions' %}">{% translate 'structure#instructions' %}</a></li>
+					<li><a href="{% url 'contact' %}">{% translate 'structure#contact' %}</a></li>
+					<li><a href="#">{% translate 'structure#privacy' %}</a></li>
+				</ul>
+			</div>
+			<div class="col-12 col-sm-6">
+				<p><strong><a href="#" id="languageModalLabel" data-toggle="modal" data-target="#languageModal">{{ LANGUAGE_CODE|language_name_local|capfirst }}</a></strong></p>
+				<p>
+				{% blocktranslate asvar project_by trimmed %}structure#project-by{% endblocktranslate %}
+				{% format_translation project_by "https://ikso.net" %}
+				</p>
+			</div>
+		</div>
+	</footer>
+	<div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title">{% translate 'structure#choose-language' %}</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="row">
+				{% for code, language in LANGUAGES %}
+				<div class="col-12 col-md-6">
+					<a href="{% translate_abs_url code %}" hreflang="{{ code }}" language="{{ code }}">{{ language }} ({{ code }})</a>
+				</div>
+				{% endfor %}
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'structure#close' %}</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+{% block js %}{% endblock %}
+</body>
+</html>

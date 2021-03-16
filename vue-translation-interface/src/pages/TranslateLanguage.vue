@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-12 col-lg-3 col-xl-2" v-if="!noDirectories">
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-body">
           <loading-spinner v-if="directoriesTreeLoading"></loading-spinner>
           <directories-tree v-else :tree="directoriesTree"></directories-tree>

@@ -58,6 +58,12 @@ $ source venv/bin/activate
 $ python manage.py migrate
 ```
 
+If there are changes in translation files:
+
+```console
+$ django-admin compilemessages
+```
+
 If there are changes in static files:
 
 ```console

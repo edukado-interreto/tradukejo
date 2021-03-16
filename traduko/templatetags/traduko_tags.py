@@ -1,7 +1,11 @@
+from typing import Optional, Any, Dict
 from django import template
-from django.urls import reverse
+from django import urls
 from django.utils import html
 import re
+
+from django.utils.safestring import mark_safe
+
 from tradukejo import settings
 
 register = template.Library()
@@ -71,5 +75,44 @@ def user_link(user_id, username):
     if not user_id or not username:
         return settings.WEBSITE_NAME
     else:
-        link = reverse('profile', args=[user_id])
+        link = urls.reverse('profile', args=[user_id])
         return html.format_html('<a href="{}">{}</a>', link, username)
+
+
+@register.simple_tag
+def format_translation(str, *args):
+    str = html.escape(str)
+    i = 1
+    while i <= len(args):
+        target = ' target="_blank"' if args[i - 1].startswith('https://') or args[i - 1].startswith('http://') else ''
+        str = re.sub(
+            r'\{%d\}(.*)\{/%d\}' % (i, i),
+            r'<a href="{%d}"%s>\1</a>' % (i, target),
+            str
+        )
+        str = str.replace('{%d}' % i, args[i - 1])
+        i += 1
+    return mark_safe(str)
+
+
+@register.simple_tag(takes_context=True)
+def translate_url(context: Dict[str, Any], language: Optional[str]) -> str:
+    """Get the absolute URL of the current page for the specified language.
+
+    Usage:
+        {% translate_url 'en' %}
+    """
+    print(context)
+    url = context['request'].get_full_path()
+    return urls.translate_url(url, language)
+
+
+@register.simple_tag(takes_context=True)
+def translate_abs_url(context: Dict[str, Any], language: Optional[str]) -> str:
+    """Get the absolute URL of the current page for the specified language.
+
+    Usage:
+        {% translate_abs_url 'en' %}
+    """
+    url = context['request'].build_absolute_uri()
+    return urls.translate_url(url, language)

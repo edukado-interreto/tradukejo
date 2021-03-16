@@ -1,5 +1,6 @@
 {% extends 'wide-page.html' %}
-{% load static %}
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}Traduko de {{ project.name }}{% endblock %}
 {% block pagetitle %}Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a>{% endblock %}
@@ -53,6 +54,7 @@ window.vueTranslationInterface = {
 	csrf: '{{ csrf }}',
 	baseURL: '{% url 'translate_without_language' project.pk %}',
 	imgURL: '{{ imgURL }}',
+	URLprefix : '/{{ LANGUAGE_CODE }}',
 	projectLanguage: '{{ project.source_language.code }}',
 	availableLanguages: {{ available_languages|safe }},
 	userId: {{ user.id }},

@@ -18,10 +18,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
-    url(r"^", include("traduko.urls")),
-    url(r"^", include("users.urls")),
     path('admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
+urlpatterns += i18n_patterns(
+    path('', include('traduko.urls')),
+    path('', include('users.urls')),
+)

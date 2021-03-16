@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'tradukejo.urls'
@@ -90,6 +91,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('eo', 'Esperanto'),
+    ('fr', 'Français'),
+)
 
 LANGUAGE_CODE = 'eo'
 

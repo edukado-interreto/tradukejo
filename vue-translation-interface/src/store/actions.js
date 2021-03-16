@@ -3,7 +3,7 @@ import axios from "axios";
 const availableLanguages = window.vueTranslationInterface.availableLanguages;
 
 async function postCsrf(url, data) {
-  return await axios.post(url, data, { headers: { 'X-CSRFToken': window.vueTranslationInterface.csrf } });
+  return await axios.post(window.vueTranslationInterface.URLprefix + url, data, { headers: { 'X-CSRFToken': window.vueTranslationInterface.csrf } });
 }
 
 const actions = {
