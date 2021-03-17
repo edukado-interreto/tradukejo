@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-17 11:30+0100\n"
-"PO-Revision-Date: 2021-03-17 11:30+0100\n"
+"POT-Creation-Date: 2021-03-17 16:40+0100\n"
+"PO-Revision-Date: 2021-03-17 16:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,128 +15,142 @@ msgstr ""
 "X-Generator: Tradukejo de E@I\n"
 
 msgid "pages/contact#contact1"
-msgstr ""
+msgstr "The Tradukejo is an E@I project ({1}Edukado@Interreto{/1})."
 
 msgid "pages/contact#contact2"
-msgstr ""
+msgstr "Please contact us with any queries and comments. {1}."
 
 msgid "pages/projects#hidden"
-msgstr ""
+msgstr "Hidden project"
 
 msgid "pages/projects#lead1"
 msgstr ""
+"More user-friendly, more effective and more beautiful: we have reprogrammed "
+"and modernised our translation system."
 
 msgid "pages/projects#lead2"
 msgstr ""
+"The  {1}old system{/1} is still running, but translation projects will "
+"gradually be migrated into this new system."
 
 msgid "pages/projects#locked"
-msgstr ""
+msgstr "Locked project"
 
 msgid "pages/projects#projects"
-msgstr ""
+msgstr "Projects"
 
 msgid "pages/projects#read-instructions"
-msgstr ""
+msgstr "Read the instructions"
 
 msgid "pages/projects#welcome"
-msgstr ""
+msgstr "Welcome to E@I's new translation system!"
 
 msgid "project#added-words"
 msgid_plural "project#added-words"
-msgstr[0] ""
+msgstr[0] "{1} added {2} word."
+msgstr[1] "{1} added {2} words."
 
+msgctxt "Butono por peti tradukpermeson"
 msgid "project#ask-permission"
-msgstr ""
+msgstr "Ask permission"
 
 msgid "project#characters"
-msgstr ""
+msgstr "Characters:"
 
 msgid "project#choose-language"
-msgstr ""
+msgstr "Choose a language..."
 
 msgid "project#edited-strings"
 msgid_plural "project#edited-strings"
-msgstr[0] ""
+msgstr[0] "{1} edited {2} string."
+msgstr[1] "{1} edited {2} strings."
 
 msgid "project#imported-words"
 msgid_plural "project#imported-words"
-msgstr[0] ""
+msgstr[0] "{1} imported {2} word."
+msgstr[1] "{1} imported {2} words."
 
 msgid "project#languages"
-msgstr ""
+msgstr "Languages"
 
 msgid "project#last-activities"
-msgstr ""
+msgstr "Latest activity"
 
 msgid "project#last-comments"
-msgstr ""
+msgstr "Latest comments"
 
 msgid "project#my-languages"
-msgstr ""
+msgstr "My languages"
 
 msgid "project#needed"
-msgstr ""
+msgstr "Required languages:"
 
 msgid "project#needed-all"
-msgstr ""
+msgstr "All available"
 
 msgid "project#other-contact"
 msgstr ""
+"If you want to translate into a language which is not in this list, please "
+"{1}contact us{/1}."
 
 msgid "project#other-languages"
-msgstr ""
+msgstr "Other languages"
 
 msgid "project#outdated-words"
-msgstr ""
+msgstr "Outdated words:"
 
 msgid "project#read-instructions"
-msgstr ""
+msgstr "Confused? Read the instructions!"
 
 msgid "project#request-explanation"
-msgstr ""
+msgstr "Kindly write a few words about yourself:"
 
 msgid "project#request-language"
-msgstr ""
+msgstr "You are requesting permission to translate into this language:"
 
+msgctxt "Titolo de fenestreto"
 msgid "project#request-permission"
-msgstr ""
+msgstr "Request permission to translate"
 
 msgid "project#request-sent"
-msgstr ""
+msgstr "Request sent"
 
+msgctxt "Butono por sendi peton pri tradukpermeso"
 msgid "project#sendi"
-msgstr ""
+msgstr "Send"
 
 msgid "project#source-language"
-msgstr ""
+msgstr "Original language:"
 
 msgid "project#strings"
-msgstr ""
+msgstr "Strings:"
 
 msgid "project#total-translated-words"
-msgstr ""
+msgstr "Translate words:"
 
+msgctxt "Butono por komenci traduki en la elektita lingvo"
 msgid "project#translate"
-msgstr ""
+msgstr "Translate"
 
 msgid "project#translate-other"
-msgstr ""
+msgstr "Translate into another language"
 
 msgid "project#translated-words"
 msgid_plural "project#translated-words"
-msgstr[0] ""
+msgstr[0] "{1} translated {2} word."
+msgstr[1] "{1} translated {2} words."
 
 msgid "project#translators"
-msgstr ""
+msgstr "Translators:"
 
 msgid "project#untranslated-words"
-msgstr ""
+msgstr "Untranslated words:"
 
 msgid "project#url"
-msgstr ""
+msgstr "Address:"
 
 msgid "project#words"
-msgstr ""
+msgstr "Words:"
 
 msgid "structure#choose-language"
 msgstr "Choose your language"
@@ -148,7 +162,7 @@ msgid "structure#contact"
 msgstr "Contact"
 
 msgid "structure#home"
-msgstr ""
+msgstr "Homepage"
 
 msgid "structure#instructions"
 msgstr "Instructions"

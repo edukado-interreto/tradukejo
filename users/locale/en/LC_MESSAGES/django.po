@@ -1,0 +1,123 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-03-17 16:35+0100\n"
+"PO-Revision-Date: 2021-03-17 16:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Best regards,"
+
+msgid "emails#greeting"
+msgstr "Dear {1},"
+
+msgid "emails#signature"
+msgstr "The E@I team"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"We can confirm that you have joined to E@I's {1} translation system. You can"
+" now login and begin translating."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"We recommend that you read the {1}instructions{/1} before you begin to "
+"translate."
+
+msgid "emails/registration#title"
+msgstr "E@I's translation system: signup confirmation"
+
+msgid "login#forgot-password"
+msgstr "Have you forgotten your password? {1}Retrieve it here.{/1}"
+
+msgid "login#sign-up"
+msgstr "If you don't have an account, {1}join now!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Your account has been created and you can now start to to translate. A "
+"confirmation message was sent to {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "The changes could not be saved."
+
+msgid "messages#changes-saved"
+msgstr "The changes were saved."
+
+msgid "password#can-login"
+msgstr "You can now {1}login{/1}."
+
+msgid "password#change-success"
+msgstr "Password change was successful."
+
+msgid "password#message-sent"
+msgstr ""
+"Instructions were emailed to your address. If you have not received this "
+"message, please check that you entered you email address correctly, and "
+"whether you have an account with us."
+
+msgid "password#reset"
+msgstr ""
+"Have you forgotten your password? Enter your email address here and we will "
+"send you instructions."
+
+msgid "password#send-instructions"
+msgstr "Send me instructions"
+
+msgid "password#type-twice"
+msgstr ""
+"For security, please type in your current password, and your new password "
+"twice, to make sure that you typed it correctly."
+
+msgid "profile#didnt-translate"
+msgstr "{1} still has not started translating."
+
+msgid "profile#projects"
+msgstr "Projects in which the user {1} participates."
+
+msgid "settings#email"
+msgstr "Email address"
+
+msgid "settings#email-new-comments"
+msgstr "Notify me by email when somebody responds to my comment"
+
+msgid "settings#email-new-texts"
+msgstr "Notify me by email when there are new texts to translate"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Inform me by email when somebody requests to translate projects which I "
+"administer"
+
+msgid "structure#change-password"
+msgstr "Change password"
+
+msgid "structure#home"
+msgstr "Homepage"
+
+msgid "structure#log-in"
+msgstr "Log in"
+
+msgid "structure#password-changed"
+msgstr "Password change was successful"
+
+msgid "structure#password-reset"
+msgstr "Retrieve password"
+
+msgid "structure#save"
+msgstr "Save"
+
+msgid "structure#settings"
+msgstr "Settings"
+
+msgid "structure#sign-up"
+msgstr "Sign up"

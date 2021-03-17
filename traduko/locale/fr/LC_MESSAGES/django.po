@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-17 11:30+0100\n"
-"PO-Revision-Date: 2021-03-17 11:30+0100\n"
+"POT-Creation-Date: 2021-03-17 16:37+0100\n"
+"PO-Revision-Date: 2021-03-17 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -53,6 +53,7 @@ msgid_plural "project#added-words"
 msgstr[0] "{1} a ajouté {2} mot."
 msgstr[1] "{1} a ajouté {2} mots."
 
+msgctxt "Butono por peti tradukpermeson"
 msgid "project#ask-permission"
 msgstr "Demander la permission"
 
@@ -110,12 +111,14 @@ msgstr "Veuillez écrire quelques mots à propos de vous :"
 msgid "project#request-language"
 msgstr "Vous demandez la permission de traduire vers la langue :"
 
+msgctxt "Titolo de fenestreto"
 msgid "project#request-permission"
 msgstr "Demander la permission de traduire"
 
 msgid "project#request-sent"
 msgstr "Demande envoyée"
 
+msgctxt "Butono por sendi peton pri tradukpermeso"
 msgid "project#sendi"
 msgstr "Envoyer"
 
@@ -128,11 +131,12 @@ msgstr "Chaînes :"
 msgid "project#total-translated-words"
 msgstr "Mots traduits :"
 
+msgctxt "Butono por komenci traduki en la elektita lingvo"
 msgid "project#translate"
 msgstr "Traduire"
 
 msgid "project#translate-other"
-msgstr "Traduire en une autre langue"
+msgstr "Traduire dans une autre langue"
 
 msgid "project#translated-words"
 msgid_plural "project#translated-words"
