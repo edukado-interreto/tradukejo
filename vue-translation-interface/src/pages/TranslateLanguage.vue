@@ -13,7 +13,7 @@
     </div>
     <div class="col">
       <directories-list
-        v-if="!directoriesTreeLoading"
+        v-if="directoriesTreeLoadedOnce"
         :directories="directories"
       ></directories-list>
       <loading-spinner v-if="isLoading"></loading-spinner>
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      directoriesLoading: false,
+      directoriesTreeLoadedOnce: false,
     };
   },
   computed: {
@@ -85,7 +85,7 @@ export default {
       return this.$store.getters.directoriesTreeLoading;
     },
     noDirectories() {
-      return this.directoriesTreeLoading || Object.keys(this.directoriesTree[""].children).length === 0;
+      return !this.directoriesTreeLoading && Object.keys(this.directoriesTree[""].children).length === 0;
     }
   },
   watch: {
@@ -108,6 +108,11 @@ export default {
       this.fetchStrings();
       this.fetchDirectoriesTree();
     },
+    directoriesTreeLoading(newVal) {
+      if (!newVal) {
+        this.directoriesTreeLoadedOnce = true;
+      }
+    }
   },
   methods: {
     setLanguage(code) {
