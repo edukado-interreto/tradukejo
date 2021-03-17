@@ -215,7 +215,7 @@ def export_to_po(response, project, **kwargs):
                 entry.msgstr = trstringtext.text
 
             if trstring.context:
-                entry.comment = trstring.context
+                entry.msgctxt = trstring.context
 
             if trstringtext.state == TRANSLATION_STATE_OUTDATED:
                 entry.flags.append('fuzzy')

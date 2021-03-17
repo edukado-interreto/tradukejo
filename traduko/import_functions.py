@@ -453,9 +453,12 @@ def import_from_po(project, po_file, update_texts, user_is_author, user, import_
                 }
             }
         }
-        if msg.comment != '':
+        if msg.msgctxt != '' and msg.msgctxt is not None:
+            string_data['context'] = msg.msgctxt
+        elif msg.comment != '' and msg.comment is not None:
             string_data['context'] = msg.comment
         data.append(string_data)
+
     if update_texts:
         import_stats = slow_import(project, data, user, user if user_is_author else None)
     else:
