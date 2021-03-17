@@ -80,7 +80,6 @@ def user_has_any_right_for_project(function):
 
 def user_is_project_admin(function):
     def wrap(request, *args, **kwargs):
-        print('cacaaa')
         try:
             json_postdata = json.loads(request.body.decode('utf-8'))
             all_arguments = {**kwargs, **json_postdata}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load static compress i18n traduko_tags %}
 {% get_current_language as LANGUAGE_CODE %}
-{% get_available_languages as LANGUAGES %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
 	<meta charset="UTF-8">
@@ -61,7 +60,7 @@
 				</ul>
 			</div>
 			<div class="col-12 col-sm-6">
-				<p><strong><a href="#" id="languageModalLabel" data-toggle="modal" data-target="#languageModal">{{ LANGUAGE_CODE|language_name_local|capfirst }}</a></strong></p>
+				<p><strong><a href="#" id="languageModalLabel" data-toggle="modal" data-target="#languageModal">{{ LANGUAGE_CODE|get_language_name }}</a></strong></p>
 				<p>
 				{% blocktranslate asvar project_by trimmed %}structure#project-by{% endblocktranslate %}
 				{% format_translation project_by "https://ikso.net" %}

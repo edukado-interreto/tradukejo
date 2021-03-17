@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-16 17:38+0100\n"
-"PO-Revision-Date: 2021-03-16 17:38+0100\n"
+"POT-Creation-Date: 2021-03-17 11:30+0100\n"
+"PO-Revision-Date: 2021-03-17 11:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -14,6 +14,143 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Tradukejo de E@I\n"
 
+msgid "pages/contact#contact1"
+msgstr ""
+"Ce système de traduction est un projet d’E@I ({1}Edukácia@Internet{/1})."
+
+msgid "pages/contact#contact2"
+msgstr ""
+"Si vous avez une question ou un commentaire, n’hésitez pas à écrire à {1}."
+
+msgid "pages/projects#hidden"
+msgstr "Projet caché"
+
+msgid "pages/projects#lead1"
+msgstr ""
+"Plus convivial, plus efficace est plus beau : nous avons reprogrammé le "
+"système de traduction avec des technologies modernes."
+
+msgid "pages/projects#lead2"
+msgstr ""
+"L’ancien système de traduction est toujours {1}accessible ici{/1}, mais les "
+"projets de traduction seront migrés peu à peu migrés vers le nouveau "
+"système."
+
+msgid "pages/projects#locked"
+msgstr "Projet fermé"
+
+msgid "pages/projects#projects"
+msgstr "Projets"
+
+msgid "pages/projects#read-instructions"
+msgstr "Lire les instructions"
+
+msgid "pages/projects#welcome"
+msgstr "Bienvenue dans le nouveau système de traduction d’E@I !"
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} a ajouté {2} mot."
+msgstr[1] "{1} a ajouté {2} mots."
+
+msgid "project#ask-permission"
+msgstr "Demander la permission"
+
+msgid "project#characters"
+msgstr "Caractères :"
+
+msgid "project#choose-language"
+msgstr "Choisir une langue…"
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} a modifié {2} chaîne."
+msgstr[1] "{1} a modifié {2} chaînes."
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} a importé {2} mot."
+msgstr[1] "{1} a importé {2} mots."
+
+msgid "project#languages"
+msgstr "Langues"
+
+msgid "project#last-activities"
+msgstr "Dernières activités"
+
+msgid "project#last-comments"
+msgstr "Derniers commentaires"
+
+msgid "project#my-languages"
+msgstr "Mes langues"
+
+msgid "project#needed"
+msgstr "Langues souhaitées :"
+
+msgid "project#needed-all"
+msgstr "toutes les langues possibles"
+
+msgid "project#other-contact"
+msgstr ""
+"Voulez-vous traduire à une langue qui n’est pas dans cette liste ? Veuillez "
+"{1}nous contacter{/1}."
+
+msgid "project#other-languages"
+msgstr "Autres langues"
+
+msgid "project#outdated-words"
+msgstr "Mots à retraduire :"
+
+msgid "project#read-instructions"
+msgstr "Perdu(e) ? {1}Lisez les instructions !{/1}"
+
+msgid "project#request-explanation"
+msgstr "Veuillez écrire quelques mots à propos de vous :"
+
+msgid "project#request-language"
+msgstr "Vous demandez la permission de traduire vers la langue :"
+
+msgid "project#request-permission"
+msgstr "Demander la permission de traduire"
+
+msgid "project#request-sent"
+msgstr "Demande envoyée"
+
+msgid "project#sendi"
+msgstr "Envoyer"
+
+msgid "project#source-language"
+msgstr "Langue source :"
+
+msgid "project#strings"
+msgstr "Chaînes :"
+
+msgid "project#total-translated-words"
+msgstr "Mots traduits :"
+
+msgid "project#translate"
+msgstr "Traduire"
+
+msgid "project#translate-other"
+msgstr "Traduire en une autre langue"
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} a traduit {2} mot."
+msgstr[1] "{1} a traduit {2} mots."
+
+msgid "project#translators"
+msgstr "Traducteurs :"
+
+msgid "project#untranslated-words"
+msgstr "Mots non traduits :"
+
+msgid "project#url"
+msgstr "Adresse :"
+
+msgid "project#words"
+msgstr "Mots :"
+
 msgid "structure#choose-language"
 msgstr "Choisissez votre langue"
 
@@ -22,6 +159,9 @@ msgstr "Fermer"
 
 msgid "structure#contact"
 msgstr "Contact"
+
+msgid "structure#home"
+msgstr "Accueil"
 
 msgid "structure#instructions"
 msgstr "Instructions"

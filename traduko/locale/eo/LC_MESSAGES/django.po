@@ -2,50 +2,246 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-16 17:38+0100\n"
-"PO-Revision-Date: 2021-03-16 17:38+0100\n"
-"Last-Translator: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-17 11:16+0100\n"
+"PO-Revision-Date: 2021-03-17 11:17+0100\n"
+"Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Tradukejo de E@I\n"
+"X-Generator: Poedit 2.3\n"
 
-msgid "structure#choose-language"
-msgstr "Elektu vian lingvon"
+#: templates/base.html:16 templates/traduko/projects.html:4
+#: templates/traduko/projects.html:5
+msgid "structure#welcome"
+msgstr "Bonvenon"
 
-msgid "structure#close"
-msgstr "Fermi"
-
-msgid "structure#contact"
-msgstr "Kontakto"
-
-msgid "structure#instructions"
-msgstr "Instrukcioj"
-
-msgid "structure#privacy"
-msgstr "Privateco"
-
-msgid "structure#project-by"
-msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
-
-msgid "structure#settings"
-msgstr "Agordoj"
-
-msgid "structure#sign-in"
-msgstr "Ensaluti"
-
-msgid "structure#sign-out"
-msgstr "Elsaluti"
-
-msgid "structure#sign-up"
-msgstr "Krei konton"
-
+#: templates/base.html:16 templates/base.html:33
 msgid "structure#website-name"
 msgstr "Tradukejo de E@I"
 
-msgid "structure#welcome"
-msgstr "Bonvenon"
+#: templates/base.html:27
+msgid "structure#settings"
+msgstr "Agordoj"
+
+#: templates/base.html:28
+msgid "structure#sign-out"
+msgstr "Elsaluti"
+
+#: templates/base.html:30
+msgid "structure#sign-in"
+msgstr "Ensaluti"
+
+#: templates/base.html:30 templates/traduko/projects.html:13
+msgid "structure#sign-up"
+msgstr "Krei konton"
+
+#: templates/base.html:58
+msgid "structure#instructions"
+msgstr "Instrukcioj"
+
+#: templates/base.html:59 templates/traduko/contact.html:3
+#: templates/traduko/contact.html:4 templates/traduko/contact.html:10
+msgid "structure#contact"
+msgstr "Kontakto"
+
+#: templates/base.html:60
+msgid "structure#privacy"
+msgstr "Privateco"
+
+#: templates/base.html:66
+msgid "structure#project-by"
+msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
+
+#: templates/base.html:76
+msgid "structure#choose-language"
+msgstr "Elektu vian lingvon"
+
+#: templates/base.html:91 templates/traduko/project.html:227
+msgid "structure#close"
+msgstr "Fermi"
+
+#: templates/traduko/contact.html:9 templates/traduko/project.html:18
+msgid "structure#home"
+msgstr "Ĉefpaĝo"
+
+#: templates/traduko/contact.html:13
+msgid "pages/contact#contact1"
+msgstr "La tradukejo estas projekto de E@I ({1}Edukado@Interreto{/1})."
+
+#: templates/traduko/contact.html:15
+msgid "pages/contact#contact2"
+msgstr "Se vi havas demandon aŭ komenton, ne hezitu skribi al {1}."
+
+#: templates/traduko/project.html:43
+msgid "project#url"
+msgstr "Adreso:"
+
+#: templates/traduko/project.html:45
+msgid "project#source-language"
+msgstr "Fontolingvo:"
+
+#: templates/traduko/project.html:46
+msgid "project#strings"
+msgstr "Ĉenoj:"
+
+#: templates/traduko/project.html:47
+msgid "project#words"
+msgstr "Vortoj:"
+
+#: templates/traduko/project.html:48
+msgid "project#characters"
+msgstr "Signoj:"
+
+#: templates/traduko/project.html:50
+msgid "project#needed"
+msgstr "Bezonataj lingvoj:"
+
+#: templates/traduko/project.html:51
+msgid "project#needed-all"
+msgstr "ĉiuj eblaj"
+
+#: templates/traduko/project.html:66
+msgid "project#read-instructions"
+msgstr "Konfuzita? {1}Legu la instrukciojn!{/1}"
+
+#: templates/traduko/project.html:95
+msgid "project#languages"
+msgstr "Lingvoj"
+
+#: templates/traduko/project.html:95
+msgid "project#my-languages"
+msgstr "Miaj lingvoj"
+
+#: templates/traduko/project.html:102
+msgid "project#other-languages"
+msgstr "Aliaj lingvoj"
+
+#: templates/traduko/project.html:109
+msgid "project#translate-other"
+msgstr "Traduki al alia lingvo"
+
+#: templates/traduko/project.html:111
+msgid "project#choose-language"
+msgstr "Elektu lingvon…"
+
+#: templates/traduko/project.html:117
+msgid "project#other-contact"
+msgstr ""
+" Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu {1}"
+"kontakti nin{/1}."
+
+#: templates/traduko/project.html:122
+msgid "project#last-comments"
+msgstr "Lastaj komentoj"
+
+#: templates/traduko/project.html:155
+msgid "project#last-activities"
+msgstr "Lastaj agadoj"
+
+#: templates/traduko/project.html:168
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} tradukis {2} vorton."
+msgstr[1] "{1} tradukis {2} vortojn."
+
+#: templates/traduko/project.html:175
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} redaktis {2} ĉenon."
+msgstr[1] "{1} redaktis {2} ĉenojn."
+
+#: templates/traduko/project.html:182
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} aldonis {2} vorton."
+msgstr[1] "{1} aldonis {2} vortojn."
+
+#: templates/traduko/project.html:189
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} importis {2} vorton."
+msgstr[1] "{1} importis {2} vortojn."
+
+#: templates/traduko/project.html:211
+msgctxt "Titolo de fenestreto"
+msgid "project#request-permission"
+msgstr "Peti permeson por traduki"
+
+#: templates/traduko/project.html:220
+msgid "project#request-language"
+msgstr "Vi petas permeson traduki al la lingvo:"
+
+#: templates/traduko/project.html:221
+msgid "project#request-explanation"
+msgstr "Bonvolu skribi kelkajn vortojn pri vi:"
+
+#: templates/traduko/project.html:228
+msgctxt "Butono por sendi peton pri tradukpermeso"
+msgid "project#sendi"
+msgstr "Sendi"
+
+#: templates/traduko/project/language-version-list.html:9
+msgid "project#untranslated-words"
+msgstr "Netradukitaj vortoj:"
+
+#: templates/traduko/project/language-version-list.html:10
+msgid "project#total-translated-words"
+msgstr "Tradukitaj vortoj:"
+
+#: templates/traduko/project/language-version-list.html:11
+msgid "project#outdated-words"
+msgstr "Retradukendaj vortoj:"
+
+#: templates/traduko/project/language-version-list.html:17
+msgctxt "Butono por komenci traduki en la elektita lingvo"
+msgid "project#translate"
+msgstr "Traduki"
+
+#: templates/traduko/project/language-version-list.html:21
+msgctxt "Butono por peti tradukpermeson"
+msgid "project#ask-permission"
+msgstr "Peti permeson"
+
+#: templates/traduko/project/language-version-list.html:28
+msgid "project#translators"
+msgstr "Tradukantoj:"
+
+#: templates/traduko/project/translation_request_sent_button.html:1
+msgid "project#request-sent"
+msgstr "Peto sendita"
+
+#: templates/traduko/projects.html:9
+msgid "pages/projects#welcome"
+msgstr "Bonvenon al la nova tradukejo de E@I!"
+
+#: templates/traduko/projects.html:10
+msgid "pages/projects#lead1"
+msgstr ""
+"Pli uzant-amika, pli efika kaj pli bela: ni reprogramis la tradukejon per "
+"modernaj teknologioj."
+
+#: templates/traduko/projects.html:11
+msgid "pages/projects#lead2"
+msgstr ""
+"La malnova tradukejo daŭre estas {1}alirebla ĉi tie{/1}, sed tradukaj "
+"projektoj estos iom post iom migrataj al la nova tradukejo."
+
+#: templates/traduko/projects.html:15
+msgid "pages/projects#read-instructions"
+msgstr "Legi la instrukciojn"
+
+#: templates/traduko/projects.html:18
+msgid "pages/projects#projects"
+msgstr "Projektoj"
+
+#: templates/traduko/projects.html:31
+msgid "pages/projects#hidden"
+msgstr "Kaŝita projekto"
+
+#: templates/traduko/projects.html:32
+msgid "pages/projects#locked"
+msgstr "Ŝlosita projekto"

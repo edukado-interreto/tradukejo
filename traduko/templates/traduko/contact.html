@@ -1,14 +1,17 @@
 {% extends 'normal-page.html' %}
-{% block title %}Kontakto{% endblock %}
-{% block pagetitle %}Kontakto{% endblock %}
+{% load i18n traduko_tags %}
+{% block title %}{% translate 'structure#contact' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#contact' %}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Kontakto</li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#contact' %}</li>
 	</ol>
 </nav>
-<p>La tradukejo estas projekto de E@I (<a href="https://ikso.net/" target="_blank">Edukado@Interreto</a>).</p>
-<p>Se vi havas demandon aŭ komenton, ne hezitu skribi al <a href="mailto:{{ DEFAULT_FROM_EMAIL }}">{{ DEFAULT_FROM_EMAIL }}</a>.</p>
+<p>{% blocktranslate asvar contact1 %}pages/contact#contact1{% endblocktranslate %}{% format_translation contact1 "https://ikso.net/" %}</p>
+{% with '<a href="mailto:'|add:DEFAULT_FROM_EMAIL|add:'">'|add:DEFAULT_FROM_EMAIL|add:'</a>' as email %}
+<p>{% blocktranslate asvar contact2 %}pages/contact#contact2{% endblocktranslate %}{% format_translation contact2 email %}</p>
+{% endwith %}
 {% endblock %}

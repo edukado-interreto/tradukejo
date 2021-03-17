@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-16 17:38+0100\n"
-"PO-Revision-Date: 2021-03-16 17:38+0100\n"
+"POT-Creation-Date: 2021-03-17 11:30+0100\n"
+"PO-Revision-Date: 2021-03-17 11:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -14,6 +14,130 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Tradukejo de E@I\n"
 
+msgid "pages/contact#contact1"
+msgstr ""
+
+msgid "pages/contact#contact2"
+msgstr ""
+
+msgid "pages/projects#hidden"
+msgstr ""
+
+msgid "pages/projects#lead1"
+msgstr ""
+
+msgid "pages/projects#lead2"
+msgstr ""
+
+msgid "pages/projects#locked"
+msgstr ""
+
+msgid "pages/projects#projects"
+msgstr ""
+
+msgid "pages/projects#read-instructions"
+msgstr ""
+
+msgid "pages/projects#welcome"
+msgstr ""
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] ""
+
+msgid "project#ask-permission"
+msgstr ""
+
+msgid "project#characters"
+msgstr ""
+
+msgid "project#choose-language"
+msgstr ""
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] ""
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] ""
+
+msgid "project#languages"
+msgstr ""
+
+msgid "project#last-activities"
+msgstr ""
+
+msgid "project#last-comments"
+msgstr ""
+
+msgid "project#my-languages"
+msgstr ""
+
+msgid "project#needed"
+msgstr ""
+
+msgid "project#needed-all"
+msgstr ""
+
+msgid "project#other-contact"
+msgstr ""
+
+msgid "project#other-languages"
+msgstr ""
+
+msgid "project#outdated-words"
+msgstr ""
+
+msgid "project#read-instructions"
+msgstr ""
+
+msgid "project#request-explanation"
+msgstr ""
+
+msgid "project#request-language"
+msgstr ""
+
+msgid "project#request-permission"
+msgstr ""
+
+msgid "project#request-sent"
+msgstr ""
+
+msgid "project#sendi"
+msgstr ""
+
+msgid "project#source-language"
+msgstr ""
+
+msgid "project#strings"
+msgstr ""
+
+msgid "project#total-translated-words"
+msgstr ""
+
+msgid "project#translate"
+msgstr ""
+
+msgid "project#translate-other"
+msgstr ""
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] ""
+
+msgid "project#translators"
+msgstr ""
+
+msgid "project#untranslated-words"
+msgstr ""
+
+msgid "project#url"
+msgstr ""
+
+msgid "project#words"
+msgstr ""
+
 msgid "structure#choose-language"
 msgstr "Choose your language"
 
@@ -22,6 +146,9 @@ msgstr "Close"
 
 msgid "structure#contact"
 msgstr "Contact"
+
+msgid "structure#home"
+msgstr ""
 
 msgid "structure#instructions"
 msgstr "Instructions"

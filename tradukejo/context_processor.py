@@ -5,6 +5,7 @@ from traduko import models
 def settings_context(request):
     return {
         'WEBSITE_NAME': settings.WEBSITE_NAME,
+        'LANGUAGES': settings.LANGUAGES,
         'DEFAULT_FROM_EMAIL': settings.DEFAULT_FROM_EMAIL,
         'TRANSLATION_STATE_TRANSLATED': models.TRANSLATION_STATE_TRANSLATED,
         'TRANSLATION_STATE_UNTRANSLATED': models.TRANSLATION_STATE_UNTRANSLATED,

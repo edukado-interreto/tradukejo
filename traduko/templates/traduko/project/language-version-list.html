@@ -1,29 +1,31 @@
+{% load i18n %}
+
 <ul class="list-group list-group-flush">
 	{% for lv in language_versions %}
 		<li class="list-group-item" id="languagerow-{{ lv.language.code }}">
 			<div class="row d-flex align-items-center">
 				<div class="col">
 					<strong>{{ lv.language.code }} – <span lang="{{ lv.language.code }}" dir="{{ lv.language.direction }}">{{ lv.language.name }}</span> ({{ lv.translated_percent|floatformat:"-2" }}&nbsp;%)</strong>
-					<div class="progress mt-2 mb-3 mb-sm-1" title="Netradukitaj vortoj: {{ lv.untranslated_words }} / {{ project.words }}">
-						<div class="progress-bar bg-success" role="progressbar" style="width: {{ lv.translated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.translated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Tradukitaj vortoj: {{ lv.translated_words }} / {{ project.words }}"></div>
-						<div class="progress-bar bg-warning" role="progressbar" style="width: {{ lv.outdated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.outdated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="Retradukendaj vortoj: {{ lv.outdated_words }} / {{ project.words }}"></div>
+					<div class="progress mt-2 mb-3 mb-sm-1" title="{% translate 'project#untranslated-words' %} {{ lv.untranslated_words }} / {{ project.words }}">
+						<div class="progress-bar bg-success" role="progressbar" style="width: {{ lv.translated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.translated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="{% translate 'project#total-translated-words' %} {{ lv.translated_words }} / {{ project.words }}"></div>
+						<div class="progress-bar bg-warning" role="progressbar" style="width: {{ lv.outdated_percent|stringformat:".3f" }}%" aria-valuenow="{{ lv.outdated_percent|stringformat:".3f" }}" aria-valuemin="0" aria-valuemax="100" title="{% translate 'project#outdated-words' %} {{ lv.outdated_words }} / {{ project.words }}"></div>
 					</div>
 				</div>
 				{% if not project.locked or is_project_admin %}
 				<div class="col-sm-3 col-md-2 col-lg-2 text-center text-md-right">
 					{% if can_translate %}
-					<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">Traduki</a>
+					<a href="{% url 'translate' project.pk lv.language.code %}" class="btn btn-secondary">{% translate 'project#translate' context 'Butono por komenci traduki en la elektita lingvo' %}</a>
 					{% elif lv.translation_request_sent %}
 						{% include 'traduko/project/translation_request_sent_button.html' %}
 					{% else %}
-					<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#translatorRequestModal" data-code="{{ lv.language.code }}" data-language="{{ lv.language.name }}">Peti permeson</button>
+					<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#translatorRequestModal" data-code="{{ lv.language.code }}" data-language="{{ lv.language.name }}">{% translate 'project#ask-permission' context 'Butono por peti tradukpermeson' %}</button>
 					{% endif %}
 				</div>
 				{% endif %}
 			</div>
 			{% if lv.translator_stats %}
 			<div class="translator-list">
-				<strong>Tradukantoj:</strong>
+				<strong>{% translate 'project#translators' %}</strong>
 				{% for translator in lv.translator_stats %}
 					<a href="{% url 'profile' translator.user__pk %}" title="{{ translator.words_sum }} vortoj">{{ translator.user__username }}</a>{% if not forloop.last %},{% endif %}
 				{% endfor %}

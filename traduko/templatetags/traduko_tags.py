@@ -3,9 +3,7 @@ from django import template
 from django import urls
 from django.utils import html
 import re
-
 from django.utils.safestring import mark_safe
-
 from tradukejo import settings
 
 register = template.Library()
@@ -80,19 +78,20 @@ def user_link(user_id, username):
 
 
 @register.simple_tag
-def format_translation(str, *args):
-    str = html.escape(str)
+def format_translation(text, *args):
+    text = html.escape(text)
     i = 1
     while i <= len(args):
-        target = ' target="_blank"' if args[i - 1].startswith('https://') or args[i - 1].startswith('http://') else ''
-        str = re.sub(
+        value = str(args[i - 1])
+        target = ' target="_blank"' if value.startswith('https://') or value.startswith('http://') else ''
+        text = re.sub(
             r'\{%d\}(.*)\{/%d\}' % (i, i),
             r'<a href="{%d}"%s>\1</a>' % (i, target),
-            str
+            text
         )
-        str = str.replace('{%d}' % i, args[i - 1])
+        text = text.replace('{%d}' % i, value)
         i += 1
-    return mark_safe(str)
+    return mark_safe(text)
 
 
 @register.simple_tag(takes_context=True)
@@ -116,3 +115,11 @@ def translate_abs_url(context: Dict[str, Any], language: Optional[str]) -> str:
     """
     url = context['request'].build_absolute_uri()
     return urls.translate_url(url, language)
+
+
+@register.filter(name='get_language_name')
+def get_language_name(str):
+    for code, language in settings.LANGUAGES:
+        if code == str:
+            return language
+    return str

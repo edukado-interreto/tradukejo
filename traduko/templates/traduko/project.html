@@ -1,6 +1,6 @@
 {% extends 'wide-page.html' %}
 {% load static %}
-{% load traduko_tags %}
+{% load i18n traduko_tags %}
 {% block title %}{{ project.name }}{% endblock %}
 {% block pagetitle %}
 	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
@@ -15,7 +15,7 @@
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
 		<li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
 	</ol>
 </nav>
@@ -40,15 +40,15 @@
 			<div class="card-body">
 				<ul>
 				{% if project.url %}
-					<li>Adreso: <a href="{{ project.url }}">{{ project.url }}</a></li>
+					<li>{% translate 'project#url' %} <a href="{{ project.url }}">{{ project.url }}</a></li>
 				{% endif %}
-					<li>Fontolingvo: {{ project.source_language.name }}</li>
-					<li>Ĉenoj: {{ project.strings }}</li>
-					<li>Vortoj: {{ project.words }}</li>
-					<li>Signoj: {{ project.characters }}</li>
+					<li>{% translate 'project#source-language' %} {{ project.source_language.name }}</li>
+					<li>{% translate 'project#strings' %} {{ project.strings }}</li>
+					<li>{% translate 'project#words' %} {{ project.words }}</li>
+					<li>{% translate 'project#characters' %} {{ project.characters }}</li>
 					<li>
-						Bezonataj lingvoj:
-						{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}ĉiuj eblaj{% endfor %}.
+						{% translate 'project#needed' %}
+						{% for l in project.needed_languages.all|dictsort:"name" %}<span lang="{{ l.code }}">{{ l.name }}</span>{% if not forloop.last %}, {% endif %}{% empty %}{% translate 'project#needed-all' %}{% endfor %}.
 					</li>
 				</ul>
 			</div>
@@ -61,7 +61,10 @@
 		</div>
 		{% endif %}
 	</div>
-	<div class="card-footer">Konfuzita? <a href="{% url 'instructions' %}">Legu la instrukciojn!</a></div>
+	<div class="card-footer">
+		{% url 'instructions' as url_instructions %}
+		{% blocktranslate asvar readinstructions %}project#read-instructions{% endblocktranslate %}{% format_translation readinstructions url_instructions %}
+	</div>
 </div>
 
 {% if is_project_admin %}
@@ -89,33 +92,34 @@
 <div class="row">
 	<div class="col-12 col-md-8 col-lg-9 col-xl-10">
 		{% if my_languages_with_stats %}
-		<h2>{% if is_project_admin %}Lingvoj{% else %}Miaj lingvoj{% endif %}</h2>
+		<h2>{% if is_project_admin %}{% translate 'project#languages' %}{% else %}{% translate 'project#my-languages' %}{% endif %}</h2>
 		<div class="card my-4">
 			{% include 'traduko/project/language-version-list.html' with language_versions=my_languages_with_stats can_translate=True %}
 		</div>
 		{% endif %}
 
 		{% if available_languages_with_stats %}
-		<h2>Aliaj lingvoj</h2>
+		<h2>{% translate 'project#other-languages' %}</h2>
 		<div class="card my-4">
 			{% include 'traduko/project/language-version-list.html' with language_versions=available_languages_with_stats can_translate=False %}
 		</div>
 		{% endif %}
 
 		{% if addible_languages and not project.locked or addible_languages and is_project_admin %}
-		<h2>Traduki al alia lingvo</h2>
+		<h2>{% translate 'project#translate-other' %}</h2>
 		<select name="addLanguage" id="addLanguage" class="select form-control mb-3">
-			<option>Elektu lingvon…</option>
+			<option>{% translate 'project#choose-language' %}</option>
 			{% for l in addible_languages %}
 				<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>
 			{% endfor %}
 		</select>
-		Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu <a href="{% url 'contact' %}">kontakti nin</a>.
+		{% url 'contact' as url_contact %}
+		{% blocktranslate asvar othercontact %}project#other-contact{% endblocktranslate %}{% format_translation othercontact url_contact %}
 		{% endif %}
 	</div>
 	<div class="col">
 		{% if last_comments %}
-		<h2>Lastaj komentoj</h2>
+		<h2>{% translate 'project#last-comments' %}</h2>
 		<div class="card mt-4">
 			<div class="card-body last-activities">
 				{% for date, comments in last_comments.items %}
@@ -148,7 +152,7 @@
 			</div>
 		</div>
 		{% endif %}
-		<h2>Lastaj agadoj</h2>
+		<h2>{% translate 'project#last-activities' %}</h2>
 		<div class="card mt-4">
 			<div class="card-body last-activities">
 				{% for date, activities in last_activities.items %}
@@ -159,14 +163,35 @@
 						{% ifchanged activity.language__code %}
 							<b lang="{{ activity.language__code }}">{{ activity.language__name }}</b><br>
 						{% endifchanged %}
+						{% user_link activity.user__pk activity.user__username as t_user_link %}
 						{% if activity.action == ACTION_TYPE_TRANSLATE %}
-							{% user_link activity.user__pk activity.user__username %} tradukis {{ activity.words_sum }} vorto(j)n.
+							{% blocktranslate trimmed asvar translated count counter=activity.words_sum %}
+								project#translated-words
+								{% plural %}
+								project#translated-words
+							{% endblocktranslate %}
+							{% format_translation translated t_user_link activity.words_sum %}
 						{% elif activity.action == ACTION_TYPE_EDIT %}
-							{% user_link activity.user__pk activity.user__username %} redaktis {{ activity.strings }} ĉeno(j)n.
+							{% blocktranslate trimmed asvar edited count counter=activity.strings %}
+								project#edited-strings
+								{% plural %}
+								project#edited-strings
+							{% endblocktranslate %}
+							{% format_translation edited t_user_link activity.strings %}
 						{% elif activity.action == ACTION_TYPE_ADD %}
-							{% user_link activity.user__pk activity.user__username %} aldonis {{ activity.words_sum }} vorto(j)n.
+							{% blocktranslate trimmed asvar added count counter=activity.words_sum %}
+								project#added-words
+								{% plural %}
+								project#added-words
+							{% endblocktranslate %}
+							{% format_translation added t_user_link activity.words_sum %}
 						{% elif activity.action == ACTION_TYPE_IMPORT %}
-							{% user_link activity.user__pk activity.user__username %} importis {{ activity.words_sum }} vorto(j)n.
+							{% blocktranslate trimmed asvar imported count counter=activity.words_sum %}
+								project#imported-words
+								{% plural %}
+								project#imported-words
+							{% endblocktranslate %}
+							{% format_translation imported t_user_link activity.words_sum %}
 						{% endif %}
 					</li>
 					{% endfor %}
@@ -183,7 +208,7 @@
 		<div class="modal-content">
 			<form action="{% url 'request_translator_permission' project.pk %}" method="post">
 				<div class="modal-header">
-					<h5 class="modal-title" id="translatorRequestModalLabel">Peti permeson por traduki</h5>
+					<h5 class="modal-title" id="translatorRequestModalLabel">{% translate 'project#request-permission' context 'Titolo de fenestreto' %}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Fermi">
 					<span aria-hidden="true">&times;</span>
 					</button>
@@ -192,15 +217,15 @@
 					<p id="requestResult"></p>
 					<div class="form-group" id="requestFields">
 						{% csrf_token %}
-						<p>Vi petas permeson traduki al la lingvo: <strong><span id="requestLanguageName">xx</span> (<span id="requestLanguageCode">xx</span>)</strong>.</p>
-						<label for="explanation">Bonvolu skribi kelkajn vortojn pri vi:</label>
+						<p>{% translate 'project#request-language' %} <strong><span id="requestLanguageName">xx</span> (<span id="requestLanguageCode">xx</span>)</strong>.</p>
+						<label for="explanation">{% translate 'project#request-explanation' %}</label>
 						<textarea name="explanation" id="explanation" rows="6" class="form-control" required></textarea>
 					</div>
 					<input type="hidden" name="language" id="requestLanguageCodeInput">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermi</button>
-					<input type="submit" class="btn btn-primary" value="Sendi" id="requestSubmit">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'structure#close' %}</button>
+					<input type="submit" class="btn btn-primary" value="{% translate 'project#sendi' context 'Butono por sendi peton pri tradukpermeso' %}" id="requestSubmit">
 				</div>
 			</form>
 		</div>

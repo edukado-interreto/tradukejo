@@ -1,20 +1,21 @@
 {% extends 'normal-page.html' %}
+{% load i18n traduko_tags %}
 
-{% block title %}Bonvenon{% endblock %}
-{% block pagetitle %}Bonvenon{% endblock %}
+{% block title %}{% translate 'structure#welcome' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#welcome' %}{% endblock %}
 
 {% block content %}
 <section class="jumbotron">
-	<h2 class="mt-0 display-4">Bonvenon al la nova tradukejo de E@I!</h2>
-	<p class="lead">Pli uzant-amika, pli efika kaj pli bela: ni reprogramis la tradukejon per modernaj teknologioj.</p>
-	<p>La malnova tradukejo daŭre estas <a href="https://tradukejo.ikso.net/" target="_blank">alirebla ĉi tie</a>, sed tradukaj projektoj estos iom post iom migrataj al la nova tradukejo.</p>
+	<h2 class="mt-0 display-4">{% translate 'pages/projects#welcome' %}</h2>
+	<p class="lead">{% translate 'pages/projects#lead1' %}</p>
+	<p>{% blocktranslate asvar lead2 %}pages/projects#lead2{% endblocktranslate %}{% format_translation lead2 "https://tradukejo.ikso.net/" %}</p>
 	{% if not user.is_authenticated %}
-		<a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}">Krei konton</a>
+		<a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
 	{% endif %}
-	<a class="btn btn-secondary btn-lg" href="{% url 'instructions' %}">Legi la instrukciojn</a>
+	<a class="btn btn-secondary btn-lg" href="{% url 'instructions' %}">{% translate 'pages/projects#read-instructions' %}</a>
 </section>
 
-<h2>Projektoj</h2>
+<h2>{% translate 'pages/projects#projects' %}</h2>
 <div class="card mt-4">
 	<ul class="list-group list-group-flush">
 		{% for project in projects %}
@@ -27,8 +28,8 @@
 				</div>
 				<div class="col">
 					<h3>
-						{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
-						{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
+						{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="{% translate 'pages/projects#hidden' %}"></i>{% endif %}
+						{% if project.locked %}<i class="fas fa-lock mr-1" title="{% translate 'pages/projects#locked' %}"></i>{% endif %}
 						<a href="{% url 'project' project.pk %}">{{ project.name }}</a>
 					</h3>
 					{% if project.url %}
