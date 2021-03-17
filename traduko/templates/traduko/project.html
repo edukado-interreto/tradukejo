@@ -1,6 +1,5 @@
 {% extends 'wide-page.html' %}
-{% load static %}
-{% load i18n traduko_tags %}
+{% load static i18n traduko_tags %}
 {% block title %}{{ project.name }}{% endblock %}
 {% block pagetitle %}
 	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}

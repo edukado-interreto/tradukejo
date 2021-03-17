@@ -1,0 +1,186 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-17 13:50+0100\n"
+"PO-Revision-Date: 2021-03-17 14:05+0100\n"
+"Last-Translator: Non\n"
+"Language-Team: \n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: models.py:7
+msgid "settings#email"
+msgstr "Retadreso"
+
+#: models.py:10
+msgid "settings#email-new-texts"
+msgstr "Informi min retpoŝte, kiam estas novaj tekstoj por traduki"
+
+#: models.py:11
+msgid "settings#email-translation-request"
+msgstr ""
+"Informi min retpoŝte, kiam iu petas rajton traduki projekton, kiun mi "
+"administras"
+
+#: models.py:12
+msgid "settings#email-new-comments"
+msgstr "Informi min retpoŝte, kiam iu respondis mian komenton"
+
+#: templates/registration/login.html:3 templates/registration/login.html:4
+#: templates/registration/login.html:10 templates/registration/login.html:16
+msgid "structure#log-in"
+msgstr "Ensaluti"
+
+#: templates/registration/login.html:9
+#: templates/registration/password_change_done.html:9
+#: templates/registration/password_change_form.html:9
+#: templates/registration/password_reset_confirm.html:9
+#: templates/registration/password_reset_done.html:9
+#: templates/registration/password_reset_form.html:9
+#: templates/users/profile.html:9 templates/users/register.html:9
+#: templates/users/user-settings.html:9
+msgid "structure#home"
+msgstr "Ĉefpaĝo"
+
+#: templates/registration/login.html:19
+msgid "login#forgot-password"
+msgstr "Ĉu vi forgesis vian pasvorton? {1}Reakiru ĝin ĉi tie.{/1}"
+
+#: templates/registration/login.html:20
+msgid "login#sign-up"
+msgstr "Ĉu vi ne havas konton? {1}Aliĝu nun!{/1}"
+
+#: templates/registration/password_change_done.html:3
+#: templates/registration/password_change_done.html:4
+#: templates/registration/password_change_done.html:12
+#: templates/registration/password_reset_complete.html:3
+#: templates/registration/password_reset_complete.html:4
+msgid "structure#password-changed"
+msgstr "Pasvorto sukcese ŝanĝita"
+
+#: templates/registration/password_change_done.html:10
+#: templates/registration/password_change_form.html:10
+#: templates/users/user-settings.html:3 templates/users/user-settings.html:4
+#: templates/users/user-settings.html:10
+msgid "structure#settings"
+msgstr "Agordoj"
+
+#: templates/registration/password_change_done.html:11
+#: templates/registration/password_change_form.html:3
+#: templates/registration/password_change_form.html:4
+#: templates/registration/password_change_form.html:11
+#: templates/registration/password_change_form.html:18
+#: templates/registration/password_reset_confirm.html:3
+#: templates/registration/password_reset_confirm.html:4
+#: templates/registration/password_reset_confirm.html:10
+#: templates/users/user-settings.html:14
+msgid "structure#change-password"
+msgstr "Ŝanĝi mian pasvorton"
+
+#: templates/registration/password_change_done.html:16
+#: templates/registration/password_reset_complete.html:8
+msgid "password#change-success"
+msgstr "Via pasvorto estis sukcese ŝanĝita."
+
+#: templates/registration/password_change_form.html:14
+msgid "password#type-twice"
+msgstr ""
+"Bonvolu entajpi vian nunan pasvorton pro sekureco, kaj vian novan "
+"pasvorton dufoje, por certiĝi, ke vi tajpis ĝin ĝuste."
+
+#: templates/registration/password_reset_complete.html:10
+msgid "password#can-login"
+msgstr "Vi povas nun {1}ensaluti{/1}."
+
+#: templates/registration/password_reset_done.html:3
+#: templates/registration/password_reset_done.html:4
+#: templates/registration/password_reset_done.html:10
+#: templates/registration/password_reset_form.html:3
+#: templates/registration/password_reset_form.html:4
+#: templates/registration/password_reset_form.html:10
+msgid "structure#password-reset"
+msgstr "Reakiri pasvorton"
+
+#: templates/registration/password_reset_done.html:14
+msgid "password#message-sent"
+msgstr ""
+"Mesaĝo kun instrukcioj estis sendita al via retpoŝtadreso. Se vi ricevas "
+"nenion, certiĝu, ke vi enmetis la ĝustan adreson kaj ke vi havas konton."
+
+#: templates/registration/password_reset_form.html:13
+msgid "password#reset"
+msgstr ""
+"Ĉu vi forgesis vian pasvorton? Skribu vian retadreson ĉi tie kaj ni sendos "
+"al vi instrukciojn."
+
+#: templates/registration/password_reset_form.html:17
+msgid "password#send-instructions"
+msgstr "Sendi al mi instrukciojn"
+
+#: templates/users/email/registration-confirmation.html:2
+msgid "emails#greeting"
+msgstr "Kara {1},"
+
+#: templates/users/email/registration-confirmation.html:3
+msgid "emails/registration#confirmation"
+msgstr ""
+"Ni konfirmas, ke vi aliĝis al la {1}tradukejo de E@I{/1}. Vi povas jam "
+"ensaluti kaj komenci traduki."
+
+#: templates/users/email/registration-confirmation.html:4
+msgid "emails/registration#instructions"
+msgstr ""
+"Ni rekomendas al vi legi la {1}instrukciojn{/1} antaŭ ol komenci traduki."
+
+#: templates/users/email/registration-confirmation.html:5
+msgid "emails#closing"
+msgstr "Amike,"
+
+#: templates/users/email/registration-confirmation.html:6
+msgid "emails#signature"
+msgstr "La E@I-teamo"
+
+#: templates/users/profile.html:13
+msgid "profile#projects"
+msgstr "Projektoj, en kiuj partoprenas la uzanto {1}"
+
+#: templates/users/profile.html:21
+msgid "profile#didnt-translate"
+msgstr "{1} ankoraŭ ne komencis traduki."
+
+#: templates/users/register.html:3 templates/users/register.html:4
+#: templates/users/register.html:10 templates/users/register.html:16
+msgid "structure#sign-up"
+msgstr "Krei konton"
+
+#: templates/users/user-settings.html:19
+msgid "structure#save"
+msgstr "Konservi"
+
+#: views.py:32
+msgid "emails/registration#title"
+msgstr "Tradukejo de E@I: konfirmo de aliĝo"
+
+#: views.py:39
+msgid "messages#account-created"
+msgstr ""
+"Via konto estis kreita kaj vi jam povas komenci traduki. Konfirma mesaĝo "
+"estis sendita al {email}."
+
+#: views.py:68
+msgid "messages#changes-saved"
+msgstr "La ŝanĝoj estis konservitaj."
+
+#: views.py:71
+msgid "messages#changes-cannot-be-saved"
+msgstr "La ŝanĝoj ne povis esti konservitaj."

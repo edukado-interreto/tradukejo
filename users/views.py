@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
 from traduko.models import *
+from django.utils.translation import gettext as _
 
 User = get_user_model()
 
@@ -28,14 +29,14 @@ def register(request):
             plain_text_message = strip_tags(html_message)
 
             send_mail(
-                'Tradukejo de E@I: konfirmo de aliĝo',
+                _('emails/registration#title'),
                 plain_text_message,
                 None,
                 [user.email],
                 html_message=html_message
             )
 
-            messages.success(request, f"Via konto estis kreita kaj vi jam povas komenci traduki. Konfirma mesaĝo estis sendita al {user.email}.")
+            messages.success(request, _('messages#account-created').format({'email': user.email}))
             return redirect(reverse("projects"))
     else:
         form = CustomUserCreationForm()
@@ -64,10 +65,10 @@ def user_settings(request):
         form = UserSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'La ŝanĝoj estis konservitaj.')
+            messages.success(request, _('messages#changes-saved'))
         else:
             print(form.errors)
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
     else:
         form = UserSettingsForm(instance=request.user)
 

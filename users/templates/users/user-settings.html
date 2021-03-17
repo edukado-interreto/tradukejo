@@ -1,22 +1,22 @@
 {% extends 'normal-page.html' %}
-{% load crispy_forms_tags %}
-{% block title %}Agordoj{% endblock %}
-{% block pagetitle %}Agordoj{% endblock %}
+{% load crispy_forms_tags i18n traduko_tags %}
+{% block title %}{% translate 'structure#settings' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#settings' %}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Agordoj</li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#settings' %}</li>
 	</ol>
 </nav>
 <p>
-	<a href="{% url 'password_change' %}" class="btn btn-secondary">Ŝanĝi mian pasvorton</a>
+	<a href="{% url 'password_change' %}" class="btn btn-secondary">{% translate 'structure#change-password' %}</a>
 </p>
 <form action="" method="post">
 	{% csrf_token %}
 	{{ form|crispy }}
-	<input type="submit" value="Konservi" class="btn btn-primary">
+	<input type="submit" value="{% translate 'structure#save' %}" class="btn btn-primary">
 </form>
 
 {% endblock %}

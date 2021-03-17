@@ -1,22 +1,23 @@
 {% extends 'normal-page.html' %}
-{% load crispy_forms_tags %}
-
-{% block title %}Ensaluti{% endblock %}
-{% block pagetitle %}Ensaluti{% endblock %}
+{% load crispy_forms_tags i18n traduko_tags %}
+{% block title %}{% translate 'structure#log-in' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#log-in' %}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Ensaluti</li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#log-in' %}</li>
 	</ol>
 </nav>
 <form method="post" class="small-form">
     {% csrf_token %}
     {{ form|crispy }}
-    <input type="submit" value="Ensaluti" class="btn btn-primary">
-    <p class="mt-3">Ĉu forgesis vian pasvorton? <a href="{% url 'password_reset' %}">Reakiru ĝin ĉi tie.</a></p>
-    <p class="mt-3">Ĉu vi ne havas konton? <a href="{% url 'register' %}">Aliĝu nun!</a></p>
+    <input type="submit" value="{% translate 'structure#log-in' %}" class="btn btn-primary">
+	{% url 'password_reset' as password_reset_url %}
+	{% url 'register' as signup_url %}
+	<p class="mt-3">{% blocktranslate asvar forgot_password %}login#forgot-password{% endblocktranslate %}{% format_translation forgot_password password_reset_url %}</p>
+	<p class="mt-3">{% blocktranslate asvar signup %}login#sign-up{% endblocktranslate %}{% format_translation signup signup_url %}</p>
 </form>
 
 {% endblock %}

@@ -1,5 +1,6 @@
-<p>Kara {{ username }},</p>
-<p>Ni konfirmas, ke vi aliĝis al la <a href="{{ url }}">tradukejo de E@I</a>. Vi povas jam ensaluti kaj komenci traduki.</p>
-<p>Ni rekomendas al vi legi la <a href="{{ instructions_url }}">instrukciojn</a> antaŭ ol komenci traduki.</p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting username %}</p>
+<p>{% blocktranslate asvar confirmation %}emails/registration#confirmation{% endblocktranslate %}{% format_translation confirmation url %}</p>
+<p>{% blocktranslate asvar instructions %}emails/registration#instructions{% endblocktranslate %}{% format_translation instructions instructions_url %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>

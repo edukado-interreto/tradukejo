@@ -1,0 +1,125 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-03-17 14:09+0100\n"
+"PO-Revision-Date: 2021-03-17 14:09+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Cordialement,"
+
+msgid "emails#greeting"
+msgstr "Cher {1},"
+
+msgid "emails#signature"
+msgstr "L’équipe d’E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Nous confirmons votre inscription au {1}système de traduction d’E@I{/1}. "
+"Vous pouvez maintenant vous connecter et commencer à traduire."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Nous vous invitons à lire les {1}instructions{/1} avant de commencer à "
+"traduire."
+
+msgid "emails/registration#title"
+msgstr "Système de traduction d’E@I : confirmation de votre inscription"
+
+msgid "login#forgot-password"
+msgstr "Vous avez oublié votre mot de passe ? {1}Récupérez-le ici.{/1}"
+
+msgid "login#sign-up"
+msgstr "Vous n’avez pas de compte ? {1}Inscrivez-vous !{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Votre compte a été créé et vous pouvez commencer à traduire dès maintenant. "
+"Un message de confirmation a été envoyé à {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Les changements n’ont pas pu être enregistrés."
+
+msgid "messages#changes-saved"
+msgstr "Les changements ont été enregistrés."
+
+msgid "password#can-login"
+msgstr "Vous pouvez maintenant {1}vous connecter{/1}."
+
+msgid "password#change-success"
+msgstr "Votre mot de passe a bien été changé."
+
+msgid "password#message-sent"
+msgstr ""
+"Un message avec des instructions a été envoyé à votre adresse e-mail. Si "
+"vous ne recevez rien, assurez-vous d’avoir entré la bonne adresse et d’être "
+"bien inscrit."
+
+msgid "password#reset"
+msgstr ""
+"Vous avez oublié votre mot de passe ? Entrez votre adresse e-mail et nous "
+"vous enverrons des instructions."
+
+msgid "password#send-instructions"
+msgstr "M’envoyer les instructions"
+
+msgid "password#type-twice"
+msgstr ""
+"Veuillez entrer votre mot de passe actuel par mesure de sécurité, et votre "
+"nouveau mot de passe deux fois, pour être sûr que vous l’avez écrit "
+"correctement."
+
+msgid "profile#didnt-translate"
+msgstr "{1} n’a pas encore commencé à traduire."
+
+msgid "profile#projects"
+msgstr "Projets auxquels {1} participe"
+
+msgid "settings#email"
+msgstr "Adresse e-mail"
+
+msgid "settings#email-new-comments"
+msgstr ""
+"M’informer par e-mail quand quelqu’un répond à un des mes commentaires"
+
+msgid "settings#email-new-texts"
+msgstr "M’informer par e-mail quand il y a de nouveaux textes à traduire"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"M’informer par e-mail quand quelqu’un demande la permission de traduire un "
+"projet dont je suis administrateur"
+
+msgid "structure#change-password"
+msgstr "Changer mon mot de passe"
+
+msgid "structure#home"
+msgstr "Accueil"
+
+msgid "structure#log-in"
+msgstr "Connexion"
+
+msgid "structure#password-changed"
+msgstr "Mot de passe changé"
+
+msgid "structure#password-reset"
+msgstr "Récupérer son mot de passe"
+
+msgid "structure#save"
+msgstr "Sauvegarder"
+
+msgid "structure#settings"
+msgstr "Préférences"
+
+msgid "structure#sign-up"
+msgstr "Inscription"
