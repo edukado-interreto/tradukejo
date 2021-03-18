@@ -431,13 +431,13 @@ def filter_by_search(trstrings, current_language, search_string):
     else:
         in_source_language = trstrings.filter(trstringtext__language=trstrings[0].project.source_language,
                                               trstringtext__text__icontains=search_string)
+        in_name = trstrings.filter(name__icontains=search_string)
         if trstrings[0].project.source_language == current_language:
             return in_source_language
         else:
             in_current_language = trstrings.filter(trstringtext__language=current_language,
                                                    trstringtext__text__icontains=search_string)
-            return (
-                        in_current_language | in_source_language).distinct()  # Otherwise some strings appear several times, I don't know why
+            return (in_name | in_current_language | in_source_language).distinct()  # Otherwise some strings appear several times
 
 
 # submitted_text has to be a JSON string like [{"name":"text[0]","value":"content here"},{"name":"text[1]","value":"content2 here"}]

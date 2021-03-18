@@ -15,7 +15,6 @@ from traduko.translation_functions import *
 @user_allowed_to_translate
 @require_POST
 def get_strings(request):
-    print('COUCOUUUU')
     postdata = json.loads(request.body.decode('utf-8'))
 
     current_project = get_object_or_404(Project, pk=postdata['project_id'])
