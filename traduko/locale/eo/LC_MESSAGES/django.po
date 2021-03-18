@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 13:41+0100\n"
-"PO-Revision-Date: 2021-03-18 13:34+0100\n"
+"POT-Creation-Date: 2021-03-18 16:17+0100\n"
+"PO-Revision-Date: 2021-03-18 16:19+0100\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -14,30 +14,42 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: admin_views.py:54
+#: admin_views.py:57
 msgid "emails/request#accepted-title"
 msgstr "Tradukejo de E@I: tradukpeto por {project} aprobita"
 
-#: admin_views.py:88
+#: admin_views.py:95
 msgid "emails/request#rejected-title"
 msgstr "Tradukejo de E@I: tradukpeto por {project} malaprobita"
 
-#: admin_views.py:108
+#: admin_views.py:116
 msgid "messages#changes-saved"
 msgstr "La ŝanĝoj estis konservitaj."
 
-#: admin_views.py:110 admin_views.py:201 admin_views.py:237 admin_views.py:274
-#: admin_views.py:309 admin_views.py:336
+#: admin_views.py:118 admin_views.py:212 admin_views.py:248 admin_views.py:285
+#: admin_views.py:320 admin_views.py:347
 msgid "messages#changes-cannot-be-saved"
 msgstr "La ŝanĝoj ne povis esti konservitaj."
 
-#: admin_views.py:150
+#: admin_views.py:160
 msgid "emails/new-texts#title"
 msgstr "Tradukejo de E@I: novaj tekstoj por traduki en {project}"
 
-#: admin_views.py:159
+#: admin_views.py:169
 msgid "messages#notification-sent"
 msgstr "La sciigo estis sendita."
+
+#: ajax.py:28
+msgid "messages#request-already-allowed"
+msgstr "Vi jam havas la rajton traduki al ĉi tiu lingvo."
+
+#: ajax.py:30
+msgid "messages#request-already-sent"
+msgstr "Vi jam sendis peton por ĉi tiu lingvo."
+
+#: ajax.py:34
+msgid "messages#request-sent"
+msgstr "La peto estis sendita."
 
 #: templates/base.html:15 templates/traduko/projects.html:3
 #: templates/traduko/projects.html:4
@@ -357,10 +369,10 @@ msgstr "Kaŝita projekto"
 msgid "pages/projects#locked"
 msgstr "Ŝlosita projekto"
 
-#: translation_functions.py:571
+#: translation_functions.py:574
 msgid "emails/request#new-title"
 msgstr "Tradukejo de E@I: peto de tradukrajto por {project}"
 
-#: translation_functions.py:648
+#: translation_functions.py:655
 msgid "emails/comment#title"
 msgstr "Tradukejo de E@I: respondo al via komento en {project}"

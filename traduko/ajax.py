@@ -25,14 +25,13 @@ def request_translator_permission(request, project_id):
         lv.save()
 
     if request.user in lv.translators.all():
-        message = 'Vi jam havas la rajton traduki al ĉi tiu lingvo.'
+        message = _('messages#request-already-allowed')
     elif TranslatorRequest.objects.filter(user=request.user, language_version=lv).count() > 0:
-        message = 'Vi jam sendis peton por ĉi tiu lingvo.'
+        message = _('messages#request-already-sent')
     else:
         translator_request = TranslatorRequest(user=request.user, explanation=request.POST.get('explanation'), language_version=lv)
         translator_request.save()
-        print(translator_request)
-        message = 'La peto estis sendita.'
+        message = _('messages#request-sent')
         send_email_to_admins_about_translation_request(request, translator_request)
 
     button = render_to_string("traduko/project/translation_request_sent_button.html")
