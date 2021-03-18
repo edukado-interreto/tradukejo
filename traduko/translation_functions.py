@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, get_language, activate
 from .models import *
 from collections import OrderedDict
 import json, html
@@ -555,7 +555,10 @@ def send_email_to_admins_about_translation_request(request, translator_request):
     project = translator_request.language_version.project
     language = translator_request.language_version.language
     administrators = project.admins.filter(email_translation_request=True)
+    current_language = get_language()
+
     for admin in administrators:
+        activate(admin.email_language)
         mail_context = {
             'admin': admin,
             'project': project,
@@ -574,6 +577,7 @@ def send_email_to_admins_about_translation_request(request, translator_request):
             [admin.email],
             html_message=html_message
         )
+    activate(current_language)
 
 
 def update_translators_when_translating(user, project, language):
@@ -620,6 +624,7 @@ def get_last_comments(project, limit=20):
 def send_email_about_new_comment(request, trstringtext, user):
     project = trstringtext.trstring.project
     authors = Comment.objects.filter(trstringtext=trstringtext, author__email_new_comments=True).exclude(author=user)
+    current_language = get_language()
     authors_list = []
     for a in authors:
         if a.author not in authors_list:
@@ -634,6 +639,8 @@ def send_email_about_new_comment(request, trstringtext, user):
                 continue
             url = request.build_absolute_uri(reverse('translate', args=(project.pk, lang[0].language.code)))
         url += f'?dir={trstringtext.trstring.path}#{trstringtext.trstring.pk}'
+
+        activate(author.email_language)
 
         mail_context = {
             'translator': author,
@@ -651,3 +658,4 @@ def send_email_about_new_comment(request, trstringtext, user):
             [author.email],
             html_message=html_message
         )
+    activate(current_language)

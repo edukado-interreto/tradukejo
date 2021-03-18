@@ -39,6 +39,9 @@ def accept_translator_request(request, request_id):
     translatorrequest.language_version.save()
     translatorrequest.delete()
 
+    current_language = get_language()
+    activate(translatorrequest.user.email_language)
+
     # Email confirmation to the user
     mail_context = {
         'translator': translatorrequest.user,
@@ -58,6 +61,7 @@ def accept_translator_request(request, request_id):
         html_message=html_message
     )
 
+    activate(current_language)
     update_project_admins(request.user, translatorrequest.language_version.project)
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
@@ -73,6 +77,9 @@ def decline_translator_request(request, request_id):
         translatorrequest.language_version.delete()  # translatorrequest deleted by cascade
     else:
         translatorrequest.delete()
+
+    current_language = get_language()
+    activate(translatorrequest.user.email_language)
 
     # Email confirmation to the user
     mail_context = {
@@ -92,6 +99,7 @@ def decline_translator_request(request, request_id):
         html_message=html_message
     )
     update_project_admins(request.user, translatorrequest.language_version.project)
+    activate(current_language)
 
     return redirect('translator_request_list', translatorrequest.language_version.project.pk)
 
@@ -125,6 +133,7 @@ def translator_notifications(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == 'POST':
+        current_language = get_language()
         languages = request.POST.getlist('send[]')
         language_versions = LanguageVersion.objects.filter(project=project, language__in=languages).exclude(
             translated_strings=project.strings)
@@ -133,6 +142,7 @@ def translator_notifications(request, project_id):
                                                           languageversion__in=language_versions).distinct().exclude(
                 pk=request.user.pk)
             for translator in translators:
+                activate(translator.email_language)
                 lv = LanguageVersion.objects.filter(project=project, translators=translator).exclude(
                     translated_strings=project.strings)
                 # Email translator about new strings
@@ -157,6 +167,7 @@ def translator_notifications(request, project_id):
             project.last_translator_notification = timezone.now()
             project.save()
             messages.success(request, _('messages#notification-sent'))
+        activate(current_language)
 
     context = {
         'project': project,
