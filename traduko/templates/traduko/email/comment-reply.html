@@ -1,6 +1,7 @@
-<p>Kara {{ translator.username }},</p>
-<p>Iu publikigis respondon al via komento en la projekto {{ project.name }}.</p>
-<p>Vi povas vidi la respondon ĉi tie <a href="{{ url }}">{{ url }}</a>.</p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
-<p>PS: se vi ne volas ricevi ĉi tiujn mesaĝojn, eblas agordi tion en via profilo: <a href="{{ settings_url }}">{{ settings_url }}</a>.</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting translator.username %}</p>
+<p>{% blocktranslate asvar comment1 %}emails/comment#comment1{% endblocktranslate %}{% format_translation comment1 project.name %}</p>
+<p>{% blocktranslate asvar comment2 %}emails/comment#comment2{% endblocktranslate %}{% format_translation comment2 url %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>
+<p>{% blocktranslate asvar opt_out %}emails#opt-out{% endblocktranslate %}{% format_translation opt_out settings_url %}</p>

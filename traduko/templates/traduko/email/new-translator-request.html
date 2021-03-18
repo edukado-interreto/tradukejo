@@ -1,6 +1,10 @@
-<p>Kara {{ admin.username }},</p>
-<p>La uzanto {{ translator_request.user.username }} petis rajton traduki la projekton {{ project.name }} al la lingvo {{ language.name }} ({{ language.code }}):</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting admin.username %}</p>
+{% with lang=language.name|add:" ("|add:language.code|add:")" %}
+<p>{% blocktranslate asvar new_request %}emails/request#new-request{% endblocktranslate %}{% format_translation new_request translator_request.user.username project.name lang %}</p>
+{% endwith %}
 <blockquote>{{ translator_request.explanation }}</blockquote>
-<p>Vi povas akcepti aŭ malakcepti la peton ĉi tie: <a href="{{ url }}">{{ url }}</a></p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
+<p>{% blocktranslate asvar accept_link %}emails/request#accept-link{% endblocktranslate %}{% format_translation accept_link url %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>
+<p>{% blocktranslate asvar opt_out %}emails#opt-out{% endblocktranslate %}{% format_translation opt_out settings_url %}</p>

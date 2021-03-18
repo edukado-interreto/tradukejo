@@ -1,5 +1,8 @@
-<p>Kara {{ translator.username }},</p>
-<p>Via peto por traduki la projekton {{ project.name }} al la lingvo {{ language.name }} ({{ language.code }}) estis akceptita.</p>
-<p>Vi povas komenci traduki ĉe la adreso: <a href="{{ url }}">{{ url }}</a></p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting translator.username %}</p>
+{% with lang=language.name|add:" ("|add:language.code|add:")" %}
+<p>{% blocktranslate asvar accepted %}emails/request#accepted{% endblocktranslate %}{% format_translation accepted project.name lang %}</p>
+{% endwith %}
+<p>{% blocktranslate asvar start_translating %}emails/request#start-translating{% endblocktranslate %}{% format_translation start_translating url %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>

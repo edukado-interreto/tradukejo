@@ -4,8 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
-
 from .models import *
 from .translation_functions import *
 from .forms import *
@@ -51,7 +51,7 @@ def accept_translator_request(request, request_id):
     plain_text_message = strip_tags(html_message)
 
     send_mail(
-        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} aprobita",
+        _('emails/request#accepted-title').format(project=translatorrequest.language_version.project.name),
         plain_text_message,
         None,
         [translatorrequest.user.email],
@@ -85,7 +85,7 @@ def decline_translator_request(request, request_id):
     plain_text_message = strip_tags(html_message)
 
     send_mail(
-        f"Tradukejo de E@I: tradukpeto por {translatorrequest.language_version.project.name} malaprobita",
+        _('emails/request#rejected-title').format(project=translatorrequest.language_version.project.name),
         plain_text_message,
         None,
         [translatorrequest.user.email],
@@ -105,9 +105,9 @@ def edit_project(request, project_id):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, 'La ŝanĝoj estis konservitaj.')
+            messages.success(request, _('messages#changes-saved'))
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = ProjectForm(instance=project)
@@ -147,7 +147,7 @@ def translator_notifications(request, project_id):
                 plain_text_message = strip_tags(html_message)
 
                 send_mail(
-                    f"Tradukejo de E@I: novaj tekstoj por traduki en {project.name}",
+                    _('emails/new-texts#title').format(project=project.name),
                     plain_text_message,
                     None,
                     [translator.email],
@@ -156,7 +156,7 @@ def translator_notifications(request, project_id):
 
             project.last_translator_notification = timezone.now()
             project.save()
-            messages.success(request, "La sciigo estis sendita.")
+            messages.success(request, _('messages#notification-sent'))
 
     context = {
         'project': project,
@@ -198,7 +198,7 @@ def import_csv(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = ImportForm()
@@ -234,7 +234,7 @@ def import_json(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = ImportForm()
@@ -271,7 +271,7 @@ def import_po(request, project_id):
                 except WrongFormatError:
                     messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = POImportForm()
@@ -306,7 +306,7 @@ def import_nested_json(request, project_id):
             except WrongFormatError:
                 messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = ImportFormWithLanguage(language_choices=languages)
@@ -333,7 +333,7 @@ def import_history(request, project_id):
             except WrongFormatError:
                 messages.error(request, 'Malĝusta formato de dosiero.')
         else:
-            messages.error(request, 'La ŝanĝoj ne povis esti konservitaj.')
+            messages.error(request, _('messages#changes-cannot-be-saved'))
         update_project_admins(request.user, project)
     else:
         form = BasicImportForm()

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 11:16+0100\n"
-"PO-Revision-Date: 2021-03-17 11:17+0100\n"
+"POT-Creation-Date: 2021-03-18 13:41+0100\n"
+"PO-Revision-Date: 2021-03-18 13:34+0100\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -14,57 +14,82 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: templates/base.html:16 templates/traduko/projects.html:4
-#: templates/traduko/projects.html:5
+#: admin_views.py:54
+msgid "emails/request#accepted-title"
+msgstr "Tradukejo de E@I: tradukpeto por {project} aprobita"
+
+#: admin_views.py:88
+msgid "emails/request#rejected-title"
+msgstr "Tradukejo de E@I: tradukpeto por {project} malaprobita"
+
+#: admin_views.py:108
+msgid "messages#changes-saved"
+msgstr "La ŝanĝoj estis konservitaj."
+
+#: admin_views.py:110 admin_views.py:201 admin_views.py:237 admin_views.py:274
+#: admin_views.py:309 admin_views.py:336
+msgid "messages#changes-cannot-be-saved"
+msgstr "La ŝanĝoj ne povis esti konservitaj."
+
+#: admin_views.py:150
+msgid "emails/new-texts#title"
+msgstr "Tradukejo de E@I: novaj tekstoj por traduki en {project}"
+
+#: admin_views.py:159
+msgid "messages#notification-sent"
+msgstr "La sciigo estis sendita."
+
+#: templates/base.html:15 templates/traduko/projects.html:3
+#: templates/traduko/projects.html:4
 msgid "structure#welcome"
 msgstr "Bonvenon"
 
-#: templates/base.html:16 templates/base.html:33
+#: templates/base.html:15 templates/base.html:32
 msgid "structure#website-name"
 msgstr "Tradukejo de E@I"
 
-#: templates/base.html:27
+#: templates/base.html:26
 msgid "structure#settings"
 msgstr "Agordoj"
 
-#: templates/base.html:28
+#: templates/base.html:27
 msgid "structure#sign-out"
 msgstr "Elsaluti"
 
-#: templates/base.html:30
+#: templates/base.html:29
 msgid "structure#sign-in"
 msgstr "Ensaluti"
 
-#: templates/base.html:30 templates/traduko/projects.html:13
+#: templates/base.html:29 templates/traduko/projects.html:12
 msgid "structure#sign-up"
 msgstr "Krei konton"
 
-#: templates/base.html:58
+#: templates/base.html:57
 msgid "structure#instructions"
 msgstr "Instrukcioj"
 
-#: templates/base.html:59 templates/traduko/contact.html:3
+#: templates/base.html:58 templates/traduko/contact.html:3
 #: templates/traduko/contact.html:4 templates/traduko/contact.html:10
 msgid "structure#contact"
 msgstr "Kontakto"
 
-#: templates/base.html:60
+#: templates/base.html:59
 msgid "structure#privacy"
 msgstr "Privateco"
 
-#: templates/base.html:66
+#: templates/base.html:65
 msgid "structure#project-by"
 msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
 
-#: templates/base.html:76
+#: templates/base.html:75
 msgid "structure#choose-language"
 msgstr "Elektu vian lingvon"
 
-#: templates/base.html:91 templates/traduko/project.html:227
+#: templates/base.html:90 templates/traduko/project.html:226
 msgid "structure#close"
 msgstr "Fermi"
 
-#: templates/traduko/contact.html:9 templates/traduko/project.html:18
+#: templates/traduko/contact.html:9 templates/traduko/project.html:17
 msgid "structure#home"
 msgstr "Ĉefpaĝo"
 
@@ -76,110 +101,196 @@ msgstr "La tradukejo estas projekto de E@I ({1}Edukado@Interreto{/1})."
 msgid "pages/contact#contact2"
 msgstr "Se vi havas demandon aŭ komenton, ne hezitu skribi al {1}."
 
-#: templates/traduko/project.html:43
+#: templates/traduko/email/comment-reply.html:2
+#: templates/traduko/email/new-texts-to-translate.html:2
+#: templates/traduko/email/new-translator-request.html:2
+#: templates/traduko/email/translator-request-accepted.html:2
+#: templates/traduko/email/translator-request-rejected.html:2
+msgid "emails#greeting"
+msgstr "Kara {1},"
+
+#: templates/traduko/email/comment-reply.html:3
+msgid "emails/comment#comment1"
+msgstr "Iu publikigis respondon al via komento en la projekto {1}."
+
+#: templates/traduko/email/comment-reply.html:4
+msgid "emails/comment#comment2"
+msgstr "Vi povas vidi la respondon ĉi tie: {1}."
+
+#: templates/traduko/email/comment-reply.html:5
+#: templates/traduko/email/new-texts-to-translate.html:21
+#: templates/traduko/email/new-translator-request.html:8
+#: templates/traduko/email/translator-request-accepted.html:7
+#: templates/traduko/email/translator-request-rejected.html:7
+msgid "emails#closing"
+msgstr "Amike,"
+
+#: templates/traduko/email/comment-reply.html:6
+#: templates/traduko/email/new-texts-to-translate.html:22
+#: templates/traduko/email/new-translator-request.html:9
+#: templates/traduko/email/translator-request-accepted.html:8
+#: templates/traduko/email/translator-request-rejected.html:8
+msgid "emails#signature"
+msgstr "La E@I-teamo"
+
+#: templates/traduko/email/comment-reply.html:7
+#: templates/traduko/email/new-texts-to-translate.html:23
+#: templates/traduko/email/new-translator-request.html:10
+msgid "emails#opt-out"
+msgstr ""
+"PS: se vi ne volas ricevi ĉi tiajn mesaĝojn, eblas agordi tion en via "
+"profilo: {1}."
+
+#: templates/traduko/email/new-texts-to-translate.html:3
+msgid "emails/new-texts#new-texts"
+msgstr "Aperis novaj tekstoj por traduki en la projekto {1}."
+
+#: templates/traduko/email/new-texts-to-translate.html:7
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} netradukita vorto"
+msgstr[1] "{1} netradukitaj vortoj"
+
+#: templates/traduko/email/new-texts-to-translate.html:12
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} retradukenda vorto"
+msgstr[1] "{1} retradukendaj vortoj"
+
+#: templates/traduko/email/new-texts-to-translate.html:20
+msgid "emails/new-texts#translate-link"
+msgstr "Vi povas traduki ĉi tie: {1}."
+
+#: templates/traduko/email/new-translator-request.html:4
+msgid "emails/request#new-request"
+msgstr "La uzanto {1} petis rajton traduki la projekton {2} al la lingvo {3}:"
+
+#: templates/traduko/email/new-translator-request.html:7
+msgid "emails/request#accept-link"
+msgstr "Vi povas akcepti aŭ malakcepti la peton ĉi tie: {1}."
+
+#: templates/traduko/email/translator-request-accepted.html:4
+msgid "emails/request#accepted"
+msgstr ""
+"Via peto por traduki la projekton {1} al la lingvo {2} estis akceptita."
+
+#: templates/traduko/email/translator-request-accepted.html:6
+msgid "emails/request#start-translating"
+msgstr "Vi povas komenci traduki ĉe la adreso: {1}."
+
+#: templates/traduko/email/translator-request-rejected.html:4
+msgid "emails/request#rejected"
+msgstr ""
+"Via peto por traduki la projekton {1} al la lingvo {2} estis malakceptita."
+
+#: templates/traduko/email/translator-request-rejected.html:6
+msgid "emails#contact-us"
+msgstr "Se vi havas demandojn, ne hezitu kontakti nin."
+
+#: templates/traduko/project.html:42
 msgid "project#url"
 msgstr "Adreso:"
 
-#: templates/traduko/project.html:45
+#: templates/traduko/project.html:44
 msgid "project#source-language"
 msgstr "Fontolingvo:"
 
-#: templates/traduko/project.html:46
+#: templates/traduko/project.html:45
 msgid "project#strings"
 msgstr "Ĉenoj:"
 
-#: templates/traduko/project.html:47
+#: templates/traduko/project.html:46
 msgid "project#words"
 msgstr "Vortoj:"
 
-#: templates/traduko/project.html:48
+#: templates/traduko/project.html:47
 msgid "project#characters"
 msgstr "Signoj:"
 
-#: templates/traduko/project.html:50
+#: templates/traduko/project.html:49
 msgid "project#needed"
 msgstr "Bezonataj lingvoj:"
 
-#: templates/traduko/project.html:51
+#: templates/traduko/project.html:50
 msgid "project#needed-all"
 msgstr "ĉiuj eblaj"
 
-#: templates/traduko/project.html:66
+#: templates/traduko/project.html:65
 msgid "project#read-instructions"
 msgstr "Konfuzita? {1}Legu la instrukciojn!{/1}"
 
-#: templates/traduko/project.html:95
+#: templates/traduko/project.html:94
 msgid "project#languages"
 msgstr "Lingvoj"
 
-#: templates/traduko/project.html:95
+#: templates/traduko/project.html:94
 msgid "project#my-languages"
 msgstr "Miaj lingvoj"
 
-#: templates/traduko/project.html:102
+#: templates/traduko/project.html:101
 msgid "project#other-languages"
 msgstr "Aliaj lingvoj"
 
-#: templates/traduko/project.html:109
+#: templates/traduko/project.html:108
 msgid "project#translate-other"
 msgstr "Traduki al alia lingvo"
 
-#: templates/traduko/project.html:111
+#: templates/traduko/project.html:110
 msgid "project#choose-language"
 msgstr "Elektu lingvon…"
 
-#: templates/traduko/project.html:117
+#: templates/traduko/project.html:116
 msgid "project#other-contact"
 msgstr ""
 " Ĉu vi volas traduki al lingvo, kiu ne estas en ĉi tiu listo? Bonvolu {1}"
 "kontakti nin{/1}."
 
-#: templates/traduko/project.html:122
+#: templates/traduko/project.html:121
 msgid "project#last-comments"
 msgstr "Lastaj komentoj"
 
-#: templates/traduko/project.html:155
+#: templates/traduko/project.html:154
 msgid "project#last-activities"
 msgstr "Lastaj agadoj"
 
-#: templates/traduko/project.html:168
+#: templates/traduko/project.html:167
 msgid "project#translated-words"
 msgid_plural "project#translated-words"
 msgstr[0] "{1} tradukis {2} vorton."
 msgstr[1] "{1} tradukis {2} vortojn."
 
-#: templates/traduko/project.html:175
+#: templates/traduko/project.html:174
 msgid "project#edited-strings"
 msgid_plural "project#edited-strings"
 msgstr[0] "{1} redaktis {2} ĉenon."
 msgstr[1] "{1} redaktis {2} ĉenojn."
 
-#: templates/traduko/project.html:182
+#: templates/traduko/project.html:181
 msgid "project#added-words"
 msgid_plural "project#added-words"
 msgstr[0] "{1} aldonis {2} vorton."
 msgstr[1] "{1} aldonis {2} vortojn."
 
-#: templates/traduko/project.html:189
+#: templates/traduko/project.html:188
 msgid "project#imported-words"
 msgid_plural "project#imported-words"
 msgstr[0] "{1} importis {2} vorton."
 msgstr[1] "{1} importis {2} vortojn."
 
-#: templates/traduko/project.html:211
+#: templates/traduko/project.html:210
 msgctxt "Titolo de fenestreto"
 msgid "project#request-permission"
 msgstr "Peti permeson por traduki"
 
-#: templates/traduko/project.html:220
+#: templates/traduko/project.html:219
 msgid "project#request-language"
 msgstr "Vi petas permeson traduki al la lingvo:"
 
-#: templates/traduko/project.html:221
+#: templates/traduko/project.html:220
 msgid "project#request-explanation"
 msgstr "Bonvolu skribi kelkajn vortojn pri vi:"
 
-#: templates/traduko/project.html:228
+#: templates/traduko/project.html:227
 msgctxt "Butono por sendi peton pri tradukpermeso"
 msgid "project#sendi"
 msgstr "Sendi"
@@ -210,38 +321,46 @@ msgstr "Peti permeson"
 msgid "project#translators"
 msgstr "Tradukantoj:"
 
-#: templates/traduko/project/translation_request_sent_button.html:1
+#: templates/traduko/project/translation_request_sent_button.html:2
 msgid "project#request-sent"
 msgstr "Peto sendita"
 
-#: templates/traduko/projects.html:9
+#: templates/traduko/projects.html:8
 msgid "pages/projects#welcome"
 msgstr "Bonvenon al la nova tradukejo de E@I!"
 
-#: templates/traduko/projects.html:10
+#: templates/traduko/projects.html:9
 msgid "pages/projects#lead1"
 msgstr ""
 "Pli uzant-amika, pli efika kaj pli bela: ni reprogramis la tradukejon per "
 "modernaj teknologioj."
 
-#: templates/traduko/projects.html:11
+#: templates/traduko/projects.html:10
 msgid "pages/projects#lead2"
 msgstr ""
 "La malnova tradukejo daŭre estas {1}alirebla ĉi tie{/1}, sed tradukaj "
 "projektoj estos iom post iom migrataj al la nova tradukejo."
 
-#: templates/traduko/projects.html:15
+#: templates/traduko/projects.html:14
 msgid "pages/projects#read-instructions"
 msgstr "Legi la instrukciojn"
 
-#: templates/traduko/projects.html:18
+#: templates/traduko/projects.html:17
 msgid "pages/projects#projects"
 msgstr "Projektoj"
 
-#: templates/traduko/projects.html:31
+#: templates/traduko/projects.html:30
 msgid "pages/projects#hidden"
 msgstr "Kaŝita projekto"
 
-#: templates/traduko/projects.html:32
+#: templates/traduko/projects.html:31
 msgid "pages/projects#locked"
 msgstr "Ŝlosita projekto"
+
+#: translation_functions.py:571
+msgid "emails/request#new-title"
+msgstr "Tradukejo de E@I: peto de tradukrajto por {project}"
+
+#: translation_functions.py:648
+msgid "emails/comment#title"
+msgstr "Tradukejo de E@I: respondo al via komento en {project}"

@@ -1,11 +1,23 @@
-<p>Kara {{ translator.username }},</p>
-<p>Aperis novaj tekstoj por traduki en la projekto {{ project.name }}.</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting translator.username %}</p>
+<p>{% blocktranslate asvar new_texts %}emails/new-texts#new-texts{% endblocktranslate %}{% format_translation new_texts project.name %}</p>
 <ul>
 	{% for lv in language_versions %}
-	<li>{{ lv.language.name }}: {{ lv.untranslated_words }} netradukitaj vortoj, {{ lv.outdated_words }} retradukendaj vortoj</li>
+	<li>{{ lv.language.name }}:
+		{% blocktranslate trimmed asvar untranslated count counter=lv.untranslated_words %}
+			emails/new-texts#untranslated
+			{% plural %}
+			emails/new-texts#untranslated
+		{% endblocktranslate %}{% format_translation untranslated lv.untranslated_words %},
+		{% blocktranslate trimmed asvar outdated count counter=lv.outdated_words %}
+			emails/new-texts#outdated
+			{% plural %}
+			emails/new-texts#outdated
+		{% endblocktranslate %}{% format_translation outdated lv.outdated_words %}
+	</li>
 	{% endfor %}
 </ul>
-<p>Vi povas traduki ĉi tie <a href="{{ translate_url }}">{{ translate_url }}</a></p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
-<p>PS: se vi ne volas ricevi ĉi tiujn mesaĝojn, eblas agordi tion en via profilo: <a href="{{ settings_url }}">{{ settings_url }}</a></p>
+<p>{% blocktranslate asvar translate_link %}emails/new-texts#translate-link{% endblocktranslate %}{% format_translation translate_link translate_url %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>
+<p>{% blocktranslate asvar opt_out %}emails#opt-out{% endblocktranslate %}{% format_translation opt_out settings_url %}</p>

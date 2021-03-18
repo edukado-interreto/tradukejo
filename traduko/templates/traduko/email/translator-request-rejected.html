@@ -1,5 +1,8 @@
-<p>Kara {{ translator.username }},</p>
-<p>Via peto por traduki la projekton {{ project.name }} al la lingvo {{ language.name }} ({{ language.code }}) estis malakceptita.</p>
-<p>Se vi havas demandojn, ne hezitu kontakti nin.</p>
-<p>Amike,</p>
-<p>La E@I-teamo</p>
+{% load i18n traduko_tags %}
+<p>{% blocktranslate asvar greeting %}emails#greeting{% endblocktranslate %}{% format_translation greeting translator.username %}</p>
+{% with lang=language.name|add:" ("|add:language.code|add:")" %}
+<p>{% blocktranslate asvar rejected %}emails/request#rejected{% endblocktranslate %}{% format_translation rejected project.name lang %}</p>
+{% endwith %}
+<p>{% translate 'emails#contact-us' %}</p>
+<p>{% translate 'emails#closing' %}</p>
+<p>{% translate 'emails#signature' %}</p>

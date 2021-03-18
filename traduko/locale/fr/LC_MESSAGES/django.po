@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-17 16:37+0100\n"
-"PO-Revision-Date: 2021-03-17 16:37+0100\n"
+"POT-Creation-Date: 2021-03-18 13:44+0100\n"
+"PO-Revision-Date: 2021-03-18 13:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -13,6 +13,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Cordialement,"
+
+msgid "emails#contact-us"
+msgstr "Si vous avez des questions, n’hésitez pas à nous contacter."
+
+msgid "emails#greeting"
+msgstr "Cher {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"PS : si vous ne souhaitez plus recevoir ces messages, vous pouvez modifier "
+"les options dans votre profil : {1}."
+
+msgid "emails#signature"
+msgstr "L’équipe d’E@I"
+
+msgid "emails/comment#comment1"
+msgstr ""
+"Quelqu’un a publié une réponse à votre commentaire dans le projet {1}."
+
+msgid "emails/comment#comment2"
+msgstr "Vous pouvez voir les réponses ici : {1}."
+
+msgid "emails/comment#title"
+msgstr ""
+"Système de traduction d’E@I : réponse à votre commentaire dans {project}"
+
+msgid "emails/new-texts#new-texts"
+msgstr "De nouveaux textes à traduire sont disponibles pour le projet {1}."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} mot à retraduire"
+msgstr[1] "{1} mots à retraduire"
+
+msgid "emails/new-texts#title"
+msgstr ""
+"Système de traduction d’E@I : nouveaux textes à traduire dans {project}"
+
+msgid "emails/new-texts#translate-link"
+msgstr "Vous pouvez traduire ici : {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} mot à traduire"
+msgstr[1] "{1} mots à traduire"
+
+msgid "emails/request#accept-link"
+msgstr "Vous pouvez accepter ou refuser la demande ici : {1}."
+
+msgid "emails/request#accepted"
+msgstr ""
+"Votre demande pour traduire le projet {1} vers la langue {2} a été acceptée."
+
+msgid "emails/request#accepted-title"
+msgstr ""
+"Système de traduction d’E@I : demande de permission de traduction pour "
+"{project} acceptée"
+
+msgid "emails/request#new-request"
+msgstr ""
+"L’utilisateur {1} a demandé la permission de traduire le projet {2} à la "
+"langue {3} :"
+
+msgid "emails/request#new-title"
+msgstr ""
+"Système de traduction d’E@I : demande de permission de traduction pour "
+"{project}"
+
+msgid "emails/request#rejected"
+msgstr ""
+"Votre demande pour traduire le projet {1} vers la langue {2} a été refusée."
+
+msgid "emails/request#rejected-title"
+msgstr ""
+"Système de traduction d’E@I : demande de permission de traduction pour "
+"{project} refusée"
+
+msgid "emails/request#start-translating"
+msgstr "Vous pouvez commencer à traduire à l’adresse {1}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Les changements n’ont pas pu être enregistrés."
+
+msgid "messages#changes-saved"
+msgstr "Les changements ont été enregistrés."
+
+msgid "messages#notification-sent"
+msgstr "La notification a été envoyée."
 
 msgid "pages/contact#contact1"
 msgstr ""
@@ -93,8 +184,8 @@ msgstr "toutes les langues possibles"
 
 msgid "project#other-contact"
 msgstr ""
-"Voulez-vous traduire à une langue qui n’est pas dans cette liste ? Veuillez "
-"{1}nous contacter{/1}."
+"Voulez-vous traduire vers une langue qui n’est pas dans cette liste ? "
+"Veuillez {1}nous contacter{/1}."
 
 msgid "project#other-languages"
 msgstr "Autres langues"
