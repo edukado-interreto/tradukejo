@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
 from traduko.models import *
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, get_language
 
 User = get_user_model()
 
@@ -18,6 +18,8 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.email_language = get_language()
+            user.save()
             login(request, user)
 
             context = {
@@ -36,7 +38,7 @@ def register(request):
                 html_message=html_message
             )
 
-            messages.success(request, _('messages#account-created').format({'email': user.email}))
+            messages.success(request, _('messages#account-created').format(email=user.email))
             return redirect(reverse("projects"))
     else:
         form = CustomUserCreationForm()

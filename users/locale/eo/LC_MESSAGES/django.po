@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 13:50+0100\n"
-"PO-Revision-Date: 2021-03-17 14:05+0100\n"
+"POT-Creation-Date: 2021-03-18 15:27+0100\n"
+"PO-Revision-Date: 2021-03-18 15:27+0100\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -18,23 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: models.py:7
+#: models.py:8
 msgid "settings#email"
 msgstr "Retadreso"
 
-#: models.py:10
+#: models.py:11
 msgid "settings#email-new-texts"
 msgstr "Informi min retpoŝte, kiam estas novaj tekstoj por traduki"
 
-#: models.py:11
+#: models.py:12
 msgid "settings#email-translation-request"
 msgstr ""
 "Informi min retpoŝte, kiam iu petas rajton traduki projekton, kiun mi "
 "administras"
 
-#: models.py:12
+#: models.py:13
 msgid "settings#email-new-comments"
 msgstr "Informi min retpoŝte, kiam iu respondis mian komenton"
+
+#: models.py:15
+msgid "settings#email-language"
+msgstr "Preferata lingvo por ricevi retpoŝton"
 
 #: templates/registration/login.html:3 templates/registration/login.html:4
 #: templates/registration/login.html:10 templates/registration/login.html:16
@@ -95,8 +99,8 @@ msgstr "Via pasvorto estis sukcese ŝanĝita."
 #: templates/registration/password_change_form.html:14
 msgid "password#type-twice"
 msgstr ""
-"Bonvolu entajpi vian nunan pasvorton pro sekureco, kaj vian novan "
-"pasvorton dufoje, por certiĝi, ke vi tajpis ĝin ĝuste."
+"Bonvolu entajpi vian nunan pasvorton pro sekureco, kaj vian novan pasvorton "
+"dufoje, por certiĝi, ke vi tajpis ĝin ĝuste."
 
 #: templates/registration/password_reset_complete.html:10
 msgid "password#can-login"
