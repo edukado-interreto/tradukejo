@@ -1,13 +1,13 @@
 <template>
   <span class="online-translators-links" v-if="languageFrom.code !== languageTo.code">
-    <a v-if="languageFrom.google && languageTo.google" :href="googleLink" target="_blank" title="Traduki per Google">
-      <img :src="imgURL + '/icons/google.png'" alt="Traduki per Google">
+    <a v-if="languageFrom.google && languageTo.google" :href="googleLink" target="_blank" :title="$t('translate.auto_translate', {name: 'Google'})">
+      <img :src="imgURL + '/icons/google.png'" :alt="$t('translate.auto_translate', {name: 'Google'})">
     </a>
-    <a v-if="languageFrom.yandex && languageTo.yandex" :href="yandexLink" target="_blank" title="Traduki per Yandex">
-      <img :src="imgURL + '/icons/yandex.png'" alt="Traduki per Yandex">
+    <a v-if="languageFrom.yandex && languageTo.yandex" :href="yandexLink" target="_blank" :title="$t('translate.auto_translate', {name: 'Yandex'})">
+      <img :src="imgURL + '/icons/yandex.png'" :alt="$t('translate.auto_translate', {name: 'Yandex'})">
     </a>
-    <a v-if="languageFrom.deepl && languageTo.deepl" :href="deeplLink" target="_blank" title="Traduki per DeepL">
-      <img :src="imgURL + '/icons/deepl.svg'" alt="Traduki per DeepL">
+    <a v-if="languageFrom.deepl && languageTo.deepl" :href="deeplLink" target="_blank" :title="$t('translate.auto_translate', {name: 'DeepL'})">
+      <img :src="imgURL + '/icons/deepl.svg'" :alt="$t('translate.auto_translate', {name: 'DeepL'})">
     </a>
   </span>
 </template>

@@ -2,7 +2,7 @@
   <div class="col-md-6 original-string">
     <display-text :texts="stringtext.text" :pluralized="stringtext.pluralized"></display-text>
     <div v-if="context" class="context">
-      <i class="fas fa-question-circle" title="Klarigoj pri la kunteksto de la ĉeno"></i> {{ context }}
+      <i class="fas fa-question-circle" :title="$t('translate.context')"></i> {{ context }}
     </div>
     <string-info
       :stringtext="stringtext"

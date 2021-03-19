@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="card" v-if="editing">
       <div class="card-body">
-        <h5 class="card-title">Aldoni ĉenon</h5>
+        <h5 class="card-title">{{ $t('translate.add_string') }}</h5>
         <translate-form
           :path="queryStringDir"
           :error="error"
@@ -17,7 +17,7 @@
 
   <div class="text-center mb-4" v-if="!editing">
     <button class="btn btn-primary" @click="showForm" ref="translate">
-      Aldoni ĉenon
+      {{ $t('translate.add_string') }}
     </button>
   </div>
 </template>

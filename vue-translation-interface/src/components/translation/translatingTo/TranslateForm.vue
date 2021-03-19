@@ -11,7 +11,7 @@
           type="text"
           class="form-control"
           v-model.trim="enteredName"
-          placeholder="Nomo de la ĉeno"
+          :placeholder="$t('translate.string_name')"
           :disabled="loading"
           required
         />
@@ -21,7 +21,7 @@
           type="text"
           class="form-control"
           v-model.trim="enteredPath"
-          placeholder="Dosierujo de la ĉeno"
+          :placeholder="$t('translate.string_path')"
           :disabled="loading"
         />
       </div>
@@ -34,9 +34,9 @@
         class="form-group"
       >
         <div class="plural-number-explanation">
-          <label :for="'txt' + stringId + '-' + index"
-            >Se la nombro estas {{ example }}:</label
-          >
+          <label :for="'txt' + stringId + '-' + index">
+            {{ $t('translate.number', {n: example}) }}
+          </label>
         </div>
         <textarea
           rows="4"
@@ -119,12 +119,12 @@
         :disabled="loading || !canSubmit"
       >
         <loading-spinner v-if="loading" inline white></loading-spinner>
-        <template v-else>Konservi</template>
+        <template v-else>{{ $t('translate.save') }}</template>
       </button>
       <input
         type="button"
         class="btn btn-secondary"
-        value="Nuligi"
+        :value="$t('translate.cancel')"
         @click="cancel"
         :disabled="loading"
       />

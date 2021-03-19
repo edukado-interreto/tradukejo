@@ -3,10 +3,10 @@
   </div>
   <div v-else class="original-text" :class="{ 'click-to-edit': clickToEdit }">
     <div class="context mt-1">
-      <i class="fas fa-question-circle" title="Klarigoj pri la ĉeno"></i> Ĉi tiu ĉeno havas diversajn formojn depende de nombro.
+      <i class="fas fa-question-circle" :title="$t('translate.context')"></i> {{ $t('translate.number_explanations') }}
     </div>
-    <template v-for="(text, numbers) in texts" :key="numbers">
-      <div class="plural-number-explanation">Se la nombro estas {{ numbers }}:</div>
+    <template v-for="(text, example) in texts" :key="example">
+      <div class="plural-number-explanation">{{ $t('translate.number', {n: example}) }}</div>
       <div v-html="text"></div>
     </template>
   </div>

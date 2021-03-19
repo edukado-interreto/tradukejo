@@ -1,6 +1,6 @@
 <template>
   <div class="alert alert-success">
-    La ĉeno #{{ string.name }} estis forigita.
+    {{ $t('translated.deleted', {name: '#' + string.name}) }}
   </div>
 </template>
 

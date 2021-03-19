@@ -16,7 +16,7 @@
         @click="showForm"
         ref="translate"
       >
-        Redakti
+        {{ $t('translate.edit') }}
       </button>
       <button
         v-else
@@ -25,7 +25,7 @@
         @click="showForm"
         ref="translate"
       >
-        Traduki
+        {{ $t('translate.translate') }}
       </button>
     </div>
 

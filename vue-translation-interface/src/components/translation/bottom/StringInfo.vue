@@ -9,12 +9,12 @@
       |
     </template>
     <a href="#" @click.prevent="toggleComments" class="toggle" :class="{open: showComments}">
-      {{ commentCount == 0 ? 'Komenti' : commentCount == 1 ? 'Unu komento' : commentCount + ' komentoj' }}
+      {{ commentCount == 0 ? $t('comments.link') : $tc('comments.number', {n: commentCount}) }}
     </a>
     <template v-if="stringtext.old_versions > 0">
       |
       <a href="#" @click.prevent="toggleHistory" class="toggle" :class="{open: showHistory}">
-        Historio ({{ stringtext.old_versions + 1 }} versioj)<!--
+        {{ $tc('history.versions', {n: stringtext.old_versions + 1}) }}<!--
       --></a>
 
       <loading-spinner

@@ -2,7 +2,7 @@
   <header class="row mb-2">
     <div class="col-6">
       <strong>
-        <a :href="'#' + string.id" class="string-anchor" title="Rekta ligilo al ĉi tiu ĉeno">#{{ string.name }}</a>
+        <a :href="'#' + string.id" class="string-anchor" :title="$t('translate.link')">#{{ string.name }}</a>
       </strong>
       –
       <language-change-dropdown :string="string"></language-change-dropdown>
@@ -14,32 +14,32 @@
     </div>
     <div class="col-6 text-right translation-state-bar">
       <template v-if="!stateLoading">
-        <button v-if="editMode" @click="deleteString(string.id)" class="btn btn-danger btn-sm">Forigi</button>
+        <button v-if="editMode" @click="deleteString(string.id)" class="btn btn-danger btn-sm">{{ $t('delete') }}</button>
         <template v-else>
           <a
             v-if="string.state === globals.TRANSLATION_STATE_TRANSLATED"
             href="#"
             @click.prevent="updateState(string.translated_text.id, globals.TRANSLATION_STATE_OUTDATED)"
-            >Marki kiel retradukendan</a
+            >{{ $t('translate.mark_outdated') }}</a
           >
           <a
             v-else-if="string.state === globals.TRANSLATION_STATE_OUTDATED"
             href="#"
             @click.prevent="updateState(string.translated_text.id, globals.TRANSLATION_STATE_TRANSLATED)"
-            >Marki kiel tradukitan</a
+            >{{ $t('translate.mark_translated') }}</a
           >
 
           <span
             v-if="string.state === globals.TRANSLATION_STATE_TRANSLATED"
             class="badge badge-success"
-            >Tradukita</span
+            >{{ $t('translate.translated') }}</span
           >
           <span
             v-else-if="string.state === globals.TRANSLATION_STATE_OUTDATED"
             class="badge badge-warning"
-            >Retradukenda</span
+            >{{ $t('translate.outdated') }}</span
           >
-          <span v-else class="badge badge-danger">Netradukita</span>
+          <span v-else class="badge badge-danger">{{ $t('translate.untranslated') }}</span>
         </template>
       </template>
       <loading-spinner v-else inline></loading-spinner>

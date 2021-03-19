@@ -2,7 +2,7 @@
   <div class="old-versions" :class="{ 'hide-deleted': !showDeleted }">
     <div class="text-center mt-3 mb-2">
       <button class="btn btn-secondary btn-sm" @click="toggleDeletedText">
-        {{ showDeleted ? "Kaŝi" : "Montri" }} forigitajn partojn de tekstoj
+        {{ showDeleted ? $t('history.hide_deleted') : $t('history.show_deleted') }}
       </button>
     </div>
     <div
@@ -13,7 +13,7 @@
       <template v-if="version.pluralized">
         <template v-for="(text, example) in version.comparison" :key="example">
           <div class="plural-number-explanation">
-            Se la nombro estas {{ example }}:
+            {{ $t('translate.number', {n: example}) }}
           </div>
           <div v-html="text"></div>
         </template>
@@ -26,7 +26,7 @@
       <hr class="my-2" />
 
       {{ version.create_date }}
-      {{ index === 0 ? "(nuna versio)" : "" }}
+      {{ index === 0 ? $t('history.current') : "" }}
       <template v-if="version.translated_by">
         –
         <a :href="version.translated_by.profile_url">{{

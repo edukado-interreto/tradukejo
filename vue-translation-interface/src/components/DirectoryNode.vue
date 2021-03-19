@@ -76,10 +76,15 @@ export default {
     },
     title() {
       if (this.hasChildren) {
-        return `Ĉenoj: ${this.node.strings.count} (${this.node.strings_in_children.count} en subdosierujoj), vortoj: ${this.node.strings.words} (${this.node.strings_in_children.words} en subdosierujoj)`;
+        return this.$t('navigation.count_children', {
+          strings: this.node.strings.count,
+          strings2: this.node.strings_in_children.count,
+          words: this.node.strings.words,
+          words2: this.node.strings_in_children.words
+        })
       }
       else {
-        return `Ĉenoj: ${this.node.strings.count}, vortoj: ${this.node.strings.words}`;
+        return this.$t('navigation.count', {strings: this.node.strings.count, words: this.node.strings.words})
       }
     }
   },

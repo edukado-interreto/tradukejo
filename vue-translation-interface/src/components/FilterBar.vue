@@ -33,8 +33,8 @@
 		</li>
 	</ul>
 	<form class="form-inline my-2 my-lg-0" @submit.prevent="search">
-		<input class="form-control mr-sm-2" type="search" placeholder="Serĉi…" aria-label="Serĉi" v-model="searchString">
-		<button class="btn btn-secondary" type="submit">Serĉi</button>
+		<input class="form-control mr-sm-2" type="search" :placeholder="$t('filters.search') + '…'" :aria-label="$t('filters.search')" v-model="searchString">
+		<button class="btn btn-secondary" type="submit">{{ $t('filters.search') }}</button>
   </form>
 </nav>
 </template>
@@ -45,15 +45,15 @@ export default {
 		return {
 			searchString: '',
 			stateFilters: {
-				[this.globals.STATE_FILTER_ALL]: 'Ĉiuj ĉenoj',
-				[this.globals.STATE_FILTER_UNTRANSLATED]: 'Nur netradukitaj',
-				[this.globals.STATE_FILTER_OUTDATED]: 'Nur retradukendaj',
-				[this.globals.STATE_FILTER_OUTDATED_UNTRANSLATED]: 'Netradukitaj kaj retradukendaj',
+				[this.globals.STATE_FILTER_ALL]: this.$t('filters.all'),
+				[this.globals.STATE_FILTER_UNTRANSLATED]: this.$t('filters.untranslated'),
+				[this.globals.STATE_FILTER_OUTDATED]: this.$t('filters.outdated'),
+				[this.globals.STATE_FILTER_OUTDATED_UNTRANSLATED]: this.$t('filters.untranslated_outdated'),
 			},
 			sortFilters: {
-				[this.globals.SORT_STRINGS_BY_NAME]: 'Ordigi laŭ nomo',
-				[this.globals.SORT_STRINGS_BY_OLDEST]: 'Ordigi laŭ plej malnovaj',
-				[this.globals.SORT_STRINGS_BY_NEWEST]: 'Ordigi laŭ plej novaj',
+				[this.globals.SORT_STRINGS_BY_NAME]: this.$t('filters.order_name'),
+				[this.globals.SORT_STRINGS_BY_OLDEST]: this.$t('filters.order_old'),
+				[this.globals.SORT_STRINGS_BY_NEWEST]: this.$t('filters.order_new'),
 			},
 		};
 	},

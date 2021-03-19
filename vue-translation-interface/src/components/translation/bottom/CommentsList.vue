@@ -1,6 +1,6 @@
 <template>
   <div class="comments">
-    <h5>Komentoj</h5>
+    <h5>{{ $t('comments.comments') }}</h5>
     <transition-group name="slide">
       <string-comment v-for="comment in comments" :key="comment.id" :comment="comment" :language="language" />
     </transition-group>
@@ -13,7 +13,7 @@
           required
           :lang="language.code"
           :dir="language.direction"
-          placeholder="Skribu vian komenton ĉi tie…"
+          :placeholder="$t('comments.write')"
           v-model.trim="enteredComment"
           :disabled="loading"
           ></textarea>
@@ -25,7 +25,7 @@
           :disabled="!canSubmit || loading"
           >
           <loading-spinner v-if="loading" inline white></loading-spinner>
-          <template v-else>Aldoni komenton</template>
+          <template v-else>{{ $t('comments.add') }}</template>
         </button>
       </div>
     </form>

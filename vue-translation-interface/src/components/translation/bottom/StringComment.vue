@@ -7,7 +7,7 @@
       class="btn btn-sm btn-danger float-right mb-1"
     >
       <loading-spinner v-if="beingDeleted" inline small white></loading-spinner>
-      <template v-else>Forigi</template>
+      <template v-else>{{ $t('delete') }}</template>
     </button>
     <blockquote :lang="language.code" :dir="language.direction">
       {{ comment.text }}
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     deleteThis() {
-      if (confirm('Ĉu vi vere volas forigi ĉi tiun komenton?')) {
+      if (confirm(this.$t('comments.delete_confirm'))) {
         this.beingDeleted = true;
         this.deleteComment(this.comment.id);
       }

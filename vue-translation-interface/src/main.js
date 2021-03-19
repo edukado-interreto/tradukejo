@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router.js';
 import store from './store/index.js';
+import i18n from './i18n.js';
 import mixins from './mixins.js';
 
 import LoadingSpinner from './components/ui/LoadingSpinner';
@@ -10,6 +11,7 @@ const app = createApp(App);
 
 app.use(router);
 app.use(store);
+app.use(i18n);
 app.mixin(mixins);
 
 app.config.globalProperties.availableLanguages = window.vueTranslationInterface.availableLanguages;

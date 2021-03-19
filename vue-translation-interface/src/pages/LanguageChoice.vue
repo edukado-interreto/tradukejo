@@ -1,5 +1,5 @@
 <template>
-  <h3>Elektu la lingvon, al kiu vi volas traduki</h3>
+  <h3>{{ $t('choose') }}</h3>
   <div v-if="availableLanguages.length > 0" class="row">
     <div
       class="col-6 col-sm-4 col-md-3 col-lx-2 py-2 vue-language-selector"

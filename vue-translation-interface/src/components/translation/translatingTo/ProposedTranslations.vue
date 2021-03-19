@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5>Proponitaj tradukoj</h5>
+    <h5>{{ $t('translate.suggestions') }}</h5>
     <ul>
       <li
         v-for="translation in translations"

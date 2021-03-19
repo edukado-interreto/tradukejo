@@ -2,9 +2,9 @@
   <ul v-if="Object.keys(directories).length > 0" class="subdirectory-list mb-4">
     <li class="row mb-1 font-weight-bold">
       <div class="col-6 col-lg-9"></div>
-      <div class="col text-center">Ĉenoj</div>
-      <div class="col text-center">Vortoj</div>
-      <div class="col text-center">Signoj</div>
+      <div class="col text-center">{{ $t('navigation.strings') }}</div>
+      <div class="col text-center">{{ $t('navigation.words') }}</div>
+      <div class="col text-center">{{ $t('navigation.characters') }}</div>
     </li>
     <li v-for="(dir, name) in directories" :key="name">
       <router-link :to="translateLink({ dir: queryStringDir ? queryStringDir + '/' + name : name })" class="row">
