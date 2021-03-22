@@ -45,6 +45,15 @@ main a {
     a {
         color: $title-dark-color;
     }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    #sitelogo {
+        height: 74px;
+        margin-right: 10px;
+    }
 }
 
 #page-footer {

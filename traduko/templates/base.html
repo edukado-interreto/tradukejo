@@ -16,6 +16,7 @@
 	{% for code, language in LANGUAGES %}
     <link rel="alternate" href="{% translate_abs_url code %}" hreflang="{{ code }}">
     {% endfor %}
+	<link rel="icon" type="image/png" href="{% static 'traduko/img/favicon.png' %}">
 </head>
 <body>
 	<header id="page-header">
@@ -29,7 +30,14 @@
 					<a href="{% url 'login' %}">{% translate 'structure#sign-in' %}</a> ⋅ <a href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
 				{% endif %}
 			</div>
-			<h1 class="mt-2 mb-3 col"><a href="{% url 'projects' %}">{% translate 'structure#website-name' %}</a></h1>
+			<h1 class="mt-2 mb-2 col">
+				<a href="{% url 'projects' %}">
+					<img src="{% static 'traduko/img/tradukejo.svg' %}" alt="" id="sitelogo">
+				</a>
+				<a href="{% url 'projects' %}">
+					{% translate 'structure#website-name' %}
+				</a>
+			</h1>
 		</div>
 	</header>
 	<main>
