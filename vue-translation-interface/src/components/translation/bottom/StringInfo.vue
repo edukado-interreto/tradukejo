@@ -47,6 +47,8 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
+import axios from 'axios';
+
 const StringHistory = defineAsyncComponent(() => import('./StringHistory'));
 const CommentsList = defineAsyncComponent(() => import('./CommentsList'));
 
@@ -102,7 +104,7 @@ export default {
     },
     async loadHistory() {
       this.historyLoading = true;
-      await this.postCsrf("/vue/get-history/", {
+      await axios.post("/vue/get-history/", {
         trstringtext_id: this.stringtext.id,
       }).then((response) => {
         this.history = response.data;
@@ -111,7 +113,7 @@ export default {
     },
     async loadComments() {
       this.commentsLoading = true;
-      await this.postCsrf("/vue/get-comments/", {
+      await axios.post("/vue/get-comments/", {
         trstringtext_id: this.stringtext.id,
       }).then((response) => {
         this.comments = response.data;
@@ -120,7 +122,7 @@ export default {
     },
     async saveComment(text) {
       this.commentBeingSaved = true;
-      await this.postCsrf("/vue/save-comment/", {
+      await axios.post("/vue/save-comment/", {
         trstringtext_id: this.stringtext.id,
         text: text,
       }).then((response) => {
@@ -133,7 +135,7 @@ export default {
       this.commentBeingSaved = false;
     },
     async deleteComment(id) {
-      await this.postCsrf("/vue/delete-comment/", {
+      await axios.post("/vue/delete-comment/", {
         comment_id: id,
       }).then(response => {
         if (response.data.ok) {

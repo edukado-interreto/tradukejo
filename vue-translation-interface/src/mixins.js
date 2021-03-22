@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const mixins = {
   computed: {
     currentLanguage() {
@@ -28,9 +26,6 @@ const mixins = {
     }
   },
   methods: {
-    async postCsrf(url, data) {
-      return await axios.post(this.URLprefix + url, data, {headers: {'X-CSRFToken': this.csrf}});
-    },
     translateLink(parameters) {
       const obj = {
         name: 'translateLanguage',

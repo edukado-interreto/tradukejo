@@ -2,17 +2,13 @@ import axios from "axios";
 
 const availableLanguages = window.vueTranslationInterface.availableLanguages;
 
-async function postCsrf(url, data) {
-  return await axios.post(window.vueTranslationInterface.URLprefix + url, data, { headers: { 'X-CSRFToken': window.vueTranslationInterface.csrf } });
-}
-
 const actions = {
   setLanguage(context, payload) {
     const language = availableLanguages.find(element => element.code === payload);
     context.commit('setLanguage', language);
   },
   async fetchStrings(context, payload) {
-    await postCsrf('/vue/get-strings/', {
+    await axios.post('/vue/get-strings/', {
       project_id: window.vueTranslationInterface.projectId,
       language: context.getters.currentLanguage.code,
       dir: payload.dir,
@@ -31,7 +27,7 @@ const actions = {
   },
   async updateStringState(context, payload) {
     const url = payload.translated ? '/vue/mark-translated/' : '/vue/mark-outdated/';
-    await postCsrf(url, {
+    await axios.post(url, {
       trstringtext_id: payload.id,
     })
       .then((response) => {
@@ -43,7 +39,7 @@ const actions = {
   },
   async fetchDirectoriesTree(context, payload) {
     context.commit('setDirectoriesTreeLoading', true);
-    await postCsrf('/vue/get-directories-tree/', {
+    await axios.post('/vue/get-directories-tree/', {
       project_id: window.vueTranslationInterface.projectId,
       language: context.getters.currentLanguage.code,
       q: payload.q,
@@ -59,7 +55,7 @@ const actions = {
   },
   async deleteString(context, payload) {
     context.commit('markDeleted', payload);
-    await postCsrf('/vue/delete-string/', {
+    await axios.post('/vue/delete-string/', {
       trstring_id: payload,
     })
       .catch(function (error) {
@@ -68,7 +64,7 @@ const actions = {
       });
   },
   async saveTranslation(context, payload) {
-    await postCsrf('/vue/save-translation/', {
+    await axios.post('/vue/save-translation/', {
       language: context.getters.currentLanguage.code,
       ...payload
     })
@@ -81,7 +77,7 @@ const actions = {
   },
   async addString(context, payload) {
     let data = null;
-    await postCsrf('/vue/add-string/', {
+    await axios.post('/vue/add-string/', {
       project_id: window.vueTranslationInterface.projectId,
       ...payload
     })
@@ -95,7 +91,7 @@ const actions = {
     return data;
   },
   async loadMore(context, payload) {
-    await postCsrf('/vue/get-strings/', {
+    await axios.post('/vue/get-strings/', {
       project_id: window.vueTranslationInterface.projectId,
       language: context.getters.currentLanguage.code,
       dir: payload.dir,

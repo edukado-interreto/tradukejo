@@ -17,6 +17,7 @@
 import TranslationRowHeader from "./TranslationRowHeader";
 import TextFrom from "./translatingFrom/TextFrom";
 import TextTo from "./translatingTo/TextTo";
+import axios from 'axios';
 
 export default {
   components: { TranslationRowHeader, TextFrom, TextTo },
@@ -67,7 +68,7 @@ export default {
         this.currentOriginalText = this.string.translated_text;
       } else {
         this.languageFromLoading = true;
-        await this.postCsrf("/vue/get-string-translation/", {
+        await axios.post("/vue/get-string-translation/", {
           trstring_id: this.string.id,
           language: code,
         })

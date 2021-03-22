@@ -135,6 +135,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 const ProposedTranslations = defineAsyncComponent(() => import('./ProposedTranslations'));
+import axios from 'axios';
 
 export default {
   components: { ProposedTranslations },
@@ -282,7 +283,7 @@ export default {
   },
   async created() {
     if (!this.newString && Object.keys(this.texts).length === 0) {
-      await this.postCsrf("/vue/get-translation-suggestions/", {
+      await axios.post("/vue/get-translation-suggestions/", {
         trstring_id: this.stringId,
         language: this.currentLanguage.code,
       }).then((response) => {
