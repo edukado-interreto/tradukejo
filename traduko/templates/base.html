@@ -22,13 +22,21 @@
 	<header id="page-header">
 		<div class="inner-container row no-gutters">
 			<div class="col-sm-6 col-lg-4 text-right order-sm-last">
-				{% if user.is_authenticated %}
+				<div>
+					{% if user.is_authenticated %}
 					<strong>{{ user.username }}</strong> ⋅
 					<a href="{% url 'user_settings' %}">{% translate 'structure#settings' %}</a> ⋅
 					<a href="{% url 'logout' %}">{% translate 'structure#sign-out' %}</a>
-				{% else %}
-					<a href="{% url 'login' %}">{% translate 'structure#sign-in' %}</a> ⋅ <a href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
-				{% endif %}
+					{% else %}
+						<a href="{% url 'login' %}">{% translate 'structure#sign-in' %}</a> ⋅ <a href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
+					{% endif %}
+				</div>
+				<div class="mt-2">
+					<a href="#" id="languageModalLabel" data-toggle="modal" data-target="#languageModal" class="dropdown-toggle">
+						<i class="fas fa-globe-africa"></i>
+						{{ LANGUAGE_CODE|get_language_name }}
+					</a>
+				</div>
 			</div>
 			<h1 class="mt-2 mb-2 col">
 				<a href="{% url 'projects' %}">
@@ -59,7 +67,7 @@
 		{% endblock %}
 	</main>
 	<footer id="page-footer">
-		<div class="inner-container row no-gutters">
+		<div class="inner-container row no-gutters d-flex align-items-center">
 			<div class="col-12 col-sm-6">
 				<ul>
 					<li><a href="{% url 'instructions' %}">{% translate 'structure#instructions' %}</a></li>
@@ -68,11 +76,8 @@
 				</ul>
 			</div>
 			<div class="col-12 col-sm-6">
-				<p><strong><a href="#" id="languageModalLabel" data-toggle="modal" data-target="#languageModal">{{ LANGUAGE_CODE|get_language_name }}</a></strong></p>
-				<p>
 				{% blocktranslate asvar project_by trimmed %}structure#project-by{% endblocktranslate %}
 				{% format_translation project_by "https://ikso.net" %}
-				</p>
 			</div>
 		</div>
 	</footer>
