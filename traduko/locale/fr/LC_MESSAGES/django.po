@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-23 12:36+0100\n"
-"PO-Revision-Date: 2021-03-23 12:36+0100\n"
+"POT-Creation-Date: 2021-03-23 17:10+0100\n"
+"PO-Revision-Date: 2021-03-23 17:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -124,6 +124,282 @@ msgstr ""
 msgid "pages/contact#contact2"
 msgstr ""
 "Si vous avez une question ou un commentaire, n’hésitez pas à écrire à {1}."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Exemples de commentaires."
+
+msgid "pages/instructions#comments-title"
+msgstr "Commentaires"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"Vous avez la possibilité de commenter les traductions (ou la version "
+"originale) des chaînes. Cela permet de demander des explications, de parler "
+"de meilleures manières de traduire avec un autre traducteur, etc. Vous "
+"pouvez choisir {1}dans vos options{/1} si vous voulez être informé⋅e par "
+"e-mail lorsque quelqu’un répond à votre commentaire."
+
+msgid "pages/instructions#interface-caption"
+msgstr "L’interface de traduction."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "L’interface détaillée pour traduire une chaîne."
+
+msgid "pages/instructions#interface-title"
+msgstr "Interface de traduction"
+
+msgid "pages/instructions#interface1"
+msgstr "L’interface de traduction ressemble à ceci :"
+
+msgid "pages/instructions#interface2"
+msgstr "On trouve cinq éléments, de haut en bas :"
+
+msgid "pages/instructions#interface2-1"
+msgstr "une barre avec divers filtres,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"une ligne qui montre vers quelle langue vous êtes en train de traduire et "
+"dans quel dossier vous vous trouvez,"
+
+msgid "pages/instructions#interface2-3"
+msgstr "à gauche : la liste de tous les dossiers dans le projet,"
+
+msgid "pages/instructions#interface2-4"
+msgstr ""
+"à droite : une liste détaillée des dossiers à l’intérieur du dossier "
+"courant,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "l’interface principale de traduction."
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"Les textes à traduire sont organisés en {1}chaînes{2} : des blocs de texte "
+"qui peuvent correspondre à tout un paragraphe, un élément de menu, un titre "
+"de section, etc. Chaque cadre de couleur est une chaîne qui peut être "
+"traduire indépendamment des autres."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"Les chaînes peuvent être organisées en dossiers, afin de regrouper les "
+"chaînes par thème pour plus de clarté."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"Si le dossier actuel contient beaucoup de chaînes (par exemple un dossier « "
+"pays » avec 200 noms de pays), elles ne seront pas toutes chargées d’un "
+"coup, mais il y aura un bouton « Charger plus » en bas de la page."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"La moitié de gauche correspond au texte dans la langue source, la moitié de "
+"droite à la traduction. Les éléments sont les suivants :"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Le nom de la chaîne. Il s’agit d’un identifiant unique surtout utile aux "
+"administrateurs du projet. Il ne doit pas être traduit."
+
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"La langue source. Cliquez dessus pour faire apparaître un menu permettant de"
+" voir les traductions en d’autres langues."
+
+msgid "pages/instructions#interface6-3"
+msgstr ""
+"Des liens pour voir la traduction donnée par des traducteurs automatiques "
+"(ce qui peut vous aider à traduire)."
+
+msgid "pages/instructions#interface6-4"
+msgstr "Le texte qu’il faut traduire."
+
+msgid "pages/instructions#interface6-5"
+msgstr ""
+"Des explications éventuelles sur la phrase, détaillant par exemple son "
+"contexte."
+
+msgid "pages/instructions#interface6-6"
+msgstr "L’état de la traduction."
+
+msgid "pages/instructions#interface6-7"
+msgstr "La traduction actuelle."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"La date et l’heure du texte ou de la traduction. Si le texte a été modifié "
+"plusieurs fois, vous pouvez voir l’historique des changements. Il est aussi "
+"possible d’écrire un commentaire."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Bienvenue dans le système de traduction d’{1}E@I{/1} ! Il s’agit d’un "
+"système qui permet de traduire facilement les contenus de sites multilingues"
+" (ou d’autres projets)."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"Le système de traduction est encore en cours de développement et "
+"d’amélioration, par conséquent son fonctionnement et son interface peuvent "
+"encore changer."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"Pour commencer à traduire, il vous faut {1}un compte{/1}. Si vous avez déjà "
+"utilisé l’ancien système de traduction (avant 2021), sachez que les anciens "
+"comptes ne fonctionnent pas avec le nouveau système."
+
+msgid "pages/instructions#plural-caption"
+msgstr "Une chaîne avec forme plurielle."
+
+msgid "pages/instructions#plural-title"
+msgstr "Chaînes avec pluriel"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Si un site comporte une phrase telle que « Nous avons X utilisateurs », cela"
+" peut poser un problème : s’il y a un seul utilisateur, le résultat affiché "
+"sera « Nous avons 1 utilisateurs », et dans une langue aux règles plus "
+"complexes, comme le russe, la phrase sera encore plus souvent "
+"grammaticalement incorrecte, selon le nombre d’utilisateurs."
+
+msgid "pages/instructions#plural2"
+msgstr ""
+"Il existe une solution : les chaînes dont le texte dépend d’un nombre."
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"Dans ce cas, traduisez chaque possibilité selon les nombres donnés en "
+"exemple. Dans l’exemple de l’image ci-dessus, un traducteur russe devra "
+"imaginer comment la phrase doit être si au lieu de {1} il y a 1, 2 ou 5."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"Il est normal que le nombre de traductions ne soit pas le même : dans "
+"beaucoup de langues, il faut deux formes différentes (singulier et pluriel),"
+" mais certaines (comme la plupart des langues slaves) nécessitent trois "
+"formes, la slovène quatre et certaines (comme l’irlandais ou l’arabe) encore"
+" plus."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Capture d’écran de la page d’un projet."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Page de projet"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"En haut, on trouve des informations générales sur le projet. Le cadre coloré"
+" contient des explications sur la manière dont les traductions sont utilisés"
+" : sur certains sites, elles sont visibles immédiatement, mais pour "
+"d’autres, le programmeur du site doit ajouter les traductions manuellement. "
+"Cela dépend du fonctionnement du site lui-même et pas du système de "
+"traduction."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"En bas, on trouve la liste des langues dans lesquels le projet est en cours "
+"de traduction, avec le pourcentage de textes traduits. Sur le côté, il y a "
+"la liste des derniers commentaires et des dernières activités."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Demande de permission pour traduire."
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Permissions de traduire"
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Pour pouvoir traduire vers une langue donnée, il faut recevoir la permission"
+" d’un administrateur du projet. Cliquez sur le bouton « Demander la "
+"permission » à côté du nom de la langue et écrivez une brève explication. "
+"Quand un administrateur aura approuvé votre demande, vous serez informé par "
+"e-mail et vous pourrez commencer à traduire."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Si la langue vers laquelle vous voulez traduire n’a pas encore été ajoutée "
+"au projet, vous trouverez un menu déroulant avec une liste de langues en "
+"dessous du titre « Traduire vers une autre langue ». Si la langue que vous "
+"voulez n’est pas dans cette liste, {1}contactez-nous{/1}."
+
+msgid "pages/instructions#projects1"
+msgstr ""
+"Un « projet » est un ensemble de textes à traduire qui concernent un seul "
+"site."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Recherche et tri"
+
+msgid "pages/instructions#search-sort1"
+msgstr "La barre d’en haut comporte plusieurs filtres :"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"le premier permet de filtrer par état (utile pour voir seulement les chaînes"
+" à traduire) ;"
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"le deuxième permet de trier les chaînes, par défaut selon le nom, mais on "
+"peut aussi les trier par plus récentes ou plus anciennes ;"
+
+msgid "pages/instructions#search-sort1-3"
+msgstr ""
+"l’outil de recherche recherche un texte dans les traductions et les textes "
+"dans la langue source."
+
+msgid "pages/instructions#state-title"
+msgstr "État des traductions"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Les traductions peuvent avoir trois états : non traduit (en rouge), à "
+"retraduire (en jaune) et traduit (en vert). « À retraduire » signifie que le"
+" texte dans la langue source a été modifier, ce qui peut nécessiter de "
+"changer la traduction. Si vous estimez que la traduction n’a pas besoin "
+"d’être modifiée, vous pouvez cliquer comme « Marquer comme traduit »."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Exemples de suggestions de traductions"
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Traductions suggérées"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Parfois, en traduisant une nouvelle chaîne, vous verrez des traductions "
+"suggérées. Ces suggestions viennent d’autres traductions du même texte qui "
+"sont déjà dans le système de traduction (dans le même projet ou un autre). "
+"Cliquez simplement sur la proposition qui vous plaît et elle sera insérée "
+"dans le champ."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Des chaînes avec des symboles bizarres."
+
+msgid "pages/instructions#symbols-title"
+msgstr "Symboles spéciaux"
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Certaines chaînes peuvent comporter des symboles bizarres. Il s’agit de "
+"symboles spéciaux que le site remplacera par quelque chose d’autre : un "
+"lien, un nom d’utilisateur, un nombre… Copiez-les sans les changer dans "
+"votre traduction (et s’ils contiennent des mots, ne les traduisez-pas) : si "
+"vous oubliez ou modifiez ces symboles, les textes ne seront pas affichés "
+"correctement dans le site."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Ces symboles spéciaux apparaissent en couleur dans l’interface de traduction"
+" et ils peuvent ressembler par exemple à ceci :"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Certains projets utilisent des apostrophes doubles ({1}) et triples ({2}) "
+"pour mettre un texte en italique ou en gras ; faites-y attention si c’est le"
+" cas. Ce n’est pas universel et ça dépend du site lui-même, pas du système "
+"de traduction."
 
 msgid "pages/projects#hidden"
 msgstr "Projet caché"

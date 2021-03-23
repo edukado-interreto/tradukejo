@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 12:24+0100\n"
-"PO-Revision-Date: 2021-03-23 12:26+0100\n"
+"POT-Creation-Date: 2021-03-23 16:34+0100\n"
+"PO-Revision-Date: 2021-03-23 17:00+0100\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -56,7 +56,7 @@ msgstr "La peto estis sendita."
 msgid "structure#welcome"
 msgstr "Bonvenon"
 
-#: templates/base.html:15 templates/base.html:46
+#: templates/base.html:15 templates/base.html:44
 msgid "structure#website-name"
 msgstr "Tradukejo de E@I"
 
@@ -76,33 +76,34 @@ msgstr "Ensaluti"
 msgid "structure#sign-up"
 msgstr "Krei konton"
 
-#: templates/base.html:73
+#: templates/base.html:71 templates/traduko/instructions.html:3
+#: templates/traduko/instructions.html:4 templates/traduko/instructions.html:10
 msgid "structure#instructions"
 msgstr "Instrukcioj"
 
-#: templates/base.html:74 templates/traduko/contact.html:3
+#: templates/base.html:72 templates/traduko/contact.html:3
 #: templates/traduko/contact.html:4 templates/traduko/contact.html:10
 msgid "structure#contact"
 msgstr "Kontakto"
 
-#: templates/base.html:75
+#: templates/base.html:73
 msgid "structure#privacy"
 msgstr "Privateco"
 
-#: templates/base.html:79
+#: templates/base.html:77
 msgid "structure#project-by"
 msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
 
-#: templates/base.html:88
+#: templates/base.html:86
 msgid "structure#choose-language"
 msgstr "Elektu vian lingvon"
 
-#: templates/base.html:103 templates/traduko/project.html:226
+#: templates/base.html:101 templates/traduko/project.html:226
 msgid "structure#close"
 msgstr "Fermi"
 
-#: templates/traduko/contact.html:9 templates/traduko/project.html:17
-#: templates/traduko/translate.html:45
+#: templates/traduko/contact.html:9 templates/traduko/instructions.html:9
+#: templates/traduko/project.html:17 templates/traduko/translate.html:47
 msgid "structure#home"
 msgstr "Ĉefpaĝo"
 
@@ -199,6 +200,340 @@ msgstr ""
 #: templates/traduko/email/translator-request-rejected.html:6
 msgid "emails#contact-us"
 msgstr "Se vi havas demandojn, ne hezitu kontakti nin."
+
+#: templates/traduko/instructions.html:14
+msgid "pages/instructions#intro1"
+msgstr ""
+"Bonvenon al la tradukejo de {1}E@I{/1}! Ĝi estas sistemo, kiu ebligas facile "
+"traduki la enhavon de multlingvaj retejoj (aŭ de aliaj projektoj)."
+
+#: templates/traduko/instructions.html:15
+msgid "pages/instructions#intro2"
+msgstr ""
+"La tradukejo estas nuntempe programata kaj plibonigata, do la funkciado kaj "
+"interfaco ankoraŭ povas ŝanĝiĝi."
+
+#: templates/traduko/instructions.html:17
+msgid "pages/instructions#intro3"
+msgstr ""
+"Por komenci traduki, vi bezonas {1}havi konton{/1}. Se vi iam uzis la "
+"malnovan tradukejon (antaŭ 2021), malnovaj kontoj ne funkcias kun ĉi tiu "
+"tradukejo."
+
+#: templates/traduko/instructions.html:19 templates/traduko/projects.html:17
+msgid "pages/projects#projects"
+msgstr "Projektoj"
+
+#: templates/traduko/instructions.html:20
+msgid "pages/instructions#projects1"
+msgstr ""
+"“Projektoj” estas apartaj aroj de tradukoj, kiuj koncernas unu retejon."
+
+#: templates/traduko/instructions.html:22
+msgid "pages/instructions#projects-page-title"
+msgstr "Paĝo de projekto"
+
+#: templates/traduko/instructions.html:25
+#: templates/traduko/instructions.html:26
+msgid "pages/instructions#projects-page-caption"
+msgstr "Ekranbildo de paĝo de projekto."
+
+#: templates/traduko/instructions.html:30
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"Supre troviĝas ĝeneralaj informoj pri la projekto. En la kolora kadro estas "
+"klarigoj pri tio, kiel la tradukoj estas uzataj: ĉe kelkaj retejoj ili estas "
+"tuj videblaj, ĉe aliaj la retejestro devas permane aldoni la tradukojn – tio "
+"dependas de la konkreta retejo, ne de la tradukejo."
+
+#: templates/traduko/instructions.html:31
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"Sube troviĝas la listo de lingvoj, en kiuj la projekto estas tradukata, kun "
+"la elcentaĵo de tradukitaj tekstoj. Apude estas listo de lastaj komentoj kaj "
+"de lastaj agadoj."
+
+#: templates/traduko/instructions.html:33
+msgid "pages/instructions#projects-rights-title"
+msgstr "Tradukpermesoj"
+
+#: templates/traduko/instructions.html:34
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Por traduki al konkreta lingvo, vi bezonas ricevi permeson de administranto "
+"de la projekto. Klaku sur la butonon “Peti permeson” apud la nomo de lingvo, "
+"kaj skribu mallongan klarigon. Kiam administranto aprobos vian peton, vi "
+"estos informita retpoŝte kaj vi povos komenci traduki."
+
+#: templates/traduko/instructions.html:37
+#: templates/traduko/instructions.html:38
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Peto de tradukpermeso."
+
+#: templates/traduko/instructions.html:42
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Se la lingvo, al kiu vi volas traduki, ankoraŭ ne estas aldonita al la "
+"projekto, vi trovos menuon kun listo de lingvoj sube, sub la titolo “Traduki "
+"al alia lingvo”. Se la lingvo, kiun vi volas, ne estas en tiu listo, tiam {1}"
+"kontaktu nin{/1}."
+
+#: templates/traduko/instructions.html:44
+msgid "pages/instructions#interface-title"
+msgstr "Traduka interfaco"
+
+#: templates/traduko/instructions.html:45
+msgid "pages/instructions#interface1"
+msgstr "La tradukinterfaco aspektas tiel:"
+
+#: templates/traduko/instructions.html:49
+#: templates/traduko/instructions.html:50
+msgid "pages/instructions#interface-caption"
+msgstr "La tradukinterfaco."
+
+#: templates/traduko/instructions.html:54
+msgid "pages/instructions#interface2"
+msgstr "Troviĝas kvin elementoj, de supro ĝis subo:"
+
+#: templates/traduko/instructions.html:56
+msgid "pages/instructions#interface2-1"
+msgstr "breto kun diversaj filtriloj,"
+
+#: templates/traduko/instructions.html:57
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"linio, kiu montras, al kiu lingvo vi tradukas, kaj en kiu dosiero vi "
+"troviĝas,"
+
+#: templates/traduko/instructions.html:58
+msgid "pages/instructions#interface2-3"
+msgstr "maldekstre: listo de ĉiuj dosierujoj en la projekto,"
+
+#: templates/traduko/instructions.html:59
+msgid "pages/instructions#interface2-4"
+msgstr "dekstre: detala listo de dosierujoj en la nuna dosierujo,"
+
+#: templates/traduko/instructions.html:60
+msgid "pages/instructions#interface2-5"
+msgstr "la ĉefa traduka interfaco."
+
+#: templates/traduko/instructions.html:63
+msgid "pages/instructions#interface3"
+msgstr ""
+"La tradukendaj tekstoj estas organizataj en {1}ĉenoj{2}: eroj de tekstoj, "
+"kiuj povas esti tuta alineo, elemento de menuo, titolo de sekcio, ktp. Ĉiu "
+"kolora kadro estas unu ĉeno, kiun oni povas traduki sendepende de aliaj."
+
+#: templates/traduko/instructions.html:64
+msgid "pages/instructions#interface4"
+msgstr ""
+"La ĉenoj povas esti organizataj en dosierujoj, por grupigi ĉenojn laŭ temo "
+"por pli da klareco."
+
+#: templates/traduko/instructions.html:65
+msgid "pages/instructions#interface5"
+msgstr ""
+"Se la nuna dosierujo enhavas multajn ĉenojn (ekzemple dosierujo “landoj” kun "
+"200 nomoj de landoj), ne ĉiuj estos ŝargitaj, sed tute sube estos granda "
+"butono “Ŝargi pli”."
+
+#: templates/traduko/instructions.html:69
+#: templates/traduko/instructions.html:70
+msgid "pages/instructions#interface-caption2"
+msgstr "Detala interfaco por traduki ĉenon."
+
+#: templates/traduko/instructions.html:74
+msgid "pages/instructions#interface6"
+msgstr ""
+"La maldekstra duono estas la teksto en la fontolingvo, la dekstra duono "
+"estas la traduko. La elementoj estas la jenaj:"
+
+#: templates/traduko/instructions.html:76
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Nomo de la ĉeno. Ĝi estas unika identigilo ĉefe utila por la administrantoj "
+"de la projekto. Vi ne devas traduki ĝin."
+
+#: templates/traduko/instructions.html:77
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"La fontolingvo. Se vi alklakos ĝin aperos menuo, per kiu vi povas vidi "
+"tradukojn en aliaj lingvoj."
+
+#: templates/traduko/instructions.html:78
+msgid "pages/instructions#interface6-3"
+msgstr ""
+"Ligiloj por vidi tradukon en aŭtomata tradukilo (tio povas helpi vin "
+"traduki)."
+
+#: templates/traduko/instructions.html:79
+msgid "pages/instructions#interface6-4"
+msgstr "La teksto, kiun vi devas traduki."
+
+#: templates/traduko/instructions.html:80
+msgid "pages/instructions#interface6-5"
+msgstr ""
+"Eventuala helpa teksto, ĝi povas esti ekzemple klarigo pri la kunteksto."
+
+#: templates/traduko/instructions.html:81
+msgid "pages/instructions#interface6-6"
+msgstr "Stato de la traduko."
+
+#: templates/traduko/instructions.html:82
+msgid "pages/instructions#interface6-7"
+msgstr "La nuna traduko."
+
+#: templates/traduko/instructions.html:83
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Dato kaj aŭtoro de la teksto aŭ de la traduko. Se la teksto estis redaktita "
+"plurfoje, vi povas vidi la historion de ŝanĝoj. Tie troviĝas ankaŭ eblo "
+"komenti."
+
+#: templates/traduko/instructions.html:86
+msgid "pages/instructions#state-title"
+msgstr "Stato de tradukoj"
+
+#: templates/traduko/instructions.html:87
+msgid "pages/instructions#state1"
+msgstr ""
+"Tradukoj povas havi tri statojn: netradukitan (aperas ruĝe), retradukendan "
+"(aperas flave) kaj tradukitan (aperas verde). “Retradukenda” signifas, ke la "
+"teksto en la fontolingvo estis ŝanĝita, kio povas postuli ŝanĝon en la "
+"traduko. Se vi taksas, ke ne necesas ŝanĝi la tradukon, vi povas klaki sur "
+"“Marki kiel tradukendan”."
+
+#: templates/traduko/instructions.html:89
+msgid "pages/instructions#comments-title"
+msgstr "Komentoj"
+
+#: templates/traduko/instructions.html:91
+msgid "pages/instructions#comments1"
+msgstr ""
+"Vi havas la eblon komenti ĉiun lingvan version de ĉiu ĉeno. Tio donas al vi "
+"eblon peti klarigojn pri la tradukenda teksto, priparoli pli bonajn "
+"tradukojn kun alia tradukanto, ktp. Vi povas elekti {1}en viaj agordoj{/1}, "
+"ĉu vi volas esti informata retpoŝte, kiam iu respondas vian komenton."
+
+#: templates/traduko/instructions.html:94
+#: templates/traduko/instructions.html:95
+msgid "pages/instructions#comments-caption"
+msgstr "Ekzemploj de komentoj."
+
+#: templates/traduko/instructions.html:99
+msgid "pages/instructions#suggestions-title"
+msgstr "Proponitaj tradukoj"
+
+#: templates/traduko/instructions.html:100
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Kelkfoje, kiam vi tradukas novan ĉenon, povas aperi proponitaj tradukoj. "
+"Tiuj proponoj venas de aliaj tradukoj de la sama teksto, kiuj jam estas en "
+"la tradukejo (povas esti en la sama projekto aŭ en alia). Simple alklaku la "
+"proponon, kiun vi ŝatas, kaj ĝi estos enmetita en la tradukan kampon."
+
+#: templates/traduko/instructions.html:103
+#: templates/traduko/instructions.html:104
+msgid "pages/instructions#suggestions-caption"
+msgstr "Ekzemploj de proponitaj tradukoj."
+
+#: templates/traduko/instructions.html:108
+msgid "pages/instructions#search-sort-title"
+msgstr "Serĉado kaj ordigo"
+
+#: templates/traduko/instructions.html:109
+msgid "pages/instructions#search-sort1"
+msgstr "La plej supra breto havas diversajn filtrilojn:"
+
+#: templates/traduko/instructions.html:111
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"la unua ebligas filtri laŭ stato (utile por vidi nur la ĉenojn, kiujn "
+"necesas traduki),"
+
+#: templates/traduko/instructions.html:112
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"la dua ebligas ordigi la ĉenojn: defaŭlte laŭ nomo, sed vi povas ordigi laŭ "
+"plej nove aŭ plej malnove aldonitaj tekstoj,"
+
+#: templates/traduko/instructions.html:113
+msgid "pages/instructions#search-sort1-3"
+msgstr "la serĉilo serĉas tekston en tradukoj kaj tekstoj en la fontolingvo."
+
+#: templates/traduko/instructions.html:116
+msgid "pages/instructions#symbols-title"
+msgstr "Specialaj simboloj"
+
+#: templates/traduko/instructions.html:119
+#: templates/traduko/instructions.html:120
+msgid "pages/instructions#symbols-caption"
+msgstr "Ĉeno kun strangaj simboloj."
+
+#: templates/traduko/instructions.html:123
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Kelkaj ĉenoj povas enhavi strangajn simbolojn. Tio estas specialaj signoj, "
+"kiujn la retejo anstataŭigos per io alia: ligilo, nomo de uzanto, nombro… "
+"Bonvolu kopii ilin senŝanĝe en vian tradukon (kaj se ili enhavas vortojn, ne "
+"traduku ilin): se vi forgesas aŭ ŝanĝas ilin, la tekstoj ne aperos ĝuste en "
+"la retejo."
+
+#: templates/traduko/instructions.html:124
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Tiuj specialaj simboloj aperas kolore en la tradukejo, kaj ili povas aspekti "
+"ekzemple ĉi tiel:"
+
+#: templates/traduko/instructions.html:133
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Kelkaj projektoj uzas duoblajn ({1}) kaj trioblajn apostrofojn ({2}) por "
+"kursivan aŭ grasan tekston, tiam atentu pri tio. Tio ne estas universala kaj "
+"dependas de la retejo mem, ne de la tradukejo."
+
+#: templates/traduko/instructions.html:135
+msgid "pages/instructions#plural-title"
+msgstr "Pluralaj ĉenoj"
+
+#: templates/traduko/instructions.html:136
+msgid "pages/instructions#plural1"
+msgstr ""
+"Se en retejo estas frazo kiel “Ni havas X uzantojn”, povas aperi problemo: "
+"se estas nur unu uzanto, aperos “Ni havas 1 uzantojn”, kaj en lingvoj kun "
+"kompleksaj reguloj kiel la rusa, la frazo estos ofte gramatike malĝusta, "
+"depende de la nombro da uzantoj."
+
+#: templates/traduko/instructions.html:137
+msgid "pages/instructions#plural2"
+msgstr "La solvo estas ĉenoj kun malsama teksto depende de nombro:"
+
+#: templates/traduko/instructions.html:141
+#: templates/traduko/instructions.html:142
+msgid "pages/instructions#plural-caption"
+msgstr "Ĉeno kun pluralaj formo."
+
+#: templates/traduko/instructions.html:146
+msgid "pages/instructions#plural3"
+msgstr ""
+"Tiam por ĉiu eblo traduku laŭ la ekzemplaj nombroj. En la ekzemplo de la ĉi-"
+"supra bildo, rusa tradukanto imagu, kia devas esti tiu frazo se anstataŭ {1} "
+"estas 1, 2 aŭ 5."
+
+#: templates/traduko/instructions.html:147
+msgid "pages/instructions#plural4"
+msgstr ""
+"Estas normale, se estas malsama kvanto da tradukoj: multaj lingvoj bezonas "
+"nur du formojn (ununombran kaj multenombran), sed kelkaj (plej multaj slavaj "
+"lingvoj) bezonas tri, la slovena kvar kaj kelkaj (irlanda, araba) eĉ pli."
+
+#: templates/traduko/project.html:5 templates/traduko/projects.html:30
+msgid "pages/projects#hidden"
+msgstr "Kaŝita projekto"
+
+#: templates/traduko/project.html:6 templates/traduko/projects.html:31
+msgid "pages/projects#locked"
+msgstr "Ŝlosita projekto"
 
 #: templates/traduko/project.html:42
 msgid "project#url"
@@ -321,7 +656,7 @@ msgid "project#outdated-words"
 msgstr "Retradukendaj vortoj:"
 
 #: templates/traduko/project/language-version-list.html:17
-#: templates/traduko/translate.html:47
+#: templates/traduko/translate.html:49
 msgctxt "Butono por komenci traduki en la elektita lingvo"
 msgid "project#translate"
 msgstr "Traduki"
@@ -359,24 +694,12 @@ msgstr ""
 msgid "pages/projects#read-instructions"
 msgstr "Legi la instrukciojn"
 
-#: templates/traduko/projects.html:17
-msgid "pages/projects#projects"
-msgstr "Projektoj"
-
-#: templates/traduko/projects.html:30
-msgid "pages/projects#hidden"
-msgstr "Kaŝita projekto"
-
-#: templates/traduko/projects.html:31
-msgid "pages/projects#locked"
-msgstr "Ŝlosita projekto"
-
-#: templates/traduko/translate.html:6 templates/traduko/translate.html:10
+#: templates/traduko/translate.html:6 templates/traduko/translate.html:12
 msgctxt "Temas pri nomo de projekto"
 msgid "translate#title"
 msgstr "Traduko de {1}"
 
-#: templates/traduko/translate.html:52
+#: templates/traduko/translate.html:54
 msgid "translate#javascript"
 msgstr "JavaScript devas esti ŝaltita por funkciigi la tradukinterfacon."
 

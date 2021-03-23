@@ -1,124 +1,127 @@
 {% extends 'normal-page.html' %}
-{% load static %}
-{% block title %}Instrukcioj{% endblock %}
-{% block pagetitle %}Instrukcioj{% endblock %}
+{% load static i18n traduko_tags %}
+{% block title %}{% translate 'structure#instructions' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#instructions' %}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Instrukcioj</li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#instructions' %}</li>
 	</ol>
 </nav>
 
-<p>Bonvenon al la tradukejo de <a href="https://ikso.net/" target="_blank">E@I</a>! Ĝi estas sistemo, kiu ebligas facile traduki la enhavon de multlingvaj retejoj (aŭ de aliaj projektoj).</p>
-<p>La tradukejo estas nuntempe programata kaj plibonigata, do la funkciado kaj interfaco ankoraŭ povas ŝanĝiĝi.</p>
-<p>Por komenci traduki, vi bezonas <a href="{% url 'register' %}">havi konton</a>. Se vi iam uzis la malnovan tradukejon (antaŭ 2021), malnovaj kontoj ne funkcias kun ĉi tiu tradukejo.</p>
+<p>{% blocktranslate asvar intro1 trimmed %}pages/instructions#intro1{% endblocktranslate %}{% format_translation intro1 'https://ikso.net/' %}</p>
+<p>{% translate 'pages/instructions#intro2' %}</p>
+{% url 'register' as register_url %}
+<p>{% blocktranslate asvar intro3 trimmed %}pages/instructions#intro3{% endblocktranslate %}{% format_translation intro3 register_url %}</p>
 
-<h2>Projektoj</h2>
-<p>“Projektoj” estas apartaj aroj de tradukoj, kiuj koncernas unu retejon.</p>
+<h2>{% translate 'pages/projects#projects' %}</h2>
+<p>{% translate 'pages/instructions#projects1' %}</p>
 
-<h3>Paĝo de projekto</h3>
+<h3>{% translate 'pages/instructions#projects-page-title' %}</h3>
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/project.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekranbildo de paĝo de projekto.">
-		<figcaption class="figure-caption">Ekranbildo de paĝo de projekto.</figcaption>
+		<img src="{% static 'traduko/img/instructions/project.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#projects-page-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#projects-page-caption' %}</figcaption>
 	</figure>
 </div>
 
-<p>Supre troviĝas ĝeneralaj informoj pri la projekto. En la kolora kadro estas klarigoj pri tio, kiel la tradukoj estas uzataj: ĉe kelkaj retejoj ili estas tuj videblaj, ĉe aliaj la retejestro devas permane aldoni la tradukojn – tio dependas de la konkreta retejo, ne de la tradukejo.</p>
-<p>Sube troviĝas la listo de lingvoj, en kiuj la projekto estas tradukata, kun la elcentaĵo de tradukitaj tekstoj. Apude estas listo de lastaj komentoj kaj de lastaj agadoj.</p>
+<p>{% translate 'pages/instructions#projects-page1' %}</p>
+<p>{% translate 'pages/instructions#projects-page2' %}</p>
 
-<h3>Tradukpermesoj</h3>
-<p>Por traduki al konkreta lingvo, vi bezonas ricevi permeson de administranto de la projekto. Klaku sur la butonon “Peti permeson” apud la nomo de lingvo, kaj skribu mallongan klarigon. Kiam administranto aprobos vian peton, vi estos informita retpoŝte kaj vi povos komenci traduki.</p>
+<h3>{% translate 'pages/instructions#projects-rights-title' %}</h3>
+<p>{% translate 'pages/instructions#projects-rights1' %}</p>
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/ask_permission.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Peto de tradukpermeso.">
-		<figcaption class="figure-caption">Peto de tradukpermeso.</figcaption>
+		<img src="{% static 'traduko/img/instructions/ask_permission.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#projects-rights-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#projects-rights-caption' %}</figcaption>
 	</figure>
 </div>
-<p>Se la lingvo, al kiu vi volas traduki, ankoraŭ ne estas aldonita al la projekto, vi trovos menuon kun listo de lingvoj sube, sub la titolo “Traduki al alia lingvo”. Se la lingvo, kiun vi volas, ne estas en tiu listo, tiam <a href="{% url 'contact' %}">kontaktu nin</a>.</p>
+{% url 'contact' as contact_url %}
+<p>{% blocktranslate asvar rights2 trimmed %}pages/instructions#projects-rights2{% endblocktranslate %}{% format_translation rights2 contact_url %}</p>
 
-<h2>Traduka interfaco</h2>
-<p>La tradukinterfaco aspektas tiel:</p>
+<h2>{% translate 'pages/instructions#interface-title' %}</h2>
+<p>{% translate 'pages/instructions#interface1' %}</p>
 
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/translation_interface.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="La tradukinterfaco.">
-		<figcaption class="figure-caption">La tradukinterfaco.</figcaption>
+		<img src="{% static 'traduko/img/instructions/translation_interface.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#interface-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#interface-caption' %}</figcaption>
 	</figure>
 </div>
 
-<p>Troviĝas kvin elementoj, de supro ĝis subo:</p>
+<p>{% translate 'pages/instructions#interface2' %}</p>
 <ul>
-	<li>breto kun diversaj filtriloj,</li>
-	<li>linio, kiu montras, al kiu lingvo vi tradukas, kaj en kiu dosiero vi troviĝas,</li>
-	<li>maldekstre: listo de ĉiuj dosierujoj en la projekto,</li>
-	<li>dekstre: detala listo de dosierujoj en la nuna dosierujo,</li>
-	<li>la ĉefa traduka interfaco.</li>
+	<li>{% translate 'pages/instructions#interface2-1' %}</li>
+	<li>{% translate 'pages/instructions#interface2-2' %}</li>
+	<li>{% translate 'pages/instructions#interface2-3' %}</li>
+	<li>{% translate 'pages/instructions#interface2-4' %}</li>
+	<li>{% translate 'pages/instructions#interface2-5' %}</li>
 </ul>
 
-<p>La tradukendaj tekstoj estas organizataj en <strong>ĉenoj</strong>: eroj de tekstoj, kiuj povas esti tuta alineo, elemento de menuo, titolo de sekcio, ktp. Ĉiu kolora kadro estas unu ĉeno, kiun oni povas traduki sendepende de aliaj.</p>
-<p>La ĉenoj povas esti organizataj en dosierujoj, por grupigi ĉenojn laŭ temo por pli da klareco.</p>
-<p>Se la nuna dosierujo enhavas multajn ĉenojn (ekzemple dosierujo “landoj” kun 200 nomoj de landoj), ne ĉiuj estos ŝargitaj, sed tute sube estos granda butono “Ŝargi pli”.</p>
+<p>{% blocktranslate asvar interface3 trimmed %}pages/instructions#interface3{% endblocktranslate %}{% format_translation interface3 '<strong>' '</strong>' %}</p>
+<p>{% translate 'pages/instructions#interface4' %}</p>
+<p>{% translate 'pages/instructions#interface5' %}</p>
 
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/string_translation.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Traduko de ĉeno.">
-		<figcaption class="figure-caption">Traduko de ĉeno.</figcaption>
+		<img src="{% static 'traduko/img/instructions/string_translation.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#interface-caption2' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#interface-caption2' %}</figcaption>
 	</figure>
 </div>
 
-<p>La maldekstra duono estas la teksto en la fontolingvo, la dekstra duono estas la traduko. La elementoj estas la jenaj:</p>
+<p>{% translate 'pages/instructions#interface6' %}</p>
 <ol>
-	<li>Nomo de la ĉeno. Ĝi estas unika identigilo ĉefe utila por administrantion de la projekto, vi ne devas traduki ĝin.</li>
-	<li>La fontolingvo. Per la menuo vi povas ŝanĝi por vidi tradukon en alia lingvo.</li>
-	<li>Ligiloj por vidi tradukon en aŭtomata tradukilo (tio povas helpi vin traduki).</li>
-	<li>La teksto, kiun vi devas traduki.</li>
-	<li>Eventuala helpa teksto, ĝi povas esti ekzemple klarigo pri la kunteksto.</li>
-	<li>Stato de la traduko.</li>
-	<li>La nuna traduko.</li>
-	<li>Dato kaj aŭtoro de la teksto aŭ de la traduko. Se la teksto estis redaktita plurfoje, vi povas vidi la historion de ŝanĝoj. Tie troviĝas ankaŭ eblo komenti.</li>
+	<li>{% translate 'pages/instructions#interface6-1' %}</li>
+	<li>{% translate 'pages/instructions#interface6-2' %}</li>
+	<li>{% translate 'pages/instructions#interface6-3' %}</li>
+	<li>{% translate 'pages/instructions#interface6-4' %}</li>
+	<li>{% translate 'pages/instructions#interface6-5' %}</li>
+	<li>{% translate 'pages/instructions#interface6-6' %}</li>
+	<li>{% translate 'pages/instructions#interface6-7' %}</li>
+	<li>{% translate 'pages/instructions#interface6-8' %}</li>
 </ol>
 
-<h3>Stato de tradukoj</h3>
-<p>Tradukoj povas havi tri statojn: netradukitan (aperas ruĝe), retradukendan (aperas flave) kaj tradukitan (aperas verde). “Retradukenda” necesas, ke la teksto en la fontolingvo estis ŝanĝita, kio povas postuli ŝanĝon en la traduko. Se vi pensas, ke ne necesas ŝanĝi la tradukon, vi povas klaki sur “Marki kiel tradukendan”.</p>
+<h3>{% translate 'pages/instructions#state-title' %}</h3>
+<p>{% translate 'pages/instructions#state1' %}</p>
 
-<h3>Komentoj</h3>
-<p>Vi havas la eblon komenti ĉiun lingvan version de ĉiu ĉeno. Tio donas al vi eblon peti klarigojn pri la tradukenda teksto, priparoli pli bonajn tradukojn kun alia tradukanto, ktp. Vi povas elekti <a href="{% url 'user_settings' %}">en viaj agordoj</a>, ĉu vi volas esti informata retpoŝte, kiam iu respondas vian komenton.</p>
+<h3>{% translate 'pages/instructions#comments-title' %}</h3>
+{% url 'user_settings' as settings_url %}
+<p>{% blocktranslate asvar comments1 trimmed %}pages/instructions#comments1{% endblocktranslate %}{% format_translation comments1 settings_url %}</p>
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/comments.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekzemploj de komentoj.">
-		<figcaption class="figure-caption">Ekzemploj de komentoj.</figcaption>
+		<img src="{% static 'traduko/img/instructions/comments.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#comments-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#comments-caption' %}</figcaption>
 	</figure>
 </div>
 
-<h3>Proponitaj tradukoj</h3>
-<p>Kelkfoje, kiam vi tradukas novan ĉenon, povas aperi proponitaj tradukoj. Tiuj proponoj venas de aliaj tradukoj de la sama teksto, kiuj jam estas en la tradukejo (povas esti en la sama projekto aŭ en alia). Simple alklaku la proponon, kiun vi ŝatas, kaj ĝi estos enmetita en la tradukan kampon.</p>
+<h3>{% translate 'pages/instructions#suggestions-title' %}</h3>
+<p>{% translate 'pages/instructions#suggestions1' %}</p>
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/suggested_translations.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ekzemploj de proponitaj tradukoj.">
-		<figcaption class="figure-caption">Ekzemploj de proponitaj tradukoj.</figcaption>
+		<img src="{% static 'traduko/img/instructions/suggested_translations.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#suggestions-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#suggestions-caption' %}</figcaption>
 	</figure>
 </div>
 
-<h3>Serĉado kaj ordigo</h3>
-<p>La plej supra breto havas diversajn filtrilojn:</p>
+<h3>{% translate 'pages/instructions#search-sort-title' %}</h3>
+<p>{% translate 'pages/instructions#search-sort1' %}</p>
 <ul>
-	<li>la unua ebligas filtri laŭ stato (utile por vidi nur la ĉenojn, kiujn necesas traduki),</li>
-	<li>la dua ebligas ordigi: defaŭlte laŭ nomo, sed vi povas ordigi laŭ plej nove aŭ plej malnove aldonitaj tekstoj,</li>
-	<li>la serĉilo serĉas tekston en tradukoj kaj tekstoj en la fontolingvo.</li>
+	<li>{% translate 'pages/instructions#search-sort1-1' %}</li>
+	<li>{% translate 'pages/instructions#search-sort1-2' %}</li>
+	<li>{% translate 'pages/instructions#search-sort1-3' %}</li>
 </ul>
 
-<h3>Specialaj simboloj</h3>
+<h3>{% translate 'pages/instructions#symbols-title' %}</h3>
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/special_symbols.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ĉeno kun strangaj simboloj.">
-		<figcaption class="figure-caption">Ĉeno kun strangaj simboloj.</figcaption>
+		<img src="{% static 'traduko/img/instructions/special_symbols.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#symbols-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#symbols-caption' %}</figcaption>
 	</figure>
 </div>
-<p>Kelkaj ĉenoj povas enhavi strangajn simbolojn. Tio estas specialaj signoj, kiujn la retejo anstataŭigos per io alia: ligilo, nomo de uzanto, nombro… Bonvolu kopii ilin senŝanĝe en vian tradukon (kaj se ili enhavas vortojn, ne traduku ilin): se vi forgesas aŭ ŝanĝas ilin, la tekstoj ne aperos ĝuste en la retejo.</p>
-<p>Tiuj specialaj simboloj aperas kolore en la tradukejo, kaj ili povas aspekti ekzemple ĉi tiel:</p>
+<p>{% translate 'pages/instructions#symbols1' %}</p>
+<p>{% translate 'pages/instructions#symbols2' %}</p>
 <ul>
 	<li><code>{1}</code>…<code>{/1}</code>,</li>
 	<li><code>{0}</code>,</li>
@@ -127,20 +130,20 @@
 	<li><code>%(username)s</code>…</li>
 </ul>
 
-<p>Kelkaj projektoj uzas duoblajn (<code>''</code>) kaj trioblajn apostrofojn (<code>'''</code>) por kursivan aŭ grasan tekston, tiam atentu pri tio.</p>
+<p>{% blocktranslate asvar symbols3 trimmed %}pages/instructions#symbols3{% endblocktranslate %}{% format_translation symbols3 "<code>''</code>" "<code>'''</code>" %}</p>
 
-<h3>Pluralaj ĉenoj</h3>
-<p>Se en retejo estas frazo kiel “Ni havas <i>x</i> uzantojn”, povas aperi problemo: se estas nur unu uzanto, aperos “Ni havas 1 uzantojn”, kaj en lingvoj kun kompleksaj reguloj kiel la rusa, la frazo estos gramatike malĝusta en multaj kazoj, depende de la nombro de uzantoj.</p>
-<p>La solvo estas ĉenoj kun malsama teksto depende de nombro:</p>
+<h3>{% translate 'pages/instructions#plural-title' %}</h3>
+<p>{% translate 'pages/instructions#plural1' %}</p>
+<p>{% translate 'pages/instructions#plural2' %}</p>
 
 <div class="text-center">
 	<figure class="figure">
-		<img src="{% static 'traduko/img/instructions/plural_string.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="Ĉeno kun pluralaj formoj.">
-		<figcaption class="figure-caption">Ĉeno kun pluralaj formoj.</figcaption>
+		<img src="{% static 'traduko/img/instructions/plural_string.png' %}" class="figure-img img-fluid rounded img-thumbnail" alt="{% translate 'pages/instructions#plural-caption' %}">
+		<figcaption class="figure-caption">{% translate 'pages/instructions#plural-caption' %}</figcaption>
 	</figure>
 </div>
 
-<p>Tiam por ĉiu eblo traduku laŭ la ekzemplaj nombroj. En ĉi tiu konkreta ekzemplo, rusa tradukanto imagu, kia devas esti tiu frazo se anstataŭ <code>{n}</code> estas 1, 2 aŭ 5.</p>
-<p>Estas normale, se estas malsama kvanto da tradukoj: multaj lingvoj bezonas nur du formojn, sed kelkaj (plej multaj slavaj lingvoj) bezonas tri, la slovena kvar kaj kelkaj (irlanda, araba) eĉ pli.</p>
+<p>{% blocktranslate asvar plural3 trimmed %}pages/instructions#plural3{% endblocktranslate %}{% format_translation plural3 "<code>{n}</code>" %}</p>
+<p>{% translate 'pages/instructions#plural4' %}</p>
 
 {% endblock %}

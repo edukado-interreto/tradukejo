@@ -2,8 +2,8 @@
 {% load static i18n traduko_tags %}
 {% block title %}{{ project.name }}{% endblock %}
 {% block pagetitle %}
-	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="Nevidebla projekto"></i>{% endif %}
-	{% if project.locked %}<i class="fas fa-lock mr-1" title="Ŝlosita projekto"></i>{% endif %}
+	{% if not project.visible %}<i class="fas fa-eye-slash mr-1" title="{% translate 'pages/projects#hidden' %}"></i>{% endif %}
+	{% if project.locked %}<i class="fas fa-lock mr-1" title="{% translate 'pages/projects#locked' %}"></i>{% endif %}
 	{{ project.name }}
 {% endblock %}
 
