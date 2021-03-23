@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-18 16:23+0100\n"
-"PO-Revision-Date: 2021-03-18 16:23+0100\n"
+"POT-Creation-Date: 2021-03-23 12:36+0100\n"
+"PO-Revision-Date: 2021-03-23 12:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -95,6 +95,9 @@ msgstr ""
 
 msgid "emails/request#start-translating"
 msgstr "Vous pouvez commencer à traduire à l’adresse {1}."
+
+msgid "messages#cannot-delete-comment"
+msgstr "Vous ne pouvez pas supprimer ce commentaire."
 
 msgid "messages#changes-cannot-be-saved"
 msgstr "Les changements n’ont pas pu être enregistrés."
@@ -293,3 +296,11 @@ msgstr "Système de traduction d’E@I"
 
 msgid "structure#welcome"
 msgstr "Bienvenue"
+
+msgid "translate#javascript"
+msgstr ""
+"JavaScript doit être activé pour que l’interface de traduction fonctionne."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Traduction de {1}"

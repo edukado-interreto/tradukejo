@@ -1,9 +1,18 @@
 {% extends 'wide-page.html' %}
-{% load static i18n %}
+{% load static i18n traduko_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
-{% block title %}Traduko de {{ project.name }}{% endblock %}
-{% block pagetitle %}Traduko de <a href="{% url 'project' project.pk %}">{{ project.name }}</a>{% endblock %}
+{% block title %}
+	{% blocktranslate asvar translate_title context 'Temas pri nomo de projekto' trimmed %}translate#title{% endblocktranslate %}
+	{% format_translation translate_title project.name %}
+{% endblock %}
+{% block pagetitle %}
+	{% url 'project' project.pk as project_url %}
+	{% with '<a href="'|add:project_url|add:'">'|add:project.name|add:'</a>' as link %}
+		{% blocktranslate asvar translate_title context 'Temas pri nomo de projekto' trimmed %}translate#title{% endblocktranslate %}
+		{% format_translation translate_title link %}
+	{% endwith %}
+{% endblock %}
 
 {% block head %}
 {% for file in css_files %}
@@ -35,14 +44,14 @@
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
-		<li class="breadcrumb-item"><a href="{% url 'projects' %}">Ĉefpaĝo</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
 		<li class="breadcrumb-item"><a href="{% url 'project' project.pk %}">{{ project.name }}</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Traduki</li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'project#translate' context 'Butono por komenci traduki en la elektita lingvo' %}</li>
 	</ol>
 </nav>
 
 <noscript>
-	JavScript devas esti ŝaltita por funkciigi la tradukinterfacon.
+	{% translate 'translate#javascript' %}
 </noscript>
 <div id="app">
 	<div class="loader">…</div>

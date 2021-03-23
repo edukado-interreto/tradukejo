@@ -299,7 +299,7 @@ def delete_comment(request):
     if is_project_admin(request.user, comment.trstringtext.trstring.project) or request.user == comment.author:
         comment.delete()
     else:
-        response = HttpResponse('Vi ne rajtas forigi ĉi tiun komenton.')
+        response = HttpResponse(_('messages#cannot-delete-comment'))
         response.status_code = 403
 
     return JsonResponse({'ok': True}, safe=False)

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 16:17+0100\n"
-"PO-Revision-Date: 2021-03-18 16:19+0100\n"
+"POT-Creation-Date: 2021-03-23 12:24+0100\n"
+"PO-Revision-Date: 2021-03-23 12:26+0100\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -56,52 +56,53 @@ msgstr "La peto estis sendita."
 msgid "structure#welcome"
 msgstr "Bonvenon"
 
-#: templates/base.html:15 templates/base.html:32
+#: templates/base.html:15 templates/base.html:46
 msgid "structure#website-name"
 msgstr "Tradukejo de E@I"
 
-#: templates/base.html:26
+#: templates/base.html:28
 msgid "structure#settings"
 msgstr "Agordoj"
 
-#: templates/base.html:27
+#: templates/base.html:29
 msgid "structure#sign-out"
 msgstr "Elsaluti"
 
-#: templates/base.html:29
+#: templates/base.html:31
 msgid "structure#sign-in"
 msgstr "Ensaluti"
 
-#: templates/base.html:29 templates/traduko/projects.html:12
+#: templates/base.html:31 templates/traduko/projects.html:12
 msgid "structure#sign-up"
 msgstr "Krei konton"
 
-#: templates/base.html:57
+#: templates/base.html:73
 msgid "structure#instructions"
 msgstr "Instrukcioj"
 
-#: templates/base.html:58 templates/traduko/contact.html:3
+#: templates/base.html:74 templates/traduko/contact.html:3
 #: templates/traduko/contact.html:4 templates/traduko/contact.html:10
 msgid "structure#contact"
 msgstr "Kontakto"
 
-#: templates/base.html:59
+#: templates/base.html:75
 msgid "structure#privacy"
 msgstr "Privateco"
 
-#: templates/base.html:65
+#: templates/base.html:79
 msgid "structure#project-by"
 msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
 
-#: templates/base.html:75
+#: templates/base.html:88
 msgid "structure#choose-language"
 msgstr "Elektu vian lingvon"
 
-#: templates/base.html:90 templates/traduko/project.html:226
+#: templates/base.html:103 templates/traduko/project.html:226
 msgid "structure#close"
 msgstr "Fermi"
 
 #: templates/traduko/contact.html:9 templates/traduko/project.html:17
+#: templates/traduko/translate.html:45
 msgid "structure#home"
 msgstr "Ĉefpaĝo"
 
@@ -320,6 +321,7 @@ msgid "project#outdated-words"
 msgstr "Retradukendaj vortoj:"
 
 #: templates/traduko/project/language-version-list.html:17
+#: templates/traduko/translate.html:47
 msgctxt "Butono por komenci traduki en la elektita lingvo"
 msgid "project#translate"
 msgstr "Traduki"
@@ -369,6 +371,15 @@ msgstr "Kaŝita projekto"
 msgid "pages/projects#locked"
 msgstr "Ŝlosita projekto"
 
+#: templates/traduko/translate.html:6 templates/traduko/translate.html:10
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Traduko de {1}"
+
+#: templates/traduko/translate.html:52
+msgid "translate#javascript"
+msgstr "JavaScript devas esti ŝaltita por funkciigi la tradukinterfacon."
+
 #: translation_functions.py:574
 msgid "emails/request#new-title"
 msgstr "Tradukejo de E@I: peto de tradukrajto por {project}"
@@ -376,3 +387,7 @@ msgstr "Tradukejo de E@I: peto de tradukrajto por {project}"
 #: translation_functions.py:655
 msgid "emails/comment#title"
 msgstr "Tradukejo de E@I: respondo al via komento en {project}"
+
+#: vue_translation.py:302
+msgid "messages#cannot-delete-comment"
+msgstr "Vi ne rajtas forigi ĉi tiun komenton."
