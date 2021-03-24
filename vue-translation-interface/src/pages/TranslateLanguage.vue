@@ -23,7 +23,7 @@
         v-if="strings.length === 0 && !isLoading && !directoriesTreeLoading && Object.keys(directories).length === 0"
         class="alert alert-info"
       >
-        Neniu ĉeno estis trovita.
+        {{ $t('translate.no_result') }}
       </div>
     </div>
   </div>

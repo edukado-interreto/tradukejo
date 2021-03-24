@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     name() {
-      return this.first ? 'Ĉiuj' : this.nodeName;
+      return this.first ? this.$t('navigation.all') : this.nodeName;
     },
     path() {
       return (this.first || this.parentPath === '') ? this.nodeName : this.parentPath + '/' + this.nodeName;

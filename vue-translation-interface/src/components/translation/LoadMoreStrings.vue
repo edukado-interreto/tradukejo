@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading" class="text-center">
-    <button class="btn btn-primary btn-lg" @click="loadMore">{{ $t('translate.load_more') }}</button>
+    <button class="btn btn-primary btn-lg" @click="loadMore">{{ $t('load_more') }}</button>
   </div>
   <loading-spinner v-else></loading-spinner>
 </template>

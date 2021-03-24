@@ -1,6 +1,6 @@
 <template>
   <div class="alert alert-success">
-    {{ $t('translated.deleted', {name: '#' + string.name}) }}
+    {{ $t('translate.deleted', {name: '#' + string.name}) }}
   </div>
 </template>
 

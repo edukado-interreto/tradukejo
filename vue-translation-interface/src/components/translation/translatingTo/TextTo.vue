@@ -104,7 +104,9 @@ export default {
       this.editing = false;
       this.setTranslationIsBeingEdited(false);
       this.$nextTick(() => {
-        this.$refs.translate.focus();
+        if (document.activeElement.tagName !== 'TEXTAREA') {
+          this.$refs.translate.focus();
+        }
       });
     },
     async saveTranslation(data) {

@@ -18,7 +18,7 @@ export default {
     write: 'Skribu vian komenton ĉi tie…',
     delete_confirm: 'Ĉu vi vere volas forigi ĉi tiun komenton?',
     link: 'Komenti',
-    number: 'Unu komento | {n} komentoj',
+    number: '{n} komento | {n} komentoj',
   },
   history: {
     hide_deleted: 'Kaŝi forigitajn partojn de tekstoj',
@@ -46,8 +46,10 @@ export default {
     outdated: 'Retradukenda',
     save: 'Konservi',
     cancel: 'Nuligi',
+    no_result: 'Neniu ĉeno estis trovita. Provu uzi aliajn filtrilojn.',
   },
   navigation: {
+    all: 'Ĉiuj',
     strings: 'Ĉenoj',
     words: 'Vortoj',
     characters: 'Signoj',

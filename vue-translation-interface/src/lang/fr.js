@@ -7,7 +7,7 @@ export default {
     "comments": "Commentaires",
     "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
     "link": "Commenter",
-    "number": "Un commentaire | {n} commentaires",
+    "number": "{n} commentaire | {n} commentaires",
     "write": "Écrivez votre commentaire ici…"
   },
   "filters": {
@@ -27,6 +27,7 @@ export default {
     "versions": "Historique ({n} version) | Historique ({n} versions)"
   },
   "navigation": {
+    "all": "Toutes",
     "characters": "Caractères",
     "count": "Chaînes : {strings}, mots : {words}",
     "count_children": "Chaînes : {strings} ({strings2} dans les sous-dossiers), mots : {words} ({words2} dans les sous-dossiers)",
@@ -43,6 +44,7 @@ export default {
     "link": "Lien direct vers cette chaîne",
     "mark_outdated": "Marquer comme à retraduire",
     "mark_translated": "Marquer comme traduit",
+    "no_result": "Aucune chaîne n’a été trouvée. Essayez avec d’autres filtres.",
     "number": "Si le nombre est {n} :",
     "number_explanations": "Cette chaîne a des formes différentes en fonction d’un nombre.",
     "outdated": "À retraduire",

@@ -7,6 +7,9 @@ const mixins = {
       return this.projectLanguage === this.currentLanguage.code;
     },
     queryStringState() {
+      if (this.currentLanguage !== null && this.editMode) {
+        return '';
+      }
       return this.$route.query.state || '';
     },
     queryStringDir() {
@@ -46,6 +49,12 @@ const mixins = {
           obj.query[p] = this.$route.query[p];
         }
       });
+
+      if (this.projectLanguage === obj.params.lang) { // No state filter for the source language
+        delete obj.query.state;
+      }
+      console.log('mdr ' + obj.params.lang);
+
       return obj;
     },
     async fetchDirectoriesTree() {

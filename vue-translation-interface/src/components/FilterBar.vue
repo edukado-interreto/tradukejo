@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<ul class="navbar-nav mr-auto">
-		<li class="nav-item dropdown">
+		<li class="nav-item dropdown" v-if="!editMode">
 			<a class="nav-link dropdown-toggle" href="#" id="stringStateDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				{{ currentStateFilter }}
 			</a>

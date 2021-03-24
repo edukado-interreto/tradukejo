@@ -5,7 +5,7 @@ export default {
     "add": "Add comment",
     "comments": "Comments",
     "link": "Comment",
-    "number": "One comment | {n} comments"
+    "number": "{n} comment | {n} comments"
   },
   "filters": {
     "all": "All strings",
@@ -15,6 +15,7 @@ export default {
     "current": "(current version)"
   },
   "navigation": {
+    "all": "All",
     "characters": "Characters",
     "strings": "Strings",
     "words": "Words"
