@@ -29,6 +29,8 @@ urlpatterns = [
 
     path('contact/', TemplateView.as_view(template_name='traduko/contact.html'), name="contact"),
     path('instructions/', TemplateView.as_view(template_name='traduko/instructions.html'), name="instructions"),
+    path('privacy/', TemplateView.as_view(template_name='traduko/privacy.html'), name="privacy"),
+    path('terms/', TemplateView.as_view(template_name='traduko/terms.html'), name="terms"),
 
     path("vue/get-strings/", vue_translation.get_strings, name="vue_get_strings"),
     path("vue/get-directories-tree/", vue_translation.get_directories_tree, name="vue_get_directories_tree"),

@@ -1,0 +1,129 @@
+{% extends 'normal-page.html' %}
+{% load i18n traduko_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %}{% translate 'structure#privacy' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#privacy' %}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#privacy' %}</li>
+	</ol>
+</nav>
+
+{% if LANGUAGE_CODE != 'eo' %}
+	<div class="alert alert-warning">
+		{% translate_abs_url 'eo' as translated_url %}
+		<p>{% blocktranslate asvar available_languages trimmed %}pages/privacy#available-languages{% endblocktranslate %}{% format_translation available_languages translated_url %}</p>
+	</div>
+{% endif %}
+
+<p>Por la celo de datumprotekta leĝaro, la respondeculo pri viaj personaj datumoj estas Edukácia@Internet (nomata “ni” en ĉi tiu deklaro pri privateco).</p>
+<h2>Ĝeneralaĵoj</h2>
+<p>Ni serioze traktas protekton de viaj personaj datumoj. La jena teksto donas superrigardon de tio, kio okazas al viaj personaj datumoj, kiam vi vizitas aŭ uzas nian retejon. Persona informo estas ĉiu datumo, per kiu vi povus esti persone identigita. Detalaj informoj pri protekto de datumoj troviĝas en ĉi tiu deklaro pri privateco.</p>
+<h2>Kolektado de datumoj en nia retejo</h2>
+<h3>Kiu respondecas pri kolektado de datumoj en ĉi tiu retejo?</h3>
+<p>La datumojn kolektatajn en ĉi tiu retejo kolektas:</p>
+<ul>
+	<li>Plena nomo de la leĝa estaĵo: Edukácia@Internet</li>
+	<li>Kompania numero (IČO): 42013551</li>
+	<li>Retpoŝtadreso: <a href="mailto:info@ikso.net">info@ikso.net</a></li>
+	<li>Poŝtadreso: Víťazná 840/67A, 958 04 Partizánske, Slovakio</li>
+</ul>
+<h3>Kiujn informojn ni kolektas pri vi?</h3>
+<p>Ni kolektas kaj prilaboras la jenajn datumojn pri vi:</p>
+<ul>
+	<li><strong>Informoj, kiujn vi donas al ni:</strong> temas pri la informoj pri vi, kiun vi memvole donas plenigante formularojn en nia retejo aŭ kontaktante nin per retpoŝto aŭ alia maniero. Tio inkluzivas ĉiun komunikaĵon, kiun vi sendas al ni per formularoj en nia retejo, per retpoŝto, teksto, mesaĝilo aŭ afiŝado en sociaj retoj aŭ iu ajn alia maniero. La informoj, kiujn vi donas al mi, povas inkluzivi viajn nomon, adreson, retpoŝtadreson kaj situon. Bonvolu sciigi nin, se ajna el tiuj informoj ŝanĝiĝas, por ke niaj datumoj estu ĝisdataj.</li>
+	<li><strong>Informoj, kiujn ni kolektas per via uzado de la retejo:</strong> kiam vi vizitas nian retejon, ni aŭtomate kolektas la jenajn informojn:
+		<ol>
+			<li>Teknikajn informojn, kiel ekzemple la IP-adreson uzatan por konekti vian aparaton al la Interreto.</li>
+			<li>La geografian pozicion, de kie vi konektiĝis al nia servo.</li>
+			<li>Vian proviziston de Interreta servo.</li>
+			<li>Kian aparaton vi uzas por aliri nian servon.</li>
+			<li>Aliajn informojn pri retaj servoj, ekzemple detalojn pri via retumilo, longecon de vizitoj de paĝoj en nia retejo, vidatajn paĝojn kaj sekvitan vojon en la retejo, detalojn pri la nombro da fojoj, kiam vi uzis nian retejon, horzonon kaj aliajn informojn pri la aparatoj, kiujn vi uzas por aliri nian retejon.</li>
+		</ol>
+	</li>
+</ul>
+<p>Se dum aliĝo vi uzas pagon per bankokarto, sciu, ke ni <strong>ne</strong> kolektas datumojn de via bankokarto.</p>
+<h3>Kial ni kolektas tiujn informojn?</h3>
+<p>Ni uzas tiujn informojn en la jenaj manieroj:</p>
+<ul>
+	<li><strong>Informoj, kiujn vi donas al ni:</strong> ni prilaboras tiujn informojn kun la celo komuniki kun vi, pro administrado kaj por starigo, konduko aŭ defendo de leĝaj aferoj. Nia leĝa bazo por prilabori tiun intereson estas niaj legitimaj interesoj, tio estas respondi al komunikaĵoj, kiujn vi sendas al mi, havi ĝisdatan datumbazon kaj starigi, konduki aŭ defendi leĝajn aferojn. Ni uzas tiujn informojn:
+		<ul>
+			<li>Por taksi, ĉu ni povas estigi kontrakton kun vi kaj por plenumi nian kontrakton kun vi. Tio inkluzivas plenumadon de niaj devoj kaj provizi al vi niajn servojn;</li>
+			<li>Por plibonigi nian servon al vi, certigi, ke la enhavo de nia retejo estas prezentata en la plej efika maniero por vi kaj via aparato;</li>
+			<li>Por trakti leĝajn petojn, kiuj rilatas kun via uzo de nia servo;</li>
+			<li>Por provizi al vi komunikaĵojn, por ke ni povu plenumi niajn devojn al vi. Ili povos esti sendataj retpoŝte. Tio inkluzivas informojn pri detaloj kaj pri via aliĝo al aranĝoj;</li>
+			<li>En nia legitima intereso plu sciigi vin pri estontaj okazoj de Somera Esperanto-Studado.</li>
+		</ul>
+	</li>
+	<li><strong>Informoj, kiujn ni kolektas per via uzado de la retejo:</strong> ni prilaboras tiujn datumojn por analizi vian uzadon de nia retejo kaj aliaj retaj servoj, por administri kaj protekti nian retejon kaj provizi taŭgan kaj interesan enhavon de la retejo. Nia leĝa bazo por prilaboro de tiuj informoj estas nia legitima intereso, tio estas bone administri nian retejon kaj fari decidojn pri reklamaj strategioj. Ni uzas tiujn informojn por la jenaj celoj:
+		<ul>
+			<li>Administri nian retejon kaj por internaj operacioj, inkluzive de serĉado de eraroj, analizo de datumoj, testado, esplorado, statistikaj celoj;</li>
+			<li>Por plibonigi nian retejon por certigi, ke la enhavo estos prezentata en la plej efika maniero por vi kaj via aparato;</li>
+			<li>En nia strebo teni nian retejon sekura.</li>
+		</ul>
+	</li>
+	<li><strong>Informoj, kiujn ni kolektas per nia interrilato:</strong> ni prilaboras tiujn datumojn por provizi la servojn, kiujn vi mendis de ni kaj por havi spuron de tiuj mendoj. Nia leĝa bazo por prilabori tiujn datumojn estas la plenumo de kontrakto inter vi kaj ni aŭ/kaj starigi tian kontrakton laŭ via peto.</li>
+</ul>
+<h2>Protektado de datumoj</h2>
+<h3>Kiom longe ni konservos viajn informojn?</h3>
+<p>Ni konservos datumojn pri vi dum maksimume 15 jaroj post ricevo de via konsento, krom se leĝaj devigoj postulas alie aŭ se ni estas devigataj forigi tiajn datumojn de niaj datumbazoj.</p>
+<p>En kelkaj cirkonstancoj ni povas anonimigi viajn personajn datumojn por esploraj aŭ statistikaj celoj, kaj tiam ni povos uzi tiajn informojn senlime sen sciigi vin.</p>
+<h3>Kun kiuj ni povas kundividi viajn informojn?</h3>
+<p>Povos esti necese, ke ni kundividos viajn personajn informojn kun la jenaj triaj partioj:</p>
+<ul>
+	<li>Provizistoj de servoj, kiuj provizas al ni komputikajn kaj administrajn servojn;</li>
+	<li>Profesiajn konsilistojn, inkluzive de advokatoj, bankistoj, kontrolistoj kaj asekuristoj;</li>
+	<li>Registaraj instancoj, kiuj postulas, ke ni raportu pri niaj datumtraktaj agadoj.</li>
+</ul>
+<p>Ni postulas, ke ĉiuj triaj partioj, kun kiuj ni kundividas viajn datumojn, respektu la sekurecon de viaj personaj datumoj kaj traktu ilin laŭleĝe. Ni permesas al tiuj triaj partioj prilabori viajn personajn datumojn nur por specifaj celoj kaj laŭ niaj instrukcioj.</p>
+<p>Vi konsentas, ke kun la celoj establitaj en la ĉi-supra sekcio “Kial ni kolektas tiujn informojn?” ni rajtas kundividi viajn personajn informojn kun la supremenciitaj partio.</p>
+<h3>Kiel viaj datumoj estas konservataj kaj sekurigataj?</h3>
+<p>Ni konsideras vian sekurecon tre serioze kaj engaĝiĝas protekti viajn personajn informojn.</p>
+<p>Ni starigis sekurecajn rimedojn por malhelpi akcidentan person, uzadon, modifon, malkaŝon aŭ aliron sen permeso de viaj personaj datumoj. Ni ankaŭ permesas aliron al viaj personaj datumoj nur al laborantoj kaj partneroj, kiu havas laboran bezonon aliri ilin. Ili prilaboros viajn personajn datumojn nur laŭ niaj instrukcioj kaj devas teni ilin sekretaj.</p>
+<p>Kiam personaj datumoj estas sendataj per la Interreto, ni ĉifras ĝin per la ĉifran teknikon Transfer Layer Security (TLS) aŭ similan. Vi povas rekoni ĉifritan konekton en via retumilo kiam la adreso en la adresbreto ŝanĝiĝas de <code>http://</code> al <code>https://</code> kaj serura ikono aperas apude.</p>
+<p>Ni havas procedojn por prizorgi suspektatan likon de personaj datumoj kaj sciigos vin kaj taŭgan reguliganton de ajna liko, se leĝo postulas tion.</p>
+
+{% comment %}
+	<h3>Sendado de viaj personaj datumoj ekster la Eŭropan Ekonomian Areon (EEA)</h3>
+	<p>Ni uzas servon de Google LLC, kiu havas sidejon en 1600 Amphitheatre Parkway, Mountain View, CA 94043, Usono (poste nur “Google”). Datumoj, inkluzive de viaj personaj datumoj, estas enmetataj en programojn de Google kaj konservataj en iliaj serviloj en Usono. Tio signifas, ke viaj personaj datumoj estas sendataj ekster la Eŭropan Union, nome al Usono.</p>
+	<p>Ni volas informi vin, ke GDPR permesas sendadon de personaj datumoj al aliaj landoj ekster la Eŭropa Unio, interalie kondiĉe ke la Eŭropa Komisiono decidis, ke tiuj landoj certigas sufiĉan nivelon de protekto. Laŭ la decido pri sufiĉeco de la Eŭropa Komisiono, Usono estas lando kun sufiĉa nivelo de protekto per la kadro Privacy Shield, kiu estis adoptita la 12-an de julio 2016. Google certias, ke dum sendado de personaj datumoj de Eŭropa Unio al aliaj landoj, ĝi plenumas la kondiĉojn de la leĝaro, kiu certigas saman nivelon de protekto kiel la leĝaj postuloj de la Eŭropa Unio, inkluzive de la kadro Privacy Field. Google provizas detalajn informojn pri la leĝaj konsideroj, kiuj rilatas al sendado de personaj datumoj; vi povas legi ilin en ilia retejo: <a href="https://policies.google.com/privacy/frameworks">https://policies.google.com/privacy/frameworks</a>.</p>
+	<p>Ĉi tiu retejo uzas la servon de Google Google Analytics por analizi, kiel vizitantoj uzas la retejon. La IP-adresoj de la vizitantoj estas anonimigitaj.</p>
+{% endcomment %}
+
+<h2>Kio estas viaj rajtoj?</h2>
+<p>Kiam prilaborado de viaj personaj datumoj dependas de via konsento, vi povas rezigni de tiu konsento iam ajn.</p>
+<p>Vi havas la jenajn rajtojn. Vi povas plenumi tiujn rajtojn iam ajn kontaktante nin per la adreso supre aŭ per retpoŝto al
+	<a href="mailto:tradukejo@ikso.net">tradukejo@ikso.net</a>. Vi rajtas:</p>
+<ul>
+	<li>Peti nin ne prilabori viajn personajn datumojn, kiam ili estas prilaborataj surbaze de nia legitima intereso, kondiĉe ke ne estas fortaj kialoj por tiu prilaborado;</li>
+	<li>Peti de ni kopion de la personaj datumoj, kiujn ni havas pri vi;</li>
+	<li>Peti korekton de la personaj datumoj, kiujn ni havas pri vi, se ili estas malĝustaj aŭ nekompletaj;</li>
+	<li>Peti, ke datumoj estu forigitaj, kondiĉe ke la personaj datumoj ne plu estas necesaj por la celo, por kiu ili estis kolektitaj, ke vi nuligas vian konsenton (se la leĝa bazo por la prilaborado estas konsento); ke vi aplikas vian rajton rezigni, klarigitan sube, kaj ke ne estas pli grava legitima kialo por la prilaborado; ke la datumoj estas kontraŭleĝe prilaborataj; aŭ ke la datumoj devas esti forigitaj por observi leĝan postulon.</li>
+	<li>Peti, ke la prilaborado de tiuj informoj estu limigita, se la ĝusteco de la datumoj estas kontestata, la prilaborado estas kontraŭleĝa, la personaj datumoj ne plu estas necesaj por la celo, por kiu ili estis kolektitaj, aŭ vi aplikas vian rajton rezigni (post kontrolo, ke ne estas pli grava legitima kialo por la prilaborado).</li>
+</ul>
+<p>Se vi havas problemon aŭ demandon rilate al viaj datumoj, aŭ volas sciigi nin pri malĝusta datumo, bonvolu kontakti nin per la manieroj priskribitaj supre.</p>
+<p>Vi ne devos pagi al ni por aliri viajn personajn datumojn (aŭ por efektivigi ajnan alian rajton). Tamen, se via peto estas klare senbaza, ripeta aŭ troa, ni povas pagigi etan koston aŭ rifuzi plenumi vian peton en tiaj cirkonstancoj.</p>
+<p>Ni povos bezoni peti specifajn informojn de vi por helpi al ni konfirmi vian identecon kaj certigi vian rajton aliri viajn personajn datumojn (aŭ efektivigi ajnan alian rajton). Tio estas sekureca procezo por certigi, ke personaj datumoj estas malkaŝitaj nur al la persono, kiu rajtas ricevi ilin. Ni ankaŭ povas kontakti vin por peti pliajn informojn rilate al via peto, por helpi al ni respondi rapide al vi.</p>
+<p>Ni strebas respondi ĉiujn legitimajn petojn ene de unu monato, tamen povas okazi, ke ni bezonas pli da tempo por plenumi vian peton, precipe se ĝi estas aparte kompleksa aŭ se vi faris plurajn petojn. En ĉi tiu kazo ni sciigos vin.</p>
+<h2>Eksteraj ligiloj</h2>
+<p>Nia retejo povas enhavi ligilojn al eksteraj retejoj, kromprogramoj kaj aplikaĵoj. Klaki al tiaj ligiloj aŭ aktivigi tiajn kromprogramojn aŭ aplikaĵojn povas ebligi al triaj partioj kolekti aŭ kundividi informojn pri vi. Ni ne regas tiujn eksterajn retejojn kaj ne respondecas pri iliaj privatecaj deklaroj. Kiam vi eliras el nia retejo, ni instigas vin legi la privatecajn deklarojn de ĉiu ekstera retejo, kiun vi vizitas, por kompreni iliajn respektivajn privatecajn politikojn.</p>
+<h2>Kuketoj</h2>
+<p>Ni uzas kuketojn por analizi, kiel vi uzas nian retejon.</p>
+<p>Ĉi tio ebligas al ni kompreni vian uzadon de la retejo kaj spuri uzmanierojn. Ni uzas ĉi tiun informon por helpi al ni disvolvi kaj plibonigi niajn retejon kaj produktojn kaj/aŭ servojn responde al tio, kion vi povus voli aŭ bezoni.</p>
+<p>Vi povas agordi vian retumilon tiel, ke ĝi rifuzu ĉiujn aŭ kelkajn kuketojn, aŭ por ke ĝi sciigu vin, kiam retejoj enmetas aŭ aliras kuketojn. Konsciu tamen, ke se vi elektos malaktivigi aŭ rifuzi kuketojn, kelkaj partoj de nia retejo povas iĝi nealireblaj aŭ ne funkcii bone por vi.</p>
+<p>Kuketo estas malgranda teksta dosiero, kiun ni konservas en via aparato. Nia retejo uzas kuketojn por distingi vin de aliaj uzantoj de la retejo. Kuketoj ankaŭ provizas al ni informojn pri tio, kiel la retejo estas uzata, por ke ni povu igi ĝin tiel ĝisdata, taŭga kaj senerara, kiel eblas. Nia retejo uzas la sekvajn specojn de kuketoj:</p>
+<ul>
+	<li>Strikte necesaj kuketoj – Temas pri kuketoj, kiuj estas esencaj por funkciigo de nia retejo.</li>
+<!--	<li>Analizaj kuketoj – Tiaj kuketoj ebligas al ni rekoni kaj kalkuli la nombron da vizitantoj en nia retejo.</li>-->
+	<li>Funkciaj kuketoj – Tiaj kuketoj estas uzataj por rekoni, kiam vi revenas al nia retejo.</li>
+<!--	<li>Celaj kuketoj – Tiaj kuketoj registras vian viziton al nia retejo, la paĝojn, kiujn vi vizitis, kaj la ligilojn, kiujn vi sekvis.</li>-->
+</ul>
+<p>Kuketoj estas uzataj de preskaŭ ĉiuj retejoj kaj ili neniel damaĝas vian sistemon.</p>
+<p>Via konsento aplikiĝas al la domajno: tradukejo.ikso.net.</p>
+<h2>Ŝanĝoj en nia privateca deklaro</h2>
+<p>Ĉi tiu deklaro povas esti ĝisdatigata de tempo al tempo. Bonvolu kontroli ofte por vidi ĝisdatigojn aŭ ŝanĝojn en nia privateca deklaro.</p>
+
+{% endblock %}

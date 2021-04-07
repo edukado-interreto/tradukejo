@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
-"POT-Creation-Date: 2021-03-17 16:40+0100\n"
-"PO-Revision-Date: 2021-03-17 16:40+0100\n"
+"POT-Creation-Date: 2021-04-07 11:12+0200\n"
+"PO-Revision-Date: 2021-04-07 11:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -14,11 +14,369 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Tradukejo de E@I\n"
 
+msgid "emails#closing"
+msgstr "Best regards,"
+
+msgid "emails#contact-us"
+msgstr "Please do not hesitate to contact us with any questions."
+
+msgid "emails#greeting"
+msgstr "Dear {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"PS: if you do not want to receive this messages, you can change your "
+"subscription settings in your profile: {1}."
+
+msgid "emails#signature"
+msgstr "The E@I team"
+
+msgid "emails/comment#comment1"
+msgstr "Somebody published a response to your comment in the project {1}."
+
+msgid "emails/comment#comment2"
+msgstr "You can see the response here: {1}."
+
+msgid "emails/comment#title"
+msgstr "E@I:'s translation system: a response to your comment in {project}"
+
+msgid "emails/new-texts#new-texts"
+msgstr "There is now new text for translating in the project {1}."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} outdated word"
+msgstr[1] "{1} outdated words"
+
+msgid "emails/new-texts#title"
+msgstr "E@I's translation system: new text to translate in {project}"
+
+msgid "emails/new-texts#translate-link"
+msgstr "You can translate here: {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} untranslated word"
+msgstr[1] "{1} untranslated words"
+
+msgid "emails/request#accept-link"
+msgstr "You can accept or decline the request here: {1}."
+
+msgid "emails/request#accepted"
+msgstr ""
+"Your request to translate the project {1} into the language {2} was "
+"accepted."
+
+msgid "emails/request#accepted-title"
+msgstr "E@I's translation system: request to translate {project} accepted."
+
+msgid "emails/request#new-request"
+msgstr ""
+"The user {1} requested permission to translate the project {2} into the "
+"lnaguage {3}:"
+
+msgid "emails/request#new-title"
+msgstr "E@I's translation system: request to translate {project}"
+
+msgid "emails/request#rejected"
+msgstr ""
+"Your request to translate the project {1} into the language {2} was "
+"declined."
+
+msgid "emails/request#rejected-title"
+msgstr "E@I's translation system: request to translate {project} declined."
+
+msgid "emails/request#start-translating"
+msgstr "You can begin translating at the address: {1}."
+
+msgid "messages#cannot-delete-comment"
+msgstr "You are not allowed to deleted that comment."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "The changes could not be saved."
+
+msgid "messages#changes-saved"
+msgstr "The changes were saved."
+
+msgid "messages#notification-sent"
+msgstr "The notification was sent."
+
+msgid "messages#request-already-allowed"
+msgstr ""
+"You already have the required permission to translate into that language."
+
+msgid "messages#request-already-sent"
+msgstr "You already sent a request to translate into that language."
+
+msgid "messages#request-sent"
+msgstr "The request was sent."
+
 msgid "pages/contact#contact1"
 msgstr "The Tradukejo is an E@I project ({1}Edukado@Interreto{/1})."
 
 msgid "pages/contact#contact2"
 msgstr "Please contact us with any queries and comments. {1}."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Examples of comments."
+
+msgid "pages/instructions#comments-title"
+msgstr "Comments"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"You have the ability to comment on each translated version of each string. "
+"That gives you the ability to request explanations about the translated "
+"text, to talk about better translations with other translators, etc. You can"
+" choose {1}in your settings{/1}, whether you want to be informed by email "
+"when somebody responds to your comment."
+
+msgid "pages/instructions#interface-caption"
+msgstr "The translation interface."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "Detailed interface for translating strings."
+
+msgid "pages/instructions#interface-title"
+msgstr "Translated interface"
+
+msgid "pages/instructions#interface1"
+msgstr "The translation interface looks like this:"
+
+msgid "pages/instructions#interface2"
+msgstr "Five elements were found, from above and below."
+
+msgid "pages/instructions#interface2-1"
+msgstr "a bar with various filters,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"A line which shows which language you are translating into, and the relevant"
+" folder."
+
+msgid "pages/instructions#interface2-3"
+msgstr "Left: a list of all folders in the project,"
+
+msgid "pages/instructions#interface2-4"
+msgstr "Right: a detailed list of subfolders in the current folder,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "the main translation interface."
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"The translated texts are organised in {1}strings{2}: segments of text, this "
+"could be a full paragraph, a part of a menu, a section's title, etc. Each "
+"coloured frame is one string, which can be translated independently of the "
+"others."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"The strings can be organised in folders, to group strings by theme for the "
+"benefit of clarity."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"If the current folder contains a lot of strings (for example, a folder "
+"'countries' with 200 countries listed inside), not all of them will load, "
+"but there will be a 'load more' button underneath."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"The left half is the text in the source language, the right half is the "
+"translation. The elements are here:"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Name of the string. It is a unique identifier, usually only the project's "
+"administrators will use it. You do not need to translate it."
+
+msgid "pages/instructions#interface6-2"
+msgstr "The source language. If you click on it, a menu will appear."
+
+msgid "pages/instructions#interface6-3"
+msgstr "Links to machine translators which might be useful."
+
+msgid "pages/instructions#interface6-4"
+msgstr "The text which needs translated."
+
+msgid "pages/instructions#interface6-5"
+msgstr "Aide-mémoire."
+
+msgid "pages/instructions#interface6-6"
+msgstr "State of the translation."
+
+msgid "pages/instructions#interface6-7"
+msgstr "The current translation."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Date and author of the original text and of the translation. If the text was"
+" editted more than once, you can see the hitory of changes. There is also a "
+"comment section."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Welcome to {1}E@I{/1}'s translation system! The system allows you to easily "
+"translate multilingual websites and other resources."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"Programmers are currently improving the translation system. Some changes "
+"could be expected."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"To begin translating, you need {1}to create an account{/1}. It is necessary "
+"to make a new account, even if you previously had an account with the "
+"previous system which ceased in 2021."
+
+msgid "pages/instructions#plural-caption"
+msgstr "String with plurals."
+
+msgid "pages/instructions#plural-title"
+msgstr "Strings with plurals"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Numerical phrases (for example 'we have X users') can cause problems. If "
+"there is only one user, then it would say 'we have 1 users', which would be "
+"grammatically incorrect in many languages."
+
+msgid "pages/instructions#plural2"
+msgstr ""
+"The solution is to use 2 different strings, which have different text, to "
+"suit the relevant number:"
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"When you see these kinds of strings, translate the phrase repeatedly, to "
+"match the various quantities. For example, in the image above, a Russian "
+"speaker would have to imagine that instead of just {1} there is 1, 2 or 5."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"Its normal, if there is a different quantity of translations: some languages"
+" will need only two forms (single and plural), but some (mostly Slavic "
+"languages) need three. Slovenian woud need four and some languages (like "
+"Irish or Arabic) would need even more."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Screenshot of the project page."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Project page"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"You can find above, general information about the project. In the coloured "
+"frame there are clarifications about how the translations are used: for "
+"several websites, the translations are immedietely visible; in others, the "
+"website's webmaster must manually add in the translations - it depends on "
+"the websites themselves, not on E@I's translation system."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"Below, you can find a list of languages, in which the project is translated,"
+" with the percentage of text translated. Beside that there is a list of the "
+"latest comments and the latest activity."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Request to translate."
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Translation permissions."
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"To translate into the relevant language, you need to receive permission from"
+" the project administrator. Click on the button 'request permission' beside "
+"the name of the language, and write a short request. Once the administrator "
+"has approved your request, you will be informed by email and you will be "
+"able to begin translating."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"You may wish to translate into a language which the project has not yet "
+"fetured. If so, find the menu with the list of languages, under the title "
+"'Translate into another language'. If the language which you want is not in "
+"that list, then {1}contact us{/1}."
+
+msgid "pages/instructions#projects1"
+msgstr "“Projects” are collections of translations which concern one website."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Search and order"
+
+msgid "pages/instructions#search-sort1"
+msgstr "The top bar has various filters:"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"The first one can filter by state (useful for seeing only the strings which "
+"require translation)."
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"The second one can sort the strings: by default this is done alphabetically,"
+" but can also be done by date (oldest/newest)."
+
+msgid "pages/instructions#search-sort1-3"
+msgstr "You can search the text of translations and of the source document."
+
+msgid "pages/instructions#state-title"
+msgstr "State of translations"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Translations can have three states: untranslated (which appear as red), "
+"outdated (which appears as yellow) and translated (which appears as green). "
+"'Outdated' means that the original source text was changed, which could "
+"present the need for updating existing translations. If you consider that "
+"such changes are unnecessary, you can click on the button 'Mark as "
+"translated'."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Examples of suggested translations."
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Suggested translations"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Sometimes when strings new strings, suggested translations will appear. "
+"These suggestions come from completed translations of identical text, "
+"whether in the same project or another. Simply click on the suggestion if "
+"you like it, and it will appear in the translation field."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Strings with strange symbols."
+
+msgid "pages/instructions#symbols-title"
+msgstr "Strange symbols."
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Some strings might have strange symbols inside. These are specials signs "
+"which the website will replace in some way; perhaps with a web link, a "
+"username or a number... Please copy these symbols into the translation field"
+" without making any changes to them (and if they contain words, do not "
+"translate them). Otherwise, the translated text will not appear correctly in"
+" the website."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"In the translation system, these special symbols have colours. Here are "
+"examples of how they might look:"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Some projects use double ({1}) and triple ({2}) apostrophes for italics or "
+"bold text. So be aware of this. This is not universal, and depends on the "
+"website, not on the translation system."
+
+msgid "pages/privacy#available-languages"
+msgstr "The privacy policy is currently available only {1}in Esperanto{/1}."
 
 msgid "pages/projects#hidden"
 msgstr "Hidden project"
@@ -44,6 +402,47 @@ msgstr "Read the instructions"
 
 msgid "pages/projects#welcome"
 msgstr "Welcome to E@I's new translation system!"
+
+msgid "pages/terms#intro"
+msgstr ""
+"If you work using our translation system, you accept all the following "
+"conditions:"
+
+msgid "pages/terms#term-1"
+msgstr ""
+"You guarantee that you have a good level of the language to which you intend"
+" to translate."
+
+msgid "pages/terms#term-2"
+msgstr "You have read our {1}privacy policy{/1} and you accept it."
+
+msgid "pages/terms#term-3"
+msgstr ""
+"You have read the {1}instructions{/1} and promise to do the translation "
+"based on those guidelines."
+
+msgid "pages/terms#term-4"
+msgstr ""
+"You promise to translate the content close to the original text’s meaning. "
+"You guarantee that you will not change the meaning of the text or add "
+"anything to its translation which is not in the original text without "
+"permission."
+
+msgid "pages/terms#term-5"
+msgstr ""
+"As a user/translator, you grant the website a worldwide, exclusive, royalty-"
+"free, transferable, temporally, content and spatially unrestricted right to "
+"use the content created and posted by you in all media used by "
+"Education@Internet. Education@Internet is specifically authorized to use "
+"this content in any media, as well as to publish, copy, reproduce, modify, "
+"edit, distribute, and adapt it for any purpose."
+
+msgid "pages/terms#term-6"
+msgstr ""
+"As a user/translator, you guarantee that your content can be used freely by "
+"third-parties. You certify that you own all the rights and authority "
+"necessary for the rights granted herein relating to content submitted by "
+"you."
 
 msgid "project#added-words"
 msgid_plural "project#added-words"
@@ -185,8 +584,19 @@ msgstr "Log out"
 msgid "structure#sign-up"
 msgstr "Sign up"
 
+msgid "structure#terms"
+msgstr "Conditions of use"
+
 msgid "structure#website-name"
 msgstr "E@I’s translation system"
 
 msgid "structure#welcome"
 msgstr "Welcome"
+
+msgid "translate#javascript"
+msgstr ""
+"JavaScriptmust be turned on for the translation interface to function."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Translation of {1}"

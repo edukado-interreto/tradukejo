@@ -1,0 +1,26 @@
+{% extends 'normal-page.html' %}
+{% load i18n traduko_tags %}
+{% block title %}{% translate 'structure#terms' %}{% endblock %}
+{% block pagetitle %}{% translate 'structure#terms' %}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb main-breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'projects' %}">{% translate 'structure#home' %}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{% translate 'structure#terms' %}</li>
+	</ol>
+</nav>
+
+<p>{% translate 'pages/terms#intro' %}</p>
+<ul>
+	<li>{% translate 'pages/terms#term-1' %}</li>
+	{% url 'privacy' as privacy_url %}
+	<li>{% blocktranslate asvar terms2 trimmed %}pages/terms#term-2{% endblocktranslate %}{% format_translation terms2 privacy_url %}</li>
+	{% url 'instructions' as instructions_url %}
+	<li>{% blocktranslate asvar terms3 trimmed %}pages/terms#term-3{% endblocktranslate %}{% format_translation terms3 instructions_url %}</li>
+	<li>{% translate 'pages/terms#term-4' %}</li>
+	<li>{% translate 'pages/terms#term-5' %}</li>
+	<li>{% translate 'pages/terms#term-6' %}</li>
+</ul>
+
+{% endblock %}

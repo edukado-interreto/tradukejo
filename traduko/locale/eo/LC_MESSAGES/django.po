@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 16:34+0100\n"
-"PO-Revision-Date: 2021-03-23 17:00+0100\n"
+"POT-Creation-Date: 2021-04-07 10:39+0200\n"
+"PO-Revision-Date: 2021-04-07 10:42+0200\n"
 "Last-Translator: Non\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -86,24 +86,31 @@ msgstr "Instrukcioj"
 msgid "structure#contact"
 msgstr "Kontakto"
 
-#: templates/base.html:73
+#: templates/base.html:73 templates/traduko/terms.html:3
+#: templates/traduko/terms.html:4 templates/traduko/terms.html:10
+msgid "structure#terms"
+msgstr "Uzkondiĉoj"
+
+#: templates/base.html:74 templates/traduko/privacy.html:4
+#: templates/traduko/privacy.html:5 templates/traduko/privacy.html:11
 msgid "structure#privacy"
 msgstr "Privateco"
 
-#: templates/base.html:77
+#: templates/base.html:78
 msgid "structure#project-by"
 msgstr "Ĉi tiu tradukejo estas projekto de {1}Edukado@Interreto{/1}."
 
-#: templates/base.html:86
+#: templates/base.html:87
 msgid "structure#choose-language"
 msgstr "Elektu vian lingvon"
 
-#: templates/base.html:101 templates/traduko/project.html:226
+#: templates/base.html:102 templates/traduko/project.html:226
 msgid "structure#close"
 msgstr "Fermi"
 
 #: templates/traduko/contact.html:9 templates/traduko/instructions.html:9
-#: templates/traduko/project.html:17 templates/traduko/translate.html:47
+#: templates/traduko/privacy.html:10 templates/traduko/project.html:17
+#: templates/traduko/terms.html:9 templates/traduko/translate.html:47
 msgid "structure#home"
 msgstr "Ĉefpaĝo"
 
@@ -527,6 +534,10 @@ msgstr ""
 "nur du formojn (ununombran kaj multenombran), sed kelkaj (plej multaj slavaj "
 "lingvoj) bezonas tri, la slovena kvar kaj kelkaj (irlanda, araba) eĉ pli."
 
+#: templates/traduko/privacy.html:18
+msgid "pages/privacy#available-languages"
+msgstr "La privatecreguloj estas nuntempe disponeblaj nur {1}en Esperanto{/1}."
+
 #: templates/traduko/project.html:5 templates/traduko/projects.html:30
 msgid "pages/projects#hidden"
 msgstr "Kaŝita projekto"
@@ -693,6 +704,49 @@ msgstr ""
 #: templates/traduko/projects.html:14
 msgid "pages/projects#read-instructions"
 msgstr "Legi la instrukciojn"
+
+#: templates/traduko/terms.html:14
+msgid "pages/terms#intro"
+msgstr "Tradukante per nia traduksistemo, vi akceptas la sekvajn kondiĉojn:"
+
+#: templates/traduko/terms.html:16
+msgid "pages/terms#term-1"
+msgstr ""
+"Vi garantias, ke vi havas bonan nivelon en la lingvo, al kiu vi intencas "
+"traduki."
+
+#: templates/traduko/terms.html:18
+msgid "pages/terms#term-2"
+msgstr "Vi legis kaj akceptas nian {1}privatecpolitikon{/1}."
+
+#: templates/traduko/terms.html:20
+msgid "pages/terms#term-3"
+msgstr ""
+"Vi legis niajn {1}instrukciojn{/1} kaj promesas labori kongrue kun ili."
+
+#: templates/traduko/terms.html:21
+msgid "pages/terms#term-4"
+msgstr ""
+"Vi promesas traduki la tekston proksime al la origina. Vi garantias, ke vi "
+"ne ŝanĝos la sencon de la teksto kaj ne aldonos ion propran, kio mankas en "
+"la origina teksto, senpermese."
+
+#: templates/traduko/terms.html:22
+msgid "pages/terms#term-5"
+msgstr ""
+"Kiel uzanto/tradukanto vi transdonas al ni la tutmondan, ekskluzivan, "
+"senpagan, transdoneblan, tempe, enhave senliman rajton uzi la kreitan kaj "
+"publikigtan de vi enhavon en ĉiuj medioj uzataj de Edukado@Interreto. "
+"Edukado@Interreto rajtas uzi tiun enhavon en ĉiaj manieroj kaj en ĉiuj "
+"medioj: publikigi, kopii, reprodukti, ŝanĝi, redakti, distribui, vendi ks."
+
+#: templates/traduko/terms.html:23
+msgid "pages/terms#term-6"
+msgstr ""
+"Kiel uzanto/tradukanto vi garantias, ke la enhavo kiun vi enmetas estas "
+"libera de rajtoj de triaj personoj. Vi garantias, ke vi posedas ĉiujn "
+"rajtojn bezonatajn por la obeo de tiuj ĉi reguloj por la enhavoj, enmetataj "
+"de vi."
 
 #: templates/traduko/translate.html:6 templates/traduko/translate.html:12
 msgctxt "Temas pri nomo de projekto"
