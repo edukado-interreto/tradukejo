@@ -7,7 +7,7 @@
 <section class="jumbotron">
 	<h2 class="mt-0 display-4">{% translate 'pages/projects#welcome' %}</h2>
 	<p class="lead">{% translate 'pages/projects#lead1' %}</p>
-	<p>{% blocktranslate asvar lead2 %}pages/projects#lead2{% endblocktranslate %}{% format_translation lead2 "https://tradukejo.ikso.net/" %}</p>
+	<p>{% blocktranslate asvar lead2 %}pages/projects#lead2{% endblocktranslate %}{% format_translation lead2 "https://malnova.tradukejo.ikso.net/" %}</p>
 	{% if not user.is_authenticated %}
 		<a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}">{% translate 'structure#sign-up' %}</a>
 	{% endif %}
