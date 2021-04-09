@@ -178,6 +178,14 @@ main {
     margin-top: 4px;
 }
 
+.project-comment-list {
+    li {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
 .progress-bar {
     transform-origin: top left;
 

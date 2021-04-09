@@ -116,14 +116,14 @@
 		{% blocktranslate asvar othercontact %}project#other-contact{% endblocktranslate %}{% format_translation othercontact url_contact %}
 		{% endif %}
 	</div>
-	<div class="col">
+	<div class="col" style="overflow: hidden;">
 		{% if last_comments %}
 		<h2>{% translate 'project#last-comments' %}</h2>
 		<div class="card mt-4">
 			<div class="card-body last-activities">
 				{% for date, comments in last_comments.items %}
 				<h4>{{ date }}</h4>
-				<ul>
+				<ul class="project-comment-list">
 					{% for comment in comments %}
 					<li>
 						{% ifchanged comment.trstringtext.language %}
