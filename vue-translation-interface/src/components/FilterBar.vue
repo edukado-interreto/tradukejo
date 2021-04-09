@@ -34,7 +34,7 @@
 	</ul>
 	<form class="form-inline my-2 my-lg-0" @submit.prevent="search">
 		<input class="form-control mr-sm-2" type="search" :placeholder="$t('filters.search') + '…'" :aria-label="$t('filters.search')" v-model="searchString">
-		<button class="clear-search" v-if="searchString" @click="clearSearch"><i class="fas fa-times-circle"></i></button>
+		<button class="clear-search" type="button" v-if="searchString" @click="clearSearch"><i class="fas fa-times-circle"></i></button>
 		<button class="btn btn-secondary" type="submit">{{ $t('filters.search') }}</button>
   </form>
 </nav>
