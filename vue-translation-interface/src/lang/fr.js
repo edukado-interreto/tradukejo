@@ -49,6 +49,7 @@ export default {
     "number_explanations": "Cette chaîne a des formes différentes en fonction d’un nombre.",
     "outdated": "À retraduire",
     "save": "Sauvegarder",
+    "special_symbols": "Votre traduction ne contient pas les symboles spéciaux suivants :{s}Êtes-vous sûr(e) de vouloir sauvegarder cette traduction ?",
     "string_name": "Nom de la chaîne",
     "string_path": "Dossier de la chaîne",
     "suggestions": "Traductions suggérées",

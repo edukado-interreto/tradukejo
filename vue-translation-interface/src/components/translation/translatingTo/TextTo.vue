@@ -124,7 +124,7 @@ export default {
           }
         });
         if (unusedTokens.length > 0) {
-          const sure = confirm('Via traduko ne enhavas la jenajn specialajn simbolojn:\n\n' + unusedTokens.join('\n') + '\n\nĈu vi certas, ke vi volas konservi ĉi tiun tradukon?');
+          const sure = confirm(this.$t('translate.special_symbols', {s: '\n\n' + unusedTokens.join('\n') + '\n\n'}));
           if (!sure) {
             return false;
           }

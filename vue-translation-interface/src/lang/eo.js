@@ -47,6 +47,7 @@ export default {
     save: 'Konservi',
     cancel: 'Nuligi',
     no_result: 'Neniu ĉeno estis trovita. Provu uzi aliajn filtrilojn.',
+    special_symbols: 'Via traduko ne enhavas la jenajn specialajn simbolojn:{s}Ĉu vi certas, ke vi volas konservi ĉi tiun tradukon?'
   },
   navigation: {
     all: 'Ĉiuj',
