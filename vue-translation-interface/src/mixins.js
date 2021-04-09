@@ -53,7 +53,6 @@ const mixins = {
       if (this.projectLanguage === obj.params.lang) { // No state filter for the source language
         delete obj.query.state;
       }
-      console.log('mdr ' + obj.params.lang);
 
       return obj;
     },
