@@ -1,6 +1,10 @@
 <template>
   <div class="col-md-6 original-string">
-    <display-text :texts="stringtext.text" :pluralized="stringtext.pluralized"></display-text>
+    <display-text
+      :texts="stringtext.text"
+      :pluralized="stringtext.pluralized"
+      :language="stringtext.language"
+      ></display-text>
     <div v-if="context" class="context">
       <i class="fas fa-question-circle" :title="$t('translate.context')"></i> {{ context }}
     </div>

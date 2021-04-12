@@ -1,5 +1,12 @@
 <template>
-  <div v-if="!pluralized" class="original-text" :class="{ 'click-to-edit': clickToEdit }" v-html="firstText">
+  <div
+    v-if="!pluralized"
+    class="original-text"
+    :class="{ 'click-to-edit': clickToEdit }"
+    v-html="firstText"
+    :lang="language.code"
+    :dir="language.direction"
+    >
   </div>
   <div v-else class="original-text" :class="{ 'click-to-edit': clickToEdit }">
     <div class="context mt-1">
@@ -28,6 +35,10 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    language: {
+      type: Object,
+      required: true,
     },
   },
   computed: {

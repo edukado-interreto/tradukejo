@@ -5,6 +5,7 @@
       :texts="string.translated_text.text"
       :pluralized="string.translated_text.pluralized"
       :click-to-edit="true"
+      :language="currentLanguage"
       @click="showForm"
     ></display-text>
 
