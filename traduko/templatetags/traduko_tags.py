@@ -59,8 +59,9 @@ def highlight_placeholders(str, escape=True):
         r'<code>{\1}</code>',
         str
     )
+    str = str.replace("&#x27;", "'")  # Unescaping single quotes but shouldn't be dangerous
     str = re.sub(
-        r'(%[0-9a-zA-Z().-]*[a-zA-Z])',
+        r'(%[0-9a-zA-Z().-]*[a-zA-Z]|\'{2,3})',
         r'<code>\1</code>',
         str
     )

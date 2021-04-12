@@ -43,7 +43,7 @@
           class="form-control"
           :dir="currentLanguage.direction"
           :lang="currentLanguage.code"
-          :ref="index === 0 ? 'textarea' : null"
+          :ref="'textarea' + index"
           :title="index === 0 ? 'textarea' : null"
           :id="'txt' + stringId + '-' + index"
           v-model.trim="enteredTexts[index]"
@@ -58,7 +58,7 @@
         class="form-control"
         :dir="currentLanguage.direction"
         :lang="currentLanguage.code"
-        ref="textarea"
+        ref="textarea0"
         v-model.trim="enteredTexts[0]"
         :disabled="loading"
         required
@@ -292,7 +292,22 @@ export default {
     }
   },
   mounted() {
-    this.$refs.textarea.focus();
+    this.$refs.textarea0.focus();
+
+    this.eventBus.on('insert-symbol', (args) => {
+      if (args.stringId === this.stringId) {
+        const textarea = this.$refs['textarea' + args.index];
+        const insertPosition = textarea.selectionEnd;
+        const oldText = this.enteredTexts[args.index] || '';
+        const newText = oldText.slice(0, insertPosition) + args.text + oldText.slice(insertPosition);
+        this.enteredTexts[args.index] = newText;
+        
+        this.$nextTick(() => {
+          textarea.focus();
+          textarea.setSelectionRange(insertPosition + args.text.length, insertPosition + args.text.length);
+        });
+      }
+    })
   },
 };
 </script>

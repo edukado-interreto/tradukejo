@@ -18,6 +18,7 @@ import TranslationRowHeader from "./TranslationRowHeader";
 import TextFrom from "./translatingFrom/TextFrom";
 import TextTo from "./translatingTo/TextTo";
 import axios from 'axios';
+import { computed } from 'vue';
 
 export default {
   components: { TranslationRowHeader, TextFrom, TextTo },
@@ -94,7 +95,8 @@ export default {
       loadLanguageFrom: this.loadLanguageFrom,
       stringId: this.stringToShow.id,
       setTranslationIsBeingEdited: this.setTranslationIsBeingEdited,
-      rowIsSelected: this.isSelected
+      translationIsBeingEdited: computed(() => this.translationIsBeingEdited),
+      rowIsSelected: this.isSelected,
     };
   },
   mounted() {
