@@ -91,13 +91,13 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<div class="row">
+			<ul class="list-unstyled">
 				{% for code, language in LANGUAGES %}
-				<div class="col-12 col-md-6">
+				<li>
 					<a href="{% translate_abs_url code %}" hreflang="{{ code }}" language="{{ code }}">{{ language }} ({{ code }})</a>
-				</div>
+				</li>
 				{% endfor %}
-			</div>
+			</ul>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'structure#close' %}</button>

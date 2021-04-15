@@ -148,7 +148,6 @@ export default {
         e.returnValue = "";
         return;
       }
-      console.log('la');
     },
   },
   created() {

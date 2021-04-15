@@ -76,18 +76,21 @@ main a {
 }
 
 #languageModal {
-    .row a {
-        color: $title-color;
-        display: block;
-        margin: 2px 0;
-        padding: 4px 6px;
+    ul {
+		column-count: 2;
 
-        &:hover {
-            text-decoration: none;
-            color: $title-dark-color;
-            background-color: #F8F8F8;
-        }
-    }
+		a {
+            color: $title-color;
+            display: block;
+            padding: 8px;
+
+            &:hover {
+                text-decoration: none;
+                color: $title-dark-color;
+                background-color: #F8F8F8;
+            }
+		}
+	}
 }
 
 main {
@@ -300,4 +303,11 @@ main {
   87.5% {
     box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
   }
+}
+
+
+@media (max-width: 400px) {
+	#languageModal ul {
+		column-count: 1;
+	}
 }

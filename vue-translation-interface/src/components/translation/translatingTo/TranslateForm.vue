@@ -279,6 +279,20 @@ export default {
       for (let i = 0; i < texts.length; i++) {
         this.enteredTexts[i] = texts[i];
       }
+    },
+    insertSymbol(args) {
+      if (args.stringId === this.stringId) {
+        const textarea = this.$refs['textarea' + args.index];
+        const insertPosition = textarea.selectionEnd;
+        const oldText = this.enteredTexts[args.index] || '';
+        const newText = oldText.slice(0, insertPosition) + args.text + oldText.slice(insertPosition);
+        this.enteredTexts[args.index] = newText;
+        
+        this.$nextTick(() => {
+          textarea.focus();
+          textarea.setSelectionRange(insertPosition + args.text.length, insertPosition + args.text.length);
+        });
+      }
     }
   },
   async created() {
@@ -293,21 +307,10 @@ export default {
   },
   mounted() {
     this.$refs.textarea0.focus();
-
-    this.eventBus.on('insert-symbol', (args) => {
-      if (args.stringId === this.stringId) {
-        const textarea = this.$refs['textarea' + args.index];
-        const insertPosition = textarea.selectionEnd;
-        const oldText = this.enteredTexts[args.index] || '';
-        const newText = oldText.slice(0, insertPosition) + args.text + oldText.slice(insertPosition);
-        this.enteredTexts[args.index] = newText;
-        
-        this.$nextTick(() => {
-          textarea.focus();
-          textarea.setSelectionRange(insertPosition + args.text.length, insertPosition + args.text.length);
-        });
-      }
-    })
+    this.eventBus.on('insert-symbol', this.insertSymbol);
+  },
+  unmounted() {
+    this.eventBus.off('insert-symbol', this.insertSymbol);
   },
 };
 </script>

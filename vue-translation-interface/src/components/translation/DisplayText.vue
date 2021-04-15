@@ -86,9 +86,18 @@ export default {
 </style>
 
 <style lang="scss">
+.original-text code {
+  border: 1px solid transparent;
+  padding: 1px 0;
+  border-radius: 3px;
+  transition: all .2s;
+}
+
 .can-add-symbols {
   code {
     cursor: pointer;
+    background-color: rgba(220, 220, 220, 0.5);
+    border-color: rgba(120, 120, 120, 0.6);
     
     &:hover {
       opacity: .75;
