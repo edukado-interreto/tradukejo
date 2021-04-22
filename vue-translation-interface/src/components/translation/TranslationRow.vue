@@ -169,4 +169,10 @@ export default {
     margin-top: 0;
   }
 }
+
+mark {
+  background-color: #ffee00;
+  padding: 0;
+  border-radius: 3px;
+}
 </style>

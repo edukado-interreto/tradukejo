@@ -2,7 +2,7 @@
   <header class="row mb-2">
     <div class="col-6">
       <strong>
-        <a :href="'#' + string.id" class="string-anchor" :title="$t('translate.link')">#{{ string.name }}</a>
+        <a :href="'#' + string.id" class="string-anchor" :title="$t('translate.link')" ref="title">#{{ string.name }}</a>
       </strong>
       –
       <language-change-dropdown :string="string"></language-change-dropdown>
@@ -50,6 +50,7 @@
 <script>
 import LanguageChangeDropdown from "./translatingFrom/LanguageChangeDropdown";
 import OnlineTranslatorLinks from "./translatingFrom/OnlineTranslatorLinks";
+import Mark from 'mark.js';
 
 export default {
   components: { LanguageChangeDropdown, OnlineTranslatorLinks },
@@ -58,6 +59,16 @@ export default {
     return {
       stateLoading: false,
     };
+  },
+  computed: {
+    stringName() {
+      let name = this.escapeHTML(this.string.name);
+      if (this.queryStringQ) {
+        const search = this.escapeHTML(this.queryStringQ);
+        name = name.replace(search, `<mark>${search}</mark>`);
+      }
+      return '#' + name;
+    }
   },
   methods: {
     async updateState(id, newState) {
@@ -75,6 +86,16 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.queryStringQ) {
+      const context = this.$refs.title;
+      const instance = new Mark(context);
+      instance.mark(this.queryStringQ, {
+        separateWordSearch: false,
+        diacritics: false
+      });
+    }
+  }
 };
 </script>
 

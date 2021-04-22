@@ -62,6 +62,9 @@ const mixins = {
         state: this.queryStringState,
       });
     },
+    escapeHTML(txt) {
+      return txt.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
   }
 };
 

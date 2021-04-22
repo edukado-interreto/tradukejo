@@ -106,7 +106,7 @@
 
 		{% if addible_languages and not project.locked or addible_languages and is_project_admin %}
 		<h2>{% translate 'project#translate-other' %}</h2>
-		<select name="addLanguage" id="addLanguage" class="select form-control mb-3">
+		<select name="addLanguage" id="addLanguage" class="select form-control m²b-3">
 			<option>{% translate 'project#choose-language' %}</option>
 			{% for l in addible_languages %}
 				<option lang="{{ l.code }}" dir="{{ l.direction }}"{% if is_project_admin %} data-url="{% url 'add_language_version' project.pk l.code %}"{% else %} data-code="{{ l.code }}" data-language="{{ l.name }}"{% endif %}>{{ l.code }} – {{ l.name }}</option>

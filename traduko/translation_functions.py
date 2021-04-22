@@ -434,7 +434,7 @@ def filter_by_search(trstrings, current_language, search_string):
                                               trstringtext__text__icontains=search_string)
         in_name = trstrings.filter(name__icontains=search_string)
         if trstrings[0].project.source_language == current_language:
-            return in_source_language
+            return (in_name | in_source_language).distinct()
         else:
             in_current_language = trstrings.filter(trstringtext__language=current_language,
                                                    trstringtext__text__icontains=search_string)
