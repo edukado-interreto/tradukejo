@@ -1,14 +1,13 @@
 <template>
   <article>
-    <button
+    <loading-button
       v-if="canComment"
-      @click="deleteThis"
-      :disabled="beingDeleted"
       class="btn btn-sm btn-danger float-right mb-1"
-    >
-      <loading-spinner v-if="beingDeleted" inline small white></loading-spinner>
-      <template v-else>{{ $t('delete') }}</template>
-    </button>
+      @click="deleteThis"
+      :loading="beingDeleted"
+      >
+      {{ $t('delete') }}
+    </loading-button>
     <blockquote :lang="language.code" :dir="language.direction">
       {{ comment.text }}
     </blockquote>

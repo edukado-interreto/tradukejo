@@ -113,14 +113,14 @@
       />
 
     <div class="form-group">
-      <button
+      <loading-button
         class="btn btn-primary mr-2 text-center"
         :class="{'can-submit': canSubmit}"
-        :disabled="loading || !canSubmit"
+        :disabled="!canSubmit"
+        :loading="loading"
       >
-        <loading-spinner v-if="loading" inline white></loading-spinner>
-        <template v-else>{{ $t('translate.save') }}</template>
-      </button>
+        {{ $t('translate.save') }}
+      </loading-button>
       <input
         type="button"
         class="btn btn-secondary"

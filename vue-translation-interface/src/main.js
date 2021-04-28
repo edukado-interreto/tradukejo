@@ -8,6 +8,7 @@ import axios from 'axios';
 import mitt from 'mitt';
 
 import LoadingSpinner from './components/ui/LoadingSpinner';
+import LoadingButton from './components/ui/LoadingButton';
 
 const app = createApp(App);
 const eventBus = mitt()
@@ -29,5 +30,6 @@ axios.defaults.baseURL = window.vueTranslationInterface.URLprefix;
 axios.defaults.headers.post['X-CSRFToken'] = app.config.globalProperties.csrf = window.vueTranslationInterface.csrf;
 
 app.component('loading-spinner', LoadingSpinner);
+app.component('loading-button', LoadingButton);
 
 app.mount('#app');

@@ -19,14 +19,14 @@
           ></textarea>
       </div>
       <div class="form-group">
-        <button
+        <loading-button
           class="btn btn-primary"
           :class="{'can-submit': canSubmit}"
-          :disabled="!canSubmit || loading"
+          :disabled="!canSubmit"
+          :loading="loading"
           >
-          <loading-spinner v-if="loading" inline white></loading-spinner>
-          <template v-else>{{ $t('comments.add') }}</template>
-        </button>
+          {{ $t('comments.add') }}
+        </loading-button>
       </div>
     </form>
   </div>

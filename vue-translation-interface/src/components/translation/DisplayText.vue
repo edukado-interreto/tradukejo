@@ -64,22 +64,6 @@ export default {
     canAddSymbols() {
       return this.isTextFrom && this.translationIsBeingEdited.value;
     },
-    highlightedTexts() {
-      if (!this.queryStringQ) {
-        return this.texts;
-      }
-
-      const highlighted = Object.fromEntries(Object
-        .entries(this.texts)
-        .map(([key, value]) => {
-          const search = this.escapeHTML(this.queryStringQ);
-          value = value.replace(search, `<mark>${search}</mark>`);
-          return [key, value];
-        })
-      );
-      console.log(highlighted);
-      return highlighted;
-    }
   },
   methods: {
     addSymbol(e, index) {

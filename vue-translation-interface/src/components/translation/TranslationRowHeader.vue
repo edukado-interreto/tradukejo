@@ -60,16 +60,6 @@ export default {
       stateLoading: false,
     };
   },
-  computed: {
-    stringName() {
-      let name = this.escapeHTML(this.string.name);
-      if (this.queryStringQ) {
-        const search = this.escapeHTML(this.queryStringQ);
-        name = name.replace(search, `<mark>${search}</mark>`);
-      }
-      return '#' + name;
-    }
-  },
   methods: {
     async updateState(id, newState) {
       this.stateLoading = true;
