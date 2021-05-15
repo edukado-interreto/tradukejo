@@ -299,6 +299,8 @@ class TrStringText(models.Model):
     def pluralized_text_dictionary(self):
         try:
             texts = json.loads(self.text)
+            if type(texts) != list:  # json.loads can parse self.text as an int or float, which isn't what we want
+                texts = [self.text]
         except ValueError as e:
             texts = [self.text]
 
@@ -314,6 +316,8 @@ class TrStringText(models.Model):
     def number_of_pluralized_texts(self):  # Unlike pluralized_text_dictionary(), can return more than 1 even if the string is not pluralized
         try:
             texts = json.loads(self.text)
+            if type(texts) != list:  # json.loads can parse self.text as an int or float, which isn't what we want
+                return 1
             return len(texts)
         except ValueError as e:
             return 1
@@ -358,6 +362,8 @@ class TrStringTextHistory(models.Model):
     def pluralized_text_dictionary(self):
         try:
             texts = json.loads(self.text)
+            if type(texts) != list:  # json.loads can parse self.text as an int or float, which isn't what we want
+                texts = [self.text]
         except ValueError as e:
             texts = [self.text]
 
