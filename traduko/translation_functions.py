@@ -302,7 +302,7 @@ def get_strings_to_translate(all_strings, language, path, sort, previous_ids=[],
         else:
             trstr.state = trstr.translated_text.state
 
-    return [strings, len(strings) + len(previous_ids) < total_strings]
+    return [strings, len(strings) < total_strings]
 
 
 def update_project_count(project):
