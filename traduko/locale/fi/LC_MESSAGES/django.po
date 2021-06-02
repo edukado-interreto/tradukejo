@@ -1,0 +1,593 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-06-02 15:03+0200\n"
+"PO-Revision-Date: 2021-06-02 15:03+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Ystävällisesti,"
+
+msgid "emails#contact-us"
+msgstr "Jos sinulla on kysyttävää, älä epäröi ottaa yhteyttä meihin."
+
+msgid "emails#greeting"
+msgstr "Rakas {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"PS: Jos et halua vastaanottaa näitä viestejä, on mahdollista säätää asiaa "
+"profiilissasi {1}."
+
+msgid "emails#signature"
+msgstr "E@I-tiimi"
+
+msgid "emails/comment#comment1"
+msgstr "Joku on julkaissut vastauksen kommenttiisi projektissa {1}"
+
+msgid "emails/comment#comment2"
+msgstr "Voit nähdä vastauksen täällä: {1}."
+
+msgid "emails/comment#title"
+msgstr "E@I:n käännössivusto: Vastaus kommenttiisi {project}:ssa"
+
+msgid "emails/new-texts#new-texts"
+msgstr "Projektissa {1} on ilmestynyt uusia tekstejä."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} käännettävä sana"
+msgstr[1] "{1} käännettävää sanaa"
+
+msgid "emails/new-texts#title"
+msgstr ""
+"E@I:n käännössivusto:  Projektissa {project} on uusia käännettäviä tekstejä"
+
+msgid "emails/new-texts#translate-link"
+msgstr "Voit kääntää täällä: {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} kääntämätön sana"
+msgstr[1] "{1} kääntämätöntä sanaa"
+
+msgid "emails/request#accept-link"
+msgstr "Voit hyväksyä tai hylätä pyynnön täällä: {1}."
+
+msgid "emails/request#accepted"
+msgstr "Pyyntösi kääntää projektia {1} kielelle {2} on vastaanotettu."
+
+msgid "emails/request#accepted-title"
+msgstr ""
+"E@I:n käännössivusto:  Käännöspyyntö projektiin {project} on hyväksytty."
+
+msgid "emails/request#new-request"
+msgstr "Käyttäjä {1} on pyytänyt oikeutta kääntää projektia {2} kielelle {3}:"
+
+msgid "emails/request#new-title"
+msgstr "E@I:n käännössivusto: Käännösoikeuspyyntö projektiin {project}"
+
+msgid "emails/request#rejected"
+msgstr "Pyyntöäsi kääntää projektia {1} kielelle {2}  ei hyväksytty."
+
+msgid "emails/request#rejected-title"
+msgstr "E@I:n käännössivusto: Käännöspyyntö projektiin {project} hylätty"
+
+msgid "emails/request#start-translating"
+msgstr "Voit aloittaa kääntämisen osoitteessa: {1}"
+
+msgid "messages#cannot-delete-comment"
+msgstr "Sinulla ei ole oikeutta poistaa tätä kommenttia."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Muutoksia ei voitu tallentaa."
+
+msgid "messages#changes-saved"
+msgstr "Muutokset tallennettiin."
+
+msgid "messages#notification-sent"
+msgstr "Viesti on lähetetty."
+
+msgid "messages#request-already-allowed"
+msgstr "Sinulla on jo oikeus kääntää tähän kieleen."
+
+msgid "messages#request-already-sent"
+msgstr "Olen jo lähettänyt pyynnön tästä kielestä."
+
+msgid "messages#request-sent"
+msgstr "Pyyntö on lähetetty."
+
+msgid "pages/contact#contact1"
+msgstr "Käännössivusto on E@I ({1}Edukado@Interreto{/1}):n projekti."
+
+msgid "pages/contact#contact2"
+msgstr ""
+"Jos sinulla on kysymys tai kommentti, älä epäröi kirjoittaa osoitteeseen "
+"{1}."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Esimerkkejä kommenteista."
+
+msgid "pages/instructions#comments-title"
+msgstr "Kommentit"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"Sinulla on mahdollisuus kommentoida kaikkia tämän ketjun kieliversioita. "
+"Tämä antaa sinulle mahdollisuuden pyytää selityksiä käännettävästä "
+"tekstistä, keskustella hyvistä käännöksistä muiden kääntäjien kesken, jne. "
+"Voit valita {1}asetuksissasi{/1}, haluatko, että sinulle ilmoitetaan, kun "
+"joku vastaa kommenttiisi."
+
+msgid "pages/instructions#interface-caption"
+msgstr "Käännöskäyttöliittymä."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "Yksityiskohtainen käyttöliittymä ketjun kääntämiseksi."
+
+msgid "pages/instructions#interface-title"
+msgstr "Kääntämisen käyttöliittymä."
+
+msgid "pages/instructions#interface1"
+msgstr "Käännöskäyttöliittymä näyttää tältä:"
+
+msgid "pages/instructions#interface2"
+msgstr "Se sisältää viisi osiota, ylhäältä alhaalle:"
+
+msgid "pages/instructions#interface2-1"
+msgstr "Palkki, jossa on erilaisia suodattimia,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"rivi, joka näyttää, mille kielelle käännät, ja missä kansiossa sijaitset."
+
+msgid "pages/instructions#interface2-3"
+msgstr "vasemmalla: luettelo kaikista projektin kansioista,"
+
+msgid "pages/instructions#interface2-4"
+msgstr "oikealla: yksityiskohtainen luettelo nykyisen kansion kansioista,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "varsinainen käännöskäyttöjärjestelmä"
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"Käännettävät tekstit on järjestetty {1}ketjuiksi{2}: tekstiosioiksi, jotka "
+"voivat olla kokonainen kappale, valikon osa, osion otsikko, jne. Jokainen "
+"värillinen kehys on yksi ketju, joka voidaan kääntää muista riippumatta."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"Ketjut voidaan järjestää kansioiksi, ryhmittelemään ketjuja aiheen mukaan "
+"selvyyden vuoksi."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"Jos nykyinen kansio sisältää paljon ketjuja (esimerkiksi kansio \"maat\", "
+"jossa on 200 maan nimeä), kaikkia ei ladata, mutta aivan alhaalla on iso "
+"painike \"Lataa lisää\"."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"Vasemmalla puolella on lähdekielinen teksti, oikealla puoliskolla on "
+"käännös. Osiot ovat seuraavia:"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Ketjun nimi. Se on yksikäsitteinen tunniste etupäässä projektin hallinnolle."
+" Sinun ei tule kääntää sitä."
+
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"Lähdekieli. Jos napautat sitä, ilmestyy valikko, jonka avulla voit nähdä "
+"muut kielet."
+
+msgid "pages/instructions#interface6-3"
+msgstr ""
+"Linkkejä nähdäksesi käännöksen automaattisessa kääntäjässä (tämä voi auttaa "
+"sinua kääntämisessä)."
+
+msgid "pages/instructions#interface6-4"
+msgstr "Teksti, jonka sinun pitää kääntää."
+
+msgid "pages/instructions#interface6-5"
+msgstr "Mahdollinen aputeksti, joka voi esimerkiksi selventää asiayhteyttä."
+
+msgid "pages/instructions#interface6-6"
+msgstr "Käännöksen tila."
+
+msgid "pages/instructions#interface6-7"
+msgstr "Nykyinen käännös."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Päiväys ja tekstin tai käännöksen tekijä. Jos tekstiä on muokattu useasti, "
+"voit nähdä muutoshistorian. Siellä on myös mahdollisuus kommentoida."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Tervetuloa {1}E@I{/1}:n käännössivustolle. Se on järjestelmä, joka "
+"mahdollistaa monikielisten sivustojen (tai muiden projektien) sisällön "
+"helpon kääntämisen."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"Käännössivustoa nykyään ohjelmoidaan ja parannellaan, joten toiminta ja "
+"käyttöliittymä voi vielä muuttua."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"Aloittaaksesi kääntämisen, sinulla pitää olla{1} tili{/1}. Jos joskus olet "
+"käyttänyt vanhaa käännössivustoa (ennen 2021), vanhat tilit eivät toimi "
+"tällä käännössivustolla."
+
+msgid "pages/instructions#plural-caption"
+msgstr "Ketju, jossa on monikkomuoto"
+
+msgid "pages/instructions#plural-title"
+msgstr "Useita ketjuja"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Jos sivustolla on esimerkiksi lause \"Meillä on X käyttäjää\", saattaa "
+"ilmetä ongelma; jos on vain yksi käyttäjä, näkyy \"Meillä on 1 käyttäjää\", "
+"ja monitahoisissa kielissä, kuten venäjä, lause on usein kieliopillisesti "
+"väärin, käyttäjien määrästä riippuen."
+
+msgid "pages/instructions#plural2"
+msgstr "Ratkaisuna on ketjut, joissa on eri teksti lukumäärästä riippuen."
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"Käännä silloin kaikki mahdolliset esimerkkinumeroiden mukaan. Yllä olevan "
+"kuvan esimerkissä, venäjänkielisen kääntäjän pitää päätellä, millainen "
+"lauseen pitää olla jos {1} sijaan on 1, 2 tai 5."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"On normaalia, jos on eri määrä käännöksiä; monissa kielissä tarvitaan vain "
+"kaksi muotoa (yksikkö ja monikko), mutta joissakin (useimmissa "
+"slaavilaisissa kielissä) tarvitaan kolme, sloveniassa neljä ja joissakin  "
+"(irlanti, arabia) jopa enemmän."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Ruutukaappaus projektin sivusta."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Projektin sivu"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"Ylhäällä on yleisiä tietoja projektista. Värillisessä kehyksessä on "
+"selityksiä siitä, miten käännöksiä käytetään; joissakin sivustoissa ne ovat "
+"heti nähtävissä, muissa sivuston haltijan täytyy käsin lisätä käännökset – "
+"tämä riippuu kyseisestä sivustosta, ei käännössivustosta."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"Alhaalla on luettelo kielistä, joille projektia käännetään, ja käännettyjen "
+"tekstien prosenttiosuus. Vieressä on luettelo viimeisimmistä kommenteista ja"
+" tapahtumista."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Käännösluvan pyyntö."
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Käännösluvat"
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Kullekin kielelle kääntämiseksi tarvitset luvan projektin ylläpitäjältä. "
+"Napauta painiketta \"Pyydä lupaa\" kielen nimen vieressä  ja kirjoita lyhyt "
+"selitys. Kun ylläpitäjä hyväksyy pyyntösi, saat tiedon sähköpostilla ja voit"
+" aloittaa kääntämisen."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Jos kieltä, jolle haluat kääntää, ei ole vielä lisätty projektiin, löydät "
+"alta valikon, jossa on luettelo kielistä, otsikolla \"Käännö muuhun "
+"kieleen\". Jos kieli, jota haluat ei ole tuossa luettelossa, silloin {1} ota"
+" yhteyttä meihin{/1}."
+
+msgid "pages/instructions#projects1"
+msgstr ""
+"\"Projektit\" ovat erillisiä käännösten joukkoja, jotka liittyvät yhteen "
+"sivustoon."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Hakeminen ja järjestäminen"
+
+msgid "pages/instructions#search-sort1"
+msgstr "Ylimässä palkissa on erilaisia suodattimia:"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"Ensimmäinen mahdollistaa suodattamisen tilan mukaan (on käytännöllistä nähdä"
+" vain ketjut, joita on tarpeen kääntää),"
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"toinen mahdollistaa ketjujen järjestämisen; oletuksena on nimen mukaan, "
+"mutta voit järjestää myös uusimman tai vanhimman lisätyn tekstin mukaan,"
+
+msgid "pages/instructions#search-sort1-3"
+msgstr "hakuikkuna etsii tekstiä käännöksistä ja lähdekielestä."
+
+msgid "pages/instructions#state-title"
+msgstr "Käännösten tila"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Käännöksillä voi olla kolme tilaa; kääntämättä (näkyy punaisella), uudelleen"
+" käännettävä (näkyy keltaisella) ja käännetty (näkyy vihreällä). \"Uudelleen"
+" käännettävä\" tarkoittaa, että lähdekielen teksti on muutettu, mikä saattaa"
+" vaatia käännöksen muuttamista. Jos arvioit, että ei tarvitse muuttaa "
+"käännöstä, voit napauttaa kohtaa \"Merkitse käännetyksi\"."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Esimerkkejä ehdotetuista käännöksistä."
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Ehdotettuja käännöksiä"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Toisinaan, kun käännät uutta ketjua, voi ilmestyä käännösehdotuksia. Nuo "
+"ehdotukset tulevat saman tekstin toisista käännöksistä, jotka jo ovat "
+"käännössivustolla (voivat olla samassa projektissa tai muussa).  Voit "
+"yksinkertaisesti napauttaa ehdotusta, josta pidät, ja se lisätään "
+"käännöskenttään."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Ketju, jossa on outoja symboleja"
+
+msgid "pages/instructions#symbols-title"
+msgstr "Erityissymbolit"
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Joissakin ketjuissa voi olla outoja merkkejä. Ne ovat erityismerkkejä, jotka"
+" sivusto korvaa joillakin muilla: linkki, käyttäjän nimi, numero... Kopioi "
+"ne muuttamatta käännökseesi (ja jos ne sisältävät sanoja, älä käännä niitä);"
+" jos jätät ne pois tai muutat niitä, tekstit eivät näyt oikein sivustolla."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Nuo erityiset symbolit näkyvät värillisinä käännösliittymässä, ja ne voivat "
+"näyttää esimerkiksi näiltä:"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Jotkin projektit käyttävät kaksinkertaisia ({1}) ja kolminkertaisia  ({2}) "
+"heittomerkkejä kursivointeihin ja lihavointeihin. Kiinnitä huomiota niihin, "
+"koska se ei ole yleispätevä ja riippuu sivustosta itsestään, eikä "
+"käännössivustosta."
+
+msgid "pages/privacy#available-languages"
+msgstr ""
+"Yksityisyyssäännökset ovat tällä hetkellä saatavilla vain "
+"{1}Esperantoksi{/1}."
+
+msgid "pages/projects#hidden"
+msgstr "Piilotettu projekti"
+
+msgid "pages/projects#lead1"
+msgstr ""
+"Käyttäjäystävällisempi, tehokkaampi ja kauniimpi; ohjelmoimme "
+"käännössivuston uudelleen nykyaikaisilla teknologioilla."
+
+msgid "pages/projects#lead2"
+msgstr ""
+"Vanha käännössivusto on edelleen {1}käytettävissä täällä{/1}, mutta "
+"käännösprojektit siirretään vähitellen uuteen käännössivustoon."
+
+msgid "pages/projects#locked"
+msgstr "Suljettu projekti"
+
+msgid "pages/projects#projects"
+msgstr "Projekteja"
+
+msgid "pages/projects#read-instructions"
+msgstr "Lue ohjeita"
+
+msgid "pages/projects#welcome"
+msgstr "Tervetuloa E@I:n uudelle käännössivustolle!"
+
+msgid "pages/terms#intro"
+msgstr "Käännössivustollamme kääntäessäsi hyväksyt seuraavat ehdot:"
+
+msgid "pages/terms#term-1"
+msgstr "Takaat, että kielitasosi on hyvä kielellä, jolle aiot kääntää."
+
+msgid "pages/terms#term-2"
+msgstr "Olet lukenut ja hyväksyt {1}yksityisyyssäännöksemme{/1}."
+
+msgid "pages/terms#term-3"
+msgstr ""
+"Olet lukenut {1}ohjeemme{/1} ja lupaat työskennellä niiden mukaisesti."
+
+msgid "pages/terms#term-4"
+msgstr ""
+"Lupaat kääntää tekstin lähelle alkuperäistä. Takaat, että et muuta tekstin "
+"tarkoitusta etkä lisää mitään alkuperäisestä tekstistä puuttuvaa ilman "
+"lupaa."
+
+msgid "pages/terms#term-5"
+msgstr ""
+"Käyttäjänä/kääntäjänä luovutat meille maailmanlaajuisen, jakamattoman, "
+"maksuttoman, ajallisesti ja sisällöllisesti rajoittamattoman oikeuden "
+"käyttää luomaasi ja julkaisemaasi sisältöä kaikissa Edukado@Interrero:n "
+"käyttämissä medioissa. Edukado@Interreto:lla on oikeus käyttä tuota sisältöä"
+" kaikilla tavoilla ja kaikissa medioissa: julkaista, kopioida, "
+"uudelleenjulkaista, muuttaa, muokata, jakaa, myydä ym."
+
+msgid "pages/terms#term-6"
+msgstr ""
+"Käyttäjänä/kääntääjänä takaat, että jakamasi sisältö on vapaa kolmansien "
+"osapuolten oikeuksista. Takaat, että sinä omistat kaikki tarvittavat "
+"oikeudet julkaisemaasi sisältöön, jotta voit noudattaa näitä sääntöjä."
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} lisäsi {2} sanan."
+msgstr[1] "{1} lisäsi {2} sanaa."
+
+msgctxt "Butono por peti tradukpermeson"
+msgid "project#ask-permission"
+msgstr "Pyydä lupaa"
+
+msgid "project#characters"
+msgstr "Merkkejä:"
+
+msgid "project#choose-language"
+msgstr "Valitse kieli..."
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} muokkasi {2} ketjun."
+msgstr[1] "{1} muokkasi {2} ketjua."
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} toi {2} sanan."
+msgstr[1] "{1} toi {2} sanaa."
+
+msgid "project#languages"
+msgstr "Kielet"
+
+msgid "project#last-activities"
+msgstr "Viimeisimmät tapahtumat"
+
+msgid "project#last-comments"
+msgstr "Viimeisimmät kommentit"
+
+msgid "project#my-languages"
+msgstr "Kieleni"
+
+msgid "project#needed"
+msgstr "Tarvittavat kielet:"
+
+msgid "project#needed-all"
+msgstr "Kaikki mahdolliset"
+
+msgid "project#other-contact"
+msgstr ""
+"Haluatko kääntää kielelle, joka ei ole luettelossa? {1}Voit ottaa yhteyttä "
+"meihin{/1}."
+
+msgid "project#other-languages"
+msgstr "Muita kieliä"
+
+msgid "project#outdated-words"
+msgstr "Uudelleen käännettäviä sanoja:"
+
+msgid "project#read-instructions"
+msgstr "Oletko ymmälläsi? {1}Lue ohjeet!{/1}"
+
+msgid "project#request-explanation"
+msgstr "Ole hyvä ja kirjoita joitakin sanoja itsestäsi:"
+
+msgid "project#request-language"
+msgstr "Pyydät lupaa kääntää kielelle:"
+
+msgctxt "Titolo de fenestreto"
+msgid "project#request-permission"
+msgstr "Pyydä käännöslupaa"
+
+msgid "project#request-sent"
+msgstr "Pyyntö on lähetetty"
+
+msgctxt "Butono por sendi peton pri tradukpermeso"
+msgid "project#sendi"
+msgstr "Lähetä"
+
+msgid "project#source-language"
+msgstr "Lähdekieli:"
+
+msgid "project#strings"
+msgstr "Ketjuja:"
+
+msgid "project#total-translated-words"
+msgstr "Käännettyjä sanoja:"
+
+msgctxt "Butono por komenci traduki en la elektita lingvo"
+msgid "project#translate"
+msgstr "Käännä"
+
+msgid "project#translate-other"
+msgstr "Käännä toiselle kielelle"
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} käänsi {2} sanan."
+msgstr[1] "{1} käänsi {2} sanaa."
+
+msgid "project#translators"
+msgstr "Kääntäjiä:"
+
+msgid "project#untranslated-words"
+msgstr "Kääntämättömiä sanoja:"
+
+msgid "project#url"
+msgstr "Osoite:"
+
+msgid "project#words"
+msgstr "Sanoja:"
+
+msgid "structure#choose-language"
+msgstr "Valitse kielesi"
+
+msgid "structure#close"
+msgstr "Sulje"
+
+msgid "structure#contact"
+msgstr "Yhteydenotto"
+
+msgid "structure#home"
+msgstr "Pääsivu"
+
+msgid "structure#instructions"
+msgstr "Ohjeita"
+
+msgid "structure#privacy"
+msgstr "Yksityisyys"
+
+msgid "structure#project-by"
+msgstr "Tämä käännössivusto on {1}Edukado@Interreto{/1}:n projekti."
+
+msgid "structure#settings"
+msgstr "Asetukset"
+
+msgid "structure#sign-in"
+msgstr "Kirjaudu"
+
+msgid "structure#sign-out"
+msgstr "Kirjaudu ulos"
+
+msgid "structure#sign-up"
+msgstr "Luo tili"
+
+msgid "structure#terms"
+msgstr "Käyttöehdot"
+
+msgid "structure#website-name"
+msgstr "E@I:n käännössivusto"
+
+msgid "structure#welcome"
+msgstr "Tervetuloa"
+
+msgid "translate#javascript"
+msgstr "JavaScript pitää olla päällä, jotta käännöskäyttöliittymä toimii."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "{1}:n käännös"

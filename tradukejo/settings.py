@@ -95,6 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGES = (
     ('en', 'English'),
     ('eo', 'Esperanto'),
+    ('fi', 'Suomi'),
     ('fr', 'Français'),
     ('pl', 'Polski'),
 )

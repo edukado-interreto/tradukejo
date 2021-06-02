@@ -3,6 +3,7 @@ import eo from './lang/eo';
 import fr from './lang/fr';
 import en from './lang/en';
 import pl from './lang/pl';
+import fi from './lang/fi';
 
 const currentLocale =  window.vueTranslationInterface.currentLocale;
 
@@ -11,6 +12,7 @@ const messages = {
     fr,
     en,
     pl,
+    fi,
 };
 
 function pluralRuleFrench(choice) {

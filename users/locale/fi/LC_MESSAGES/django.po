@@ -1,0 +1,126 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-06-02 15:07+0200\n"
+"PO-Revision-Date: 2021-06-02 15:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Ystävällisesti,"
+
+msgid "emails#greeting"
+msgstr "Rakas {1},"
+
+msgid "emails#signature"
+msgstr "E@I-tiimi"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Vahvistamme, että olet liittynyt  E@I:n {1} käännössivustolle {/1}. Voit jo "
+"kirjautua ja alkaa kääntää."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Suosittelemme, että luet {1} ohjeet{/1} ennen kuin aloitat kääntämisen."
+
+msgid "emails/registration#title"
+msgstr "E@I:n käännössivusto: liittymisen vahvistus"
+
+msgid "login#forgot-password"
+msgstr "Unohditko salasanasi? {1}Saat sen uudestaan täältä.{/1}"
+
+msgid "login#sign-up"
+msgstr "Eikö sinulla ole tiliä? {1}Liity nyt!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Tilisi on luotu ja voit jo aloittaa kääntämisen. Vahvistusviesti on "
+"lähetetty osoitteeseen {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Muutoksia ei voitu tallentaa."
+
+msgid "messages#changes-saved"
+msgstr "Muutokset tallennettiin."
+
+msgid "password#can-login"
+msgstr "Voit nyt {1}kirjautua{/1}."
+
+msgid "password#change-success"
+msgstr "Salasanasi on vaihdettu onnistuneesti."
+
+msgid "password#message-sent"
+msgstr ""
+"Viesti, jossa on ohjeet, on lähetetty sähköpostiosoitteeseesi. Jos et saanut"
+" mitään, varmista, että annoit oikean osoitteen ja että sinulla on tili."
+
+msgid "password#reset"
+msgstr ""
+"Unohditko salasanasi? Kirjoita tähän sähköpostiosoitteesi ja lähetämme "
+"sinulle ohjeet."
+
+msgid "password#send-instructions"
+msgstr "Lähettäkää minulle ohjeet"
+
+msgid "password#type-twice"
+msgstr ""
+"Ole hyvä ja kirjoita nykyinen salasanasi varmistukseksi, ja uusi salasanasi "
+"kaksi kertaa, varmistaaksesi, että kirjoitit sen oikein."
+
+msgid "profile#didnt-translate"
+msgstr "{1} ei vielä ole alkanut kääntää."
+
+msgid "profile#projects"
+msgstr "Projekteja, joihin käyttäjä osallistuu {1}"
+
+msgid "settings#email"
+msgstr "Sähköpostiosoite"
+
+msgid "settings#email-language"
+msgstr "Ensisijainen kieli sähköpostin vastaanottamiseen."
+
+msgid "settings#email-new-comments"
+msgstr ""
+"Ilmoittakaa minulle sähköpostilla, milloin joku on vastannut kommenttiini"
+
+msgid "settings#email-new-texts"
+msgstr ""
+"Ilmoittakaa minulle sähköpostilla milloin on uusia tekstejä käännettäväksi"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Ilmoittakaa minulle sähköpostilla milloin joku pyytää oikeutta kääntää "
+"projektia, jota hallinnoin"
+
+msgid "structure#change-password"
+msgstr "Vaihda salasanani"
+
+msgid "structure#home"
+msgstr "Pääsivu"
+
+msgid "structure#log-in"
+msgstr "Kirjaudu"
+
+msgid "structure#password-changed"
+msgstr "Salasana vaihdettu onnistuneesti"
+
+msgid "structure#password-reset"
+msgstr "Hanki salasana uudelleen"
+
+msgid "structure#save"
+msgstr "Tallenna"
+
+msgid "structure#settings"
+msgstr "Asetukset"
+
+msgid "structure#sign-up"
+msgstr "Luo tili"
