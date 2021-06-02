@@ -2,17 +2,23 @@ import { createI18n } from 'vue-i18n'
 import eo from './lang/eo';
 import fr from './lang/fr';
 import en from './lang/en';
+import pl from './lang/pl';
 
 const currentLocale =  window.vueTranslationInterface.currentLocale;
 
 const messages = {
     eo,
     fr,
-    en
+    en,
+    pl,
 };
 
 function pluralRuleFrench(choice) {
   return choice >= 2 ? 1 : 0;
+}
+
+function pluralRulePolish(n) {
+  return n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;
 }
 
 const i18n = createI18n({
@@ -20,7 +26,8 @@ const i18n = createI18n({
     fallbackLocale: 'eo',
     messages,
     pluralizationRules: {
-      fr: pluralRuleFrench
+      fr: pluralRuleFrench,
+      pl: pluralRulePolish,
     }
 });
 

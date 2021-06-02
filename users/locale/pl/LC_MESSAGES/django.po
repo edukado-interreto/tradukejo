@@ -1,0 +1,124 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-06-02 11:15+0200\n"
+"PO-Revision-Date: 2021-06-02 11:15+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Z pozdrowieniami,"
+
+msgid "emails#greeting"
+msgstr "Cześć {1},"
+
+msgid "emails#signature"
+msgstr "Zespół E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Ni konfirmas, ke vi aliĝis al la {1}tradukejo de E@I{/1}. Vi povas jam "
+"ensaluti kaj komenci traduki."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Ni rekomendas al vi legi la {1}instrukciojn{/1} antaŭ ol komenci traduki."
+
+msgid "emails/registration#title"
+msgstr "Tradukejo de E@I: konfirmo de aliĝo"
+
+msgid "login#forgot-password"
+msgstr "Nie pamiętasz hasła? {1}Odzyskaj je tutaj.{/1}"
+
+msgid "login#sign-up"
+msgstr "Nie masz konta? {1}Zarejestruj się teraz!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Twoje konto zostało zarejestrowane, możesz już zacząć tłumaczyć. Wiadomość z"
+" potwierdzeniem została wysłana na adres {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Zmiany nie zostały zachowane."
+
+msgid "messages#changes-saved"
+msgstr "Zmiany zostały zachowane."
+
+msgid "password#can-login"
+msgstr "Możesz teraz się {1}zalogować{/1}."
+
+msgid "password#change-success"
+msgstr "Twoje hasło zostało zmienione."
+
+msgid "password#message-sent"
+msgstr ""
+"Wiadomość z instrukcją została wysłana na twój adres mailowy. Jeśli niczego "
+"nie otrzymasz, upewnij się, że wpisałeś/łaś poprawny adres i że posiadasz tu"
+" konto."
+
+msgid "password#reset"
+msgstr ""
+"Nie pamiętasz hasła? Wpisz tutaj swój adres mailowy i wyślemy ci instrukcję."
+
+msgid "password#send-instructions"
+msgstr "Wyślij mi instrukcję"
+
+msgid "password#type-twice"
+msgstr ""
+"Dla bezpieczeństwa wpisz swoje obecne hasło i swoje nowe hasło dwukrotnie, "
+"by upewnić się, że jest ono poprawnie wpisane."
+
+msgid "profile#didnt-translate"
+msgstr "{1} jeszcze nie rozpoczął/ęła tłumaczenia."
+
+msgid "profile#projects"
+msgstr "Projekty, w których uczestniczy użytkownik {1}."
+
+msgid "settings#email"
+msgstr "Adres mailowy"
+
+msgid "settings#email-language"
+msgstr "Preferowany język otrzymywanych wiadomości"
+
+msgid "settings#email-new-comments"
+msgstr "Powiadom mnie mailowo, gdy ktoś odpowie na mój komentarz"
+
+msgid "settings#email-new-texts"
+msgstr "Powiadom mnie mailowo, gdy pojawią się nowe teksty do przetłumaczenia"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Powiadom mnie mailowo, gdy ktoś poprosi o uprawnienie do tłumaczenia "
+"projektu, którym zarządzam"
+
+msgid "structure#change-password"
+msgstr "Zmień moje hasło"
+
+msgid "structure#home"
+msgstr "Strona główna"
+
+msgid "structure#log-in"
+msgstr "Zaloguj się"
+
+msgid "structure#password-changed"
+msgstr "Hasło zostało zmienione"
+
+msgid "structure#password-reset"
+msgstr "Odzyskaj hasło"
+
+msgid "structure#save"
+msgstr "Zapisz"
+
+msgid "structure#settings"
+msgstr "Ustawienia"
+
+msgid "structure#sign-up"
+msgstr "Utwórz konto"

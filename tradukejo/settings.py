@@ -96,6 +96,7 @@ LANGUAGES = (
     ('en', 'English'),
     ('eo', 'Esperanto'),
     ('fr', 'Français'),
+    ('pl', 'Polski'),
 )
 
 LANGUAGE_CODE = 'eo'
