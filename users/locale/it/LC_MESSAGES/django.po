@@ -1,0 +1,126 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2021-10-21 11:05+0200\n"
+"PO-Revision-Date: 2021-10-21 11:05+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Distinti saluti,"
+
+msgid "emails#greeting"
+msgstr "Caro/a {1},"
+
+msgid "emails#signature"
+msgstr "La squadra E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Possiamo confermare che ti sei unito al sistema di traduzione E@I's {1}. Ora"
+" è possibile effettuare il login e cominciare a tradurre."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Si raccomanda di leggere le {1}istruzioni{/1} prima di cominciare a "
+"tradurre."
+
+msgid "emails/registration#title"
+msgstr "Sistema di traduzione E@I: conferma di iscrizione"
+
+msgid "login#forgot-password"
+msgstr "Hai dimenticato la tua password? {1}Recuperala quì.{/1}"
+
+msgid "login#sign-up"
+msgstr "Se non hai un account, {1} creane uno ora!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Il tuo account è stato creato e ora puoi cominciare a tradurre. Un messaggio"
+" di conferma è stato inviato a {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Non è stato possibile salvare le modifiche."
+
+msgid "messages#changes-saved"
+msgstr "Le modifiche sono state salvate."
+
+msgid "password#can-login"
+msgstr "Ora puoi fare {1}login{/1}."
+
+msgid "password#change-success"
+msgstr "La tua password è stata cambiata con successo."
+
+msgid "password#message-sent"
+msgstr ""
+"Un messaggio di istruzioni è stato inviato al tuo indirizzo email. Se non si"
+" ha ricevuto nulla, accertarsi di aver inserito l'indirizzo email corretto e"
+" di avere un account."
+
+msgid "password#reset"
+msgstr ""
+"Hai dimenticato la password? Scrivi quì il tuo indirizzo email e ti "
+"spediremo istruzioni in proposito."
+
+msgid "password#send-instructions"
+msgstr "Inviami istruzioni."
+
+msgid "password#type-twice"
+msgstr ""
+"Inserire per sicurezza la password corrente, e la nuova password due volte "
+"per assicurarsi di averla scritta bene."
+
+msgid "profile#didnt-translate"
+msgstr "{1} non ha ancora cominciato a tradurre."
+
+msgid "profile#projects"
+msgstr "Progetti ai quali partecipa l'utente {1}"
+
+msgid "settings#email"
+msgstr "Indirizzo di posta elettronica"
+
+msgid "settings#email-language"
+msgstr "Lingua preferita per la ricezione delle email."
+
+msgid "settings#email-new-comments"
+msgstr "Informami per email quando qualcuno risponde ad un mio commento"
+
+msgid "settings#email-new-texts"
+msgstr "Informami per email quando ci sono nuovi testi da tradurre"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Informami per email quando qualcuno chiede di poter tradurre un progetto di "
+"sono amministratore"
+
+msgid "structure#change-password"
+msgstr "Cambia password"
+
+msgid "structure#home"
+msgstr "Pagina principale"
+
+msgid "structure#log-in"
+msgstr "Accedi"
+
+msgid "structure#password-changed"
+msgstr "Password cambiata"
+
+msgid "structure#password-reset"
+msgstr "Reimposta password"
+
+msgid "structure#save"
+msgstr "Salva"
+
+msgid "structure#settings"
+msgstr "Impostazioni"
+
+msgid "structure#sign-up"
+msgstr "Registrazione"

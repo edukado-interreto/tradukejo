@@ -23,7 +23,7 @@ export default {
       return `https://translate.yandex.ru/?lang=${this.languageFrom.code}-${this.languageTo.code}&text=${this.firstText}`;
     },
     deeplLink() {
-      return `https://www.deepl.com/translator#${this.languageFrom.code}/${this.languageTo.code}/${this.firstText}`;
+      return `https://www.deepl.com/translator#${this.languageFrom.code}/${this.languageTo.code}/${this.firstText.replaceAll("/", "\\%2F")}`;
     },
     firstText() {
       return encodeURI(this.texts[Object.keys(this.texts)[0]]);

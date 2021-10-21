@@ -518,7 +518,7 @@ msgstr "La solvo estas ĉenoj kun malsama teksto depende de nombro:"
 #: templates/traduko/instructions.html:141
 #: templates/traduko/instructions.html:142
 msgid "pages/instructions#plural-caption"
-msgstr "Ĉeno kun pluralaj formo."
+msgstr "Ĉeno kun pluralaj formoj."
 
 #: templates/traduko/instructions.html:146
 msgid "pages/instructions#plural3"

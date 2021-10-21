@@ -97,6 +97,7 @@ LANGUAGES = (
     ('eo', 'Esperanto'),
     ('fi', 'Suomi'),
     ('fr', 'Français'),
+    ('it', 'Italiano'),
     ('pl', 'Polski'),
 )
 

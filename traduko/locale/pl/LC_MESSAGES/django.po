@@ -240,7 +240,7 @@ msgstr ""
 "tradukejo."
 
 msgid "pages/instructions#plural-caption"
-msgstr "Ĉeno kun pluralaj formo."
+msgstr "Ĉeno kun pluralaj formoj."
 
 msgid "pages/instructions#plural-title"
 msgstr "Pluralaj ĉenoj"
