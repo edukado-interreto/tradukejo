@@ -1,0 +1,128 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2022-04-01 15:07+0200\n"
+"PO-Revision-Date: 2022-04-01 15:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Yang benar,"
+
+msgid "emails#greeting"
+msgstr "Selamat sejahtera {1},"
+
+msgid "emails#signature"
+msgstr "Pasukan E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Kami mengesahkan bahawa anda telah menyertai {1}sistem terjemahan E@I. Anda "
+"kini boleh mendaftar masuk dan mula menterjemah."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Kami mencadangkan supaya anda membaca {1}arahan{/1} sebelum anda mula "
+"menterjemah."
+
+msgid "emails/registration#title"
+msgstr "Sistem terjemahan E@I: pengesahan pendaftaran"
+
+msgid "login#forgot-password"
+msgstr "Lupa kata laluan anda? {1}Dapatkan semula di sini.{/1}"
+
+msgid "login#sign-up"
+msgstr "Jika anda belum mempunyai akaun, {1}sertai sekarang!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Akaun anda telah dicipta dan anda kini boleh memulakan penterjemahan. Emel "
+"pengesahan telah dihantar ke {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Perubahan-perubahan tidak dapat disimpan."
+
+msgid "messages#changes-saved"
+msgstr "Perubahan-perubahan telah disimpan."
+
+msgid "password#can-login"
+msgstr "Anda kini boleh {1}mendaftar masuk{/1}."
+
+msgid "password#change-success"
+msgstr "Kata laluan telah berjaya ditukar."
+
+msgid "password#message-sent"
+msgstr ""
+"Arahan telah dihantar ke alamat emel anda. Jika anda tidak menerima mesej "
+"ini, sila pastikan bahawa anda memasukkan alamat emel anda dengan betul, dan"
+" anda mempunyai akaun dengan kami."
+
+msgid "password#reset"
+msgstr ""
+"Lupa kata laluan anda? Sila masukkan alamat email anda di sini dan kami akan"
+" menghantar arahan kepada anda."
+
+msgid "password#send-instructions"
+msgstr "Hantar arahan kepada saya"
+
+msgid "password#type-twice"
+msgstr ""
+"Untuk keselamatan, sila taip kata laluan anda sekarang, dan kata laluan "
+"baharu sebanyak dua kali, bagi memastikan anda menaip kata laluan dengan "
+"betul."
+
+msgid "profile#didnt-translate"
+msgstr "{1} masih belum memulakan penterjemahan."
+
+msgid "profile#projects"
+msgstr "Projek yang pengguna {1} turut terlibat dengannya."
+
+msgid "settings#email"
+msgstr "Alamat emel"
+
+msgid "settings#email-language"
+msgstr "Bahasa pilihan untuk emel"
+
+msgid "settings#email-new-comments"
+msgstr "Beritahu saya melalui emel apabila seseorang membalas komen saya"
+
+msgid "settings#email-new-texts"
+msgstr ""
+"Beritahu saya melalui emel apabila terdapat teks baru untuk diterjemahkan"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Beritahu saya melalui emel apabila seseorang memohon untuk menterjemahkan "
+"projek yang saya kelola"
+
+msgid "structure#change-password"
+msgstr "Tukar kata laluan"
+
+msgid "structure#home"
+msgstr "Halaman utama"
+
+msgid "structure#log-in"
+msgstr "Daftar masuk"
+
+msgid "structure#password-changed"
+msgstr "Kata laluan telah berjaya ditukar"
+
+msgid "structure#password-reset"
+msgstr "Dapatkan semula kata laluan"
+
+msgid "structure#save"
+msgstr "Simpan"
+
+msgid "structure#settings"
+msgstr "Tetapan"
+
+msgid "structure#sign-up"
+msgstr "Daftar masuk"

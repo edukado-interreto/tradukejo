@@ -1,0 +1,593 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2022-04-01 15:04+0200\n"
+"PO-Revision-Date: 2022-04-01 15:04+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "S pozdravem,"
+
+msgid "emails#contact-us"
+msgstr "V případě dotazů nás neváhejte kontaktovat."
+
+msgid "emails#greeting"
+msgstr "Zdravíme, {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"P.S.: Pokud nechcete tyto zprávy dostávat, můžete si upravit nastavení v "
+"uživatelském profilu: {1}."
+
+msgid "emails#signature"
+msgstr "Tým E@I"
+
+msgid "emails/comment#comment1"
+msgstr "Někdo odpověděl na váš komentář v projektu {1}."
+
+msgid "emails/comment#comment2"
+msgstr "Odpověď si můžete prohlédnout zde: {1}."
+
+msgid "emails/comment#title"
+msgstr ""
+"Překladatelský systém E@I: odpověď na váš komentář v projektu {project}"
+
+msgid "emails/new-texts#new-texts"
+msgstr "V projektu {1} jsou nové řetězce k překladu."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} neaktuální slovo"
+msgstr[1] "{1} neaktuální slova"
+msgstr[2] "{1} neaktuálních slov"
+
+msgid "emails/new-texts#title"
+msgstr "Překladatelský systém E@I: nové texty k překladu v projektu {project}"
+
+msgid "emails/new-texts#translate-link"
+msgstr "Můžete překládat zde: {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} nepřeložené slovo"
+msgstr[1] "{1} nepřeložená slova"
+msgstr[2] "{1} nepřeložených slov"
+
+msgid "emails/request#accept-link"
+msgstr "Můžete schválit nebo zamítnout žádost zde: {1}."
+
+msgid "emails/request#accepted"
+msgstr "Vaše žádost o překládání projektu {1} do jazyka {2} byla schválena."
+
+msgid "emails/request#accepted-title"
+msgstr ""
+"Překladatelský systém E@I: žádost o překládání projektu {project} schválena"
+
+msgid "emails/request#new-request"
+msgstr ""
+"Uživatel {1} požádal o povolení překládání projektu {2} do jazyka {3}:"
+
+msgid "emails/request#new-title"
+msgstr ""
+"Překladatelský systém E@I: žádost o povolení překládání projektu {project}"
+
+msgid "emails/request#rejected"
+msgstr "Vaše žádost o překládání projektu {1} do jazyka {2} byla zamítnuta."
+
+msgid "emails/request#rejected-title"
+msgstr ""
+"Překladatelský systém E@I: žádost o překládání projektu {project} zamítnuta"
+
+msgid "emails/request#start-translating"
+msgstr "Můžete začít překládat na adrese: {1}."
+
+msgid "messages#cannot-delete-comment"
+msgstr "Nemáte oprávnění smazat tento komentář."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Změny nemohly být uloženy."
+
+msgid "messages#changes-saved"
+msgstr "Změny byly uloženy."
+
+msgid "messages#notification-sent"
+msgstr "Upozornění bylo odesláno."
+
+msgid "messages#request-already-allowed"
+msgstr "Už máte oprávnění překládat do tohoto jazyka."
+
+msgid "messages#request-already-sent"
+msgstr "Už jste odeslali žádost o překládání do tohoto jazyka."
+
+msgid "messages#request-sent"
+msgstr "Žádost byla odeslána."
+
+msgid "pages/contact#contact1"
+msgstr ""
+"Překladatelský systém je projektem organizace E@I ({1}Edukace@Internet{/1})."
+
+msgid "pages/contact#contact2"
+msgstr "V případě dotazů nebo připomínek neváhejte napsat na {1}."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Příklady komentářů."
+
+msgid "pages/instructions#comments-title"
+msgstr "Komentáře"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"Můžete komentovat každou jazykovou verzi každého řetězce. Tímto způsobem "
+"můžete žádat upřesňující informace k překládanému textu, probírat překlady s"
+" jiným překladatelem atd. V {1}nastavení{/1} si můžete zvolit, jestli chcete"
+" dostávat e-maily, když vám na komentář někdo odpoví."
+
+msgid "pages/instructions#interface-caption"
+msgstr "Překladatelské rozhraní."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "Detail rozhraní pro překlad řetězce."
+
+msgid "pages/instructions#interface-title"
+msgstr "Překladatelské rozhraní"
+
+msgid "pages/instructions#interface1"
+msgstr "Překladatelské rozhraní vypadá takto:"
+
+msgid "pages/instructions#interface2"
+msgstr "Skládá se z pěti částí, shora dolů:"
+
+msgid "pages/instructions#interface2-1"
+msgstr "lišta s různými filtry,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"řádek, který ukazuje, do jakého jazyka překládáte a v které složce jste,"
+
+msgid "pages/instructions#interface2-3"
+msgstr "vlevo: seznam složek v projektu,"
+
+msgid "pages/instructions#interface2-4"
+msgstr "vpravo: podrobný seznam složek v aktuální složce,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "hlavní překladatelské rozhraní."
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"Texty k překladu jsou rozdělené na {1}řetězce{2} – útržky, které mohou "
+"znamenat celý odstavec, položku menu, název kapitoly atd. Každý barevný "
+"rámeček je jeden řetězec, který lze přeložit nezávisle na ostatních."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"Řetězce týkající se stejného tématu mívají svou složku kvůli přehlednosti."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"Pokud aktuální složka obsahuje velké množství řetězců (např. složka „landoj“"
+" s 200 jmény zemí), tak se nenačtou všechny řetězce, ale úplně dole bude "
+"velké tlačítko „Načíst další“."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"Levá půlka představuje text ve zdrojovém jazyce, pravá půlka pak překlad. "
+"Ovládací prvky jsou následující:"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Název řetězce. Jde o jedinečný identifikátor, užitečný hlavně pro "
+"administrátory projektu. Není třeba ho překládat."
+
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"Zdrojový jazyk. Když na něj kliknete, budete si moct zobrazit překlady do "
+"jiných jazyků."
+
+msgid "pages/instructions#interface6-3"
+msgstr "Odkazy pro strojový překlad (to vám může pomoct v překládání)."
+
+msgid "pages/instructions#interface6-4"
+msgstr "Text k překladu."
+
+msgid "pages/instructions#interface6-5"
+msgstr "Případný pomocný text, např. vysvětlení kontextu."
+
+msgid "pages/instructions#interface6-6"
+msgstr "Stav překladu."
+
+msgid "pages/instructions#interface6-7"
+msgstr "Aktuální překlad."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Datum a autor textu nebo překladu. Pokud byl text upravovaný, můžete "
+"zobrazit historii změn. Je zde i možnost přidat komentář."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Vítejte v překladatelském systému od {1}E@I{/1}! Systém umožňuje snadné "
+"překládání vícejazyčných webů (nebo jiných projektů)."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"Systém je momentálně ve vývoji, takže funkčnost a uživatelské rozhraní se "
+"ještě můžou měnit."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"K překládání potřebujete {1}uživatelský účet{/1}. Pokud jste používali "
+"původní překladatelský systém (před rokem 2021), původní uživatelské účty s "
+"v tomto novém systému nefungují."
+
+msgid "pages/instructions#plural-caption"
+msgstr "Řetězec s tvary množného čísla."
+
+msgid "pages/instructions#plural-title"
+msgstr "Řetězce s množným číslem"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Pokud je na webu věta typu „Máme X uživatelů“, může nastat problém: Pokud je"
+" uživatel jen jeden, zobrazí se „Máme 1 uživatelů“. V jazycích se "
+"složitějšími pravidly číslovek je možností chybovat ještě víc."
+
+msgid "pages/instructions#plural2"
+msgstr "Řešením jsou řetězce s různými texty v závislosti na počtu:"
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"V takových případech překládejte podle ukázkových čísel. Na obrázku výše je "
+"příklad překladu do ruštiny – místo {1} si představte na prvním řádku 1, na "
+"druhém řádku 2, na třetím řádku 5."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"Je běžné, že se počet tvarů různí – v některých jazycích stačí dva tvary "
+"(pro číslo 1 a pro jiné číslo), ve většině slovanských jazyků jsou potřeba "
+"tři tvary, ve slovinštině čtyři a v irštině a arabštině ještě víc."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Stránka projektu."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Stránka projektu"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"V horní části se nachází obecné informace o projektu. V barevném rámečku je "
+"vysvětleno, jakým způsobem se překlady použijí: u některých webů jsou "
+"zveřejněné hned, u jiných je ručně zveřejňuje jejich správce – závisí to na "
+"konkrétním webu, ne na překladatelském systému."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"V dolní části je seznam cílových jazyků, včetně procentuálního stavu "
+"překladu. Vedle je seznam nejnovějších komentářů a aktivity."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Žádost o povolení k překládání"
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Povolení k překládání"
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Pro překládání do konkrétního jazyka potřebujete povolení od správce "
+"projektu. Klikněte na tlačítko „Požádat o povolení“ vedle názvu jazyka a "
+"napište stručné zdůvodnění. Když správce vaši žádost schválí, oznámíme vám "
+"to e-mailem a budete moct začít překládat."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Pokud jazyk, do kterého chcete překládat, zatím není součástí projektu, "
+"můžete ho přidat níže v části „Překládat do jiného jazyka“. Jestliže daný "
+"jazyk není ani tam, {1}kontaktujte nás{/1}."
+
+msgid "pages/instructions#projects1"
+msgstr "„Projekt“ je sada řetězců k překladu, které se týkají jednoho webu."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Vyhledávání a řazení"
+
+msgid "pages/instructions#search-sort1"
+msgstr "Horní lišta obsahuje různé nástroje k filtrování:"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"první umožňuje filtrovat podle stavu překladu (pro zobrazení jen těch "
+"řetězců, u kterých je nutný překlad),"
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"druhý umožňuje řazení řetězců: výchozí je podle názvu, ale můžete si zvolit "
+"i řazení od nejnovějších, nebo od nejstarších,"
+
+msgid "pages/instructions#search-sort1-3"
+msgstr "hledání funguje na přeložené texty i na texty ve zdrojovém jazyce."
+
+msgid "pages/instructions#state-title"
+msgstr "Stav překladů"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Překlady můžou mít tři stavy: nepřeložený (zobrazené červeně), neaktuální "
+"(zobrazené žlutě) a přeložený (zobrazené zeleně). „Neaktuální“ znamená, že "
+"text ve zdrojovém jazyce byl změněn, což může vyžadovat i změnu překladu. "
+"Pokud vyhodnotíte, že překlad není nutné měnit, můžete kliknout na „Označit "
+"jako přeložený“."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Příklady navrhovaných překladů."
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Navrhované překlady"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Občas se při překládání nového řetězce objeví navrhované překlady. Tyto "
+"návrhy pochází z jiných překladů stejného textu, které se už v systému "
+"nachází (ať už ve stejném projektu, nebo v jiném). Jednoduše klikněte na "
+"návrh, který se vám líbí, čímž dojde k jeho vložení do pole s překladem."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Řetězec se zvláštními znaky."
+
+msgid "pages/instructions#symbols-title"
+msgstr "Speciální znaky"
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Některé řetězce obsahují zvláštní znaky. Jedná se o speciální značky, které "
+"na příslušném webu budou nahrazené něčím jiným: odkazem, uživatelským "
+"jménem, číslem, apod. Prosím kopírujte je do překladů beze změn (a pokud "
+"obsahují slova, nepřekládejte je). Kdybyste na ně zapomněli, nebo je "
+"změnili, překlady by se na webu nezobrazovaly správně."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Tyto speciální znaky se v překladatelském systému zobrazují barevně a můžou "
+"vypadat např. takto:"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Některé projekty používají dvojité ({1}) a trojité apostrofy ({2}) pro "
+"kurzívu a tučný text, proto na to dávejte pozor. Není to všeobecné pravidlo "
+"a záleží to na samotném webu, ne na překladatelském systému."
+
+msgid "pages/privacy#available-languages"
+msgstr ""
+"Zásady ochrany osobních údajů jsou momentálně k dispozici jen {1}v "
+"esperantu{/1}."
+
+msgid "pages/projects#hidden"
+msgstr "Skrytý projekt"
+
+msgid "pages/projects#lead1"
+msgstr ""
+"Uživatelsky přívětivější, efektivnější a hezčí: Přeprogramovali jsme "
+"překladatelský systém s pomocí moderních technologií."
+
+msgid "pages/projects#lead2"
+msgstr ""
+"Starý překladatelský systém je stále {1}dostupný{/1}, ale projekty budou "
+"postupně převáděny do nového."
+
+msgid "pages/projects#locked"
+msgstr "Zamčený projekt"
+
+msgid "pages/projects#projects"
+msgstr "Projekty"
+
+msgid "pages/projects#read-instructions"
+msgstr "Přečíst instrukce"
+
+msgid "pages/projects#welcome"
+msgstr "Vítejte v překladatelském systému E@I!"
+
+msgid "pages/terms#intro"
+msgstr ""
+"Pokud překládáte pomocí tohoto systému, přijímáte následující podmínky:"
+
+msgid "pages/terms#term-1"
+msgstr ""
+"Zaručujete, že máte dobrou znalost jazyka, do kterého chcete překládat."
+
+msgid "pages/terms#term-2"
+msgstr ""
+"Četli jste naše {1}Zásady ochrany osobních údajů{/1} a souhlasíte s nimi."
+
+msgid "pages/terms#term-3"
+msgstr "Četli jste naše {1}Instrukce{/1} a zavazujete se řídit se jimi."
+
+msgid "pages/terms#term-4"
+msgstr ""
+"Zavazujete se překládat texty tak, aby odpovídaly originálu. Zaručujete, že "
+"nebudete měnit význam textu a nebudete bez svolení přidávat nic vlastního, "
+"co není v původním textu."
+
+msgid "pages/terms#term-5"
+msgstr ""
+"Jako uživatel/překladatel nám dáváte celosvětové, výlučné, bezplatné, "
+"přenositelné, časově a obsahově neomezené právo používat vámi vytvořený a "
+"publikovaný obsah ve všech médiích používaných organizací Edukace@Internet. "
+"Organizace Edukace@Internet má právo použít tento obsah libovolným způsobem "
+"a všemi prostředky: publikovat, kopírovat, reprodukovat, měnit, upravovat, "
+"distribuovat, prodávat apod."
+
+msgid "pages/terms#term-6"
+msgstr ""
+"Jako uživatel/překladatel zaručujete, že váš obsah mohou volně používat "
+"třetí strany. Potvrzujete, že vlastníte veškerá práva a oprávnění potřebná "
+"pro zde udělená práva týkající se vámi poskytnutého obsahu."
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} přidal(a) {2} slovo."
+msgstr[1] "{1} přidal(a) {2} slova."
+msgstr[2] "{1} přidal(a) {2} slov."
+
+msgctxt "Butono por peti tradukpermeson"
+msgid "project#ask-permission"
+msgstr "Požádat o povolení"
+
+msgid "project#characters"
+msgstr "Znaky:"
+
+msgid "project#choose-language"
+msgstr "Vyberte jazyk…"
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} editoval(a) {2} řetězec."
+msgstr[1] "{1} editoval(a) {2} řetězce."
+msgstr[2] "{1} editoval(a) {2} řetězců."
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} importoval(a) {2} slovo."
+msgstr[1] "{1} importoval(a) {2} slova."
+msgstr[2] "{1} importoval(a) {2} slov."
+
+msgid "project#languages"
+msgstr "Jazyky"
+
+msgid "project#last-activities"
+msgstr "Nejnovější aktivita"
+
+msgid "project#last-comments"
+msgstr "Nejnovější komentáře"
+
+msgid "project#my-languages"
+msgstr "Moje jazyky"
+
+msgid "project#needed"
+msgstr "Žádané jazyky:"
+
+msgid "project#needed-all"
+msgstr "všechny"
+
+msgid "project#other-contact"
+msgstr ""
+"Chcete překládat do jazyka, který není v tomto seznamu? Prosím "
+"{1}kontaktujte nás{/1}."
+
+msgid "project#other-languages"
+msgstr "Jiné jazyky"
+
+msgid "project#outdated-words"
+msgstr "Neaktuální slova:"
+
+msgid "project#read-instructions"
+msgstr "Potřebujete vědět víc? {1}Přečtěte si instrukce!{/1}"
+
+msgid "project#request-explanation"
+msgstr "Prosím napište o sobě pár slov:"
+
+msgid "project#request-language"
+msgstr "Žádáte o povolení překládat do jazyka:"
+
+msgctxt "Titolo de fenestreto"
+msgid "project#request-permission"
+msgstr "Požádat o povolení k překládání"
+
+msgid "project#request-sent"
+msgstr "Žádost odeslána"
+
+msgctxt "Butono por sendi peton pri tradukpermeso"
+msgid "project#sendi"
+msgstr "Odeslat"
+
+msgid "project#source-language"
+msgstr "Zdrojový jazyk:"
+
+msgid "project#strings"
+msgstr "Řetězce:"
+
+msgid "project#total-translated-words"
+msgstr "Přeložená slova:"
+
+msgctxt "Butono por komenci traduki en la elektita lingvo"
+msgid "project#translate"
+msgstr "Překládat"
+
+msgid "project#translate-other"
+msgstr "Překládat do jiného jazyka"
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} přeložil(a) {2} slovo"
+msgstr[1] "{1} přeložil(a) {2} slova"
+msgstr[2] "{1} přeložil(a) {2} slov"
+
+msgid "project#translators"
+msgstr "Překladatelé:"
+
+msgid "project#untranslated-words"
+msgstr "Nepřeložená slova:"
+
+msgid "project#url"
+msgstr "Adresa:"
+
+msgid "project#words"
+msgstr "Slova:"
+
+msgid "structure#choose-language"
+msgstr "Zvolte jazyk"
+
+msgid "structure#close"
+msgstr "Zavřít"
+
+msgid "structure#contact"
+msgstr "Kontakt"
+
+msgid "structure#home"
+msgstr "Hlavní stránka"
+
+msgid "structure#instructions"
+msgstr "Instrukce"
+
+msgid "structure#privacy"
+msgstr "Ochrana osobních údajů"
+
+msgid "structure#project-by"
+msgstr ""
+"Tento překladatelský systém je projektem organizace {1}Edukace@Internet{/1}."
+
+msgid "structure#settings"
+msgstr "Nastavení"
+
+msgid "structure#sign-in"
+msgstr "Přihlásit"
+
+msgid "structure#sign-out"
+msgstr "Odhlásit"
+
+msgid "structure#sign-up"
+msgstr "Vytvořit uživatelský účet"
+
+msgid "structure#terms"
+msgstr "Podmínky použití"
+
+msgid "structure#website-name"
+msgstr "Překladatelský systém E@I"
+
+msgid "structure#welcome"
+msgstr "Vítejte"
+
+msgid "translate#javascript"
+msgstr ""
+"Pro správný běh překladatelského rozhraní musí být zapnutý JavaScript."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Překlad projektu {1}"

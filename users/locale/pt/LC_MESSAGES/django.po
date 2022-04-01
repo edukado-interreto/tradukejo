@@ -1,0 +1,125 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2022-04-01 15:07+0200\n"
+"PO-Revision-Date: 2022-04-01 15:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Amistosamente,"
+
+msgid "emails#greeting"
+msgstr "Prezado(a) {1},"
+
+msgid "emails#signature"
+msgstr "A equipa E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Nós confirmamos que você se inscreveu no {1}tradukejo de E@I{/1}. Você já "
+"pode entrar e começar a traduzir."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Nós recomendamos que você leia as {1}instruções{/1} antes de começar a "
+"traduzir."
+
+msgid "emails/registration#title"
+msgstr "Tradukejo de E@I: konfirmo de aliĝo"
+
+msgid "login#forgot-password"
+msgstr "Você esqueceu sua palavra-passe? {1}Recupere-a aqui{/1}"
+
+msgid "login#sign-up"
+msgstr "Você não tem uma conta? {1}Registe-se agora!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"A sua conta foi criada e você já pode começar a traduzir. Uma mensagem de "
+"confirmação foi enviada para {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "La ŝanĝoj ne povis esti konservitaj."
+
+msgid "messages#changes-saved"
+msgstr "La ŝanĝoj estis konservitaj."
+
+msgid "password#can-login"
+msgstr "Vi povas nun {1}ensaluti{/1}."
+
+msgid "password#change-success"
+msgstr "Via pasvorto estis sukcese ŝanĝita."
+
+msgid "password#message-sent"
+msgstr ""
+"Mesaĝo kun instrukcioj estis sendita al via retpoŝtadreso. Se vi ricevas "
+"nenion, certiĝu, ke vi enmetis la ĝustan adreson kaj ke vi havas konton."
+
+msgid "password#reset"
+msgstr ""
+"Ĉu vi forgesis vian pasvorton? Skribu vian retadreson ĉi tie kaj ni sendos "
+"al vi instrukciojn."
+
+msgid "password#send-instructions"
+msgstr "Envie-me instruções"
+
+msgid "password#type-twice"
+msgstr ""
+"Bonvolu entajpi vian nunan pasvorton pro sekureco, kaj vian novan pasvorton "
+"dufoje, por certiĝi, ke vi tajpis ĝin ĝuste."
+
+msgid "profile#didnt-translate"
+msgstr "{1} ainda não começou a traduzir."
+
+msgid "profile#projects"
+msgstr "Projetos, nos quais o usuário participa {1}"
+
+msgid "settings#email"
+msgstr "Retadreso"
+
+msgid "settings#email-language"
+msgstr "Preferata lingvo por ricevi retpoŝton"
+
+msgid "settings#email-new-comments"
+msgstr "Informi min retpoŝte, kiam iu respondis mian komenton"
+
+msgid "settings#email-new-texts"
+msgstr "Informi min retpoŝte, kiam estas novaj tekstoj por traduki"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Informi min retpoŝte, kiam iu petas rajton traduki projekton, kiun mi "
+"administras"
+
+msgid "structure#change-password"
+msgstr "Ŝanĝi mian pasvorton"
+
+msgid "structure#home"
+msgstr "Ĉefpaĝo"
+
+msgid "structure#log-in"
+msgstr "Ensaluti"
+
+msgid "structure#password-changed"
+msgstr "Pasvorto sukcese ŝanĝita"
+
+msgid "structure#password-reset"
+msgstr "Reakiri pasvorton"
+
+msgid "structure#save"
+msgstr "Konservi"
+
+msgid "structure#settings"
+msgstr "Agordoj"
+
+msgid "structure#sign-up"
+msgstr "Krei konton"

@@ -93,12 +93,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGES = (
+    ('cs', 'Česky'),
     ('en', 'English'),
     ('eo', 'Esperanto'),
     ('fi', 'Suomi'),
     ('fr', 'Français'),
     ('it', 'Italiano'),
+    ('ms', 'Bahasa Melayu'),
     ('pl', 'Polski'),
+    ('pt', 'Português'),
 )
 
 LANGUAGE_CODE = 'eo'

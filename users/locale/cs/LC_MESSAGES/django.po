@@ -1,0 +1,124 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2022-04-01 15:07+0200\n"
+"PO-Revision-Date: 2022-04-01 15:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "S pozdravem,"
+
+msgid "emails#greeting"
+msgstr "Zdravíme, {1},"
+
+msgid "emails#signature"
+msgstr "Tým E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Potvrzujeme vaši registraci do {1}překladatelského systému E@I{/1}. Můžete "
+"se přihlásit a začít překládat."
+
+msgid "emails/registration#instructions"
+msgstr "Než budete překládat, doporučujeme vám přečíst si {1}instrukce{/1}."
+
+msgid "emails/registration#title"
+msgstr "Překladatelský systém E@I: potvrzení registrace"
+
+msgid "login#forgot-password"
+msgstr "Zapomněli jste heslo? {1}Obnovte si ho zde.{/1}"
+
+msgid "login#sign-up"
+msgstr "Nemáte uživatelský účet? {1}Zaregistrujte se hned!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Uživatelský účet byl vytvořen a můžete začít překládat. Potvrzovací zprávu "
+"jsme odeslali na {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Změny nemohly být uloženy."
+
+msgid "messages#changes-saved"
+msgstr "Změny byly uloženy."
+
+msgid "password#can-login"
+msgstr "Teď se můžete {1}přihlásit{/1}."
+
+msgid "password#change-success"
+msgstr "Heslo bylo úspěšně změněno."
+
+msgid "password#message-sent"
+msgstr ""
+"Zprávu s instrukcemi jsme odeslali na vaši e-mailovou adresu. Pokud vám "
+"nepřišla, ujistěte se, že jste napsali správnou adresu a že máte uživatelský"
+" účet."
+
+msgid "password#reset"
+msgstr ""
+"Zapomněli jste heslo? Napište svou e-mailovou adresu a my vám pošleme další "
+"instrukce."
+
+msgid "password#send-instructions"
+msgstr "Poslat instrukce"
+
+msgid "password#type-twice"
+msgstr ""
+"Prosím napište současné heslo kvůli bezpečnosti a dále dvakrát nové heslo "
+"kvůli zabránění překlepům."
+
+msgid "profile#didnt-translate"
+msgstr "{1} zatím nezačal(a) překládat."
+
+msgid "profile#projects"
+msgstr "Projekty, do kterých přispívá uživatel {1}"
+
+msgid "settings#email"
+msgstr "E-mail"
+
+msgid "settings#email-language"
+msgstr "Vybraný jazyk e-mailů"
+
+msgid "settings#email-new-comments"
+msgstr "Upozorněte mě e-mailem, když někdo odpoví na můj komentář"
+
+msgid "settings#email-new-texts"
+msgstr "Upozorněte mě e-mailem, když se objeví nové texty k překladu"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Upozorněte mě e-mailem, když někdo požádá o právo překládat projekt, který "
+"spravuji"
+
+msgid "structure#change-password"
+msgstr "Změnit heslo"
+
+msgid "structure#home"
+msgstr "Hlavní stránka"
+
+msgid "structure#log-in"
+msgstr "Přihlásit"
+
+msgid "structure#password-changed"
+msgstr "Heslo úspěšně změněno"
+
+msgid "structure#password-reset"
+msgstr "Obnovit heslo"
+
+msgid "structure#save"
+msgstr "Uložit"
+
+msgid "structure#settings"
+msgstr "Nastavení"
+
+msgid "structure#sign-up"
+msgstr "Vytvořit uživatelský účet"
