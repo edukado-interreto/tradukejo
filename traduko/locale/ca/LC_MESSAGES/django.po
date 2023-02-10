@@ -1,0 +1,622 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2023-02-10 09:28+0100\n"
+"PO-Revision-Date: 2023-02-10 09:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Cordialment,"
+
+msgid "emails#contact-us"
+msgstr ""
+"Si teniu alguna pregunta, no dubteu a posar-vos en contacte amb nosaltres."
+
+msgid "emails#greeting"
+msgstr "Benvolgut/da {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"PS: si no voleu seguir rebent aquests missatges, podeu canviar la "
+"configuració en el vostre perfil: {1}."
+
+msgid "emails#signature"
+msgstr "L’equip d’E@I"
+
+msgid "emails/comment#comment1"
+msgstr "Algú ha publicat una resposta al vostre comentari en el projecte {1}."
+
+msgid "emails/comment#comment2"
+msgstr "Podeu veure la resposta aquí: {1}."
+
+msgid "emails/comment#title"
+msgstr "Sistema de traducció d'E@I: resposta al vostre comentari a {project}"
+
+msgid "emails/new-texts#new-texts"
+msgstr "Hi ha nous textos per traduir en el projecte {1}."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} paraula per actualitzar"
+msgstr[1] "{1} paraules per actualitzar"
+
+msgid "emails/new-texts#title"
+msgstr "Sistema de traducció de E@I: nous textos per traduir a {project}"
+
+msgid "emails/new-texts#translate-link"
+msgstr "Podeu traduir aquí: {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] "{1} paraula no traduïda"
+msgstr[1] "{1} paraules no traduïdes"
+
+msgid "emails/request#accept-link"
+msgstr "Podeu acceptar o rebutjar la petició aquí: {1}."
+
+msgid "emails/request#accepted"
+msgstr ""
+"La vostra petició per traduir el projecte {1} a la llengua {2} ha estat "
+"ecceptada."
+
+msgid "emails/request#accepted-title"
+msgstr ""
+"Sistema de traducció d’E@I: petició de permís de traducció per a {project} "
+"acceptat"
+
+msgid "emails/request#new-request"
+msgstr ""
+"L'usuari {1} ha demanat el permís per traduir el projecte {2} a la llengua "
+"{3}:"
+
+msgid "emails/request#new-title"
+msgstr ""
+"Sistema de traducció d'E@I: petició del permís de traducció per a {project}"
+
+msgid "emails/request#rejected"
+msgstr ""
+"La vostra petició per traduir el projecte {1} a la llengua {2} ha estat "
+"refusada."
+
+msgid "emails/request#rejected-title"
+msgstr ""
+"Sistema de traducció d'E@I: petició de traducció per a {project} refusada"
+
+msgid "emails/request#start-translating"
+msgstr "Podeu començar a traduir a l'adreça: {1}."
+
+msgid "messages#cannot-delete-comment"
+msgstr "No teniu el permís per suprimir aquest comentari."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Els canvis no han pogut ser guardats."
+
+msgid "messages#changes-saved"
+msgstr "Els canvis han estat guardats."
+
+msgid "messages#notification-sent"
+msgstr "La notificació ha estat enviada."
+
+msgid "messages#request-already-allowed"
+msgstr "Ja teniu el permís per traduir a aquesta llengua."
+
+msgid "messages#request-already-sent"
+msgstr "Ja heu enviat una petició per a aquesta llengua."
+
+msgid "messages#request-sent"
+msgstr "La petició ha estat enviada."
+
+msgid "pages/contact#contact1"
+msgstr ""
+"El sistema de tracucció és un projecte d'E@I ({1}Educació@Internet{/1})."
+
+msgid "pages/contact#contact2"
+msgstr "Si teniu alguna pregunta o comentari, no dubteu d'escriure a {1}."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Exemples de comentaris"
+
+msgid "pages/instructions#comments-title"
+msgstr "Comentaris"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"Teniu la possibilitat de comentar qualsevol versió d'idioma de qualsevol "
+"encadenament. Això us permet demanar aclariments sobre el text a traduir, "
+"discutir la millora de la traducció amb altres traductors, etc. Podeu "
+"escollir {1} a la vostra configuració {/1} si voleu rebre una notificació "
+"per correu electrònic quan algú respongui als vostres comentaris."
+
+msgid "pages/instructions#interface-caption"
+msgstr "La interfície de traducció."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "La interfície detallada per traduir un encadenament."
+
+msgid "pages/instructions#interface-title"
+msgstr "Interfície de traducció."
+
+msgid "pages/instructions#interface1"
+msgstr "La interfície de traducció té aquest aspecte:"
+
+msgid "pages/instructions#interface2"
+msgstr "Hi ha cinc elements, de dalt a baix:"
+
+msgid "pages/instructions#interface2-1"
+msgstr "un panell amb diversos filtres,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"una línia que mostra a quina llenga esteu traduint i en quina carpeta us "
+"troveu,"
+
+msgid "pages/instructions#interface2-3"
+msgstr "a l'esquerra: la llista de totes les carpetes del projecte,"
+
+msgid "pages/instructions#interface2-4"
+msgstr ""
+"a la dreta: la llista detallada de les subcarpetes dins de la carpeta "
+"actual,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "la interfície principal de traducció."
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"Els textos a traduir estan organitzats en {1}encadenaments{2}: blocs de text"
+" que poden correspondre a un paràgraf sencer, un element del menú, el títol "
+"d'una secció, etc. Cada quadre de color es un encadenament que es pot "
+"traduir independentment dels altres."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"Els encadenaments poder estar organitzats en carpetes a fi d'grupar-los per "
+"temes, per a millor claredat."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"Si la carpeta actual conté molts encadenaments (per exemple la carpeta "
+"\"països\" amb 200 noms de països), no tots es carregaran, de cop, però hi "
+"haurà el botó \"Carregar més\" a baix de tot."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"La meitat de l'esquerra correspon al text en la llengua d'origen, la meitat "
+"de la dreta a la traducció. Els elements són els següents:"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Nom de  l'encadenament. És un identificador únic, sobretot d'utilitat per "
+"als administradors del projecte. No l'heu de traduir."
+
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"La llengua d'origen. Si hi cliqueu al damunt apareix un menú a través del "
+"qual es poden veure les traduccions en altres llengües."
+
+msgid "pages/instructions#interface6-3"
+msgstr ""
+"Enllaços per veure la traducció en un traductor automàtic (això us pot "
+"ajudar a fer la traducció)."
+
+msgid "pages/instructions#interface6-4"
+msgstr "El text que heu de traduir."
+
+msgid "pages/instructions#interface6-5"
+msgstr ""
+"Eventuals explicacions d'ajuda, per exemple amb aclariments sobre el "
+"context."
+
+msgid "pages/instructions#interface6-6"
+msgstr "Estat de la traducció."
+
+msgid "pages/instructions#interface6-7"
+msgstr "La traducció actual."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Data i autor del text o de la traducció. Si el text ha estat redactat "
+"diverses vegades, es pot consultar la cronologia dels canvis. També és "
+"possible d'escriure-hi un comentari."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Benvinguts al sistema de traducció d'{1}E@I{/1}! És un sistema que ppermet "
+"traduir fàcilment el contingut de llocs web multillingües (o d'altres "
+"projectes)."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"El sistema de traducció es troba en fase de desenvolupament i de millora, "
+"per tant el funcionament i la interfícia encara podrien canviar."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"Per començar a traduir us cal {1}tenir un compte{/1}. Si ja havíeu fet "
+"servir l'antic sistema de traducció (d'abans del 2021), el vostre compte "
+"antic no funciona en aquest el nou sistema."
+
+msgid "pages/instructions#plural-caption"
+msgstr "Encadenament amb forma plural."
+
+msgid "pages/instructions#plural-title"
+msgstr "Encadenaments en plural"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Si en la pàgina hi ha una frase com ara: \"Tenim X usuaris\", hi podria "
+"haver un problema: si hi hagués només un sol usuari, apareixeria \"Tenim 1 "
+"usuaris\", la qual cosa és gramaticalment incorrecte en moltes llengües."
+
+msgid "pages/instructions#plural2"
+msgstr ""
+"La solució és fer servir diversos encadenaments amb textos diferents, que "
+"vagin d'acord amb el nombre indicat:"
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"En aquest cas cal traduir cada possibilitat segons correspongui al nombre "
+"donat en l'exemple. En l'exemple de la imatge de sota, un traductor rus "
+"haurà d'imaginar com ha de traduir la frase si en comptes de un {1} hi ha un"
+" 1, un 2 o un 5."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"És normal que hi hagi una quantitat diferent de traduccions: en moltes "
+"llengües hi ha només dues formes (singular i plural), però en algunes (la "
+"majoria de llengües eslaves) en necessiten tres, l'eslovè en necessita "
+"quatre, i altres encara més (com l'irlandès o l'àrab)."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Captura de pantalla de la pàgina del projecte."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Pàgina del projecte"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"A dalt hi ha les informacions generals sobre el projecte. El marc de color "
+"conté les explicacions sobre la manera com es fan servir les traduccions: en"
+" algunes webs són visibles de seguida, en altres el programador ha d'afegir "
+"les traduccions de manera manual.  Això depèn del lloc web en concret, no "
+"pas del sistema de traducció."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"A sota hi ha la llista de llengües en que està traduït el projecte, amb el "
+"tant per cent dels textos ja traduïts. Al costat hi ha la llista dels "
+"darrers comentaris i les últimes activitats."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Petició del permís de traducció."
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Permisos de traducció"
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Per traduir a una llengua en concret, us cal rebre el permís d'un "
+"administrador del projecte. Cliqueu el botó \"Demanar permís\" al costat del"
+" nom de la llengua, i escriviu-hi una explicació breu. Quan l'administrador "
+"hagi aprovat la vostra petició, se us informarà per correu electrònic i "
+"podreu començar a traduir."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Si la llengua a la qual voleu traduir encara no està afegida al projecte, "
+"trobareu un menú desplegable amb la llista de llengües sota el títol "
+"\"Traduir a una altra llengua\". Si la llengua que cerqueu no estigués en "
+"aquesta llista, llavors {1}poseu-vos en contacte amb nosaltres{/1}."
+
+msgid "pages/instructions#projects1"
+msgstr ""
+"Un “projecte” és un conjunt de textos a traduir que correspon a un sol lloc "
+"web."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Cercar i ordenar"
+
+msgid "pages/instructions#search-sort1"
+msgstr "En la barra de dalt hi ha diversos filtres:"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"El primer permet filtrar per estat (útil per veure només els encadenaments "
+"pendents de traducció),"
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"el segon permet ordenar els encadenaments: per defecte segons el nom, però "
+"també es pot ordenar segons la data més antiga o més recent,"
+
+msgid "pages/instructions#search-sort1-3"
+msgstr ""
+"el cercador busca un text en les traduccions i en les llengües d'origen."
+
+msgid "pages/instructions#state-title"
+msgstr "Estat de  les traduccions"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Les traduccions poden aparèixer en tres estats: no traduïda (en vermell), "
+"per actualitzar (en groc) i traduïda (en verd). \"Per actualitzar\" "
+"significa que el text en la llengua origen ha estat modificat, i podria fer "
+"falta canviar-ne la traducció. Si creieu que a la traducció no li cal cap "
+"modificació, podeu clicar \"Marcar com a traduït\"."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Exemples de suggeriments de traduccions."
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Traduccions suggerides"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"A vegades, en traduir un nou encadenament, poden aparèixer suggeriments de "
+"traducció. Aquests suggeriments vénen d'altres traduccions del mateix text "
+"ja incloses en el sistema de traducció (pot ser en el mateix projecte o en "
+"algun altre). Cliqueu simplement sobre la proposta que us agradi i serà "
+"inclosa en el camp de traducció."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Encadenaments amb símbols estranys."
+
+msgid "pages/instructions#symbols-title"
+msgstr "Símbols especials"
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Alguns encadenaments poden contenir símbols estranys. Es tracta de signes "
+"especials que el lloc web substituirà per alguna altra cosa: un enllaç, in "
+"nom d'usuari, un número... Si us plau, copieu-ho sense canvis a la vostra "
+"traducció (si hi ha contingudes algunes paraules, no les traduïu pas): si us"
+" n'oblideu o ho modifiqueu, el text correcte no apareixerà a la web."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Aquest símbols especials apareixen en color, i poden tenir el següent "
+"aspecte, per exemple:"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Alguns projectes fan servir apòstrofs dobles ({1}) i triples ({2}) per tal "
+"de posar un text en cursiva o negreta, poseu-hi atenció. Això no és "
+"universal i depèn del propi lloc web, no pas del sistema de traducció."
+
+msgid "pages/privacy#available-languages"
+msgstr ""
+"La política de confidencialitat actualment es troba disponible només {1}en "
+"esperanto{/1}."
+
+msgid "pages/projects#hidden"
+msgstr "Projecte ocult"
+
+msgid "pages/projects#lead1"
+msgstr ""
+"Més amigable, més eficaç i més bonica: hem reprogramat el sistema de "
+"traducció amb tecnologies modernes."
+
+msgid "pages/projects#lead2"
+msgstr ""
+"L'antic sistema de traducció és {1}accessible aquí{/1} però, de mica en "
+"mica, els projectes de traducció seran migrats cap el nou sistema."
+
+msgid "pages/projects#locked"
+msgstr "Projecte tancat"
+
+msgid "pages/projects#projects"
+msgstr "Projectes"
+
+msgid "pages/projects#read-instructions"
+msgstr "Llegir les instruccions"
+
+msgid "pages/projects#welcome"
+msgstr "Benvinguts al nou sistema de traducció d’E@I !"
+
+msgid "pages/terms#intro"
+msgstr ""
+"En traduir a través del nostre sistema de traducció, accepteu les condicions"
+" següents:"
+
+msgid "pages/terms#term-1"
+msgstr ""
+"Doneu garanties de tenir un bon nivell de la llengua a la qual voleu "
+"traduir."
+
+msgid "pages/terms#term-2"
+msgstr "Heu llegit i accepteu la nostra {1}política de confidencialitat{/1}."
+
+msgid "pages/terms#term-3"
+msgstr ""
+"Heu llegit les nostres {1}instruccions{/1} i prometeu de treballar d'acord "
+"amb aquestes."
+
+msgid "pages/terms#term-4"
+msgstr ""
+"Prometeu de traduir els textos el més fidelment possible a l'original. Doneu"
+" garanties de no canviar el sentit del text i de no afegir-hi res pel propi "
+"compte que no estigui en el text original, sense autorització."
+
+msgid "pages/terms#term-5"
+msgstr ""
+"Com a usuari/traductor, concediu al lloc web el dret mundial, exclusiu, "
+"lliure de drets d'autor, transferible, temporal, de contingut i sense "
+"restriccions d'espai per utilitzar el contingut que heu creat i publicat en "
+"qualsevol dels mitjans utilitzats per Educació@Internet. Educació@Internet "
+"està expressament autoritzat a utilitzar aquest contingut per a qualsevol "
+"finalitat i en qualsevol mitjà, així com a publicar-lo, copiar-lo, "
+"reproduir-lo, modificar-lo, editar-lo, distribuir-lo, vendre'l, etc."
+
+msgid "pages/terms#term-6"
+msgstr ""
+"Com a usuari/traductor, garantiu que els continguts que hi introduïu estan "
+"lliures de drets de terceres persones. Garantiu que teniu tots els drets "
+"necessaris sobre els continguts que publiqueu per al compliment d'aquestes "
+"regles."
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} afegida {2} paraula."
+msgstr[1] "{1} afegides {2} paraules."
+
+msgctxt "Butono por peti tradukpermeson"
+msgid "project#ask-permission"
+msgstr "Demanar permís"
+
+msgid "project#characters"
+msgstr "Caràcters:"
+
+msgid "project#choose-language"
+msgstr "Escolliu una llengua..."
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} editat {2} encadenament."
+msgstr[1] "{1} editats {2} encadenaments."
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} importada {2} paraula."
+msgstr[1] "{1} importades {2} paraules."
+
+msgid "project#languages"
+msgstr "Llengües"
+
+msgid "project#last-activities"
+msgstr "Darreres activitats"
+
+msgid "project#last-comments"
+msgstr "Darrers comentaris"
+
+msgid "project#my-languages"
+msgstr "Les meves llengües"
+
+msgid "project#needed"
+msgstr "Llengües requerides:"
+
+msgid "project#needed-all"
+msgstr "Totes les disponibles"
+
+msgid "project#other-contact"
+msgstr ""
+"Voleu traduir a una llengua que no està en aquesta llista? Si us plau, "
+"{1}poseu-vos en contacte amb nosaltres{/1}."
+
+msgid "project#other-languages"
+msgstr "Altres llengües"
+
+msgid "project#outdated-words"
+msgstr "Paraules per actualitzar:"
+
+msgid "project#read-instructions"
+msgstr "Confús? {1}Llegiu les instruccions!{/1}"
+
+msgid "project#request-explanation"
+msgstr "Si us plau, escriviu algunes paraules sobre un mateix:"
+
+msgid "project#request-language"
+msgstr "Demaneu permís per a traduir a la llengua:"
+
+msgctxt "Titolo de fenestreto"
+msgid "project#request-permission"
+msgstr "Demanar permís per traduir"
+
+msgid "project#request-sent"
+msgstr "Petició enviada"
+
+msgctxt "Butono por sendi peton pri tradukpermeso"
+msgid "project#sendi"
+msgstr "Enviar"
+
+msgid "project#source-language"
+msgstr "llengua d'origen:"
+
+msgid "project#strings"
+msgstr "Encadenaments:"
+
+msgid "project#total-translated-words"
+msgstr "Paraules traduïdes:"
+
+msgctxt "Butono por komenci traduki en la elektita lingvo"
+msgid "project#translate"
+msgstr "Traduir"
+
+msgid "project#translate-other"
+msgstr "Traduir a una altra llengua"
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} traduïda {2} paraula."
+msgstr[1] "{1} traduïdes {2} paraules."
+
+msgid "project#translators"
+msgstr "Traductors:"
+
+msgid "project#untranslated-words"
+msgstr "Paraules no traduïdes:"
+
+msgid "project#url"
+msgstr "Adreça:"
+
+msgid "project#words"
+msgstr "Paraules:"
+
+msgid "structure#choose-language"
+msgstr "Escull la teva llengua"
+
+msgid "structure#close"
+msgstr "Tancar"
+
+msgid "structure#contact"
+msgstr "Contacte"
+
+msgid "structure#home"
+msgstr "Pàgina principal"
+
+msgid "structure#instructions"
+msgstr "Instruccions"
+
+msgid "structure#privacy"
+msgstr "Política de confidencialitat"
+
+msgid "structure#project-by"
+msgstr ""
+"Aquest sistema de traducció és un projecte d'{1}Educació@Internet{/1}."
+
+msgid "structure#settings"
+msgstr "Configuració"
+
+msgid "structure#sign-in"
+msgstr "Iniciar sessió"
+
+msgid "structure#sign-out"
+msgstr "Tancar sessió"
+
+msgid "structure#sign-up"
+msgstr "Crear un compte"
+
+msgid "structure#terms"
+msgstr "Condicions d'ús"
+
+msgid "structure#website-name"
+msgstr "Sistema de traducció d’E@I"
+
+msgid "structure#welcome"
+msgstr "Benvingut/da"
+
+msgid "translate#javascript"
+msgstr ""
+"JavaScript ha de ser activat perquè la interfície de traducció funcioni."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Traducció de {1}"

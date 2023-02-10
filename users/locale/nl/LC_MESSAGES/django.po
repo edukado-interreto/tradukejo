@@ -1,0 +1,126 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2023-02-10 09:47+0100\n"
+"PO-Revision-Date: 2023-02-10 09:47+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Vriendelijke groet,"
+
+msgid "emails#greeting"
+msgstr "Beste {1},"
+
+msgid "emails#signature"
+msgstr "Het E@I team"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"We bevestigen dat u lid bent geworden van de {1}vertaalsite van E@I{/1}. U "
+"kunt nu inloggen en beginnen met vertalen."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"We raden u aan de {1}instructies{/1} te lezen alvorens u begint te vertalen."
+
+msgid "emails/registration#title"
+msgstr "Vertaalsite van E@I: bevestiging van uw registratie"
+
+msgid "login#forgot-password"
+msgstr "Uw wachtwoord vergeten? {1}Verander hier uw wachtwoord. {/1}"
+
+msgid "login#sign-up"
+msgstr "Hebt u geen account? {1} Meld u nu aan!{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"Uw account werd aangemaakt en u kunt al beginnen met vertalen. Er is een "
+"bevestigingsmail verzonden naar {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "De veranderingen konden niet bewaard worden."
+
+msgid "messages#changes-saved"
+msgstr "De veranderingen werden bewaard."
+
+msgid "password#can-login"
+msgstr "U kunt nu {1}inloggen{/1}."
+
+msgid "password#change-success"
+msgstr "Uw wachtwoord werd succesvol veranderd."
+
+msgid "password#message-sent"
+msgstr ""
+"Er is een e-mail met instructies naar uw e-mailadres gestuurd. Als u niets "
+"ontvangt, controleer dan of u het juiste adres hebt ingevuld en of u een "
+"account hebt aangemaakt."
+
+msgid "password#reset"
+msgstr ""
+"Uw wachtwoord vergeten? Vul hier uw e-mailadres in en we sturen u "
+"instructies."
+
+msgid "password#send-instructions"
+msgstr "Mij instructies sturen"
+
+msgid "password#type-twice"
+msgstr ""
+"Voer voor de veiligheid uw huidig wachtwoord in en tweemaal uw nieuw "
+"wachtwoord om er zeker van te zijn dat u het correct hebt getypt."
+
+msgid "profile#didnt-translate"
+msgstr "{1} is nog niet begonnen met vertalen."
+
+msgid "profile#projects"
+msgstr "Projecten waaraan de gebruiker deelneemt {1}"
+
+msgid "settings#email"
+msgstr "E-mailadres"
+
+msgid "settings#email-language"
+msgstr "Voorkeurstaal om e-mail te ontvangen"
+
+msgid "settings#email-new-comments"
+msgstr ""
+"Laat me per e-mail weten wanneer iemand op mijn opmerking heeft gereageerd"
+
+msgid "settings#email-new-texts"
+msgstr "Stuur me een e-mail als er nieuwe teksten zijn om te vertalen"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Stuur me een e-mail wanneer iemand toestemming vraagt ​​om een ​​project te "
+"vertalen dat ik beheer"
+
+msgid "structure#change-password"
+msgstr "Mijn wachtwoord veranderen"
+
+msgid "structure#home"
+msgstr "Hoofdpagina"
+
+msgid "structure#log-in"
+msgstr "Inloggen"
+
+msgid "structure#password-changed"
+msgstr "Wachtwoord succesvol veranderd"
+
+msgid "structure#password-reset"
+msgstr "Nieuw wachtwoord aanvragen"
+
+msgid "structure#save"
+msgstr "Bewaren"
+
+msgid "structure#settings"
+msgstr "Instellingen"
+
+msgid "structure#sign-up"
+msgstr "Een account aanmaken"

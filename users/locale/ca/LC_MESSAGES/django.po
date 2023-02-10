@@ -1,0 +1,128 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2023-02-10 09:47+0100\n"
+"PO-Revision-Date: 2023-02-10 09:47+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Cordialment,"
+
+msgid "emails#greeting"
+msgstr "Benvolgut/da {1},"
+
+msgid "emails#signature"
+msgstr "L’equip d’E@I"
+
+msgid "emails/registration#confirmation"
+msgstr ""
+"Confirmem la vostra inscripció al {1}sistema de traducció d'E@I{/1}. Ja "
+"podeu connectar-vos-hi i començar a traduir."
+
+msgid "emails/registration#instructions"
+msgstr ""
+"Us recomanem que llegiu les {1}instruccions{/1} abans de començar a traduir."
+
+msgid "emails/registration#title"
+msgstr "Sistema de traducció d'E@I: confirmació d'inscripció"
+
+msgid "login#forgot-password"
+msgstr "Heu oblidat la contrasenya? {1}Recupereu-la aquí.{/1}"
+
+msgid "login#sign-up"
+msgstr "Si encara no teniu un compte, {1}inscriviu-vos-hi ara{/1}"
+
+msgid "messages#account-created"
+msgstr ""
+"El vostre compte ha estat creat i ja podeu començar a traduir. Un missatge "
+"de confirmació ha estat enviat a {email}."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "Els canvis no han pogut ser guardats."
+
+msgid "messages#changes-saved"
+msgstr "Els canvis han estat guardats."
+
+msgid "password#can-login"
+msgstr "Ara podeu {1}iniciar sessió{/1}."
+
+msgid "password#change-success"
+msgstr "El canvi de contrasenya s'ha realitzat correctament."
+
+msgid "password#message-sent"
+msgstr ""
+"S'ha enviat un missatge amb les instruccions a la vostra adreça de correu "
+"electrònic. Si no heu rebut res, comproveu que heu introduït l'adreça "
+"correcta i que teniu un compte."
+
+msgid "password#reset"
+msgstr ""
+"Heu oblidat la contrasenya? Escriviu l'adreça de correu electrònic aquí i us"
+" enviarem les instruccions."
+
+msgid "password#send-instructions"
+msgstr "Envieu-me les instruccions"
+
+msgid "password#type-twice"
+msgstr ""
+"Per seguretat, escriviu si us plau la vostra contrasenya actual, i la vostra"
+" contrasenya nova dues vegades, per assegurar-vos que l'heu escrita "
+"correctament."
+
+msgid "profile#didnt-translate"
+msgstr "{1} encara no heu començat a traduir."
+
+msgid "profile#projects"
+msgstr "Projectes en els quals participa l'usuari {1}"
+
+msgid "settings#email"
+msgstr "Correu-e"
+
+msgid "settings#email-language"
+msgstr "Llengua preferida per rebre missatges de correu electrònic"
+
+msgid "settings#email-new-comments"
+msgstr ""
+"Informar-me per correu electrònic quan algú respongui un comentari meu"
+
+msgid "settings#email-new-texts"
+msgstr ""
+"Informar-me per correu electrònic quan hi hagi textos nous per traduir"
+
+msgid "settings#email-translation-request"
+msgstr ""
+"Informar-me per correu electrònic quan algú sol·liciti el permís per traduir"
+" un projecte que jo gestiono"
+
+msgid "structure#change-password"
+msgstr "Canvia la meva contrasenya"
+
+msgid "structure#home"
+msgstr "Pàgina principal"
+
+msgid "structure#log-in"
+msgstr "Iniciar sessió"
+
+msgid "structure#password-changed"
+msgstr "Contrasenya canviada correctament"
+
+msgid "structure#password-reset"
+msgstr "Recuperar contrasenya"
+
+msgid "structure#save"
+msgstr "Guardar"
+
+msgid "structure#settings"
+msgstr "Configuració"
+
+msgid "structure#sign-up"
+msgstr "Crear un compte"

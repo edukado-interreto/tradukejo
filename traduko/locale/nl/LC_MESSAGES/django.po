@@ -1,0 +1,623 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: tradukejo@ikso.net\n"
+"POT-Creation-Date: 2023-02-10 09:28+0100\n"
+"PO-Revision-Date: 2023-02-10 09:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Tradukejo de E@I\n"
+
+msgid "emails#closing"
+msgstr "Vriendelijke groet,"
+
+msgid "emails#contact-us"
+msgstr "Als u vragen heeft, aarzel dan niet om ons te contacteren."
+
+msgid "emails#greeting"
+msgstr "Beste {1},"
+
+msgid "emails#opt-out"
+msgstr ""
+"PS: als u dergelijke berichten niet wilt ontvangen, kunt u dit instellen in "
+"uw profiel: {1}."
+
+msgid "emails#signature"
+msgstr "Het E@I team"
+
+msgid "emails/comment#comment1"
+msgstr "Iemand publiceerde een antwoord op uw commentaar in het project {1}."
+
+msgid "emails/comment#comment2"
+msgstr "U kunt het antwoord hier zien: {1}."
+
+msgid "emails/comment#title"
+msgstr "Vertaalsite van E@I: antwoord op uw commentaar in {project}"
+
+msgid "emails/new-texts#new-texts"
+msgstr "Er zijn nieuwe te vertalen teksten verschenen in het project {1}."
+
+msgid "emails/new-texts#outdated"
+msgid_plural "emails/new-texts#outdated"
+msgstr[0] "{1} opnieuw te vertalen woord"
+msgstr[1] "{1} opnieuw te vertalen woorden"
+
+msgid "emails/new-texts#title"
+msgstr "Vertaalsite van E@I: nieuw te vertalen teksten in {project}"
+
+msgid "emails/new-texts#translate-link"
+msgstr "U kunt hier vertalen: {1}."
+
+msgid "emails/new-texts#untranslated"
+msgid_plural "emails/new-texts#untranslated"
+msgstr[0] ""
+"Indien het aantal 1 is:\n"
+"{1} niet vertaald woord"
+msgstr[1] ""
+"Indien het aantal 0, 2, 3, 4, 5 ...is:\n"
+"{1} niet vertaalde woorden"
+
+msgid "emails/request#accept-link"
+msgstr "U kunt hier het verzoek aanvaarden of niet aanvaarden: {1}."
+
+msgid "emails/request#accepted"
+msgstr ""
+"Uw verzoek om het project {1} te vertalen naar uw taal {2} werd aanvaard."
+
+msgid "emails/request#accepted-title"
+msgstr ""
+"Vertaalsite van E@I: verzoek tot vertalen van {project} werd goedgekeurd"
+
+msgid "emails/request#new-request"
+msgstr ""
+"De gebruiker {1} vroeg om het project te mogen vertalen {2} naar de taal "
+"{3}:"
+
+msgid "emails/request#new-title"
+msgstr ""
+"Vertaalsite van E@I: verzoek tot machtiging om het {project} te vertalen"
+
+msgid "emails/request#rejected"
+msgstr ""
+"Uw verzoek om het project {1} te vertalen naar de taal {2} werd niet "
+"aanvaard."
+
+msgid "emails/request#rejected-title"
+msgstr ""
+"Vertaalsite van E@I: verzoek om het {project} te vertalen werd niet "
+"goedgekeurd"
+
+msgid "emails/request#start-translating"
+msgstr "U kunt beginnen te vertalen via deze link:{1}."
+
+msgid "messages#cannot-delete-comment"
+msgstr "U hebt niet het recht om dit commentaar te wissen."
+
+msgid "messages#changes-cannot-be-saved"
+msgstr "De wijzigingen konden niet bewaard worden."
+
+msgid "messages#changes-saved"
+msgstr "De veranderingen werden bewaard."
+
+msgid "messages#notification-sent"
+msgstr "De mededeling werd verzonden."
+
+msgid "messages#request-already-allowed"
+msgstr "U hebt niet het recht om naar deze taal te vertalen."
+
+msgid "messages#request-already-sent"
+msgstr "U hebt al een verzoek ingediend voor deze taal."
+
+msgid "messages#request-sent"
+msgstr "Het verzoek werd verzonden."
+
+msgid "pages/contact#contact1"
+msgstr ""
+"De vertaalsite is een project van E@I\n"
+"({1}Edukado@Interreto{/1})."
+
+msgid "pages/contact#contact2"
+msgstr ""
+"Indien u een vraag of commentaar heeft, aarzel dan niet om {1} te "
+"contacteren."
+
+msgid "pages/instructions#comments-caption"
+msgstr "Voorbeelden van commentaren."
+
+msgid "pages/instructions#comments-title"
+msgstr "Commentaren"
+
+msgid "pages/instructions#comments1"
+msgstr ""
+"U hebt de mogelijkheid om commentaar te leveren op elke taalversie van elke "
+"keten (onderverdeling). Zo kun je opheldering vragen over de te vertalen "
+"tekst, betere vertalingen bespreken met een andere vertaler, enzovoort. Je "
+"kunt {1} in je instellingen {/1} selecteren of u per e-mail op de hoogte "
+"wilt worden gehouden wanneer iemand op uw opmerking reageert."
+
+msgid "pages/instructions#interface-caption"
+msgstr "De vertaalinterface."
+
+msgid "pages/instructions#interface-caption2"
+msgstr "Gedetailleerde interface om een keten te vertalen."
+
+msgid "pages/instructions#interface-title"
+msgstr "Vertaalinterface"
+
+msgid "pages/instructions#interface1"
+msgstr "De vertaalinterface ziet er zo uit:"
+
+msgid "pages/instructions#interface2"
+msgstr "Er bevinden zich vijf elementen, van boven naar beneden:"
+
+msgid "pages/instructions#interface2-1"
+msgstr "balk met verschillende filters,"
+
+msgid "pages/instructions#interface2-2"
+msgstr ""
+"lijn, die verwijst naar welke taal u vertaalt, en in welk dossier u zich "
+"bevindt,"
+
+msgid "pages/instructions#interface2-3"
+msgstr "links: lijst met alle dossiers in het project,"
+
+msgid "pages/instructions#interface2-4"
+msgstr "rechts: gedetailleerde lijst van dossiers in het huidige dossier,"
+
+msgid "pages/instructions#interface2-5"
+msgstr "de voornaamste vertaalinterface."
+
+msgid "pages/instructions#interface3"
+msgstr ""
+"De te vertalen teksten zijn georganiseerd in {1} ketens {2}: tekstonderdelen"
+" die een hele alinea kunnen zijn, een menu-item, een titel van een sectie, "
+"enzovoort. Elk kleurenframe is één string die onafhankelijk van andere kan "
+"worden vertaald."
+
+msgid "pages/instructions#interface4"
+msgstr ""
+"Om ketens te groeperen volgens thema en voor meer duidelijkheid kunnen "
+"strings in dossiers worden gegroepeerd."
+
+msgid "pages/instructions#interface5"
+msgstr ""
+"Als de huidige map veel ketens (onderverdelingen) bevat (bijvoorbeeld een "
+"map \"landen\" met 200 landnamen), worden ze niet allemaal geladen, maar "
+"staat er onderaan een grote knop \"Meer tonen\"."
+
+msgid "pages/instructions#interface6"
+msgstr ""
+"De linkerhelft is de tekst in de brontaal, de rechterhelft de vertaling. Dit"
+" zijn de elementen:"
+
+msgid "pages/instructions#interface6-1"
+msgstr ""
+"Naam van de string. Het is een unieke identificatie die vooral nuttig is "
+"voor projectbeheerders. U hoeft deze niet te vertalen."
+
+msgid "pages/instructions#interface6-2"
+msgstr ""
+"De brontaal. Als u erop klikt, verschijnt er een menu waarmee u vertalingen "
+"in andere talen kunt zien."
+
+msgid "pages/instructions#interface6-3"
+msgstr ""
+"Links om een ​​vertaling in een automatisch vertaalsysteem te zien (dit kan "
+"u helpen bij het vertalen)."
+
+msgid "pages/instructions#interface6-4"
+msgstr "De tekst die u dient te vertalen."
+
+msgid "pages/instructions#interface6-5"
+msgstr ""
+"Een eventuele hulptekst, het kan bijvoorbeeld een uitleg van de context "
+"zijn."
+
+msgid "pages/instructions#interface6-6"
+msgstr "Status van de vertaling."
+
+msgid "pages/instructions#interface6-7"
+msgstr "De huidige vertaling."
+
+msgid "pages/instructions#interface6-8"
+msgstr ""
+"Datum en auteur van de tekst of de vertaling. Als de tekst meerdere keren is"
+" bewerkt, kunt u de geschiedenis van de wijzigingen bekijken. Er is ook de "
+"mogelijkheid om commentaar te geven."
+
+msgid "pages/instructions#intro1"
+msgstr ""
+"Welkom op de vertaalsite van {1}E@I{/1} ! Het is een systeem dat het "
+"gemakkelijk maakt om de inhoud van meertalige websites (of andere projecten)"
+" te vertalen."
+
+msgid "pages/instructions#intro2"
+msgstr ""
+"De vertaalsite wordt momenteel geprogrammeerd en verbeterd. De werking en de"
+" interface kunnen dus nog veranderen."
+
+msgid "pages/instructions#intro3"
+msgstr ""
+"Om te beginnen met het vertalen, heeft u {1} een account{/1} nodig. Als u "
+"ooit de oude vertaalsite hebt gebruikt (vóór 2021), werken oude accounts "
+"niet meer voor deze vertaalsite."
+
+msgid "pages/instructions#plural-caption"
+msgstr "Keten met meervoudige vormen."
+
+msgid "pages/instructions#plural-title"
+msgstr "Meervoudige ketens"
+
+msgid "pages/instructions#plural1"
+msgstr ""
+"Als er een zin als \"We hebben X-gebruikers\" op internet staat, kan er een "
+"probleem ontstaan: als er maar één gebruiker is, verschijnt \"We hebben 1 "
+"gebruikers\" en in talen met complexe regels zoals het Russisch, zal de zin "
+"vaak grammaticaal incorrect zijn, afhankelijk van het aantal gebruikers."
+
+msgid "pages/instructions#plural2"
+msgstr ""
+"Strings met een verschillende tekst, afhankelijk van het nummer, vormen de "
+"oplossing:"
+
+msgid "pages/instructions#plural3"
+msgstr ""
+"Vertaal vervolgens voor elke optie volgens de voorbeeldnummers. In het "
+"voorbeeld in de afbeelding hierboven stelt een Russische vertaler zich voor "
+"hoe die zin eruit zou moeten zien als het in plaats van {1} 1, 2 of 5 is."
+
+msgid "pages/instructions#plural4"
+msgstr ""
+"Het is normaal als er een verschillend aantal vertalingen is: veel talen "
+"hebben slechts twee vormen nodig (enkelvoud en meervoud), maar sommige (de "
+"meeste Slavische talen) hebben er drie nodig, Sloveens vier en sommige "
+"(Iers, Arabisch) zelfs meer."
+
+msgid "pages/instructions#projects-page-caption"
+msgstr "Schermafbeelding van een pagina uit het project."
+
+msgid "pages/instructions#projects-page-title"
+msgstr "Projectpagina"
+
+msgid "pages/instructions#projects-page1"
+msgstr ""
+"Hierboven vindt u algemene informatie over het project. In het kleurvak "
+"staat uitleg over hoe de vertalingen worden gebruikt: op sommige websites "
+"zijn ze direct zichtbaar, op andere moet de webmaster de vertalingen "
+"handmatig toevoegen - dit hangt af van de specifieke website, niet van de "
+"vertaalsite."
+
+msgid "pages/instructions#projects-page2"
+msgstr ""
+"Hieronder vindt u de lijst met talen waarin het project werd vertaald, met "
+"het percentage aan vertaalde teksten. Hieronder vindt u een lijst met "
+"recente opmerkingen en recente activiteiten."
+
+msgid "pages/instructions#projects-rights-caption"
+msgstr "Verzoek tot toelating om te vertalen."
+
+msgid "pages/instructions#projects-rights-title"
+msgstr "Vertaaltoestemmingen"
+
+msgid "pages/instructions#projects-rights1"
+msgstr ""
+"Om naar een specifieke taal te vertalen, heeft u toestemming nodig van de "
+"projectbeheerder. Klik op de knop \"Toestemming aanvragen\" naast de naam "
+"van een taal en schrijf een korte uitleg. Wanneer uw beheerder uw verzoek "
+"goedkeurt, ontvangt u een e-mail en kunt u beginnen met vertalen."
+
+msgid "pages/instructions#projects-rights2"
+msgstr ""
+"Als de taal die u wilt vertalen nog niet aan het project is toegevoegd, "
+"vindt u hieronder onder het kopje \"Vertalen naar een andere taal\" een menu"
+" met een lijst van talen. Als de gewenste taal niet in die lijst staat, neem"
+" dan {1}contact{/1} met ons op."
+
+msgid "pages/instructions#projects1"
+msgstr ""
+"\"Projecten\" zijn afzonderlijke sets vertalingen die betrekking hebben op "
+"één website."
+
+msgid "pages/instructions#search-sort-title"
+msgstr "Zoeken en sorteren"
+
+msgid "pages/instructions#search-sort1"
+msgstr "De bovenste plank heeft diverse filters:"
+
+msgid "pages/instructions#search-sort1-1"
+msgstr ""
+"met de eerste kun je filteren op status (handig om alleen de strings te zien"
+" die vertaald moeten worden),"
+
+msgid "pages/instructions#search-sort1-2"
+msgstr ""
+"de tweede stelt u in staat om de strings te sorteren: standaard op naam, "
+"maar u kunt ook sorteren op nieuwste of oudste toegevoegde tekst"
+
+msgid "pages/instructions#search-sort1-3"
+msgstr ""
+"de zoekmachine zoekt naar tekst in vertalingen en teksten in de brontaal."
+
+msgid "pages/instructions#state-title"
+msgstr "Status van de vertalingen"
+
+msgid "pages/instructions#state1"
+msgstr ""
+"Vertalingen kunnen drie statussen hebben: onvertaald (verschijnt in rood), "
+"onvertaald (verschijnt in geel) en vertaald (verschijnt in groen). \"Opnieuw"
+" vertalen\" betekent dat de tekst in de brontaal is gewijzigd, waardoor "
+"mogelijk een wijziging in de vertaling nodig is. Als u denkt dat het niet "
+"nodig is om de vertaling te wijzigen, kunt u op \"Markeren als vertaald\" "
+"klikken."
+
+msgid "pages/instructions#suggestions-caption"
+msgstr "Voorbeelden van voorgestelde vertalingen."
+
+msgid "pages/instructions#suggestions-title"
+msgstr "Voorgestelde vertalingen"
+
+msgid "pages/instructions#suggestions1"
+msgstr ""
+"Soms verschijnen er voorgestelde vertalingen wanneer u een nieuwe "
+"keten/string vertaalt. Deze suggesties zijn afkomstig van andere vertalingen"
+" van dezelfde tekst die al op de vertaalsite staan ​​(mogelijk in hetzelfde "
+"of in een ander project). Klik gewoon op het voorstel dat u leuk vindt en "
+"het wordt in het vertaalveld ingevoerd."
+
+msgid "pages/instructions#symbols-caption"
+msgstr "Keten met vreemde symbolen."
+
+msgid "pages/instructions#symbols-title"
+msgstr "Speciale symbolen"
+
+msgid "pages/instructions#symbols1"
+msgstr ""
+"Sommige strings kunnen vreemde symbolen bevatten. Dit zijn speciale tekens "
+"die de site door iets anders zal vervangen: een link, een gebruikersnaam, "
+"een nummer... Kopieer ze ongewijzigd in uw vertaling (en als ze woorden "
+"bevatten, vertaal ze dan niet): als u ze vergeet of wijzigt, worden de "
+"teksten niet correct op de website verschijnen."
+
+msgid "pages/instructions#symbols2"
+msgstr ""
+"Deze speciale symbolen verschijnen in kleur op de vertaalsite en kunnen er "
+"als volgt uitzien:"
+
+msgid "pages/instructions#symbols3"
+msgstr ""
+"Sommige projecten gebruiken dubbele ({1}) en driedubbele leestekens ({2}) "
+"voor cursief of vetgedrukte tekst, wees dus voorzichtig. Dit is niet "
+"universeel en hangt af van de website zelf, niet van de vertaalsite."
+
+msgid "pages/privacy#available-languages"
+msgstr ""
+"Het privacybeleid is momenteel alleen beschikbaar {1} in het Esperanto {/1}."
+
+msgid "pages/projects#hidden"
+msgstr "Verborgen project"
+
+msgid "pages/projects#lead1"
+msgstr ""
+"Gebruiksvriendelijker, efficiënter en mooier: we hebben de vertaalsite "
+"opnieuw geprogrammeerd met moderne technologieën."
+
+msgid "pages/projects#lead2"
+msgstr ""
+"De oude vertaalsite is nog steeds {1} hier {/1}toegankelijk, maar "
+"vertaalprojecten zullen geleidelijk worden gemigreerd naar de nieuwe "
+"vertaalsite."
+
+msgid "pages/projects#locked"
+msgstr "Gesloten project"
+
+msgid "pages/projects#projects"
+msgstr "Projecten"
+
+msgid "pages/projects#read-instructions"
+msgstr "De instructies lezen"
+
+msgid "pages/projects#welcome"
+msgstr "Welkom bij de nieuwe vertaalsite van E@I !"
+
+msgid "pages/terms#intro"
+msgstr ""
+"Door te vertalen met ons vertaalsysteem accepteert u de volgende "
+"voorwaarden:"
+
+msgid "pages/terms#term-1"
+msgstr ""
+"Je garandeert dat je een goed niveau hebt in de taal waarnaar je wilt "
+"vertalen."
+
+msgid "pages/terms#term-2"
+msgstr "U heeft ons {1}privacybeleid{/1} gelezen en geaccepteerd."
+
+msgid "pages/terms#term-3"
+msgstr ""
+"U heeft onze {1}instructies{/1} gelezen en belooft er overeenkomstig mee aan"
+" de slag te gaan."
+
+msgid "pages/terms#term-4"
+msgstr ""
+"U belooft de originele tekst zo getrouw mogelijk te vertalen. Je garandeert "
+"dat je zonder toestemming de betekenis van de tekst niet verandert of er "
+"zelf iets aan toevoegt dat in de originele tekst ontbreekt."
+
+msgid "pages/terms#term-5"
+msgstr ""
+"Als gebruiker/vertaler verleent u ons het wereldwijde, exclusieve, gratis, "
+"overdraagbare, tijdelijke, inhoudelijk onbeperkte recht om de door u "
+"gecreëerde en gepubliceerde content te gebruiken in alle omgevingen die "
+"worden gebruikt door Edukado@Interreto. Edukado@Interreto heeft het recht om"
+" deze inhoud op alle mogelijke manieren en in alle omgevingen te gebruiken: "
+"publiceren, kopiëren, reproduceren, wijzigen, bewerken, distribueren, "
+"verkopen enz."
+
+msgid "pages/terms#term-6"
+msgstr ""
+"Als gebruiker/vertaler garandeert u dat de inhoud die u invoert vrij is van "
+"rechten van derden. U garandeert dat u over alle benodigde rechten beschikt "
+"om te voldoen aan deze regels voor de inhoud die u invoert."
+
+msgid "project#added-words"
+msgid_plural "project#added-words"
+msgstr[0] "{1} toegevoegd {2} woord."
+msgstr[1] "{1} toegevoegde {2} woorden."
+
+msgctxt "Butono por peti tradukpermeson"
+msgid "project#ask-permission"
+msgstr "Toelating vragen"
+
+msgid "project#characters"
+msgstr "Tekens:"
+
+msgid "project#choose-language"
+msgstr "Kies een taal..."
+
+msgid "project#edited-strings"
+msgid_plural "project#edited-strings"
+msgstr[0] "{1} geredigeerde {2} keten."
+msgstr[1] "{1} geredigeerde {2} ketens."
+
+msgid "project#imported-words"
+msgid_plural "project#imported-words"
+msgstr[0] "{1} geïmporteerd {2} woord."
+msgstr[1] "{1} geïmporteerde {2} woorden."
+
+msgid "project#languages"
+msgstr "Talen"
+
+msgid "project#last-activities"
+msgstr "Laatste acties"
+
+msgid "project#last-comments"
+msgstr "Laatste commentaren"
+
+msgid "project#my-languages"
+msgstr "Mijn talen"
+
+msgid "project#needed"
+msgstr "Benodigde talen"
+
+msgid "project#needed-all"
+msgstr "alle mogelijke"
+
+msgid "project#other-contact"
+msgstr ""
+"Wilt u vertalen naar een taal die niet op deze lijst staat? Neem "
+"{1}contact{/1} met ons op."
+
+msgid "project#other-languages"
+msgstr "Alle talen"
+
+msgid "project#outdated-words"
+msgstr "Opnieuw te vertalen woorden:"
+
+msgid "project#read-instructions"
+msgstr "Verward? {1}Lees de instructies!{/1}"
+
+msgid "project#request-explanation"
+msgstr "Gelieve een paar woorden over uzelf te scrhijven:"
+
+msgid "project#request-language"
+msgstr "U vraagt toestemming om te vertalen naar deze taal:"
+
+msgctxt "Titolo de fenestreto"
+msgid "project#request-permission"
+msgstr "Toestemming vragen om te vertalen"
+
+msgid "project#request-sent"
+msgstr "Verzoek verzonden"
+
+msgctxt "Butono por sendi peton pri tradukpermeso"
+msgid "project#sendi"
+msgstr "Versturen"
+
+msgid "project#source-language"
+msgstr "Brontaal:"
+
+msgid "project#strings"
+msgstr "Ketens:"
+
+msgid "project#total-translated-words"
+msgstr "Vertaalde woorden:"
+
+msgctxt "Butono por komenci traduki en la elektita lingvo"
+msgid "project#translate"
+msgstr "Vertalen"
+
+msgid "project#translate-other"
+msgstr "Naar een andere taal vertalen"
+
+msgid "project#translated-words"
+msgid_plural "project#translated-words"
+msgstr[0] "{1} vertaald {2} woord."
+msgstr[1] "{1} vertaalde {2} woorden."
+
+msgid "project#translators"
+msgstr "Vertalers:"
+
+msgid "project#untranslated-words"
+msgstr "Niet vertaalde woorden:"
+
+msgid "project#url"
+msgstr "Adres:"
+
+msgid "project#words"
+msgstr "Woorden:"
+
+msgid "structure#choose-language"
+msgstr "Kies uw taal"
+
+msgid "structure#close"
+msgstr "Sluiten"
+
+msgid "structure#contact"
+msgstr "Kontakt"
+
+msgid "structure#home"
+msgstr "Hoofdpagina"
+
+msgid "structure#instructions"
+msgstr "Instructies"
+
+msgid "structure#privacy"
+msgstr "Privacy"
+
+msgid "structure#project-by"
+msgstr "Deze vertaalsite is een project van {1} Edukado@Interreto{/1}."
+
+msgid "structure#settings"
+msgstr "Instellingen"
+
+msgid "structure#sign-in"
+msgstr "Inloggen"
+
+msgid "structure#sign-out"
+msgstr "Uitloggen"
+
+msgid "structure#sign-up"
+msgstr "Account aanmaken"
+
+msgid "structure#terms"
+msgstr "Gebruiksvoorwaarden"
+
+msgid "structure#website-name"
+msgstr "Vertaalsite van E@I"
+
+msgid "structure#welcome"
+msgstr "Welkom"
+
+msgid "translate#javascript"
+msgstr ""
+"JavaScript moet zijn ingeschakeld om de vertaalinterface te laten werken."
+
+msgctxt "Temas pri nomo de projekto"
+msgid "translate#title"
+msgstr "Vertaling van {1}"
