@@ -49,10 +49,21 @@ class TrStringTextAdmin(admin.ModelAdmin):
     search_fields = ['text']
     autocomplete_fields = ['trstring', 'language']
     list_filter = ('language','trstring__project')
+    actions = ['mark_outdated', 'mark_translated']
+
+
+    @admin.action(description='Mark translations as outdated')
+    def mark_outdated(self, request, queryset):
+        queryset.update(state=TRANSLATION_STATE_OUTDATED)
+
+
+    @admin.action(description='Mark translations as translated')
+    def mark_translated(self, request, queryset):
+        queryset.update(state=TRANSLATION_STATE_TRANSLATED)
 
 
 @admin.register(TrStringTextHistory)
-class TrStringTextAdmin(admin.ModelAdmin):
+class TrStringTextHistoryAdmin(admin.ModelAdmin):
     list_display = ('trstringtext', 'pluralized', 'text', 'create_date')
     ordering = ['trstringtext']
     search_fields = ['text']
