@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
@@ -47,3 +49,6 @@ urlpatterns = [
     path("vue/get-translation-suggestions/", vue_translation.get_translation_suggestions, name="vue_get_translation_suggestions"),
 ]
 
+if settings.DEBUG:
+    urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
+    

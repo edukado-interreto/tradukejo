@@ -11,7 +11,7 @@ from django.utils.timezone import make_aware
 from .models import *
 from .translation_functions import *
 from . import signals
-import demjson
+import demjson3
 
 
 class WrongFormatError(Exception):
@@ -474,8 +474,8 @@ def import_from_nested_json(project, json_file, language_code, update_texts, use
 
     try:
         # The file could be improper JSON (e.g. no double quotes around keys), demjson accepts this but json doesn't
-        json_data = demjson.decode(file_content)
-    except demjson.JSONDecodeError as e:
+        json_data = demjson3.decode(file_content)
+    except demjson3.JSONDecodeError as e:
         print(e)
         raise WrongFormatError()
 
