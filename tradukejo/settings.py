@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
-from django.contrib.messages import constants as messages
+
 from decouple import config, Csv
+from django.contrib.messages import constants as messages
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -13,6 +14,13 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="tradukejo@ikso.net")
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
 )
+
+if "emaillabs" in EMAIL_BACKEND:
+    ANYMAIL = {
+        "EMAILLABS_SMTP_ACCOUNT": config("EMAILLABS_SMTP_ACCOUNT"),
+        "EMAILLABS_APP_KEY": config("EMAILLABS_APP_KEY"),
+        "EMAILLABS_SECRET_KEY": config("EMAILLABS_SECRET_KEY"),
+    }
 
 if config("MARIADB_DATABASE", default=False):
     DATABASES = {
@@ -37,8 +45,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_cleanup.apps.CleanupConfig",
+    "anymail",
     "crispy_forms",
     "compressor",
+    "core",
 ]
 
 MIDDLEWARE = [
