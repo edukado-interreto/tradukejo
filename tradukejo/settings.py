@@ -12,15 +12,31 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from decouple import config, Csv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+SECRET_KEY = config("SECRET_KEY")
+DEBUG = config("DEBUG", default=False, cast=bool)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="", cast=Csv())
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="tradukejo@ikso.net")
+EMAIL_BACKEND = config(
+    "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# Application definition
+if config("MARIADB_DATABASE", default=False):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": config("MARIADB_DATABASE", default="tradukejo"),
+            "USER": config("MARIADB_USER"),
+            "PASSWORD": config("MARIADB_PASSWORD"),
+            # Name of the service in Docker Compose:
+            "HOST": config("MARIADB_HOST", default="mariadb"),
+            "PORT": config("MARIADB_PORT", default=3306, cast=int),
+        }
+    }
 
 INSTALLED_APPS = [
     'traduko.apps.TradukoConfig',
@@ -38,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,10 +138,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static-files'),
-]
+STATIC_URL = "/static/"
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -154,4 +168,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MAX_LOADED_STRINGS = 30
 
-from tradukejo.local_settings import *
+COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=not DEBUG)
+LIBSASS_OUTPUT_STYLE = config(
+    "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
+)
+# STATICFILES_STORAGE = config("STATICFILES_STORAGE", default="django.contrib.staticfiles.storage.ManifestStaticFilesStorage")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"

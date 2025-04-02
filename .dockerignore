@@ -1,0 +1,38 @@
+/static
+/upload
+/vue-translation-interface
+
+# Python-related
+*.pyc
+*.pyo
+**/__pycache__/  # Ignore __pycache__ in all subdirectories
+.docker/
+.venv/
+venv/
+env/
+*.swp
+*.swo
+local_settings.py
+db.sqlite3  # If you're not using a persistent database volume
+media/  # If you're using a persistent volume for media files
+
+# Node.js/Vue-related
+node_modules/
+dist/  # Or whatever your Vue build output directory is
+yarn-error.log
+npm-debug.log
+
+# General
+.git/
+.gitignore
+docker-compose.yml  # Or any other Docker-related files
+Dockerfile  # Or any other Docker-related files
+*.log
+*.bak
+*.tmp
+tmp/
+
+# IDE related
+.DS_Store  # macOS
+.idea/  # JetBrains IDE
+.vscode/  # VS Code

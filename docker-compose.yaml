@@ -1,0 +1,73 @@
+name: tradukejo
+
+networks:
+  django_network:
+
+services:
+
+  django:
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile
+    restart: always
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      # vue-build:
+      #   condition: service_completed_successfully
+    volumes:
+      - .:/src:z
+    working_dir: /src
+    environment:
+      DJANGO_SETTINGS_MODULE: tradukejo.settings
+      MARIADB_HOST: mariadb
+      MARIADB_NAME: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    user: ${USER_ID-1000}:${GROUP_ID-1000}
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py loaddata languages.json &&
+      python manage.py collectstatic --noinput &&
+      python manage.py compilemessages -v0 &&
+      gunicorn tradukejo.wsgi:application --bind 0.0.0.0:$DJANGO_PORT
+      "
+    networks:
+      - django_network
+    ports:
+      - $DJANGO_PORT:$DJANGO_PORT
+
+  vue-build:
+    # image: node:14.21-slim
+    image: node:16.20-slim
+    working_dir: /src/vue-translation-interface
+    user: ${USER_ID-1000}:${USER_ID-1000}
+    volumes:
+      - .:/src:z
+    command: /bin/sh -c "npm i; npm run --verbose build"
+
+  vue-build-watch:
+    extends: vue-build
+    profiles: ["exclude"]
+    tty: true
+    command: "npm install && npm run build-watch"
+
+  mariadb:
+    image: mariadb:10.11.11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    volumes:
+      - .docker/mariadb_data:/var/lib/mysql:z
+    networks:
+      - django_network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 3s
+      interval: 30s
+      timeout: 2s
+      retries: 3

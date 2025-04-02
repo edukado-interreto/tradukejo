@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  django:
+    image: blfpd/tradukejo:2.0.4
+    volumes:
+      - type: bind
+        source: /srv/Tradukejo/static
+        target: /srv/static
+      - type: bind
+        source: /srv/Tradukejo/upload
+        target: /srv/upload
+    working_dir: /srv
+    environment:
+      SECRET_KEY: $SECRET_KEY
+      DEBUG: 1
+      DJANGO_SETTINGS_MODULE: $DJANGO_SETTINGS
+      ALLOWED_HOSTS: $ALLOWED_HOSTS
+      MARIADB_HOST: mariadb
+      MARIADB_NAME: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py loaddata languages.json &&
+      python manage.py collectstatic --noinput &&
+      python manage.py compilemessages -v0 &&
+      gunicorn tradukejo.wsgi:application --bind unix:/srv/Tradukejo/tradukejo-swarm.sock
+      "
+    deploy:
+      restart_policy:
+        condition: any
+    networks:
+      - tradukejo_network
+
+  build-vue:
+    image: node:16.20-slim
+    volumes:
+      - type: bind
+        source: /srv/Tradukejo/tradukejo
+        target: /srv
+    working_dir: /src/vue-translation-interface
+    command: "npm install && npm run build"
+
+  mariadb:
+    image: mariadb:10.11.6
+    deploy:
+      restart_policy:
+        condition: any
+    environment:
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    volumes:
+      - type: bind
+        source: /srv/Tradukejo/mariadb_data
+        target: /var/lib/mysql
+    networks:
+      - tradukejo_network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 12s
+      retries: 3
+      start_period: 15s
+
+networks:
+  tradukejo_network:
+

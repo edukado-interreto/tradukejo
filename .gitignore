@@ -2,6 +2,9 @@
 upload/projects/*
 /static/CACHE/
 
+# Docker stuff
+.docker/*_data/
+
 # Pycharm stuff
 .idea/
 
@@ -136,3 +139,5 @@ dmypy.json
 .pyre/
 
 node_modules
+# traduko/static/**/vue-translation-interface
+/static
