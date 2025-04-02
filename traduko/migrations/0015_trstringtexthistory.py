@@ -6,22 +6,47 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('traduko', '0014_remove_trstring_pluralized'),
+        ("traduko", "0014_remove_trstring_pluralized"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TrStringTextHistory',
+            name="TrStringTextHistory",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('pluralized', models.BooleanField(default=False)),
-                ('text', models.TextField(help_text='If not pluralized, store text directly. If pluralized, store as JSON array.')),
-                ('create_date', models.DateTimeField(auto_now_add=True)),
-                ('translated_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('trstringtext', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='traduko.trstringtext')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("pluralized", models.BooleanField(default=False)),
+                (
+                    "text",
+                    models.TextField(
+                        help_text="If not pluralized, store text directly. If pluralized, store as JSON array."
+                    ),
+                ),
+                ("create_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "translated_by",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "trstringtext",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="traduko.trstringtext",
+                    ),
+                ),
             ],
         ),
     ]

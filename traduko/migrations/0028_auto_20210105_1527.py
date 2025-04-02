@@ -4,18 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0027_remove_language_plural_examples'),
+        ("traduko", "0027_remove_language_plural_examples"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='trstringtext',
-            unique_together={('trstring', 'language')},
+            name="trstringtext",
+            unique_together={("trstring", "language")},
         ),
         migrations.AddIndex(
-            model_name='trstringtext',
-            index=models.Index(fields=['trstring', 'language'], name='traduko_trs_trstrin_d7bc31_idx'),
+            model_name="trstringtext",
+            index=models.Index(
+                fields=["trstring", "language"], name="traduko_trs_trstrin_d7bc31_idx"
+            ),
         ),
     ]

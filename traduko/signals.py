@@ -1,15 +1,22 @@
 from .models import *
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .translation_functions import update_project_count, update_language_version_count, update_all_language_versions_count
+from .translation_functions import (
+    update_project_count,
+    update_language_version_count,
+    update_all_language_versions_count,
+)
 
 
 # See also import_export_functions where these functions are temporarily disabled
 
+
 @receiver(post_save, sender=TrStringText)
 def update_project_count_from_trstringtext(sender, instance, **kwargs):
     if instance.trstring.project.source_language != instance.language:
-        lv = LanguageVersion.objects.get(project=instance.trstring.project, language=instance.language)
+        lv = LanguageVersion.objects.get(
+            project=instance.trstring.project, language=instance.language
+        )
         update_language_version_count(lv)
     # If we are editing/adding the text in the source language, the associated TrString should already be updated
 
@@ -17,6 +24,8 @@ def update_project_count_from_trstringtext(sender, instance, **kwargs):
 @receiver(post_save, sender=TrString)
 @receiver(post_delete, sender=TrString)
 def update_project_count_from_trstring(sender, instance, **kwargs):
-    if 'created' not in kwargs.keys() or not kwargs['created']:  # The string is created, saved, changed and saved again, so no need for this to run twice
+    if (
+        "created" not in kwargs.keys() or not kwargs["created"]
+    ):  # The string is created, saved, changed and saved again, so no need for this to run twice
         update_project_count(instance.project)
         update_all_language_versions_count(instance.project)

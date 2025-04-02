@@ -5,15 +5,16 @@ import traduko.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0018_project_image'),
+        ("traduko", "0018_project_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='project',
-            name='image',
-            field=models.ImageField(blank=True, upload_to=traduko.models.project_image_upload_location),
+            model_name="project",
+            name="image",
+            field=models.ImageField(
+                blank=True, upload_to=traduko.models.project_image_upload_location
+            ),
         ),
     ]

@@ -23,58 +23,61 @@ def register(request):
             login(request, user)
 
             context = {
-                'username': user.username,
-                'url': request.build_absolute_uri('/'),
-                'instructions_url': request.build_absolute_uri(reverse('instructions')),
+                "username": user.username,
+                "url": request.build_absolute_uri("/"),
+                "instructions_url": request.build_absolute_uri(reverse("instructions")),
             }
-            html_message = render_to_string("users/email/registration-confirmation.html", context)
+            html_message = render_to_string(
+                "users/email/registration-confirmation.html", context
+            )
             plain_text_message = strip_tags(html_message)
 
             send_mail(
-                _('emails/registration#title'),
+                _("emails/registration#title"),
                 plain_text_message,
                 None,
                 [user.email],
-                html_message=html_message
+                html_message=html_message,
             )
 
-            messages.success(request, _('messages#account-created').format(email=user.email))
+            messages.success(
+                request, _("messages#account-created").format(email=user.email)
+            )
             return redirect(reverse("projects"))
     else:
         form = CustomUserCreationForm()
 
-    return render(
-        request, "users/register.html",
-        {"form": form}
-    )
+    return render(request, "users/register.html", {"form": form})
 
 
 @login_required
 def profile(request, user_id):
     current_user = get_object_or_404(User, pk=user_id)
-    projects = Project.objects.filter(visible=True, languageversion__translators=current_user).distinct().order_by('name')
+    projects = (
+        Project.objects.filter(visible=True, languageversion__translators=current_user)
+        .distinct()
+        .order_by("name")
+    )
 
     context = {
-        'projects': projects,
-        'current_user': current_user,
+        "projects": projects,
+        "current_user": current_user,
     }
     return render(request, "users/profile.html", context)
 
 
 @login_required
 def user_settings(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, _('messages#changes-saved'))
+            messages.success(request, _("messages#changes-saved"))
         else:
             print(form.errors)
-            messages.error(request, _('messages#changes-cannot-be-saved'))
+            messages.error(request, _("messages#changes-cannot-be-saved"))
     else:
         form = UserSettingsForm(instance=request.user)
 
-    context = {
-        'form': form
-    }
+    context = {"form": form}
     return render(request, "users/user-settings.html", context)

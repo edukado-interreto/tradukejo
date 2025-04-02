@@ -4,40 +4,39 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0019_auto_20201210_1338'),
+        ("traduko", "0019_auto_20201210_1338"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='languageversion',
-            name='outdated_characters',
+            model_name="languageversion",
+            name="outdated_characters",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='languageversion',
-            name='outdated_strings',
+            model_name="languageversion",
+            name="outdated_strings",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='languageversion',
-            name='outdated_words',
+            model_name="languageversion",
+            name="outdated_words",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='languageversion',
-            name='translated_characters',
+            model_name="languageversion",
+            name="translated_characters",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='languageversion',
-            name='translated_strings',
+            model_name="languageversion",
+            name="translated_strings",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='languageversion',
-            name='translated_words',
+            model_name="languageversion",
+            name="translated_words",
             field=models.IntegerField(default=0),
         ),
     ]

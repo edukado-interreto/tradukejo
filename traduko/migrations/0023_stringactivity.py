@@ -6,25 +6,50 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('traduko', '0022_auto_20201230_1533'),
+        ("traduko", "0022_auto_20201230_1533"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StringActivity',
+            name="StringActivity",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('action', models.CharField(choices=[], max_length=5)),
-                ('words', models.IntegerField(default=None, null=True)),
-                ('characters', models.IntegerField(default=None, null=True)),
-                ('date', models.DateField(auto_now_add=True)),
-                ('datetime', models.DateTimeField(auto_now_add=True)),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='traduko.language')),
-                ('trstringtext', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='traduko.trstringtext')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("action", models.CharField(choices=[], max_length=5)),
+                ("words", models.IntegerField(default=None, null=True)),
+                ("characters", models.IntegerField(default=None, null=True)),
+                ("date", models.DateField(auto_now_add=True)),
+                ("datetime", models.DateTimeField(auto_now_add=True)),
+                (
+                    "language",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="traduko.language",
+                    ),
+                ),
+                (
+                    "trstringtext",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="traduko.trstringtext",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

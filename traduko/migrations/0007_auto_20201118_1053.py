@@ -4,34 +4,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0006_trstringtext_plural_index'),
+        ("traduko", "0006_trstringtext_plural_index"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='trstringtext',
-            name='plural_index',
+            model_name="trstringtext",
+            name="plural_index",
         ),
         migrations.AddField(
-            model_name='trstringtext',
-            name='pluralized',
+            model_name="trstringtext",
+            name="pluralized",
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name='language',
-            name='plural_examples',
-            field=models.CharField(blank=True, help_text='Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5. Must have the same amount of numbers as nplural in the “Plural forms” field.', max_length=50),
+            model_name="language",
+            name="plural_examples",
+            field=models.CharField(
+                blank=True,
+                help_text="Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5. Must have the same amount of numbers as nplural in the “Plural forms” field.",
+                max_length=50,
+            ),
         ),
         migrations.AlterField(
-            model_name='language',
-            name='plural_forms',
-            field=models.CharField(help_text='Plurals header in .po files. Must begin with “nplurals=n;” where n is the number of different plural forms. Do not touch if you don’t know what you’re doing.', max_length=200),
+            model_name="language",
+            name="plural_forms",
+            field=models.CharField(
+                help_text="Plurals header in .po files. Must begin with “nplurals=n;” where n is the number of different plural forms. Do not touch if you don’t know what you’re doing.",
+                max_length=200,
+            ),
         ),
         migrations.AlterField(
-            model_name='trstringtext',
-            name='text',
-            field=models.TextField(help_text='If not pluralized, store text directly. If pluralized, store as JSON array.'),
+            model_name="trstringtext",
+            name="text",
+            field=models.TextField(
+                help_text="If not pluralized, store text directly. If pluralized, store as JSON array."
+            ),
         ),
     ]

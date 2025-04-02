@@ -4,18 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0010_auto_20201123_1321'),
+        ("traduko", "0010_auto_20201123_1321"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='trstring',
-            unique_together={('project', 'path', 'name')},
+            name="trstring",
+            unique_together={("project", "path", "name")},
         ),
         migrations.AddIndex(
-            model_name='trstring',
-            index=models.Index(fields=['project', 'path', 'name'], name='traduko_trs_project_4f6791_idx'),
+            model_name="trstring",
+            index=models.Index(
+                fields=["project", "path", "name"],
+                name="traduko_trs_project_4f6791_idx",
+            ),
         ),
     ]

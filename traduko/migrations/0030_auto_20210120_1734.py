@@ -5,15 +5,14 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0029_auto_20210119_1437'),
+        ("traduko", "0029_auto_20210119_1437"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trstringtexthistory',
-            name='create_date',
+            model_name="trstringtexthistory",
+            name="create_date",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

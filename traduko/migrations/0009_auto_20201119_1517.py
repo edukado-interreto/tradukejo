@@ -5,26 +5,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('traduko', '0008_auto_20201119_1050'),
+        ("traduko", "0008_auto_20201119_1050"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='admins',
+            model_name="project",
+            name="admins",
             field=models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
-            model_name='languageversion',
-            name='translator_requests',
-            field=models.ManyToManyField(blank=True, related_name='translator_requests', to=settings.AUTH_USER_MODEL),
+            model_name="languageversion",
+            name="translator_requests",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="translator_requests",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='languageversion',
-            name='translators',
+            model_name="languageversion",
+            name="translators",
             field=models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL),
         ),
     ]

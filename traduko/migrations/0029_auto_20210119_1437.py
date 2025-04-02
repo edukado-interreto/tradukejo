@@ -4,20 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0028_auto_20210105_1527'),
+        ("traduko", "0028_auto_20210105_1527"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='export_explanations',
-            field=models.TextField(blank=True, help_text='Explanations for project admins: how to export the translations?'),
+            model_name="project",
+            name="export_explanations",
+            field=models.TextField(
+                blank=True,
+                help_text="Explanations for project admins: how to export the translations?",
+            ),
         ),
         migrations.AddField(
-            model_name='project',
-            name='update_explanations',
-            field=models.TextField(blank=True, help_text='Explanations for translators: how are translations updated in the website?'),
+            model_name="project",
+            name="update_explanations",
+            field=models.TextField(
+                blank=True,
+                help_text="Explanations for translators: how are translations updated in the website?",
+            ),
         ),
     ]

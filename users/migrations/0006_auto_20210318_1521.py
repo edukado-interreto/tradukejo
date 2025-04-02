@@ -4,35 +4,47 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0005_user_email_new_comments'),
+        ("users", "0005_user_email_new_comments"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='email_language',
-            field=models.CharField(choices=[('en', 'English'), ('eo', 'Esperanto'), ('fr', 'Français')], default='eo', max_length=5, verbose_name='settings#email-language'),
+            model_name="user",
+            name="email_language",
+            field=models.CharField(
+                choices=[("en", "English"), ("eo", "Esperanto"), ("fr", "Français")],
+                default="eo",
+                max_length=5,
+                verbose_name="settings#email-language",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email',
-            field=models.EmailField(max_length=254, unique=True, verbose_name='settings#email'),
+            model_name="user",
+            name="email",
+            field=models.EmailField(
+                max_length=254, unique=True, verbose_name="settings#email"
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email_new_comments',
-            field=models.BooleanField(default=True, verbose_name='settings#email-new-comments'),
+            model_name="user",
+            name="email_new_comments",
+            field=models.BooleanField(
+                default=True, verbose_name="settings#email-new-comments"
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email_new_texts',
-            field=models.BooleanField(default=True, verbose_name='settings#email-new-texts'),
+            model_name="user",
+            name="email_new_texts",
+            field=models.BooleanField(
+                default=True, verbose_name="settings#email-new-texts"
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email_translation_request',
-            field=models.BooleanField(default=True, verbose_name='settings#email-translation-request'),
+            model_name="user",
+            name="email_translation_request",
+            field=models.BooleanField(
+                default=True, verbose_name="settings#email-translation-request"
+            ),
         ),
     ]

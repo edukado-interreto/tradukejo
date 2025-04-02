@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0020_auto_20201211_1243'),
+        ("traduko", "0020_auto_20201211_1243"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='last_translator_notification',
+            model_name="project",
+            name="last_translator_notification",
             field=models.DateTimeField(blank=True, default=None, null=True),
         ),
     ]

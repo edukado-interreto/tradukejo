@@ -4,15 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0023_stringactivity'),
+        ("traduko", "0023_stringactivity"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='stringactivity',
-            name='action',
-            field=models.CharField(choices=[('trans', 'translated'), ('edit', 'edited'), ('add', 'added'), ('imp', 'imported')], max_length=5),
+            model_name="stringactivity",
+            name="action",
+            field=models.CharField(
+                choices=[
+                    ("trans", "translated"),
+                    ("edit", "edited"),
+                    ("add", "added"),
+                    ("imp", "imported"),
+                ],
+                max_length=5,
+            ),
         ),
     ]

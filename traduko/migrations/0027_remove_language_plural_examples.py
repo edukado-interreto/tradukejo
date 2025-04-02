@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0026_auto_20210104_1316'),
+        ("traduko", "0026_auto_20210104_1316"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='language',
-            name='plural_examples',
+            model_name="language",
+            name="plural_examples",
         ),
     ]

@@ -4,25 +4,32 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0021_project_last_translator_notification'),
+        ("traduko", "0021_project_last_translator_notification"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='language',
-            name='deepl',
-            field=models.BooleanField(default=False, help_text='Is the language available in DeepL?'),
+            model_name="language",
+            name="deepl",
+            field=models.BooleanField(
+                default=False, help_text="Is the language available in DeepL?"
+            ),
         ),
         migrations.AddField(
-            model_name='language',
-            name='google',
-            field=models.BooleanField(default=False, help_text='Is the language available in Google Translate?'),
+            model_name="language",
+            name="google",
+            field=models.BooleanField(
+                default=False,
+                help_text="Is the language available in Google Translate?",
+            ),
         ),
         migrations.AddField(
-            model_name='language',
-            name='yandex',
-            field=models.BooleanField(default=False, help_text='Is the language available in Yandex.Translate?'),
+            model_name="language",
+            name="yandex",
+            field=models.BooleanField(
+                default=False,
+                help_text="Is the language available in Yandex.Translate?",
+            ),
         ),
     ]

@@ -4,19 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0004_languageversion'),
+        ("traduko", "0004_languageversion"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='languageversion',
-            options={'ordering': ['language']},
+            name="languageversion",
+            options={"ordering": ["language"]},
         ),
         migrations.AddField(
-            model_name='trstring',
-            name='context',
-            field=models.TextField(blank=True, help_text='Short explanation for translators'),
+            model_name="trstring",
+            name="context",
+            field=models.TextField(
+                blank=True, help_text="Short explanation for translators"
+            ),
         ),
     ]

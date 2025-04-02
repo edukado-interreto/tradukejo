@@ -4,15 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0004_auto_20201217_1227'),
+        ("users", "0004_auto_20201217_1227"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='email_new_comments',
-            field=models.BooleanField(default=True, verbose_name='Informi min retpoŝte, kiam iu respondis mian komenton'),
+            model_name="user",
+            name="email_new_comments",
+            field=models.BooleanField(
+                default=True,
+                verbose_name="Informi min retpoŝte, kiam iu respondis mian komenton",
+            ),
         ),
     ]

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0017_auto_20201204_1200'),
+        ("traduko", "0017_auto_20201204_1200"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='image',
-            field=models.ImageField(blank=True, upload_to=''),
+            model_name="project",
+            name="image",
+            field=models.ImageField(blank=True, upload_to=""),
         ),
     ]

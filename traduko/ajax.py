@@ -16,7 +16,7 @@ import json
 @login_required
 def request_translator_permission(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    language = get_object_or_404(Language, pk=request.POST.get('language'))
+    language = get_object_or_404(Language, pk=request.POST.get("language"))
 
     try:
         lv = LanguageVersion.objects.get(project=project, language=language)
@@ -25,18 +25,22 @@ def request_translator_permission(request, project_id):
         lv.save()
 
     if request.user in lv.translators.all():
-        message = _('messages#request-already-allowed')
-    elif TranslatorRequest.objects.filter(user=request.user, language_version=lv).count() > 0:
-        message = _('messages#request-already-sent')
+        message = _("messages#request-already-allowed")
+    elif (
+        TranslatorRequest.objects.filter(user=request.user, language_version=lv).count()
+        > 0
+    ):
+        message = _("messages#request-already-sent")
     else:
-        translator_request = TranslatorRequest(user=request.user, explanation=request.POST.get('explanation'), language_version=lv)
+        translator_request = TranslatorRequest(
+            user=request.user,
+            explanation=request.POST.get("explanation"),
+            language_version=lv,
+        )
         translator_request.save()
-        message = _('messages#request-sent')
+        message = _("messages#request-sent")
         send_email_to_admins_about_translation_request(request, translator_request)
 
     button = render_to_string("traduko/project/translation_request_sent_button.html")
-    response_dict = {
-        'message': message,
-        'button': button
-    }
+    response_dict = {"message": message, "button": button}
     return HttpResponse(json.dumps(response_dict, ensure_ascii=False))

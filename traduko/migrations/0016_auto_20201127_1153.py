@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0015_trstringtexthistory'),
+        ("traduko", "0015_trstringtexthistory"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='project',
-            name='url',
+            model_name="project",
+            name="url",
             field=models.URLField(blank=True),
         ),
     ]

@@ -4,38 +4,88 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Language',
+            name="Language",
             fields=[
-                ('code', models.CharField(help_text='ISO 639-1 or ISO 639-2 code', max_length=6, primary_key=True, serialize=False)),
-                ('name', models.CharField(help_text='Name in the language itself', max_length=60, unique=True)),
-                ('direction', models.CharField(choices=[('ltr', 'Left to right →'), ('rtl', 'Right to left ←')], default='ltr', max_length=3)),
-                ('plural_forms', models.CharField(help_text='Plurals header in .po files', max_length=200)),
-                ('plural_examples', models.CharField(blank=True, help_text='Numbers to illustrate plural rules separated by commas, e.g. for Russian: 1,2,5', max_length=50)),
+                (
+                    "code",
+                    models.CharField(
+                        help_text="ISO 639-1 or ISO 639-2 code",
+                        max_length=6,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Name in the language itself",
+                        max_length=60,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "direction",
+                    models.CharField(
+                        choices=[
+                            ("ltr", "Left to right →"),
+                            ("rtl", "Right to left ←"),
+                        ],
+                        default="ltr",
+                        max_length=3,
+                    ),
+                ),
+                (
+                    "plural_forms",
+                    models.CharField(
+                        help_text="Plurals header in .po files", max_length=200
+                    ),
+                ),
+                (
+                    "plural_examples",
+                    models.CharField(
+                        blank=True,
+                        help_text="Numbers to illustrate plural rules separated by commas, e.g. for Russian: 1,2,5",
+                        max_length=50,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Project',
+            name="Project",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=80, unique=True)),
-                ('url', models.URLField()),
-                ('description', models.TextField(blank=True)),
-                ('strings', models.IntegerField(default=0)),
-                ('words', models.IntegerField(default=0)),
-                ('characters', models.IntegerField(default=0)),
-                ('visible', models.BooleanField(default=True)),
-                ('locked', models.BooleanField(default=False)),
-                ('create_date', models.DateTimeField(auto_now_add=True)),
-                ('last_change', models.DateTimeField(auto_now=True)),
-                ('languages', models.ManyToManyField(blank=True, help_text='Leave empty if all languages are required', to='traduko.Language')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=80, unique=True)),
+                ("url", models.URLField()),
+                ("description", models.TextField(blank=True)),
+                ("strings", models.IntegerField(default=0)),
+                ("words", models.IntegerField(default=0)),
+                ("characters", models.IntegerField(default=0)),
+                ("visible", models.BooleanField(default=True)),
+                ("locked", models.BooleanField(default=False)),
+                ("create_date", models.DateTimeField(auto_now_add=True)),
+                ("last_change", models.DateTimeField(auto_now=True)),
+                (
+                    "languages",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Leave empty if all languages are required",
+                        to="traduko.Language",
+                    ),
+                ),
             ],
         ),
     ]

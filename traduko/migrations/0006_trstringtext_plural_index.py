@@ -4,16 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0005_auto_20201116_1101'),
+        ("traduko", "0005_auto_20201116_1101"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='trstringtext',
-            name='plural_index',
-            field=models.SmallIntegerField(default=None, help_text='Only for strings that have plural forms', null=True),
+            model_name="trstringtext",
+            name="plural_index",
+            field=models.SmallIntegerField(
+                default=None,
+                help_text="Only for strings that have plural forms",
+                null=True,
+            ),
         ),
         # migrations.RenameField(
         #     model_name='project',

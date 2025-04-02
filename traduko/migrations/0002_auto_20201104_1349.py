@@ -5,30 +5,42 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('traduko', '0001_initial'),
+        ("traduko", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='project',
-            name='languages',
+            model_name="project",
+            name="languages",
         ),
         migrations.AddField(
-            model_name='project',
-            name='source_language',
-            field=models.ForeignKey(default='eo', on_delete=django.db.models.deletion.PROTECT, to='traduko.language'),
+            model_name="project",
+            name="source_language",
+            field=models.ForeignKey(
+                default="eo",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="traduko.language",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='project',
-            name='needed_languages',
-            field=models.ManyToManyField(blank=True, help_text='Leave empty if all languages are needed', related_name='needed_languages', to='traduko.Language'),
+            model_name="project",
+            name="needed_languages",
+            field=models.ManyToManyField(
+                blank=True,
+                help_text="Leave empty if all languages are needed",
+                related_name="needed_languages",
+                to="traduko.Language",
+            ),
         ),
         migrations.AlterField(
-            model_name='language',
-            name='plural_examples',
-            field=models.CharField(blank=True, help_text='Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5', max_length=50),
+            model_name="language",
+            name="plural_examples",
+            field=models.CharField(
+                blank=True,
+                help_text="Numbers to illustrate plural rules separated by commas, e.g. for Polish: 1,2,5",
+                max_length=50,
+            ),
         ),
     ]
