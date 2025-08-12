@@ -39,7 +39,6 @@ services:
       - $DJANGO_PORT:$DJANGO_PORT
 
   vue-build:
-    # image: node:14.21-slim
     image: node:16.20-slim
     working_dir: /src/vue-translation-interface
     user: ${USER_ID-1000}:${USER_ID-1000}
