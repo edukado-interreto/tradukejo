@@ -57,10 +57,11 @@ WORKDIR /app
 FROM development AS production
 
 USER 1030:33
-# 
+
 # Copy the project
-COPY ./ /app
+COPY --chown=1030:33 ./ /app
 
 # Set working directory
 WORKDIR /app
 
+RUN SECRET_KEY=_ ./manage.py compilemessages -v0
