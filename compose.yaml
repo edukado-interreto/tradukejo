@@ -8,7 +8,7 @@ services:
   django:
     build:
       context: .
-      dockerfile: ./.docker/Dockerfile
+      target: development
     restart: always
     depends_on:
       mariadb:
@@ -16,8 +16,8 @@ services:
       # vue-build:
       #   condition: service_completed_successfully
     volumes:
-      - .:/src:z
-    working_dir: /src
+      - .:/app:z
+    working_dir: /app
     environment:
       DJANGO_SETTINGS_MODULE: tradukejo.settings
       MARIADB_HOST: mariadb
@@ -40,10 +40,10 @@ services:
 
   vue-build:
     image: node:16.20-slim
-    working_dir: /src/vue-translation-interface
+    working_dir: /app/vue-translation-interface
     user: ${USER_ID-1000}:${USER_ID-1000}
     volumes:
-      - .:/src:z
+      - .:/app:z
     command: /bin/sh -c "npm i; npm run --verbose build"
 
   vue-build-watch:

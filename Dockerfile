@@ -2,7 +2,7 @@ FROM python:3.11-slim-bookworm AS python-base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    HOME=/src \
+    HOME=/app \
     PYTHONPATH=/ \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
@@ -36,7 +36,7 @@ pkg-config \
 python3-pip
 
 # Copy requirements file
-COPY ../requirements.txt .
+COPY ./requirements.txt .
 
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
@@ -49,10 +49,18 @@ FROM python-base AS development
 COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
 
-USER 33:33
+# Set working directory
+WORKDIR /app
+
+
+# Stage 4: Production
+FROM development AS production
+
+USER 1030:33
+# 
+# Copy the project
+COPY ./ /app
 
 # Set working directory
-WORKDIR /src
+WORKDIR /app
 
-# Copy the project
-COPY .. .
