@@ -14,6 +14,7 @@ ENV PYTHONUNBUFFERED=1 \
 # make: Use of make with Makefile
 # vim: for local debugging of packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
+build-essential \
 default-libmysqlclient-dev \
 gettext \
 git \
@@ -35,7 +36,6 @@ build-essential \
 pkg-config \
 python3-pip
 
-# Copy requirements file
 COPY ./requirements.txt .
 
 # Install Python dependencies
@@ -48,13 +48,18 @@ FROM python-base AS development
 # Copy installed packages from the builder stage
 COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
+COPY --from=ghcr.io/astral-sh/uv:0.8.22 /uv /uvx /usr/local/bin/
 
 # Set working directory
 WORKDIR /app
 
 
 # Stage 4: Production
-FROM development AS production
+FROM python-base AS production
+
+# Copy installed packages from the builder stage
+COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder-base /usr/local/bin /usr/local/bin
 
 USER 1030:33
 

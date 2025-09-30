@@ -17,6 +17,7 @@ services:
       #   condition: service_completed_successfully
     volumes:
       - .:/app:z
+      - ./.venv:/app/.venv:z
     working_dir: /app
     environment:
       DJANGO_SETTINGS_MODULE: tradukejo.settings

@@ -1,0 +1,28 @@
+[project]
+name = "tradukejo"
+version = "0.1.0"
+description = "La tradukejo de E@I"
+requires-python = ">=3.11"
+dependencies = [
+  "demjson3==3.0.6",
+  "django==3.2.6",
+  "django-anymail==11.1",
+  "django-cleanup==5.2.0",
+  "django-crispy-forms==1.12.0",
+  "django-libsass==0.9",
+  "django-sendmail-backend==0.1.2",
+  "isort==5.9.3",
+  "mysqlclient==2.0.3",
+  "pillow==9.4.0",
+  "polib==1.1.1",
+  "python-decouple==3.8",
+  "sqlparse==0.4.1",
+  "whitenoise==6.7.0",
+  "wrapt==1.12.1",
+]
+
+[dependency-groups]
+dev = [
+    "pylint==2.9.6",
+]
+production = ["gunicorn>=23.0.0"]
