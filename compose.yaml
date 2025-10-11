@@ -32,8 +32,9 @@ services:
       python manage.py loaddata languages.json &&
       python manage.py collectstatic --noinput &&
       python manage.py compilemessages -v0 &&
-      gunicorn tradukejo.wsgi:application --bind 0.0.0.0:$DJANGO_PORT
+      python manage.py runserver 0.0.0.0:${DJANGO_PORT}
       "
+    # granian --interface wsgi --blocking-threads 3 config.wsgi:application --host 0.0.0.0 --port 8000
     networks:
       - django_network
     ports:

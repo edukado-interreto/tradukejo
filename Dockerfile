@@ -48,7 +48,7 @@ FROM python-base AS development
 # Copy installed packages from the builder stage
 COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
-COPY --from=ghcr.io/astral-sh/uv:0.8.22 /uv /uvx /usr/local/bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.24 /uv /uvx /usr/local/bin/
 
 # Set working directory
 WORKDIR /app

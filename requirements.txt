@@ -32,6 +32,8 @@ django-libsass==0.9
     # via tradukejo
 django-sendmail-backend==0.1.2
     # via tradukejo
+granian==2.5.2
+    # via tradukejo
 idna==3.10
     # via requests
 isort==5.9.3

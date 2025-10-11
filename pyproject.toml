@@ -25,4 +25,4 @@ dependencies = [
 dev = [
     "pylint==2.9.6",
 ]
-production = ["gunicorn>=23.0.0"]
+production = ["granian>=2.5.5"]
