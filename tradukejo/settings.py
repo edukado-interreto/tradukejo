@@ -152,3 +152,26 @@ LIBSASS_OUTPUT_STYLE = config(
 )
 # STATICFILES_STORAGE = config("STATICFILES_STORAGE", default="django.contrib.staticfiles.storage.ManifestStaticFilesStorage")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": True},
+    },
+    "formatters": {
+        "app": {
+            "format": (
+                "%(asctime)s [%(levelname)-8s] (%(module)s.%(funcName)s) %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}
