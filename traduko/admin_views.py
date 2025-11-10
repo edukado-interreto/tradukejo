@@ -1,6 +1,10 @@
+import io
+from zipfile import ZipFile, ZIP_DEFLATED
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
+from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -516,9 +520,7 @@ def export_nested_json(request, project_id):
     if request.method == "POST":
         form = NestedJSONExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            response = HttpResponse(content_type="application/zip")
             data = export_to_nested_json(
-                response,
                 project,
                 path=form.cleaned_data["path"],
                 languages=form.cleaned_data["languages"],
@@ -534,9 +536,10 @@ def export_nested_json(request, project_id):
                 file_name=form.cleaned_data["file_name"],
                 strings_to_export=form.cleaned_data["strings_to_export"],
             )
-            filename = slugify(project.name)
-            response["Content-Disposition"] = f'attachment; filename="{filename}.zip"'
-            return response
+
+            buffer = nested_json_as_zip(data, form.cleaned_data["file_name"])
+            return FileResponse(buffer, True, filename=f"{slugify(project.name)}.zip")
+
     else:
         form = NestedJSONExportForm(language_choices=languages)
     context = {

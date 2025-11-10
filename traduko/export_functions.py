@@ -1,10 +1,28 @@
-from django.db.models import Q, Value as V
-from django.db.models.functions import Concat
-from zipfile import ZipFile, ZIP_DEFLATED
-from .models import *
-from datetime import datetime
-import polib
+import io
 import json
+from datetime import datetime
+from zipfile import ZIP_DEFLATED, ZipFile
+
+import polib
+from django.conf import settings
+from django.db.models import Q
+from django.db.models import Value as V
+from django.db.models.functions import Concat
+
+from .models import (
+    TRANSLATION_STATE_OUTDATED,
+    TRANSLATION_STATE_TRANSLATED,
+    Language,
+    TrStringText,
+)
+
+UnknownJsonData = str | dict[str, str]
+
+
+def ensure_json(data: UnknownJsonData) -> str:
+    if isinstance(data, dict):
+        data = json.dumps(data, ensure_ascii=False, indent=2)
+    return data
 
 
 def get_filtered_strings(project, strings_to_export, path):
@@ -264,7 +282,6 @@ def export_to_po(response, project, **kwargs):
             if trstringtext.state == TRANSLATION_STATE_OUTDATED:
                 entry.flags.append("fuzzy")
             po.append(entry)
-        # print(po.__unicode__())
 
         if po_file_name == "":
             filepath = language.code
@@ -275,9 +292,8 @@ def export_to_po(response, project, **kwargs):
         zf.writestr(f"{filepath}.mo", po.to_binary())
 
 
-def export_to_nested_json(response, project, **kwargs):
+def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
     """
-    :param response:
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
@@ -315,14 +331,14 @@ def export_to_nested_json(response, project, **kwargs):
             trstring=trstring, language=project.source_language
         )
 
-    zf = ZipFile(response, "w")
-
-    if len(languages) == 0:
+    if languages:
+        languages = Language.objects.filter(code__in=languages)
+    else:
         languages = Language.objects.filter(
             Q(languageversion__project=project) | Q(code=project.source_language.code)
         )
-    else:
-        languages = Language.objects.filter(code__in=languages)
+
+    json_data_by_language = {}
 
     for language in languages:
         current_language_data = {}
@@ -402,10 +418,25 @@ def export_to_nested_json(response, project, **kwargs):
 
             current_key[trstring.name] = text
 
-        json_data = json.dumps(current_language_data, ensure_ascii=False, indent=2)
-        if export_default:
-            json_data = "export default " + json_data
-        current_file_name = file_name.format(lang=language.code)
-        zf.writestr(current_file_name, json_data, compress_type=ZIP_DEFLATED)
+        json_data_by_language[language.code] = current_language_data
 
-    return zf
+    if export_default:
+        # Note: values are not JSON anymore
+        return {
+            lang: f"export default {ensure_json(lang_data)}"
+            for lang, lang_data in json_data_by_language.items()
+        }
+    return json_data_by_language
+
+
+def nested_json_as_zip(
+    json_data_by_language: dict[str, UnknownJsonData], lang_file_name
+):
+    buffer = io.BytesIO()
+
+    with ZipFile(buffer, "w", ZIP_DEFLATED) as zf:
+        for lang, json_data in json_data_by_language.items():
+            zf.writestr(lang_file_name.format(lang=lang), ensure_json(json_data))
+
+    buffer.seek(0)
+    return buffer

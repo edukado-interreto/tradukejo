@@ -1,7 +1,13 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import CheckboxSelectMultiple
 
 from traduko.models import Project
+
+
+def validate_lang(value):
+    if "{lang}" not in value:
+        raise ValidationError("Mankas “{lang}” en la dosiernomo")
 
 
 class ProjectForm(forms.ModelForm):
@@ -154,4 +160,6 @@ class NestedJSONExportForm(ExportForm):
         widget=forms.TextInput(attrs={"placeholder": "{lang}.json"}),
         required=False,
         help_text="<code>{lang}</code> estos la nomo de la lingvo.",
+        empty_value="{lang}.json",
+        validators=[validate_lang]
     )
