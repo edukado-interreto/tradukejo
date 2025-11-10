@@ -1,5 +1,6 @@
 import io
 import json
+import tarfile
 from datetime import datetime
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -437,6 +438,29 @@ def nested_json_as_zip(
     with ZipFile(buffer, "w", ZIP_DEFLATED) as zf:
         for lang, json_data in json_data_by_language.items():
             zf.writestr(lang_file_name.format(lang=lang), ensure_json(json_data))
+
+    buffer.seek(0)
+    return buffer
+
+
+def nested_json_as_tar_gz(
+    json_data_by_language: dict[str, UnknownJsonData], lang_file_name
+):
+    buffer = io.BytesIO()
+
+    with tarfile.open(fileobj=buffer, mode="w|gz") as tf:
+        for lang, json_data in json_data_by_language.items():
+            json_string = ensure_json(json_data)
+            # Encode to bytes for writing to the tar file
+            json_bytes = json_string.encode("utf-8")
+
+            # Create TarInfo object
+            file_name = lang_file_name.format(lang=lang)
+            tar_info = tarfile.TarInfo(name=file_name)
+            tar_info.size = len(json_bytes)
+            tar_info.mtime = int(datetime.now().timestamp())
+
+            tf.addfile(tar_info, io.BytesIO(json_bytes))
 
     buffer.seek(0)
     return buffer
