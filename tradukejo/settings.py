@@ -3,6 +3,7 @@ from pathlib import Path
 
 from decouple import config, Csv
 from django.contrib.messages import constants as messages
+import pymysql
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -34,6 +35,8 @@ if config("MARIADB_DATABASE", default=False):
             "PORT": config("MARIADB_PORT", default=3306, cast=int),
         }
     }
+    # Fake PyMySQL's version and install as MySQLdb
+    pymysql.install_as_MySQLdb()
 
 INSTALLED_APPS = [
     "traduko.apps.TradukoConfig",

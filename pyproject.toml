@@ -12,9 +12,9 @@ dependencies = [
   "django-libsass==0.9",
   "django-sendmail-backend==0.1.2",
   "isort==5.9.3",
-  "mysqlclient==2.0.3",
   "pillow==9.4.0",
   "polib==1.1.1",
+  "pymysql>=1.1.2",
   "python-decouple==3.8",
   "sqlparse==0.4.1",
   "whitenoise==6.7.0",
@@ -22,7 +22,5 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "pylint==2.9.6",
-]
+dev = ["pylint==2.9.6"]
 production = ["granian>=2.5.5"]

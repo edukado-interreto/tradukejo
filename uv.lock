@@ -4,11 +4,11 @@ requires-python = ">=3.11"
 
 [[package]]
 name = "asgiref"
-version = "3.4.1"
+version = "3.10.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/07/93/3618b68b4ba6b54bc97b5fd7d90e4981471edfaf51c8321a29a3c76cf47c/asgiref-3.4.1.tar.gz", hash = "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9", size = 32529, upload-time = "2021-07-01T16:17:42.656Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/46/08/4dfec9b90758a59acc6be32ac82e98d1fbfc321cb5cfa410436dbacf821c/asgiref-3.10.0.tar.gz", hash = "sha256:d89f2d8cd8b56dada7d52fa7dc8075baa08fb836560710d38c292a7a3f78c04e", size = 37483, upload-time = "2025-10-05T09:15:06.557Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/66/577f32b54c50dcd8dec38447258e82ed327ecb86820d67ae7b3dea784f13/asgiref-3.4.1-py3-none-any.whl", hash = "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214", size = 25019, upload-time = "2021-07-01T16:17:40.824Z" },
+    { url = "https://files.pythonhosted.org/packages/17/9c/fc2331f538fbf7eedba64b2052e99ccf9ba9d6888e2f41441ee28847004b/asgiref-3.10.0-py3-none-any.whl", hash = "sha256:aef8a81283a34d0ab31630c9b7dfe70c812c95eba78171367ca8745e88124734", size = 24050, upload-time = "2025-10-05T09:15:05.11Z" },
 ]
 
 [[package]]
@@ -334,12 +334,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mysqlclient"
-version = "2.0.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3c/df/59cd2fa5e48d0804d213bdcb1acb4d08c403b61c7ff7ed4dd4a6a2deb3f7/mysqlclient-2.0.3.tar.gz", hash = "sha256:f6ebea7c008f155baeefe16c56cd3ee6239f7a5a9ae42396c2f1860f08a7c432", size = 88886, upload-time = "2021-01-01T13:11:39.006Z" }
-
-[[package]]
 name = "pillow"
 version = "9.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -383,6 +377,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/47/18/d148ae88f254cbb9a8763beae34027bc603dc6f57b29c48f7cb3f2e28cde/pylint-2.9.6.tar.gz", hash = "sha256:8b838c8983ee1904b2de66cce9d0b96649a91901350e956d78f289c3bc87b48e", size = 317360, upload-time = "2021-07-28T18:51:40.779Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b9/27/2aca16def0282964f0f3f09afb7e86b4bfbfa98ecb53025ea92b3d36251e/pylint-2.9.6-py3-none-any.whl", hash = "sha256:2e1a0eb2e8ab41d6b5dbada87f066492bb1557b12b76c47c2ee8aa8a11186594", size = 375220, upload-time = "2021-07-28T18:51:39.234Z" },
+]
+
+[[package]]
+name = "pymysql"
+version = "1.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f5/ae/1fe3fcd9f959efa0ebe200b8de88b5a5ce3e767e38c7ac32fb179f16a388/pymysql-1.1.2.tar.gz", hash = "sha256:4961d3e165614ae65014e361811a724e2044ad3ea3739de9903ae7c21f539f03", size = 48258, upload-time = "2025-08-24T12:55:55.146Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/4c/ad33b92b9864cbde84f259d5df035a6447f91891f5be77788e2a3892bce3/pymysql-1.1.2-py3-none-any.whl", hash = "sha256:e6b1d89711dd51f8f74b1631fe08f039e7d76cf67a42a323d3178f0f25762ed9", size = 45300, upload-time = "2025-08-24T12:55:53.394Z" },
 ]
 
 [[package]]
@@ -479,9 +482,9 @@ dependencies = [
     { name = "django-libsass" },
     { name = "django-sendmail-backend" },
     { name = "isort" },
-    { name = "mysqlclient" },
     { name = "pillow" },
     { name = "polib" },
+    { name = "pymysql" },
     { name = "python-decouple" },
     { name = "sqlparse" },
     { name = "whitenoise" },
@@ -506,9 +509,9 @@ requires-dist = [
     { name = "django-libsass", specifier = "==0.9" },
     { name = "django-sendmail-backend", specifier = "==0.1.2" },
     { name = "isort", specifier = "==5.9.3" },
-    { name = "mysqlclient", specifier = "==2.0.3" },
     { name = "pillow", specifier = "==9.4.0" },
     { name = "polib", specifier = "==1.1.1" },
+    { name = "pymysql", specifier = ">=1.1.2" },
     { name = "python-decouple", specifier = "==3.8" },
     { name = "sqlparse", specifier = "==0.4.1" },
     { name = "whitenoise", specifier = "==6.7.0" },
