@@ -6,6 +6,8 @@ from traduko.models import Project
 
 
 def validate_lang(value):
+    if not value:
+        return
     if "{lang}" not in value:
         raise ValidationError("Mankas “{lang}” en la dosiernomo")
 
@@ -78,6 +80,11 @@ class POImportForm(ImportForm):
 
 
 class ExportForm(forms.Form):
+    def __init__(self, language_choices=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if language_choices:
+            self.fields["languages"].choices = language_choices
+
     path = forms.CharField(
         label="Dosierujo por eksporti (lasi malplena por eksporti ĉion)", required=False
     )
@@ -102,11 +109,6 @@ class ExportForm(forms.Form):
         widget=CheckboxSelectMultiple,
     )
 
-    def __init__(self, language_choices=None, *args, **kwargs):
-        super(ExportForm, self).__init__(*args, **kwargs)
-        if language_choices:
-            self.fields["languages"].choices = language_choices
-
 
 class POExportForm(ExportForm):
     untranslated_as_source_language = forms.BooleanField(
@@ -120,7 +122,7 @@ class POExportForm(ExportForm):
         label="Ŝlosiloj en la PO-dosiero (<code>msgid</code>) estas tekstoj en la fonta lingvo (se ne, ili estos ŝlosilo en la formo <code>path#name</code>)",
         required=False,
     )
-    po_file_name = forms.CharField(
+    file_name = forms.CharField(
         label="Nomo de PO/MO-dosieroj",
         required=False,
         help_text="Se malplena, ĉiuj estos en la sama dosierujo kaj la nomo estos la kodo de la lingvo. Alie, ili estos ekzemple <code><i>lingvokodo</i>/LC_MESSAGES/<i>nomo</i>.po</code>. Do ekzemple por Django-projekto, la valoro devas esti <code>django</code>.",
@@ -161,5 +163,5 @@ class NestedJSONExportForm(ExportForm):
         required=False,
         help_text="<code>{lang}</code> estos la nomo de la lingvo.",
         empty_value="{lang}.json",
-        validators=[validate_lang]
+        validators=[validate_lang],
     )

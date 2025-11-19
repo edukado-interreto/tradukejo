@@ -1,4 +1,3 @@
-import io
 import json
 import tarfile
 from datetime import datetime
@@ -10,20 +9,14 @@ from django.db.models import Q
 from django.db.models import Value as V
 from django.db.models.functions import Concat
 
-from .models import (
+from traduko.utils import as_tar_file, ensure_json, in_memory_bytes, UnknownJsonData
+
+from traduko.models import (
     TRANSLATION_STATE_OUTDATED,
     TRANSLATION_STATE_TRANSLATED,
     Language,
     TrStringText,
 )
-
-UnknownJsonData = str | dict[str, str]
-
-
-def ensure_json(data: UnknownJsonData) -> str:
-    if isinstance(data, dict):
-        data = json.dumps(data, ensure_ascii=False, indent=2)
-    return data
 
 
 def get_filtered_strings(project, strings_to_export, path):
@@ -53,6 +46,20 @@ def remove_path_start(path, path_start, remove_path):
         else:
             new_path = path
     return new_path
+
+
+def gettext_file_path(language_code: str, file_name: str = ""):
+    """Get the stem of a PO/MO file with its relative path, without extension
+
+    Usage examples:
+    >>> gettext_file_stem("eo")
+    "eo"
+    >>> gettext_file_stem("eo", file_name="django")
+    "eo/LC_MESSAGES/django"
+    """
+    if file_name:
+        return f"{language_code}/LC_MESSAGES/{file_name}"
+    return language_code
 
 
 def export_to_csv(
@@ -169,15 +176,14 @@ def export_to_json(
     return data
 
 
-def export_to_po(response, project, **kwargs):
+def export_to_po(project, **kwargs):
     """
-    :param response:
     :param project:
     :param path:
     :param languages: list of language codes or empty list for all languages.
     :param remove_path: if True and path is e.g. "users", then paths like "users/profile" will be changed to "profile"
     :param strings_to_export: each string (path#name) on a new line; all strings if empty
-    :return: nothing, the content of the zip file is written to response
+    :return: dict of POFile by language code {"eo": <polib.POFile object>}
     """
     path = kwargs.get("path", "")
     remove_path = kwargs.get("remove_path", False)
@@ -186,7 +192,7 @@ def export_to_po(response, project, **kwargs):
         "untranslated_as_source_language", True
     )
     include_outdated = kwargs.get("include_outdated", False)
-    po_file_name = kwargs.get("po_file_name", "")
+    file_name = kwargs.get("file_name", "")
     original_text_as_key = kwargs.get("original_text_as_key", "")
     strings_to_export = kwargs.get("strings_to_export", "")
 
@@ -196,14 +202,14 @@ def export_to_po(response, project, **kwargs):
             trstring=trstring, language=project.source_language
         )
 
-    zf = ZipFile(response, "w")
-
     if len(languages) == 0:
         languages = Language.objects.filter(
             Q(languageversion__project=project) | Q(code=project.source_language.code)
         )
     else:
         languages = Language.objects.filter(code__in=languages)
+
+    data_by_language = {}
 
     for language in languages:
         po = polib.POFile()
@@ -284,13 +290,31 @@ def export_to_po(response, project, **kwargs):
                 entry.flags.append("fuzzy")
             po.append(entry)
 
-        if po_file_name == "":
-            filepath = language.code
-        else:
-            filepath = f"{language.code}/LC_MESSAGES/{po_file_name}"
+        data_by_language[language.code] = po
 
-        zf.writestr(f"{filepath}.po", po.__unicode__(), compress_type=ZIP_DEFLATED)
-        zf.writestr(f"{filepath}.mo", po.to_binary())
+    return data_by_language
+
+
+def po_as_zip(po_data_by_language: dict[str, polib.POFile], file_name):
+    with in_memory_bytes() as buffer:
+        with ZipFile(buffer, mode="w", compression=ZIP_DEFLATED) as zf:
+            for lang, po in po_data_by_language.items():
+                filepath = gettext_file_path(lang, file_name)
+                zf.writestr(f"{filepath}.po", str(po))
+                zf.writestr(f"{filepath}.mo", po.to_binary())
+
+    return buffer
+
+
+def po_as_tar_gz(po_data_by_language: dict[str, polib.POFile], file_name):
+    with in_memory_bytes() as buffer:
+        with tarfile.open(fileobj=buffer, mode="w|gz") as tf:
+            for lang, po in po_data_by_language.items():
+                filepath = f"{lang}/LC_MESSAGES/{file_name}" if file_name else lang
+                tf.addfile(*as_tar_file(f"{filepath}.po", str(po).encode("utf-8")))
+                tf.addfile(*as_tar_file(f"{filepath}.mo", po.to_binary()))
+
+    return buffer
 
 
 def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
@@ -307,7 +331,7 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
     :param export_language_name: name of key where the language name should be exported
     :param export_plural_rules: name of key where the plural rules should be exported
     :param strings_to_export: each string (path#name) on a new line; all strings if empty
-    :return: content of ZIP file
+    :return: dict of JSON by language code {"eo": '\{"key":"value"\}'}
     """
     path = kwargs.get("path", "")
     remove_path = kwargs.get("remove_path", False)
@@ -339,7 +363,7 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
             Q(languageversion__project=project) | Q(code=project.source_language.code)
         )
 
-    json_data_by_language = {}
+    data_by_language = {}
 
     for language in languages:
         current_language_data = {}
@@ -419,48 +443,31 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
 
             current_key[trstring.name] = text
 
-        json_data_by_language[language.code] = current_language_data
+        data_by_language[language.code] = current_language_data
 
     if export_default:
         # Note: values are not JSON anymore
         return {
             lang: f"export default {ensure_json(lang_data)}"
-            for lang, lang_data in json_data_by_language.items()
+            for lang, lang_data in data_by_language.items()
         }
-    return json_data_by_language
+    return data_by_language
 
 
-def nested_json_as_zip(
-    json_data_by_language: dict[str, UnknownJsonData], lang_file_name
-):
-    buffer = io.BytesIO()
+def nested_json_as_zip(json_data_by_language: dict[str, UnknownJsonData], file_name):
+    with in_memory_bytes() as buffer:
+        with ZipFile(buffer, mode="w", compression=ZIP_DEFLATED) as zf:
+            for lang, json_data in json_data_by_language.items():
+                zf.writestr(file_name.format(lang=lang), ensure_json(json_data))
 
-    with ZipFile(buffer, "w", ZIP_DEFLATED) as zf:
-        for lang, json_data in json_data_by_language.items():
-            zf.writestr(lang_file_name.format(lang=lang), ensure_json(json_data))
-
-    buffer.seek(0)
     return buffer
 
 
-def nested_json_as_tar_gz(
-    json_data_by_language: dict[str, UnknownJsonData], lang_file_name
-):
-    buffer = io.BytesIO()
+def nested_json_as_tar_gz(json_data_by_language: dict[str, UnknownJsonData], file_name):
+    with in_memory_bytes() as buffer:
+        with tarfile.open(fileobj=buffer, mode="w|gz") as tf:
+            for lang, json_data in json_data_by_language.items():
+                data: bytes = ensure_json(json_data).encode("utf-8")
+                tf.addfile(*as_tar_file(file_name.format(lang=lang), data))
 
-    with tarfile.open(fileobj=buffer, mode="w|gz") as tf:
-        for lang, json_data in json_data_by_language.items():
-            json_string = ensure_json(json_data)
-            # Encode to bytes for writing to the tar file
-            json_bytes = json_string.encode("utf-8")
-
-            # Create TarInfo object
-            file_name = lang_file_name.format(lang=lang)
-            tar_info = tarfile.TarInfo(name=file_name)
-            tar_info.size = len(json_bytes)
-            tar_info.mtime = int(datetime.now().timestamp())
-
-            tf.addfile(tar_info, io.BytesIO(json_bytes))
-
-    buffer.seek(0)
     return buffer

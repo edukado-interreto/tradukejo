@@ -481,9 +481,7 @@ def export_po(request, project_id):
     if request.method == "POST":
         form = POExportForm(data=request.POST, language_choices=languages)
         if form.is_valid():
-            response = HttpResponse(content_type="application/zip")
-            export_to_po(
-                response,
+            data = export_to_po(
                 project,
                 path=form.cleaned_data["path"],
                 languages=form.cleaned_data["languages"],
@@ -493,12 +491,12 @@ def export_po(request, project_id):
                 ],
                 include_outdated=form.cleaned_data["include_outdated"],
                 original_text_as_key=form.cleaned_data["original_text_as_key"],
-                po_file_name=form.cleaned_data["po_file_name"],
+                file_name=form.cleaned_data["file_name"],
                 strings_to_export=form.cleaned_data["strings_to_export"],
             )
-            filename = slugify(project.name)
-            response["Content-Disposition"] = f'attachment; filename="{filename}.zip"'
-            return response
+
+            buffer = po_as_zip(data, form.cleaned_data["file_name"])
+            return FileResponse(buffer, True, filename=f"{slugify(project.name)}.zip")
     else:
         form = POExportForm(
             initial={"untranslated_as_source_language": True},
