@@ -1,0 +1,18 @@
+{% extends "rest_framework/base.html" %}
+{% load i18n %}
+
+{% block request_forms %}
+{{ block.super }}
+
+{% if params_form %}
+  <button style="float: right; margin-right: 10px" data-toggle="modal" data-target="#paramsModal" class="btn btn-default">
+    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+    {{ "Agordoj" | upper }}
+  </button>
+{% endif %}
+{% endblock request_forms %}
+
+{% block script %} {# This should be after actual filter_form #}
+{{ params_form }}
+{{ block.super }}
+{% endblock script %}

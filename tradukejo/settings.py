@@ -5,6 +5,9 @@ from decouple import config, Csv
 from django.contrib.messages import constants as messages
 import pymysql
 
+from tradukejo.api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
+
+
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
@@ -48,6 +51,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_cleanup.apps.CleanupConfig",
+    "django_extensions",
+    "rest_framework",
+    "drf_spectacular",
+    "drf_standardized_errors",
     "anymail",
     "crispy_forms",
     "compressor",
@@ -84,6 +91,9 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = REST_FRAMEWORK
+SPECTACULAR_SETTINGS = SPECTACULAR_SETTINGS
 
 WSGI_APPLICATION = "tradukejo.wsgi.application"
 

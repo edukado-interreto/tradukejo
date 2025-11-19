@@ -5,13 +5,16 @@ description = "La tradukejo de E@I"
 requires-python = ">=3.11"
 dependencies = [
   "demjson3==3.0.6",
-  "django==3.2.6",
+  "django==3.2.25",
   "django-anymail==11.1",
   "django-cleanup==5.2.0",
   "django-crispy-forms==1.12.0",
+  "django-extensions>=3.2.3",
   "django-libsass==0.9",
   "django-sendmail-backend==0.1.2",
-  "isort==5.9.3",
+  "djangorestframework>=3.15.1",
+  "drf-spectacular>=0.29.0",
+  "drf-standardized-errors[openapi]>=0.15.0",
   "pillow==9.4.0",
   "polib==1.1.1",
   "pymysql>=1.1.2",
@@ -22,5 +25,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pylint==2.9.6"]
+dev = [
+  "djangorestframework-stubs>=3.16.5",
+  "isort==5.9.3",
+  "pylint==2.9.6",
+  "ruff>=0.14.5",
+]
 production = ["granian>=2.5.5"]

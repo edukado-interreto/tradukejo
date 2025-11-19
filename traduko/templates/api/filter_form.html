@@ -1,0 +1,29 @@
+<div class="modal fade" id="paramsModal" tabindex="-1" role="dialog" aria-labelledby="params" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Agordoj</h4>
+    </div>
+      <div class="modal-body">
+        <form method="GET" action="">
+            {% for field in form %}
+              {% if field.name not in exclude_fields %}
+                <div class="fieldWrapper">
+                    <label for="{{ field.id_for_label }}">{{ field.label|safe }}</label>
+                    <br>
+                    {{ field }}
+                    {{ field.errors }}
+                    {% if field.help_text %}
+                      <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% if not forloop.last %}<hr style="margin: 1em">{% endif %}
+              {% endif %}
+            {% endfor %}
+          <button type=submit style="margin-top: 2em">Apliki agordojn</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
