@@ -11,7 +11,7 @@ from anymail.utils import (
     UNSET,
 )
 
-from mail.utils import nested_urlencode
+from core.mail.utils import nested_urlencode
 
 MaybeStr = str | type[UNSET]
 Emails = list[EmailAddress]
