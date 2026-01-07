@@ -51,6 +51,11 @@ urlpatterns = [
         ("project/<int:pk>/export/po/", api_views.ExportPo),
         ("project/<int:pk>/export/", api_views.ExportSimple),
     ),
+    path(
+        "project/<int:pk>/languages/",
+        api_views.LanguageListView.as_view(),
+        name="languages",
+    ),
     path("docs", SpectacularRedocView.as_view(), name="redoc"),
     path("schema", SpectacularAPIView.as_view(), name="schema"),
     path("swagger", SpectacularSwaggerView.as_view(), name="swagger"),

@@ -1,18 +1,32 @@
 from typing import Any, Type
 
-
-from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, viewsets
 from rest_framework.exceptions import NotAcceptable, ValidationError
-from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
+from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
 from traduko import export_functions as export
+from traduko.api.serializers import LanguageSerializer
 from traduko.forms import ExportForm, NestedJSONExportForm, POExportForm
 from traduko.import_functions import get_languages_for_export
+from traduko.models import Language, Project
 
-from traduko.models import Project
+
+class LanguageListView(generics.ListAPIView):
+    serializer_class = LanguageSerializer
+
+    def get_queryset(self):
+        pk = self.project.pk
+        qs_source = Language.objects.filter(project__pk=pk)
+        qs_lv = Language.objects.filter(languageversion__project__pk=pk)
+        return (qs_source | qs_lv).distinct().order_by("code")
+
+    def setup(self, request, pk):
+        super().setup(request)
+        self.project = get_object_or_404(Project, pk=pk)
 
 
 class BaseExportViewSet(viewsets.ReadOnlyModelViewSet):
