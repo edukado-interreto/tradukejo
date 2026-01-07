@@ -13,6 +13,8 @@ class BrowsableAPIRenderer(renderers.BrowsableAPIRenderer):
         return context
 
     def get_params_form(self, data, view):
+        if not hasattr(view, "get_form"):
+            return ""
         form = view.get_form(view.get_object())
         template = loader.get_template("api/filter_form.html")
         context = {"form": form, "exclude_fields": view.body_fields}
