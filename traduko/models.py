@@ -63,7 +63,7 @@ class Language(models.Model):
     ]
 
     code = models.CharField(
-        primary_key=True, max_length=6, help_text="ISO 639-1 or ISO 639-2 code"
+        primary_key=True, max_length=8, help_text="ISO 639-1 or ISO 639-2 code"
     )
     name = models.CharField(
         max_length=60, unique=True, help_text="Name in the language itself"

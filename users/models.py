@@ -18,7 +18,7 @@ class User(AbstractUser):
 
     email_language = models.CharField(
         _("settings#email-language"),
-        max_length=5,
+        max_length=8,
         choices=settings.LANGUAGES,
         default=settings.LANGUAGE_CODE,
     )
