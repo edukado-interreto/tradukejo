@@ -1,16 +1,15 @@
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.db import IntegrityError
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from traduko.decorators import (
     user_allowed_to_translate,
-    user_is_project_admin,
     user_has_any_right_for_project,
+    user_is_project_admin,
 )
+from traduko.deepl import deepl_translate
 from traduko.models import *
 from traduko.translation_functions import *
 
@@ -370,5 +369,12 @@ def get_translation_suggestions(request):
         if str(current_translation) not in translations:
             translations.append(str(current_translation))
             translation_lists.append(current_translation)
+
+    if current_language.deepl:
+        for deepl_translation in deepl_translate(
+            trstring.project, trstringtext.text, current_language
+        ):
+            if str([deepl_translation]) not in translations:
+                translation_lists.append([deepl_translation])
 
     return JsonResponse(translation_lists, safe=False)

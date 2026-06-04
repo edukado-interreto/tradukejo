@@ -189,3 +189,5 @@ LOGGING = {
         },
     },
 }
+
+DEEPL_URL = "https://api-free.deepl.com/v2"
