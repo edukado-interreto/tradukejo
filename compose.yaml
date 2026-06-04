@@ -52,7 +52,7 @@ services:
     extends: vue-build
     profiles: ["exclude"]
     tty: true
-    command: "npm install && npm run build-watch"
+    command: sh -c "npm install && npm run build-watch"
 
   mariadb:
     image: mariadb:10.11.11

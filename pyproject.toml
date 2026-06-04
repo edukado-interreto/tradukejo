@@ -5,7 +5,7 @@ description = "La tradukejo de E@I"
 requires-python = ">=3.11"
 dependencies = [
   "demjson3==3.0.6",
-  "django==3.2.25",
+  "django==4.2.30",
   "django-anymail==11.1",
   "django-cleanup==5.2.0",
   "django-crispy-forms==1.12.0",
@@ -17,6 +17,7 @@ dependencies = [
   "drf-standardized-errors[openapi]>=0.15.0",
   "pillow==9.4.0",
   "polib==1.1.1",
+  "pylint>=2.9.6",
   "pymysql>=1.1.2",
   "python-decouple==3.8",
   "sqlparse==0.4.1",

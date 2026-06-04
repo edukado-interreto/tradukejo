@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, re_path
+from django.urls import path
 from django.views.generic import TemplateView
 
-from traduko import views, ajax, admin_views, vue_translation
+from traduko import admin_views, ajax, views, vue_translation
 
 urlpatterns = [
     path("", views.projects, name="projects"),
