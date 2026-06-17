@@ -1,4 +1,15 @@
-from django.contrib import admin
+from itertools import batched
+
+from django.contrib import admin, messages
+from django.db.models import OuterRef, Subquery
+from django.utils.translation import gettext_lazy as _
+
+from traduko.deepl import deepl_translate
+from traduko.translation_functions import (
+    add_or_update_trstringtext,
+    parse_submitted_text,
+)
+
 from .models import *
 
 
@@ -21,8 +32,43 @@ class ProjectAdmin(admin.ModelAdmin):
 class LanguageVersionAdmin(admin.ModelAdmin):
     list_display = ("__str__", "project", "language")
     ordering = ["project", "language"]
-    search_fields = ["translators"]
+    search_fields = ["translators__username", "language__name", "language__code"]
     autocomplete_fields = ["project", "language", "translators"]
+    list_filter = ["project", "language"]
+    actions = ["translate_untranslated_with_deepl"]
+
+    @admin.action(
+        permissions=["change"],
+        description=_("Translate untranslated with DeepL"),
+    )
+    def translate_untranslated_with_deepl(self, request, queryset):
+        num_lang, num_str = 0, 0
+
+        for langver in queryset.filter(language__deepl=True):
+            project, language = langver.project, langver.language
+            untranslated = TrString.objects.untranslated(project, language)
+
+            # Need to batch due to DeepL API v2 limitation
+            for trstrings in batched(untranslated, 50):
+                texts = [trstr.source_text for trstr in trstrings]
+                translated = deepl_translate(project, texts, language)
+
+                for trstring, text in zip(trstrings, translated):
+                    add_or_update_trstringtext(
+                        project=project,
+                        path=trstring.path,
+                        name=trstring.name,
+                        language=language,
+                        text=text,
+                        author=request.user,
+                        state=TRANSLATION_STATE_OUTDATED,
+                    )
+                num_str += len(translated)
+
+            num_lang += 1
+
+        msg = _("Translated %d strings in %d languages" % (num_str, num_lang))
+        self.message_user(request, msg, level=messages.SUCCESS)
 
 
 @admin.register(TranslatorRequest)

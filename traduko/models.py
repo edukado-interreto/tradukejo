@@ -233,6 +233,19 @@ class TranslatorRequest(models.Model):
         return f"{self.user.username} - {self.language_version}"
 
 
+class TrStringManager(models.Manager):
+    def untranslated(self, project, language):
+        qs = self.filter(project=project).exclude(trstringtext__language=language)
+        return qs.annotate(
+            source_text=models.Subquery(
+                TrStringText.objects.filter(
+                    language=models.OuterRef("project__source_language"),
+                    trstring__id=models.OuterRef("id"),
+                ).values("text")
+            )
+        )
+
+
 # I'd rather not call this class "String" to avoid problems
 class TrString(models.Model):
     project = models.ForeignKey("Project", on_delete=models.CASCADE)
@@ -248,6 +261,8 @@ class TrString(models.Model):
         blank=True, help_text="Short explanation for translators"
     )
     last_change = models.DateTimeField(auto_now=True)
+
+    objects = TrStringManager()
 
     def __str__(self):
         return f"{self.path}#{self.name}"
