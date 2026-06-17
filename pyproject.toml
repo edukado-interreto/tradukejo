@@ -2,7 +2,7 @@
 name = "tradukejo"
 version = "0.1.0"
 description = "La tradukejo de E@I"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
   "demjson3==3.0.6",
   "django==4.2.30",
@@ -15,7 +15,7 @@ dependencies = [
   "djangorestframework>=3.15.1",
   "drf-spectacular>=0.29.0",
   "drf-standardized-errors[openapi]>=0.15.0",
-  "pillow==9.4.0",
+  "pillow==12.2.0",
   "polib==1.1.1",
   "pylint>=2.9.6",
   "pymysql>=1.1.2",

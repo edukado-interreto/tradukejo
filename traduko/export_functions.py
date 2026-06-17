@@ -331,7 +331,7 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
     :param export_language_name: name of key where the language name should be exported
     :param export_plural_rules: name of key where the plural rules should be exported
     :param strings_to_export: each string (path#name) on a new line; all strings if empty
-    :return: dict of JSON by language code {"eo": '\{"key":"value"\}'}
+    :return: dict of JSON by language code {"eo": {"key":"value"}}
     """
     path = kwargs.get("path", "")
     remove_path = kwargs.get("remove_path", False)

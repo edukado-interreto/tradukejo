@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm AS python-base
+FROM python:3.13-slim-bookworm AS python-base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -46,9 +46,9 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 FROM python-base AS development
 
 # Copy installed packages from the builder stage
-COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder-base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
-COPY --from=ghcr.io/astral-sh/uv:0.8.24 /uv /uvx /usr/local/bin/
+COPY --from=ghcr.io/astral-sh/uv:0.10.12 /uv /uvx /usr/local/bin/
 
 # Set working directory
 WORKDIR /app
@@ -58,7 +58,7 @@ WORKDIR /app
 FROM python-base AS production
 
 # Copy installed packages from the builder stage
-COPY --from=builder-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder-base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
 
 USER 1030:33

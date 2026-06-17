@@ -65,7 +65,7 @@ drf-spectacular==0.29.0
     #   tradukejo
 drf-standardized-errors==0.16.0
     # via tradukejo
-granian==2.7.5
+granian==2.7.6
 idna==3.18
     # via requests
 inflection==0.5.1
@@ -84,7 +84,7 @@ libsass==0.23.0
     # via django-libsass
 mccabe==0.6.1
     # via pylint
-pillow==9.4.0
+pillow==12.2.0
     # via tradukejo
 polib==1.1.1
     # via tradukejo
@@ -110,7 +110,7 @@ rpds-py==2026.5.1
     # via
     #   jsonschema
     #   referencing
-ruff==0.15.15
+ruff==0.15.17
 setuptools==82.0.1
     # via astroid
 sqlparse==0.4.1
