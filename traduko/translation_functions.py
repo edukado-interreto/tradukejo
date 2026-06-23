@@ -1,17 +1,41 @@
 import difflib
+import html
+import json
+import re
+from collections import OrderedDict
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.core.mail import send_mail
-from django.db.models import Sum, Q, Count, Max
+from django.db.models import Count, Max, Sum
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
-from django.utils.translation import gettext as _, get_language, activate
-from .models import *
-from collections import OrderedDict
-import json, html
+from django.utils.translation import activate, get_language
+from django.utils.translation import gettext as _
+
+from .models import (
+    ACTION_TYPE_ADD,
+    ACTION_TYPE_EDIT,
+    ACTION_TYPE_IMPORT,
+    ACTION_TYPE_TRANSLATE,
+    SORT_STRINGS_BY_NEWEST,
+    SORT_STRINGS_BY_OLDEST,
+    STATE_FILTER_OUTDATED,
+    STATE_FILTER_OUTDATED_UNTRANSLATED,
+    STATE_FILTER_UNTRANSLATED,
+    TRANSLATION_STATE_OUTDATED,
+    TRANSLATION_STATE_TRANSLATED,
+    TRANSLATION_STATE_UNTRANSLATED,
+    Comment,
+    Language,
+    LanguageVersion,
+    StringActivity,
+    TrString,
+    TrStringText,
+    TrStringTextHistory,
+)
 
 
 def is_project_admin(user, project):
@@ -374,7 +398,7 @@ def update_all_language_versions_count(project):
         update_language_version_count(lv)
 
 
-def update_language_version_count(l):  # l: languageversion
+def update_language_version_count(l: LanguageVersion):
     translated = TrStringText.objects.filter(
         trstring__project=l.project,
         language=l.language,
@@ -536,7 +560,7 @@ def filter_by_search(trstrings, current_language, search_string):
 def parse_submitted_text(submitted_text, is_pluralized, nplurals):
     try:
         json_data = json.loads(submitted_text)
-    except ValueError as e:
+    except ValueError:
         json_data = [
             {"name": "text[0]", "value": submitted_text},
         ]

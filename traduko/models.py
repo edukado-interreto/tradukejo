@@ -1,6 +1,6 @@
-import json, re
+import json
+import re
 from collections import OrderedDict
-from html import unescape
 
 from django.db import models
 from django.conf import settings
@@ -347,7 +347,7 @@ class TrStringText(models.Model):
                 type(texts) != list
             ):  # json.loads can parse self.text as an int or float, which isn't what we want
                 texts = [self.text]
-        except ValueError as e:
+        except ValueError:
             texts = [self.text]
 
         if self.pluralized:
@@ -369,7 +369,7 @@ class TrStringText(models.Model):
             ):  # json.loads can parse self.text as an int or float, which isn't what we want
                 return 1
             return len(texts)
-        except ValueError as e:
+        except ValueError:
             return 1
 
     class Meta:
@@ -419,7 +419,7 @@ class TrStringTextHistory(models.Model):
                 type(texts) != list
             ):  # json.loads can parse self.text as an int or float, which isn't what we want
                 texts = [self.text]
-        except ValueError as e:
+        except ValueError:
             texts = [self.text]
 
         if self.pluralized:

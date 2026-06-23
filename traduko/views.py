@@ -1,19 +1,25 @@
+import json
 import os
 
 from compressor.utils.staticfiles import finders
-from django.contrib.staticfiles.storage import StaticFilesStorage
-from django.contrib.staticfiles.utils import get_files
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.middleware import csrf
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 
-from .models import *
-from .translation_functions import *
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .decorators import *
-from django.db.models import Q
+from .decorators import is_project_admin, user_is_project_admin
+from .models import Language, LanguageVersion, Project, TranslatorRequest, TrString
+from .translation_functions import (
+    addible_languages,
+    get_last_activities,
+    get_last_comments,
+    get_project_language_statistics,
+    get_project_languages_for_user,
+    update_project_admins,
+)
 
 
 def projects(request):

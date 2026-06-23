@@ -1,14 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import login, get_user_model
-from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth import get_user_model, login
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from users.forms import CustomUserCreationForm, UserSettingsForm
-from django.core.mail import send_mail
 from django.utils.html import strip_tags
-from django.contrib.auth.decorators import login_required
-from traduko.models import *
-from django.utils.translation import gettext as _, get_language
+from django.utils.translation import get_language
+from django.utils.translation import gettext as _
+
+from traduko.models import Project
+from users.forms import CustomUserCreationForm, UserSettingsForm
 
 User = get_user_model()
 

@@ -1,12 +1,12 @@
-from .models import *
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
-from .translation_functions import (
-    update_project_count,
-    update_language_version_count,
-    update_all_language_versions_count,
-)
 
+from .models import LanguageVersion, TrString, TrStringText
+from .translation_functions import (
+    update_all_language_versions_count,
+    update_language_version_count,
+    update_project_count,
+)
 
 # See also import_export_functions where these functions are temporarily disabled
 

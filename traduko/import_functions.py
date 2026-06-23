@@ -1,17 +1,37 @@
-import csv, io, polib
+import csv
 import hashlib
+import io
+import json
+import re
 
+import demjson3
+import polib
 from django.contrib.auth import get_user_model
-from django.db.models import Case, When
+from django.db.models import Case, Max, When
 from django.db.models.signals import post_save
 from django.utils.dateparse import parse_datetime
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
 
-from .models import *
-from .translation_functions import *
 from . import signals
-import demjson3
+from .models import (
+    ACTION_TYPE_IMPORT,
+    TRANSLATION_STATE_OUTDATED,
+    TRANSLATION_STATE_TRANSLATED,
+    Language,
+    LanguageVersion,
+    StringActivity,
+    TrString,
+    TrStringText,
+    TrStringTextHistory,
+)
+from .translation_functions import (
+    add_or_update_trstringtext,
+    parse_submitted_text,
+    update_all_language_versions_count,
+    update_project_count,
+    update_translators_when_translating,
+)
 
 
 class WrongFormatError(Exception):

@@ -1,16 +1,23 @@
 from itertools import batched
 
 from django.contrib import admin, messages
-from django.db.models import OuterRef, Subquery
 from django.utils.translation import gettext_lazy as _
 
-from traduko.deepl import deepl_translate
-from traduko.translation_functions import (
-    add_or_update_trstringtext,
-    parse_submitted_text,
+from .deepl import deepl_translate
+from .models import (
+    TRANSLATION_STATE_OUTDATED,
+    TRANSLATION_STATE_TRANSLATED,
+    Comment,
+    Language,
+    LanguageVersion,
+    Project,
+    StringActivity,
+    TranslatorRequest,
+    TrString,
+    TrStringText,
+    TrStringTextHistory,
 )
-
-from .models import *
+from .translation_functions import add_or_update_trstringtext
 
 
 @admin.register(Language)

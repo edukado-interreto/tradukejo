@@ -1,24 +1,53 @@
-import io
-from zipfile import ZipFile, ZIP_DEFLATED
+import csv
+from typing import TYPE_CHECKING, cast
 
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, JsonResponse
-from django.http import FileResponse
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.utils import timezone
-from django.utils.text import slugify
-from django.utils.translation import gettext as _
-from django.views.decorators.http import require_POST
-from .models import *
-from .translation_functions import *
-from .forms import *
-from .import_functions import *
-from .export_functions import *
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .decorators import *
-from django.db.models import Q
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.http import FileResponse, HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.html import strip_tags
+from django.utils.text import slugify
+from django.utils.translation import activate, get_language
+from django.utils.translation import gettext as _
+
+if TYPE_CHECKING:
+    from users.models import User
+
+from .decorators import user_is_project_admin
+from .export_functions import (
+    export_to_csv,
+    export_to_json,
+    export_to_nested_json,
+    export_to_po,
+    nested_json_as_zip,
+    po_as_zip,
+)
+from .forms import (
+    BasicImportForm,
+    ExportForm,
+    ImportForm,
+    ImportFormWithLanguage,
+    NestedJSONExportForm,
+    POExportForm,
+    POImportForm,
+    ProjectForm,
+)
+from .import_functions import (
+    WrongFormatError,
+    get_languages_for_export,
+    import_from_csv,
+    import_from_json,
+    import_from_nested_json,
+    import_from_po,
+    import_history_from_json,
+)
+from .models import LanguageVersion, Project, TranslatorRequest, TrStringText
+from .translation_functions import update_project_admins
 
 
 @login_required
@@ -166,7 +195,7 @@ def translator_notifications(request, project_id):
                 .distinct()
                 .exclude(pk=request.user.pk)
             )
-            for translator in translators:
+            for translator in cast(list[User], translators):
                 activate(translator.email_language)
                 lv = LanguageVersion.objects.filter(
                     project=project, translators=translator

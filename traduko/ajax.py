@@ -1,16 +1,14 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
+import json
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-from .models import *
-from .decorators import *
-from .translation_functions import *
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-import json
+
+from traduko.models import Language, LanguageVersion, Project, TranslatorRequest
+
+from .translation_functions import send_email_to_admins_about_translation_request
 
 
 @login_required

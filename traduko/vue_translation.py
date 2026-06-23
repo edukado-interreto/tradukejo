@@ -1,7 +1,10 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 
 from traduko.decorators import (
@@ -10,8 +13,31 @@ from traduko.decorators import (
     user_is_project_admin,
 )
 from traduko.deepl import deepl_translate
-from traduko.models import *
-from traduko.translation_functions import *
+from traduko.models import (
+    ACTION_TYPE_EDIT,
+    SORT_STRINGS_BY_NAME,
+    STATE_FILTER_ALL,
+    TRANSLATION_STATE_OUTDATED,
+    TRANSLATION_STATE_TRANSLATED,
+    Comment,
+    Language,
+    Project,
+    StringActivity,
+    TrString,
+    TrStringText,
+    TrStringTextHistory,
+)
+from traduko.translation_functions import (
+    add_or_update_trstringtext,
+    get_all_strings,
+    get_history_comparison,
+    get_recursive_directories,
+    get_strings_to_translate,
+    is_project_admin,
+    send_email_about_new_comment,
+    update_project_admins,
+    update_translators_when_translating,
+)
 
 
 @login_required

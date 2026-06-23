@@ -1,9 +1,23 @@
-from django.contrib import messages
-from django.http import Http404, RawPostDataException
-from django.shortcuts import get_object_or_404, redirect
-from .models import *
-from .translation_functions import *
+import json
+
 from django.core.exceptions import PermissionDenied
+from django.http import Http404, RawPostDataException
+from django.shortcuts import get_object_or_404
+
+from traduko.translation_functions import (
+    is_allowed_to_translate,
+    is_project_admin,
+    user_has_translation_right,
+)
+
+from .models import (
+    Comment,
+    Language,
+    Project,
+    TranslatorRequest,
+    TrString,
+    TrStringText,
+)
 
 
 def find_project_from_params(all_arguments):
