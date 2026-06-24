@@ -72,3 +72,20 @@ services:
       interval: 30s
       timeout: 2s
       retries: 3
+
+  mariadb-test:
+    image: mariadb:10.11.11
+    environment:
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MARIADB_DATABASE: test_$MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    volumes:
+      - MARIADB_TEST:/var/lib/mysql:z
+    networks:
+      - django_network
+    ports:
+      - 3306:3306
+
+volumes:
+  MARIADB_TEST:

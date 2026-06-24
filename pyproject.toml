@@ -29,7 +29,18 @@ dependencies = [
 dev = [
   "djangorestframework-stubs>=3.16.5",
   "isort==5.9.3",
+  "model-bakery>=1.23.5",
   "pylint==2.9.6",
+  "pytest>=9.1.1",
+  "pytest-cov>=7.1.0",
+  "pytest-django>=4.12.0",
   "ruff>=0.14.5",
 ]
 production = ["granian>=2.5.5"]
+
+# [tool.pytest]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tradukejo.settings"
+python_files = "tests.py test_*.py"
+addopts = "--reuse-db"

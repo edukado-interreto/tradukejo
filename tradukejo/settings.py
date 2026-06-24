@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 from decouple import config, Csv
@@ -7,9 +8,9 @@ import pymysql
 
 from tradukejo.api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 
-
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
+TESTING = "test" in "".join(sys.argv)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,6 +40,9 @@ if config("MARIADB_DATABASE", default=False):
             "PORT": config("MARIADB_PORT", default=3306, cast=int),
         }
     }
+    if TESTING:
+        DATABASES["default"]["HOST"] = "127.0.0.1"
+
     # Fake PyMySQL's version and install as MySQLdb
     pymysql.install_as_MySQLdb()
 
@@ -120,13 +124,8 @@ LANGUAGES = (
 
 LANGUAGE_CODE = "eo"
 
-TIME_ZONE = "Europe/Bratislava"
-
-USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
+TIME_ZONE = "Europe/Bratislava"
 
 
 # Static files (CSS, JavaScript, Images)

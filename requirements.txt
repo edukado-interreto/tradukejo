@@ -18,6 +18,9 @@ colorama==0.4.6 ; sys_platform == 'win32'
     # via
     #   click
     #   pylint
+    #   pytest
+coverage==7.14.3
+    # via pytest-cov
 demjson3==3.0.6
     # via tradukejo
 django==4.2.30
@@ -32,6 +35,7 @@ django==4.2.30
     #   djangorestframework
     #   drf-spectacular
     #   drf-standardized-errors
+    #   model-bakery
     #   tradukejo
 django-anymail==11.1
     # via tradukejo
@@ -72,6 +76,8 @@ inflection==0.5.1
     # via
     #   drf-spectacular
     #   drf-standardized-errors
+iniconfig==2.3.0
+    # via pytest
 isort==5.9.3
     # via pylint
 jsonschema==4.26.0
@@ -84,14 +90,29 @@ libsass==0.23.0
     # via django-libsass
 mccabe==0.6.1
     # via pylint
+model-bakery==1.23.5
+packaging==26.2
+    # via pytest
 pillow==12.2.0
     # via tradukejo
+pluggy==1.6.0
+    # via
+    #   pytest
+    #   pytest-cov
 polib==1.1.1
     # via tradukejo
+pygments==2.20.0
+    # via pytest
 pylint==2.9.6
     # via tradukejo
 pymysql==1.2.0
     # via tradukejo
+pytest==9.1.1
+    # via
+    #   pytest-cov
+    #   pytest-django
+pytest-cov==7.1.0
+pytest-django==4.12.0
 python-decouple==3.8
     # via tradukejo
 pyyaml==6.0.3
@@ -128,7 +149,6 @@ typing-extensions==4.15.0
     #   django-stubs
     #   django-stubs-ext
     #   djangorestframework-stubs
-    #   referencing
 tzdata==2026.2 ; sys_platform == 'win32'
     # via django
 uritemplate==4.2.0
