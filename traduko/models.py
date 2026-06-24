@@ -1,15 +1,15 @@
 import json
 import re
 from collections import OrderedDict
+from gettext import c2py
 
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.html import linebreaks
 
-from .cpython_gettext import c2py
 from .templatetags.traduko_tags import highlight_placeholders
 
 TRANSLATION_STATE_TRANSLATED = 1
