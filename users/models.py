@@ -1,3 +1,4 @@
+from uuid import UUID
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.exceptions import ValidationError
@@ -32,6 +33,10 @@ def deepl_api_key(value):
     except ValueError:
         raise error
     if len(uid) != 36 or len(uid.split("-")) != 5:
+        raise error
+    try:
+        UUID(uid, version=4)
+    except ValueError:
         raise error
 
 
