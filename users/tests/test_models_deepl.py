@@ -1,8 +1,9 @@
 import pytest
 from django.core.exceptions import ValidationError
-from model_bakery import baker
 
-from users.models import DeeplAuthKey, deepl_api_key
+from users.models import deepl_api_key
+
+from .factories import DeeplAuthKeyFactory
 
 
 def test_validation_deepl_api_key():
@@ -23,13 +24,13 @@ def test_validation_deepl_api_key():
 
 
 def test_deepl_auth_key_str():
-    auth_key = baker.prepare(DeeplAuthKey)
+    auth_key = DeeplAuthKeyFactory.build()
     first, last = auth_key.api_key[:4], auth_key.api_key[-4:]
     assert str(auth_key) == first + "******" + last
 
 
 def test_deepl_auth_key_default():
-    auth_key = baker.prepare(DeeplAuthKey)
+    auth_key = DeeplAuthKeyFactory.build()
     assert auth_key.name == ""
     assert auth_key.plan == "free"
     assert auth_key.character_count == 0
@@ -37,5 +38,5 @@ def test_deepl_auth_key_default():
 
 
 def test_deepl_auth_key_properties():
-    auth_key = baker.prepare(DeeplAuthKey)
+    auth_key = DeeplAuthKeyFactory.build()
     assert auth_key.character_limit == 5 * 10**5

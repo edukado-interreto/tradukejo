@@ -35,7 +35,6 @@ django==4.2.30
     #   djangorestframework
     #   drf-spectacular
     #   drf-standardized-errors
-    #   model-bakery
     #   tradukejo
 django-anymail==11.1
     # via tradukejo
@@ -69,6 +68,10 @@ drf-spectacular==0.29.0
     #   tradukejo
 drf-standardized-errors==0.16.0
     # via tradukejo
+factory-boy==3.3.3
+faker==40.23.0
+    # via factory-boy
+freezegun==1.5.5
 granian==2.7.6
 idna==3.18
     # via requests
@@ -90,7 +93,6 @@ libsass==0.23.0
     # via django-libsass
 mccabe==0.6.1
     # via pylint
-model-bakery==1.23.5
 packaging==26.2
     # via pytest
 pillow==12.2.0
@@ -113,6 +115,8 @@ pytest==9.1.1
     #   pytest-django
 pytest-cov==7.1.0
 pytest-django==4.12.0
+python-dateutil==2.9.0.post0
+    # via freezegun
 python-decouple==3.8
     # via tradukejo
 pyyaml==6.0.3
@@ -134,6 +138,8 @@ rpds-py==2026.5.1
 ruff==0.15.17
 setuptools==82.0.1
     # via astroid
+six==1.17.0
+    # via python-dateutil
 sqlparse==0.4.1
     # via
     #   django
@@ -150,7 +156,9 @@ typing-extensions==4.15.0
     #   django-stubs-ext
     #   djangorestframework-stubs
 tzdata==2026.2 ; sys_platform == 'win32'
-    # via django
+    # via
+    #   django
+    #   faker
 uritemplate==4.2.0
     # via drf-spectacular
 urllib3==2.7.0

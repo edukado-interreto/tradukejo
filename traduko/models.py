@@ -51,7 +51,7 @@ SORT_STRINGS_BY_NAME = ""
 
 def project_image_upload_location(instance, filename):
     extension = filename.split(".")[-1]
-    return "projects/%s.%s" % (instance.pk, extension)
+    return f"projects/{instance.pk}.{extension}"
 
 
 class Language(models.Model):

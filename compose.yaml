@@ -1,8 +1,5 @@
 name: tradukejo
 
-networks:
-  django_network:
-
 services:
 
   django:
@@ -36,7 +33,7 @@ services:
       "
     # granian --interface wsgi --blocking-threads 3 config.wsgi:application --host 0.0.0.0 --port 8000
     networks:
-      - django_network
+      - backend
     ports:
       - $DJANGO_PORT:$DJANGO_PORT
 
@@ -54,18 +51,19 @@ services:
     tty: true
     command: sh -c "npm install && npm run build-watch"
 
-  mariadb:
+  mariadb: &mariadb
     image: mariadb:10.11.11
     restart: always
-    environment:
+    environment: &mariadb_env
       MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
       MARIADB_DATABASE: $MARIADB_DATABASE
       MARIADB_USER: $MARIADB_USER
       MARIADB_PASSWORD: $MARIADB_PASSWORD
+    command: --wait-timeout=28800
     volumes:
       - .docker/mariadb_data:/var/lib/mysql:z
     networks:
-      - django_network
+      - backend
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       start_period: 3s
@@ -74,18 +72,18 @@ services:
       retries: 3
 
   mariadb-test:
-    image: mariadb:10.11.11
+    <<: *mariadb
     environment:
-      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      <<: *mariadb_env
       MARIADB_DATABASE: test_$MARIADB_DATABASE
-      MARIADB_USER: $MARIADB_USER
-      MARIADB_PASSWORD: $MARIADB_PASSWORD
     volumes:
-      - MARIADB_TEST:/var/lib/mysql:z
-    networks:
-      - django_network
+      - MARIADB_TEST:/var/lib/mysql
     ports:
       - 3306:3306
+
+
+networks:
+  backend:
 
 volumes:
   MARIADB_TEST:

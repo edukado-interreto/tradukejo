@@ -28,8 +28,9 @@ dependencies = [
 [dependency-groups]
 dev = [
   "djangorestframework-stubs>=3.16.5",
+  "factory-boy>=3.3.3",
+  "freezegun>=1.5.5",
   "isort==5.9.3",
-  "model-bakery>=1.23.5",
   "pylint==2.9.6",
   "pytest>=9.1.1",
   "pytest-cov>=7.1.0",
@@ -44,3 +45,5 @@ production = ["granian>=2.5.5"]
 DJANGO_SETTINGS_MODULE = "tradukejo.settings"
 python_files = "tests.py test_*.py"
 addopts = "--reuse-db"
+# addopts = "--reuse-db --cov tradukejo --cov traduko --cov core --cov users"
+#  --cov-report term-missing:skip-covered
