@@ -163,8 +163,11 @@ COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=not DEBUG)
 LIBSASS_OUTPUT_STYLE = config(
     "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
 )
-# STATICFILES_STORAGE = config("STATICFILES_STORAGE", default="django.contrib.staticfiles.storage.ManifestStaticFilesStorage")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+}
 
 LOGGING = {
     "version": 1,
