@@ -3,6 +3,7 @@ import html
 import json
 import re
 from collections import OrderedDict
+from typing import TypedDict
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -36,6 +37,11 @@ from .models import (
     TrStringText,
     TrStringTextHistory,
 )
+
+
+class StringResponse(TypedDict):
+    trstring: TrString | None
+    trstringtext: TrStringText | None
 
 
 def is_project_admin(user, project):
@@ -108,7 +114,7 @@ def add_or_update_trstringtext(
     new_string=False,
     state=TRANSLATION_STATE_TRANSLATED,
     importing_user=None,
-):
+) -> StringResponse:
     """
     Main function used to save strings. Translation right checks should be done before calling this function.
     text: text to be parsed with parse_submitted_text

@@ -9,6 +9,11 @@ from users.tests.factories import UserFactory
 fake = Faker()
 
 
+def lang_code(obj):
+    name = obj.name.lower()
+    return f"{name[:2]}-{name[-3:]}"
+
+
 class LanguageFactory(DjangoModelFactory):
     """
     Factory for the Language model.
@@ -16,16 +21,10 @@ class LanguageFactory(DjangoModelFactory):
 
     class Meta:
         model = "traduko.Language"
-        django_get_or_create = ("code",)
+        django_get_or_create = ("name",)
 
-    code = factory.Faker("language_code")
-    name = factory.LazyAttribute(
-        lambda obj: (
-            fake.language_name()
-            if hasattr(fake, "language_name")
-            else f"{obj.code} Language"
-        )
-    )
+    name = factory.Faker("language_name")
+    code = factory.LazyAttribute(lang_code)
     plural_forms = "nplurals=2; plural=(n == 1 ? 0 : 1);"
 
 
@@ -117,3 +116,27 @@ class TrStringTextFactory(DjangoModelFactory):
 
     trstring = factory.SubFactory(TrStringFactory)
     language = factory.SubFactory(LanguageFactory)
+
+
+class TrStringTextHistoryFactory(DjangoModelFactory):
+    class Meta:
+        model = "traduko.TrStringTextHistory"
+
+    trstringtext = factory.SubFactory(TrStringTextFactory)
+    translated_by = factory.SubFactory(UserFactory)
+
+
+class StringActivityFactory(DjangoModelFactory):
+    class Meta:
+        model = "traduko.StringActivity"
+
+    trstringtext = factory.SubFactory(TrStringTextFactory)
+    user = factory.SubFactory(UserFactory)
+
+
+class CommentFactory(DjangoModelFactory):
+    class Meta:
+        model = "traduko.Comment"
+
+    trstringtext = factory.SubFactory(TrStringTextFactory)
+    author = factory.SubFactory(UserFactory)

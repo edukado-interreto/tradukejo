@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
@@ -120,7 +120,7 @@ def get_string_translation(request):
 def change_translation_state(request, trstringtext_id, state):
     trstringtext = get_object_or_404(TrStringText, pk=trstringtext_id)
     if trstringtext.language == trstringtext.trstring.project.source_language:
-        raise Http404("Malĝusta ĉeno")
+        return HttpResponseBadRequest("Malĝusta ĉeno")
 
     trstringtext.state = state
     trstringtext.save()
@@ -215,6 +215,8 @@ def save_translation(request):
         new_context = ""
         minor_change = False
 
+    FORCE_UPDATE = True
+
     saved_data = add_or_update_trstringtext(
         current_string.project,
         current_string.path,
@@ -223,7 +225,7 @@ def save_translation(request):
         json.dumps(postdata["text"]),
         request.user,
         new_pluralized,
-        True,
+        FORCE_UPDATE,
         new_context,
         minor_change,
     )
