@@ -13,6 +13,20 @@ def ensure_json(data: UnknownJsonData) -> str:
     return data
 
 
+def set_nested_value(data: dict, path_str: str, value: str):
+    if not path_str:
+        return
+
+    segments = path_str.split("/")
+    current = data
+    # Navigate/create all dictionaries except the final leaf
+    for segment in segments[:-1]:
+        current = current.setdefault(segment, {})
+
+    # Set the actual value on the last segment
+    current[segments[-1]] = value
+
+
 @contextmanager
 def in_memory_bytes(initial_bytes=b""):
     buffer = io.BytesIO(initial_bytes)

@@ -338,8 +338,9 @@ def get_all_strings(project, language, state_filter, search_string=""):
 
 
 def get_strings_to_translate(
-    all_strings, language, path, sort, previous_ids=[], chosen_string_id=None
+    all_strings, language, path, sort, previous_ids=None, chosen_string_id=None
 ):
+    previous_ids = previous_ids if previous_ids else []
     strings = all_strings.filter(path=path).exclude(pk__in=previous_ids)
     if get_strings_to_translate is not None:
         chosen_string = all_strings.filter(pk=chosen_string_id)

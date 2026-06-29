@@ -106,6 +106,9 @@ class TrStringFactory(DjangoModelFactory):
         model = "traduko.TrString"
 
     project = factory.SubFactory(ProjectFactory)
+    path = factory.Faker("mime_type")
+    name = factory.Faker("word")
+    context = factory.Faker("sentence")
 
 
 class TrStringTextFactory(DjangoModelFactory):
@@ -116,6 +119,7 @@ class TrStringTextFactory(DjangoModelFactory):
 
     trstring = factory.SubFactory(TrStringFactory)
     language = factory.SubFactory(LanguageFactory)
+    text = factory.Faker("word")
 
 
 class TrStringTextHistoryFactory(DjangoModelFactory):

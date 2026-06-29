@@ -9,13 +9,18 @@ from django.db.models import Q
 from django.db.models import Value as V
 from django.db.models.functions import Concat
 
-from traduko.utils import as_tar_file, ensure_json, in_memory_bytes, UnknownJsonData
-
 from traduko.models import (
     TRANSLATION_STATE_OUTDATED,
     TRANSLATION_STATE_TRANSLATED,
     Language,
     TrStringText,
+)
+from traduko.utils import (
+    UnknownJsonData,
+    as_tar_file,
+    ensure_json,
+    in_memory_bytes,
+    set_nested_value,
 )
 
 
@@ -35,26 +40,23 @@ def get_filtered_strings(project, strings_to_export, path):
     return trstrings
 
 
-def remove_path_start(path, path_start, remove_path):
-    if not remove_path or path_start == "":
-        new_path = path
-    elif remove_path:
-        if path == path_start:
-            new_path = ""
-        elif path.startswith(path_start + "/"):
-            new_path = path[(len(path_start) + 1) :]
-        else:
-            new_path = path
-    return new_path
+def remove_path_start(path: str, path_start: str, remove_path: bool) -> str:
+    if not remove_path or not path_start:
+        return path
+    if path == path_start:
+        return ""
+
+    prefix = path_start if path_start.endswith("/") else f"{path_start}/"
+    return path.removeprefix(prefix)
 
 
 def gettext_file_path(language_code: str, file_name: str = ""):
     """Get the stem of a PO/MO file with its relative path, without extension
 
     Usage examples:
-    >>> gettext_file_stem("eo")
+    >>> gettext_file_path("eo")
     "eo"
-    >>> gettext_file_stem("eo", file_name="django")
+    >>> gettext_file_path("eo", file_name="django")
     "eo/LC_MESSAGES/django"
     """
     if file_name:
@@ -63,8 +65,9 @@ def gettext_file_path(language_code: str, file_name: str = ""):
 
 
 def export_to_csv(
-    project, path="", languages=[], remove_path=False, strings_to_export=""
+    project, path="", languages=None, remove_path=False, strings_to_export=""
 ):
+    languages = languages if languages else []
     fieldnames = ["path", "name", "pluralized", "context"]
     export_source_language = (
         project.source_language.code in languages or len(languages) == 0
@@ -135,7 +138,7 @@ def export_to_csv(
 
 
 def export_to_json(
-    project, path="", languages=[], remove_path=False, strings_to_export=""
+    project, path="", languages=None, remove_path=False, strings_to_export=""
 ):
     """
     :param project:
@@ -145,6 +148,7 @@ def export_to_json(
     :param strings_to_export: each string (path#name) on a new line; all strings if empty
     :return: list of dictionaries
     """
+    languages = languages if languages else []
     trstrings = get_filtered_strings(project, strings_to_export, path)
 
     data = []
@@ -343,8 +347,8 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
     file_name = kwargs.get("file_name", "{lang}.json")
     export_default = kwargs.get("export_default", False)
     export_empty = kwargs.get("export_empty", False)
-    export_language_name = kwargs.get("export_language_name", "")
-    export_plural_rules = kwargs.get("export_plural_rules", "")
+    language_name_path = kwargs.get("export_language_name", "")
+    plural_rules_path = kwargs.get("export_plural_rules", "")
     strings_to_export = kwargs.get("strings_to_export", "")
 
     if "{lang}" not in file_name:
@@ -366,31 +370,10 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
     data_by_language = {}
 
     for language in languages:
-        current_language_data = {}
+        current_data = {}
 
-        # Export language name?
-        if export_language_name != "":
-            language_name_path = export_language_name.split("/")
-            current_key = current_language_data
-            for i in range(len(language_name_path)):
-                if i == len(language_name_path) - 1:
-                    current_key[language_name_path[i]] = language.name
-                else:
-                    if language_name_path[i] not in current_key.keys():
-                        current_key[language_name_path[i]] = {}
-                    current_key = current_key[language_name_path[i]]
-
-        # Export plural rules?
-        if export_plural_rules != "":
-            plural_rules_path = export_plural_rules.split("/")
-            current_key = current_language_data
-            for i in range(len(plural_rules_path)):
-                if i == len(plural_rules_path) - 1:
-                    current_key[plural_rules_path[i]] = language.plural_forms
-                else:
-                    if plural_rules_path[i] not in current_key.keys():
-                        current_key[plural_rules_path[i]] = {}
-                    current_key = current_key[plural_rules_path[i]]
+        set_nested_value(current_data, language_name_path, language.name)
+        set_nested_value(current_data, plural_rules_path, language.plural_forms)
 
         # Export translations
         for trstring in trstrings:
@@ -433,7 +416,7 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
 
             # Getting the nested path
             new_path = remove_path_start(trstring.path, path, remove_path)
-            current_key = current_language_data
+            current_key = current_data
             if new_path != "":
                 new_path = new_path.split("/")
                 for p in new_path:
@@ -443,7 +426,7 @@ def export_to_nested_json(project, **kwargs) -> dict[str, UnknownJsonData]:
 
             current_key[trstring.name] = text
 
-        data_by_language[language.code] = current_language_data
+        data_by_language[language.code] = current_data
 
     if export_default:
         # Note: values are not JSON anymore

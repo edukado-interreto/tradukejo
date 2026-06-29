@@ -91,7 +91,7 @@ def test_get_strings(client, translator):
                 "id": trstring.pk,
                 "name": "nomo",
                 "path": "ui",
-                "context": "",
+                "context": trstring.context,
                 "original_text": {
                     "id": source.pk,
                     "language": project.source_language.to_dict(),
@@ -247,7 +247,7 @@ def test_save_translation_new(client, translator):
     assert resp.json() == {
         "id": trstring.pk,
         "name": "n",
-        "path": "",
+        "path": trstring.path,
         "context": "ctx",
         "original_text": {
             "id": text.pk,
@@ -304,7 +304,7 @@ def test_save_translation_edit(client, translator):
         "id": trstring.pk,
         "name": "nn",
         "path": "ui",
-        "context": "",
+        "context": trstring.context,
         "original_text": {
             "id": trstringtext.pk,
             "language": project.source_language.to_dict(),
@@ -412,12 +412,12 @@ def test_add_string_existing(client, project_admin):
 def test_get_history(client, translator):
     project = translator.lv.project
     trstring = TrStringFactory(project=project)
-    text = TrStringTextFactory(trstring=trstring, language=project.source_language)
+    text = TrStringTextFactory(trstring=trstring, language=project.source_language, text="ghi")
     hist1 = TrStringTextHistoryFactory(
-        trstringtext=text, translated_by=translator, text="new"
+        trstringtext=text, translated_by=translator, text="abc"
     )
     hist2 = TrStringTextHistoryFactory(
-        trstringtext=text, translated_by=translator, text="nova"
+        trstringtext=text, translated_by=translator, text="def"
     )
 
     client.force_login(translator)
@@ -429,20 +429,20 @@ def test_get_history(client, translator):
             "id": None,
             "pluralized": False,
             "create_date": ANY,
-            "comparison": {"1": "<p><del>nova</del></p>"},
+            "comparison": {"1": "<p><del>def</del><ins>ghi</ins></p>"},
         },
         {
             "id": hist2.pk,
             "pluralized": False,
             "create_date": ANY,
-            "comparison": {"1": "<p>n<del>ew</del><ins>ova</ins></p>"},
+            "comparison": {"1": "<p><del>abc</del><ins>def</ins></p>"},
             "translated_by": user_dict(translator),
         },
         {
             "id": hist1.pk,
             "pluralized": False,
             "create_date": ANY,
-            "comparison": {"1": "<p>new</p>"},
+            "comparison": {"1": "<p>abc</p>"},
             "translated_by": user_dict(translator),
         },
     ]
