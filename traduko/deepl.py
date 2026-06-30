@@ -1,9 +1,11 @@
 import json
 from contextlib import contextmanager
 from typing import Any
-from django.conf import settings
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+
+from django.conf import settings
+
 from users.models import DeeplAuthKey
 
 

@@ -1,9 +1,10 @@
-from typing import Optional, Any, Dict
-from django import template
-from django import urls
-from django.utils import html
 import re
+from typing import Any, Dict, Optional
+
+from django import template, urls
+from django.utils import html
 from django.utils.safestring import mark_safe
+
 from tradukejo import settings
 
 register = template.Library()

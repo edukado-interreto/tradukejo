@@ -224,7 +224,9 @@ def test_import_from_json_import_to(admin_user):
         user=admin_user,
         import_to="app",
     )
-    assert TrString.objects.filter(project=project, path="app/ui", name="hello").exists()
+    assert TrString.objects.filter(
+        project=project, path="app/ui", name="hello"
+    ).exists()
 
 
 def test_import_from_json_wrong_format():
@@ -287,7 +289,9 @@ def test_import_from_csv_import_to(admin_user):
         user=admin_user,
         import_to="app",
     )
-    assert TrString.objects.filter(project=project, path="app/ui", name="hello").exists()
+    assert TrString.objects.filter(
+        project=project, path="app/ui", name="hello"
+    ).exists()
 
 
 @pytest.mark.django_db
@@ -372,9 +376,7 @@ def test_import_from_po_fuzzy(admin_user):
         trstring=trstr, language=lang, text="Malnova", state=TRANSLATION_STATE_OUTDATED
     )
 
-    po_data = export.export_to_po(
-        project, languages=[lang.code], include_outdated=True
-    )
+    po_data = export.export_to_po(project, languages=[lang.code], include_outdated=True)
     TrStringText.objects.filter(trstring=trstr, language=lang).delete()
 
     uut.import_from_po(

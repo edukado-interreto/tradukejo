@@ -1,5 +1,5 @@
-from unittest.mock import ANY
 from http import HTTPStatus
+from unittest.mock import ANY
 
 import pytest
 
@@ -412,7 +412,9 @@ def test_add_string_existing(client, project_admin):
 def test_get_history(client, translator):
     project = translator.lv.project
     trstring = TrStringFactory(project=project)
-    text = TrStringTextFactory(trstring=trstring, language=project.source_language, text="ghi")
+    text = TrStringTextFactory(
+        trstring=trstring, language=project.source_language, text="ghi"
+    )
     hist1 = TrStringTextHistoryFactory(
         trstringtext=text, translated_by=translator, text="abc"
     )
