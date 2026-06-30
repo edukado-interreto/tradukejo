@@ -20,30 +20,29 @@ from .models import (
 )
 
 
-def find_project_from_params(all_arguments):
-    if "trstringtext_id" in all_arguments.keys():
-        trstringtext = get_object_or_404(
-            TrStringText, pk=all_arguments["trstringtext_id"]
-        )
-        project = trstringtext.trstring.project
-    else:
-        if "project_id" in all_arguments.keys():
-            project = get_object_or_404(Project, pk=all_arguments["project_id"])
-        elif "trstring_id" in all_arguments.keys():
-            project = get_object_or_404(
-                TrString, pk=all_arguments["trstring_id"]
-            ).project
-        elif "request_id" in all_arguments.keys():
-            project = get_object_or_404(
-                TranslatorRequest, pk=all_arguments["request_id"]
-            ).language_version.project
-        elif "comment_id" in all_arguments.keys():
-            project = get_object_or_404(
-                Comment, pk=all_arguments["comment_id"]
-            ).trstringtext.trstring.project
-        else:
-            raise Http404()
-    return project
+def find_project_from_params(args):
+    match args:
+        case {"trstringtext_id": text_id}:
+            return get_object_or_404(TrStringText, pk=text_id).trstring.project
+
+        case {"project_id": project_id}:
+            return get_object_or_404(Project, pk=project_id)
+
+        case {"trstring_id": string_id}:
+            return get_object_or_404(TrString, pk=string_id).project
+
+        case {"request_id": request_id}:
+            qs = TranslatorRequest.objects.select_related("language_version__project")
+            tr_request = get_object_or_404(qs, pk=request_id)
+            return tr_request.language_version.project
+
+        case {"comment_id": comment_id}:
+            qs = Comment.objects.select_related("trstringtext__trstring__project")
+            comment = get_object_or_404(qs, pk=comment_id)
+            return comment.trstringtext.trstring.project
+
+        case _:
+            raise Http404("No valid project identifier found in parameters.")
 
 
 def find_language_from_params(all_arguments):
