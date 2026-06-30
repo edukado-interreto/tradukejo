@@ -40,11 +40,7 @@ dev = [
 ]
 production = ["granian>=2.5.5"]
 
-# [tool.pytest]
-
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings"
 python_files = "tests.py test_*.py"
-addopts = "--reuse-db"
-# addopts = "--reuse-db --cov tradukejo --cov traduko --cov core --cov users"
-#  --cov-report term-missing:skip-covered
+addopts = "--reuse-db --cov traduko --cov core --cov users --cov-report term:skip-covered --cov-report json"
