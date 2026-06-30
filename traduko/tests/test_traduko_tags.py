@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+from django.conf import settings
 from django.test import RequestFactory
 
 from traduko.templatetags import traduko_tags as uut
@@ -34,9 +35,6 @@ def test_format_translation():
     assert 'href="https://example.com"' in html
     assert 'target="_blank"' in html
     assert "site" in html
-
-
-from tradukejo import settings
 
 
 @pytest.mark.django_db

@@ -5,7 +5,7 @@ from django import template, urls
 from django.utils import html
 from django.utils.safestring import mark_safe
 
-from tradukejo import settings
+from config import settings
 
 register = template.Library()
 

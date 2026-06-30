@@ -17,7 +17,7 @@ services:
       - ./.venv:/app/.venv:z
     working_dir: /app
     environment:
-      DJANGO_SETTINGS_MODULE: tradukejo.settings
+      DJANGO_SETTINGS_MODULE: config.settings
       MARIADB_HOST: mariadb
       MARIADB_NAME: $MARIADB_DATABASE
       MARIADB_USER: $MARIADB_USER

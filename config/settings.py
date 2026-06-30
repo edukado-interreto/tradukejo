@@ -2,11 +2,11 @@ import os
 import sys
 from pathlib import Path
 
-from decouple import config, Csv
-from django.contrib.messages import constants as messages
 import pymysql
+from decouple import Csv, config
+from django.contrib.messages import constants as messages
 
-from tradukejo.api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
+from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -78,7 +78,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
 ]
 
-ROOT_URLCONF = "tradukejo.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -91,7 +91,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "tradukejo.context_processor.settings_context",
+                "config.context_processor.settings_context",
             ],
         },
     },
@@ -100,7 +100,7 @@ TEMPLATES = [
 REST_FRAMEWORK = REST_FRAMEWORK
 SPECTACULAR_SETTINGS = SPECTACULAR_SETTINGS
 
-WSGI_APPLICATION = "tradukejo.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_USER_MODEL = "users.User"
 
@@ -193,4 +193,9 @@ LOGGING = {
     },
 }
 
+GIT_COMMIT = config("GIT_COMMIT", default="")
+
 DEEPL_URL = "https://api-free.deepl.com/v2"
+
+if ENVIRONMENT.deployed:
+    setup_bugsink(config)

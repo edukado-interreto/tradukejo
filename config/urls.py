@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 
-from tradukejo.api import urls as api_urls
+from .api import urls as api_urls
 
 
 urlpatterns = [
