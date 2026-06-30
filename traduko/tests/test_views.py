@@ -1,8 +1,10 @@
 import json
+from compressor.base import Compressor
 from http import HTTPStatus
 from unittest.mock import patch
 
 import pytest
+from django.test import override_settings
 
 from traduko.models import LanguageVersion
 from traduko.tests.factories import (
@@ -12,8 +14,9 @@ from traduko.tests.factories import (
     TranslatorRequestFactory,
 )
 
+pytestmark = pytest.mark.django_db
 
-@pytest.mark.django_db
+
 def test_projects_visible_to_anonymous(client):
     visible = ProjectFactory(visible=True)
     hidden = ProjectFactory(visible=False)
@@ -26,7 +29,6 @@ def test_projects_visible_to_anonymous(client):
     assert hidden not in projects
 
 
-@pytest.mark.django_db
 def test_projects_admin_sees_hidden(client, project_admin):
     hidden = ProjectFactory(visible=False)
     project_admin.lv.project.admins.add(project_admin)
@@ -37,7 +39,6 @@ def test_projects_admin_sees_hidden(client, project_admin):
     assert hidden in list(resp.context["projects"])
 
 
-@pytest.mark.django_db
 def test_projectpage_hidden_for_non_admin(client, translator):
     project = ProjectFactory(visible=False, admins=[])
     project.admins.clear()
@@ -47,7 +48,6 @@ def test_projectpage_hidden_for_non_admin(client, translator):
     assert resp.status_code == HTTPStatus.FORBIDDEN
 
 
-@pytest.mark.django_db
 def test_projectpage_for_admin(client, project_admin):
     project = project_admin.lv.project
 
@@ -59,7 +59,6 @@ def test_projectpage_for_admin(client, project_admin):
     assert resp.context["project"] == project
 
 
-@pytest.mark.django_db
 def test_projectpage_translator_request_count(client, project_admin):
     project = project_admin.lv.project
     TranslatorRequestFactory(language_version__project=project)
@@ -70,7 +69,6 @@ def test_projectpage_translator_request_count(client, project_admin):
     assert resp.context["translator_request_count"] == 1
 
 
-@pytest.mark.django_db
 def test_translate_requires_login(client):
     project = LanguageVersionFactory().project
     resp = client.get(f"/eo/translate/{project.pk}/")
@@ -78,15 +76,18 @@ def test_translate_requires_login(client):
     assert "/login" in resp.url
 
 
-@pytest.mark.django_db
-@patch("traduko.views.finders.find", return_value="/tmp/vue-static")
-@patch("traduko.views.os.walk")
+@override_settings(COMPRESS_ENABLED=False, COMPRESS_OFFLINE=False)
+@patch("traduko.views.finders.find", return_value=list())
+@patch("traduko.views.os.walk", return_value=[("/tmp/static", [], [])])
 def test_translate_renders(mock_walk, mock_find, client, translator):
-    mock_walk.return_value = [("/tmp/vue-static", [], ["app.js", "chunk.js"])]
     project = translator.lv.project
 
     client.force_login(translator)
-    resp = client.get(f"/eo/translate/{project.pk}/")
+    with patch(
+        "compressor.templatetags.compress.CompressorNode.render_compressed",
+        return_value="",
+    ):
+        resp = client.get(f"/eo/translate/{project.pk}/")
 
     assert resp.status_code == HTTPStatus.OK
     languages = json.loads(resp.context["available_languages"])
@@ -94,7 +95,6 @@ def test_translate_renders(mock_walk, mock_find, client, translator):
     assert resp.context["csrf"]
 
 
-@pytest.mark.django_db
 def test_add_language_version_as_admin(client, project_admin):
     project = project_admin.lv.project
     lang = LanguageFactory()
@@ -106,10 +106,9 @@ def test_add_language_version_as_admin(client, project_admin):
     assert LanguageVersion.objects.filter(project=project, language=lang).exists()
 
 
-@pytest.mark.django_db
 def test_add_language_version_ignored_for_non_admin(client, translator):
     project = translator.lv.project
-    lang = LanguageFactory()
+    lang = LanguageFactory(code="xx", name="XxXx")
 
     client.force_login(translator)
     resp = client.get(f"/eo/project/{project.pk}/add-language-version/{lang.code}/")

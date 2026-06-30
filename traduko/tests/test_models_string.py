@@ -14,27 +14,24 @@ from .factories import (
 
 @pytest.mark.django_db
 def test_tr_string_manager():
-    en = LanguageFactory(code="en")
-    eo = LanguageFactory(code="eo")
+    en = LanguageFactory()
+    eo = LanguageFactory()
     project = ProjectFactory(source_language=en)
     LanguageVersionFactory(project=project, language=en)
     LanguageVersionFactory(project=project, language=eo)
 
-    tr_str_1 = TrStringFactory(project=project, name="unu")
-    TrStringTextFactory(trstring=tr_str_1, language=en, text="one")
+    TrStringTextFactory(trstring__project=project, language=en, text="One")
 
-    tr_str_2 = TrStringFactory(project=project, name="du")
-    TrStringTextFactory(trstring=tr_str_2, language=en, text="two")
+    TrStringTextFactory(trstring__project=project, language=en, text="Two")
 
-    tr_str_3 = TrStringFactory(project=project, name="tri")
-    TrStringTextFactory(trstring=tr_str_3, language=en, text="three")
+    TrStringTextFactory(trstring__project=project, language=en, text="Three")
 
     assert TrString.objects.count() == 3
     assert TrStringText.objects.count() == 3
 
     qs = TrString.objects.untranslated(project, eo)
     assert qs.count() == 3
-    assert set(qs.values_list("source_text", flat=True)) == {"one", "two", "three"}
+    assert set(qs.values_list("source_text", flat=True)) == {"One", "Two", "Three"}
 
 
 def test_tr_string_str():
@@ -79,7 +76,6 @@ def test_tr_string_to_dict():
     }
 
 
-# @pytest.mark.django_db
 def test_tr_string_text_str():
     tr_str = TrStringFactory.build(path="ui", name="nomo")
     text = TrStringTextFactory.build(trstring=tr_str, text="teksto")

@@ -18,7 +18,9 @@ def _csv_upload(content, name="import.csv"):
     return SimpleUploadedFile(name, content.encode("utf-8"), content_type="text/csv")
 
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
+
 def test_translator_request_list_requires_admin(client, translator):
     project = translator.lv.project
     client.force_login(translator)
@@ -26,7 +28,6 @@ def test_translator_request_list_requires_admin(client, translator):
     assert resp.status_code == HTTPStatus.FORBIDDEN
 
 
-@pytest.mark.django_db
 def test_translator_request_list(client, project_admin):
     project = project_admin.lv.project
     req = TranslatorRequestFactory(language_version=project_admin.lv)
@@ -38,7 +39,6 @@ def test_translator_request_list(client, project_admin):
     assert req in resp.context["requests"]
 
 
-@pytest.mark.django_db
 def test_accept_translator_request(client, project_admin):
     req = TranslatorRequestFactory(
         language_version__project=project_admin.lv.project,
@@ -58,7 +58,6 @@ def test_accept_translator_request(client, project_admin):
     assert len(mail.outbox) == 1
 
 
-@pytest.mark.django_db
 def test_decline_translator_request_deletes_language_version(client, project_admin):
     req = TranslatorRequestFactory(
         language_version__project=project_admin.lv.project,
@@ -76,7 +75,6 @@ def test_decline_translator_request_deletes_language_version(client, project_adm
     assert len(mail.outbox) == 1
 
 
-@pytest.mark.django_db
 def test_decline_translator_request_keeps_language_version(client, project_admin):
     req = TranslatorRequestFactory(
         language_version__project=project_admin.lv.project,
@@ -95,7 +93,6 @@ def test_decline_translator_request_keeps_language_version(client, project_admin
     assert not TranslatorRequest.objects.filter(pk=req.pk).exists()
 
 
-@pytest.mark.django_db
 def test_import_csv(client, project_admin):
     project = project_admin.lv.project
     source = project.source_language
@@ -116,7 +113,6 @@ def test_import_csv(client, project_admin):
     assert TrString.objects.filter(project=project, path="ui", name="hello").exists()
 
 
-@pytest.mark.django_db
 def test_import_csv_wrong_extension(client, project_admin):
     project = project_admin.lv.project
     source = project.source_language
@@ -135,7 +131,6 @@ def test_import_csv_wrong_extension(client, project_admin):
     assert not TrString.objects.filter(project=project).exists()
 
 
-@pytest.mark.django_db
 def test_export_json(client, project_admin):
     project = project_admin.lv.project
     source = project.source_language
@@ -151,7 +146,6 @@ def test_export_json(client, project_admin):
     assert data[0]["name"] == "hello"
 
 
-@pytest.mark.django_db
 def test_import_export_page(client, project_admin):
     project = project_admin.lv.project
     client.force_login(project_admin)

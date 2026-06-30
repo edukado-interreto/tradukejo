@@ -12,7 +12,9 @@ from traduko.tests.factories import (
 )
 
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
+
 def test_get_filtered_strings():
     lv = LanguageVersionFactory()
     for name in "wan tu luka".split():
@@ -40,7 +42,6 @@ def test_gettext_file_path():
     assert uut.gettext_file_path("eo", file_name="django") == "eo/LC_MESSAGES/django"
 
 
-@pytest.mark.django_db
 def test_export_to_csv():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -78,7 +79,6 @@ def test_export_to_csv():
     assert len(res["csv_data"]) == 1
 
 
-@pytest.mark.django_db
 def test_export_to_json(admin_user):
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -101,7 +101,6 @@ def test_export_to_json(admin_user):
     assert res == uut.export_to_json(lv.project, languages=[language.code])
 
 
-@pytest.mark.django_db
 def test_export_to_po():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -116,7 +115,6 @@ def test_export_to_po():
     assert poentry.msgstr == text.text
 
 
-@pytest.mark.django_db
 def test_export_to_po_with_outdated():
     lv = LanguageVersionFactory()
     lang, source = lv.language, lv.project.source_language
@@ -143,7 +141,6 @@ def test_export_to_po_with_outdated():
     assert poentry.fuzzy
 
 
-@pytest.mark.django_db
 def test_export_to_po_pluralized():
     lv = LanguageVersionFactory()
     lang, source = lv.language, lv.project.source_language
@@ -169,7 +166,6 @@ def test_export_to_po_pluralized():
     assert poentry.msgstr_plural == {0: "plain"}
 
 
-@pytest.mark.django_db
 def test_po_as_zip():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -187,7 +183,6 @@ def test_po_as_zip():
             assert f'msgstr "{text.text}"' in content
 
 
-@pytest.mark.django_db
 def test_po_as_tar_gz():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -210,7 +205,6 @@ def test_po_as_tar_gz():
             assert f'msgstr "{text.text}"' in content
 
 
-@pytest.mark.django_db
 def test_export_to_nested_json_minimal():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -223,7 +217,6 @@ def test_export_to_nested_json_minimal():
     assert res == {language.code: {"dir": {text.trstring.name: text.text}}}
 
 
-@pytest.mark.django_db
 def test_export_to_nested_json_pluralized():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -238,7 +231,6 @@ def test_export_to_nested_json_pluralized():
     assert res == {language.code: {text.trstring.name: "wan | tu"}}
 
 
-@pytest.mark.django_db
 def test_export_to_nested_json_with_language_name():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -259,7 +251,6 @@ def test_export_to_nested_json_with_language_name():
     }
 
 
-@pytest.mark.django_db
 def test_export_to_nested_json_with_plural_rules():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -282,7 +273,6 @@ def test_export_to_nested_json_with_plural_rules():
     }
 
 
-@pytest.mark.django_db
 def test_export_to_nested_json_with_export_default():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -299,7 +289,6 @@ def test_export_to_nested_json_with_export_default():
     }
 
 
-@pytest.mark.django_db
 def test_nested_json_as_zip():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
@@ -321,7 +310,6 @@ def test_nested_json_as_zip():
             }
 
 
-@pytest.mark.django_db
 def test_nested_json_as_tar_gz():
     lv = LanguageVersionFactory()
     language = lv.project.source_language

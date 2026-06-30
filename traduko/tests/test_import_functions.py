@@ -25,6 +25,9 @@ from traduko.tests.factories import (
 )
 
 
+pytestmark = pytest.mark.django_db
+
+
 def _json_file(data):
     return BytesIO(json.dumps(data).encode())
 
@@ -64,20 +67,17 @@ def test_recursive_dictionary_parse():
     }
 
 
-@pytest.mark.django_db
 def test_get_all_languages_dictionary():
     lang = LanguageFactory()
     dictionary = uut.get_all_languages_dictionary()
     assert dictionary[lang.code] == lang
 
 
-@pytest.mark.django_db
 def test_get_all_users_dictionary(admin_user):
     dictionary = uut.get_all_users_dictionary()
     assert dictionary[admin_user.username] == admin_user
 
 
-@pytest.mark.django_db
 def test_get_languages_for_export():
     lv = LanguageVersionFactory()
     project = lv.project
@@ -88,7 +88,6 @@ def test_get_languages_for_export():
     assert (lv.language.code, f"{lv.language.code} - {lv.language.name}") in res
 
 
-@pytest.mark.django_db
 def test_add_language_versions():
     lv = LanguageVersionFactory()
     project = lv.project
@@ -98,11 +97,9 @@ def test_add_language_versions():
     assert LanguageVersion.objects.filter(project=project, language=new_lang).exists()
 
 
-@pytest.mark.django_db
 def test_quick_import(admin_user):
     lv = LanguageVersionFactory()
-    project = lv.project
-    source = project.source_language
+    source = lv.project.source_language
     target = lv.language
 
     data = [
@@ -115,10 +112,10 @@ def test_quick_import(admin_user):
             },
         }
     ]
-    res = uut.quick_import(project, data, admin_user, fallback_author=admin_user)
+    res = uut.quick_import(lv.project, data, admin_user, fallback_author=admin_user)
     assert res == {"imported_strings": 1, "imported_translations": 1}
 
-    trstr = TrString.objects.get(project=project, path="ui", name="hello")
+    trstr = TrString.objects.get(project=lv.project, path="ui", name="hello")
     assert TrStringText.objects.get(trstring=trstr, language=source).text == "Hello"
     assert TrStringText.objects.get(trstring=trstr, language=target).text == "Saluton"
     assert (
@@ -129,7 +126,6 @@ def test_quick_import(admin_user):
     )
 
 
-@pytest.mark.django_db
 def test_quick_import_skips_existing(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -149,7 +145,6 @@ def test_quick_import_skips_existing(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=source).text == "Hello"
 
 
-@pytest.mark.django_db
 def test_slow_import_updates(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -169,7 +164,6 @@ def test_slow_import_updates(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=source).text == "New Hello"
 
 
-@pytest.mark.django_db
 def test_import_from_json(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -203,7 +197,6 @@ def test_import_from_json(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=target).text == "Saluton"
 
 
-@pytest.mark.django_db
 def test_import_from_json_import_to(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -240,7 +233,6 @@ def test_import_from_json_wrong_format():
         )
 
 
-@pytest.mark.django_db
 def test_import_from_csv(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -272,7 +264,6 @@ def test_import_from_csv(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=target).text == "Saluton"
 
 
-@pytest.mark.django_db
 def test_import_from_csv_import_to(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -294,7 +285,6 @@ def test_import_from_csv_import_to(admin_user):
     ).exists()
 
 
-@pytest.mark.django_db
 def test_import_from_csv_wrong_format(admin_user):
     lv = LanguageVersionFactory()
     with pytest.raises(WrongFormatError):
@@ -307,7 +297,6 @@ def test_import_from_csv_wrong_format(admin_user):
         )
 
 
-@pytest.mark.django_db
 def test_import_from_po(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -332,7 +321,6 @@ def test_import_from_po(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=lang).text == "Saluton"
 
 
-@pytest.mark.django_db
 def test_import_from_po_pluralized(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -363,7 +351,6 @@ def test_import_from_po_pluralized(admin_user):
     assert json.loads(text.text) == ["wan", "tu"]
 
 
-@pytest.mark.django_db
 def test_import_from_po_fuzzy(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -391,7 +378,6 @@ def test_import_from_po_fuzzy(admin_user):
     assert text.state == TRANSLATION_STATE_OUTDATED
 
 
-@pytest.mark.django_db
 def test_import_from_po_original_text_as_key(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -419,7 +405,6 @@ def test_import_from_po_original_text_as_key(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=lang).text == "Saluton"
 
 
-@pytest.mark.django_db
 def test_import_from_nested_json(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -437,7 +422,6 @@ def test_import_from_nested_json(admin_user):
     assert TrString.objects.filter(project=project, path="", name="hello").exists()
 
 
-@pytest.mark.django_db
 def test_import_from_nested_json_with_path(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -459,7 +443,6 @@ def test_import_from_nested_json_with_path(admin_user):
     assert TrStringText.objects.get(trstring=trstr, language=target).text == "Saluton"
 
 
-@pytest.mark.django_db
 def test_import_from_nested_json_pluralized(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -480,7 +463,6 @@ def test_import_from_nested_json_pluralized(admin_user):
     assert json.loads(text.text) == ["wan", "tu"]
 
 
-@pytest.mark.django_db
 def test_import_from_nested_json_export_default(admin_user):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -510,7 +492,6 @@ def test_import_from_nested_json_wrong_format():
         )
 
 
-@pytest.mark.django_db
 def test_import_history_from_json(admin_user):
     lv = LanguageVersionFactory()
     text = TrStringTextFactory(
@@ -539,7 +520,6 @@ def test_import_history_from_json(admin_user):
     ).exists()
 
 
-@pytest.mark.django_db
 def test_import_history_from_json_skips_duplicate(admin_user):
     lv = LanguageVersionFactory()
     text = TrStringTextFactory(

@@ -36,7 +36,7 @@ def test_fetch_deepl_uses_least_used_key(mock_fetch, mock_get_least):
 @patch("traduko.deepl.update_deepl_usage")
 @patch("traduko.deepl._fetch_deepl")
 def test_deepl_usage_updates_even_on_error(mock_fetch, mock_update):
-    key = DeeplAuthKeyFactory()
+    key = DeeplAuthKeyFactory.build()
     mock_fetch.side_effect = RuntimeError("network")
 
     with pytest.raises(RuntimeError):

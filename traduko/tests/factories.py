@@ -9,11 +9,6 @@ from users.tests.factories import UserFactory
 fake = Faker()
 
 
-def lang_code(obj):
-    name = obj.name.lower()
-    return f"{name[:2]}-{name[-3:]}"
-
-
 class LanguageFactory(DjangoModelFactory):
     """
     Factory for the Language model.
@@ -24,7 +19,7 @@ class LanguageFactory(DjangoModelFactory):
         django_get_or_create = ("name",)
 
     name = factory.Faker("language_name")
-    code = factory.LazyAttribute(lang_code)
+    code = factory.Faker("pystr", max_chars=8)
     plural_forms = "nplurals=2; plural=(n == 1 ? 0 : 1);"
 
 
@@ -49,8 +44,6 @@ class ProjectFactory(DjangoModelFactory):
     strings = factory.Faker("random_int", min=0, max=10000)
     words = factory.Faker("random_int", min=0, max=50000)
     characters = factory.Faker("random_int", min=0, max=200000)
-    visible = factory.Faker("boolean", chance_of_getting_true=90)
-    locked = factory.Faker("boolean", chance_of_getting_true=10)
 
     @factory.post_generation
     def needed_languages(self, create, extracted, **kwargs):
@@ -86,6 +79,15 @@ class LanguageVersionFactory(DjangoModelFactory):
 
     project = factory.SubFactory(ProjectFactory)
     language = factory.SubFactory(LanguageFactory)
+
+    @factory.post_generation
+    def translators(self, create, extracted, **kwargs):
+        if not create or not extracted:
+            # Simple build, or nothing to add, do nothing.
+            return
+
+        # Add the iterable of translators using bulk addition
+        self.translators.add(*extracted)
 
 
 class TranslatorRequestFactory(DjangoModelFactory):

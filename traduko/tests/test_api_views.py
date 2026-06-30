@@ -11,12 +11,14 @@ from traduko.tests.factories import (
 )
 
 
+pytestmark = pytest.mark.django_db
+
+
 @pytest.fixture
 def api_client():
     return APIClient()
 
 
-@pytest.mark.django_db
 def test_language_list(api_client):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -30,7 +32,6 @@ def test_language_list(api_client):
     assert lv.language.code in codes
 
 
-@pytest.mark.django_db
 def test_export_simple_json(api_client):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -49,7 +50,6 @@ def test_export_simple_json(api_client):
     assert data[0]["translations"][source.code]["text"] == "Hello"
 
 
-@pytest.mark.django_db
 def test_export_simple_csv(api_client):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -67,7 +67,6 @@ def test_export_simple_csv(api_client):
     assert "path,name" in resp.content.decode()
 
 
-@pytest.mark.django_db
 def test_export_po_requires_one_language(api_client):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -81,7 +80,6 @@ def test_export_po_requires_one_language(api_client):
     assert "languages" in json.dumps(resp.json()).lower()
 
 
-@pytest.mark.django_db
 def test_export_po_single_language(api_client):
     lv = LanguageVersionFactory()
     project = lv.project
@@ -98,7 +96,6 @@ def test_export_po_single_language(api_client):
     assert b"msgid" in resp.content
 
 
-@pytest.mark.django_db
 def test_export_nested_not_acceptable(api_client):
     lv = LanguageVersionFactory()
     project = lv.project

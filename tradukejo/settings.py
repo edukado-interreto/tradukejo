@@ -159,7 +159,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MAX_LOADED_STRINGS = 30
 
-COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=not DEBUG)
+COMPRESS_ENABLED = config("COMPRESS_ENABLED", default=not (DEBUG or TESTING))
+COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=not (DEBUG or TESTING))
 LIBSASS_OUTPUT_STYLE = config(
     "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
 )

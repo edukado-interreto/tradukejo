@@ -12,9 +12,11 @@ def translator():
     project = ProjectFactory(source_language=source_lang)
     project.admins.clear()
     LanguageVersionFactory(project=project, language=source_lang)
+
     target_lang = LanguageFactory()
-    lv = LanguageVersionFactory(project=project, language=target_lang)
-    lv.translators.add(user)
+    lv = LanguageVersionFactory(
+        project=project, language=target_lang, translators=[user]
+    )
     user.lv = lv
     return user
 

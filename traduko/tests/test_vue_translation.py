@@ -3,13 +3,8 @@ from unittest.mock import ANY
 
 import pytest
 
-from users.tests.factories import UserFactory
-
 from .factories import (
     CommentFactory,
-    LanguageFactory,
-    LanguageVersionFactory,
-    ProjectFactory,
     TrStringFactory,
     TrStringTextFactory,
     TrStringTextHistoryFactory,
@@ -33,27 +28,6 @@ def user_dict(user, lang="eo"):
     }
 
 
-@pytest.fixture
-def translator():
-    user = UserFactory()
-    source_lang = LanguageFactory()
-    project = ProjectFactory(source_language=source_lang)
-    LanguageVersionFactory(project=project, language=source_lang)
-    target_lang = LanguageFactory()
-    lv = LanguageVersionFactory(project=project, language=target_lang)
-    lv.translators.add(user)
-    user.lv = lv
-    return user
-
-
-@pytest.fixture
-def project_admin(translator):
-    project = translator.lv.project
-    project.admins.add(translator)
-    project.save()
-    return translator
-
-
 @pytest.mark.django_db
 def test_get_strings_empty(client, translator):
     project, language = translator.lv.project, translator.lv.language
@@ -66,7 +40,7 @@ def test_get_strings_empty(client, translator):
     assert resp.json() == {"strings": [], "can_load_more": False}
 
 
-@pytest.mark.django_db(transaction=True)
+@pytest.mark.django_db
 def test_get_strings(client, translator):
     project, language = translator.lv.project, translator.lv.language
     trstring = TrStringFactory(project=project, name="nomo", path="ui")
@@ -202,14 +176,15 @@ def test_marktranslated(client, translator):
 
 
 @pytest.mark.django_db
-def test_error_change_translation_state(client, translator):
-    project, language = translator.lv.project, translator.lv.language
+def test_error_change_translation_state(client, project_admin):
+    project = project_admin.lv.project
+
     trstring = TrStringFactory(project=project)
     text = TrStringTextFactory(
         trstring=trstring, language=project.source_language, text="x"
     )
 
-    client.force_login(translator)
+    client.force_login(project_admin)
     resp = client.post(
         "/eo/vue/mark-translated/", **_json({"trstringtext_id": text.pk})
     )
@@ -219,9 +194,10 @@ def test_error_change_translation_state(client, translator):
 
 
 @pytest.mark.django_db
-def test_delete_string(client, translator):
-    trstring = TrStringFactory(project=translator.lv.project)
-    client.force_login(translator)
+def test_delete_string(client, project_admin):
+    trstring = TrStringFactory(project=project_admin.lv.project)
+
+    client.force_login(project_admin)
     resp = client.post("/eo/vue/delete-string/", **_json({"trstring_id": trstring.pk}))
 
     assert resp.status_code == HTTPStatus.OK
@@ -278,16 +254,18 @@ def test_save_translation_new(client, translator):
 @pytest.mark.django_db
 def test_save_translation_edit(client, translator):
     project = translator.lv.project
-    trstring = TrStringFactory(project=translator.lv.project)
-    trstringtext = TrStringTextFactory(
-        trstring=trstring, language=project.source_language, text="x"
-    )
+    language = project.source_language
+    lv = project.languageversion_set.get(language=language)
+    lv.translators.add(translator)
+    trstring = TrStringFactory(project=project)
+    text = TrStringTextFactory(trstring=trstring, language=language, text="x")
+
     client.force_login(translator)
     resp = client.post(
         "/eo/vue/save-translation/",
         **_json(
             {
-                "language": project.source_language.code,
+                "language": language.code,
                 "trstring_id": trstring.pk,
                 "pluralized": False,
                 "context": "ctx",
@@ -306,8 +284,8 @@ def test_save_translation_edit(client, translator):
         "path": "ui",
         "context": trstring.context,
         "original_text": {
-            "id": trstringtext.pk,
-            "language": project.source_language.to_dict(),
+            "id": text.pk,
+            "language": language.to_dict(),
             "pluralized": False,
             "raw_text": {"1": "redaktite"},
             "text": {"1": "<p>redaktite</p>"},
@@ -317,8 +295,8 @@ def test_save_translation_edit(client, translator):
             "translated_by": user_dict(translator),
         },
         "translated_text": {
-            "id": trstringtext.pk,
-            "language": project.source_language.to_dict(),
+            "id": text.pk,
+            "language": language.to_dict(),
             "pluralized": False,
             "raw_text": {"1": "redaktite"},
             "text": {"1": "<p>redaktite</p>"},
@@ -328,9 +306,7 @@ def test_save_translation_edit(client, translator):
             "translated_by": user_dict(translator),
         },
         "state": 1,
-        "translated_languages": {
-            project.source_language.code: project.source_language.name
-        },
+        "translated_languages": {language.code: language.name},
     }
 
 
