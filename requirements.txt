@@ -9,7 +9,9 @@ attrs==26.1.0
     #   jsonschema
     #   referencing
 certifi==2026.5.20
-    # via requests
+    # via
+    #   requests
+    #   sentry-sdk
 charset-normalizer==3.4.7
     # via requests
 click==8.4.1
@@ -35,6 +37,7 @@ django==4.2.30
     #   djangorestframework
     #   drf-spectacular
     #   drf-standardized-errors
+    #   sentry-sdk
     #   tradukejo
 django-anymail==11.1
     # via tradukejo
@@ -136,6 +139,8 @@ rpds-py==2026.5.1
     #   jsonschema
     #   referencing
 ruff==0.15.17
+sentry-sdk==2.64.0
+    # via tradukejo
 setuptools==82.0.1
     # via astroid
 six==1.17.0
@@ -165,6 +170,7 @@ urllib3==2.7.0
     # via
     #   django-anymail
     #   requests
+    #   sentry-sdk
 whitenoise==6.7.0
     # via tradukejo
 wrapt==1.12.1

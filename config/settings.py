@@ -1,5 +1,4 @@
 import os
-import sys
 from pathlib import Path
 
 import pymysql
@@ -7,10 +6,12 @@ from decouple import Csv, config
 from django.contrib.messages import constants as messages
 
 from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
+from .error_tracking import setup_bugsink
+from .utils import Environment
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
-TESTING = "test" in "".join(sys.argv)
+ENVIRONMENT = Environment.init(config, DEBUG)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +41,7 @@ if config("MARIADB_DATABASE", default=False):
             "PORT": config("MARIADB_PORT", default=3306, cast=int),
         }
     }
-    if TESTING:
+    if ENVIRONMENT.testing:
         DATABASES["default"]["HOST"] = "127.0.0.1"
 
     # Fake PyMySQL's version and install as MySQLdb
@@ -159,8 +160,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MAX_LOADED_STRINGS = 30
 
-COMPRESS_ENABLED = config("COMPRESS_ENABLED", default=not (DEBUG or TESTING))
-COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=not (DEBUG or TESTING))
+COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=ENVIRONMENT.deployed)
 LIBSASS_OUTPUT_STYLE = config(
     "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
 )

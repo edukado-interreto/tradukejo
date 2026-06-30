@@ -57,6 +57,11 @@ WORKDIR /app
 # Stage 4: Production
 FROM python-base AS production
 
+ARG GIT_COMMIT
+ARG GIT_BRANCH
+
+ENV ENVIRONMENT="build" GIT_COMMIT=$GIT_COMMIT GIT_BRANCH=$GIT_BRANCH
+
 # Copy installed packages from the builder stage
 COPY --from=builder-base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=builder-base /usr/local/bin /usr/local/bin
