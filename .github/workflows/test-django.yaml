@@ -35,8 +35,6 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        env:
-          TRADUKEJO_MARIADB_DATABASE: db
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -44,11 +42,11 @@ jobs:
 
       - name: Run tests
         env:
-          SECRET_KEY: secret_key
-          MARIADB_ROOT_PASSWORD: rootpass
-          MARIADB_DATABASE: db
-          MARIADB_USER: testuser
-          MARIADB_PASSWORD: testpass
+          TRADUKEJO_SECRET_KEY: secret_key
+          TRADUKEJO_MARIADB_ROOT_PASSWORD: rootpass
+          TRADUKEJO_MARIADB_DATABASE: db
+          TRADUKEJO_MARIADB_USER: testuser
+          TRADUKEJO_MARIADB_PASSWORD: testpass
         run: |
           pytest -v --cov=. --cov-report term-missing:skip-covered
 
