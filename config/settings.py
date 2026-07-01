@@ -2,21 +2,29 @@ import os
 from pathlib import Path
 
 import pymysql
-from decouple import Csv, config
 from django.contrib.messages import constants as messages
+from toml_decouple import config
 
 from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 from .error_tracking import setup_bugsink
 from .utils import Environment
 
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", default=False, cast=bool)
+SECRET_KEY = config("SECRET_KEY", "NESEKURA")
+DEBUG = config("DEBUG", False)
 ENVIRONMENT = Environment.init(config, DEBUG)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="", cast=Csv())
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="", cast=Csv())
+HOSTNAME = config("HOSTNAME", "127.0.0.1")
+HOST = config("HOST", "0.0.0.0")
+PORT = config("PORT", 8000)
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    list({HOSTNAME, "django", "localhost", "127.0.0.1", "0.0.0.0"}),
+)
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS", [f"https://{h}" for h in ALLOWED_HOSTS]
+)
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="tradukejo@ikso.net")
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
@@ -24,21 +32,20 @@ EMAIL_BACKEND = config(
 
 if "emaillabs" in EMAIL_BACKEND:
     ANYMAIL = {
-        "EMAILLABS_SMTP_ACCOUNT": config("EMAILLABS_SMTP_ACCOUNT"),
-        "EMAILLABS_APP_KEY": config("EMAILLABS_APP_KEY"),
-        "EMAILLABS_SECRET_KEY": config("EMAILLABS_SECRET_KEY"),
+        "EMAILLABS_SMTP_ACCOUNT": config("EMAILLABS_SMTP_ACCOUNT", "NONE"),
+        "EMAILLABS_APP_KEY": config("EMAILLABS_APP_KEY", "NONE"),
+        "EMAILLABS_SECRET_KEY": config("EMAILLABS_SECRET_KEY", "NONE"),
     }
-
-if config("MARIADB_DATABASE", default=False):
+if "MARIADB_DATABASE" in config:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": config("MARIADB_DATABASE", default="tradukejo"),
-            "USER": config("MARIADB_USER"),
-            "PASSWORD": config("MARIADB_PASSWORD"),
+            "NAME": config("MARIADB_DATABASE", "tradukejo"),
+            "USER": config("MARIADB_USER", "ikso"),
+            "PASSWORD": config("MARIADB_PASSWORD", "NONE"),
             # Name of the service in Docker Compose:
-            "HOST": config("MARIADB_HOST", default="mariadb"),
-            "PORT": config("MARIADB_PORT", default=3306, cast=int),
+            "HOST": config("MARIADB_HOST", "mariadb"),
+            "PORT": config("MARIADB_PORT", 3306),
         }
     }
     if ENVIRONMENT.testing:
@@ -108,7 +115,7 @@ AUTH_USER_MODEL = "users.User"
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGES = (
+LANGUAGES = [
     ("ca", "Català"),
     ("cs", "Česky"),
     ("en", "English"),
@@ -121,7 +128,7 @@ LANGUAGES = (
     ("pl", "Polski"),
     ("pt", "Português"),
     ("sk", "Slovenčina"),
-)
+]
 
 LANGUAGE_CODE = "eo"
 
@@ -160,7 +167,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MAX_LOADED_STRINGS = 30
 
-COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", default=ENVIRONMENT.deployed)
+COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", ENVIRONMENT.deployed)
 LIBSASS_OUTPUT_STYLE = config(
     "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
 )
@@ -193,7 +200,7 @@ LOGGING = {
     },
 }
 
-GIT_COMMIT = config("GIT_COMMIT", default="")
+GIT_COMMIT = config("GIT_COMMIT", "")
 
 DEEPL_URL = "https://api-free.deepl.com/v2"
 

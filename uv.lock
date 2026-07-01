@@ -750,15 +750,6 @@ wheels = [
 ]
 
 [[package]]
-name = "python-decouple"
-version = "3.8"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e1/97/373dcd5844ec0ea5893e13c39a2c67e7537987ad8de3842fe078db4582fa/python-decouple-3.8.tar.gz", hash = "sha256:ba6e2657d4f376ecc46f77a3a615e058d93ba5e465c01bbe57289bfb7cce680f", size = 9612, upload-time = "2023-03-01T19:38:38.143Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/d4/9193206c4563ec771faf2ccf54815ca7918529fe81f6adb22ee6d0e06622/python_decouple-3.8-py3-none-any.whl", hash = "sha256:d0d45340815b25f4de59c974b855bb38d03151d81b037d9e3f463b0c9f8cbd66", size = 9947, upload-time = "2023-03-01T19:38:36.015Z" },
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1061,6 +1052,15 @@ wheels = [
 ]
 
 [[package]]
+name = "toml-decouple"
+version = "0.11.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/30/b8/26ad433a6af42ca66ccd648bc5cce2a06708c41f4a976b59f103058f59a5/toml_decouple-0.11.3.tar.gz", hash = "sha256:15e008c33db45a6274e0a8f8b07013f3222dcccb97ac2889f78c733bb5309c76", size = 6067, upload-time = "2026-03-22T03:08:41.881Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/23/44/bffc936f345ecd90b043549a024e1d7064a1328b8be813975e345d265fd3/toml_decouple-0.11.3-py3-none-any.whl", hash = "sha256:dffe7e8c26d397269815bfcb4ddc17603d027a35b306828f36e91961eb8bf88d", size = 7753, upload-time = "2026-03-22T03:08:40.635Z" },
+]
+
+[[package]]
 name = "tradukejo"
 version = "0.1.0"
 source = { virtual = "." }
@@ -1080,9 +1080,9 @@ dependencies = [
     { name = "polib" },
     { name = "pylint" },
     { name = "pymysql" },
-    { name = "python-decouple" },
     { name = "sentry-sdk", extra = ["django"] },
     { name = "sqlparse" },
+    { name = "toml-decouple" },
     { name = "whitenoise" },
     { name = "wrapt" },
 ]
@@ -1120,9 +1120,9 @@ requires-dist = [
     { name = "polib", specifier = "==1.1.1" },
     { name = "pylint", specifier = ">=2.9.6" },
     { name = "pymysql", specifier = ">=1.1.2" },
-    { name = "python-decouple", specifier = "==3.8" },
     { name = "sentry-sdk", extras = ["django"], specifier = ">=2.64.0" },
     { name = "sqlparse", specifier = "==0.4.1" },
+    { name = "toml-decouple", specifier = ">=0.11.3" },
     { name = "whitenoise", specifier = "==6.7.0" },
     { name = "wrapt", specifier = "==1.12.1" },
 ]
