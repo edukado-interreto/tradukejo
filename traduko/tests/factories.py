@@ -1,9 +1,7 @@
 import factory
-from django.contrib.auth import get_user_model
 from factory.django import DjangoModelFactory
 from faker import Faker
 
-from traduko.models import Language
 from users.tests.factories import UserFactory
 
 fake = Faker()
@@ -16,10 +14,10 @@ class LanguageFactory(DjangoModelFactory):
 
     class Meta:
         model = "traduko.Language"
-        django_get_or_create = ("name",)
+        django_get_or_create = ("code",)
 
-    name = factory.Faker("language_name")
     code = factory.Faker("pystr", max_chars=8)
+    name = factory.LazyAttribute(lambda o: f"{fake.language_name()} ({o.code})")
     plural_forms = "nplurals=2; plural=(n == 1 ? 0 : 1);"
 
 
@@ -32,7 +30,7 @@ class ProjectFactory(DjangoModelFactory):
         model = "traduko.Project"
         skip_postgeneration_save = True
 
-    name = factory.Faker("company")
+    name = factory.LazyFunction(lambda: f"{fake.last_name()} {fake.pyint()}")
     url = factory.Faker("url")
     source_language = factory.SubFactory(LanguageFactory)
     image = factory.django.ImageField(
@@ -52,10 +50,7 @@ class ProjectFactory(DjangoModelFactory):
         if extracted:
             for lang in extracted:
                 self.needed_languages.add(lang)
-        else:
-            # Optionally attach up to 5 random languages
-            langs = Language.objects.order_by("?")[: fake.random_int(min=1, max=5)]
-            self.needed_languages.set(langs)
+                self.save()
 
     @factory.post_generation
     def admins(self, create, extracted, **kwargs):
@@ -64,11 +59,7 @@ class ProjectFactory(DjangoModelFactory):
         if extracted:
             for admin in extracted:
                 self.admins.add(admin)
-        else:
-            # Optionally attach up to 3 random users
-            User = get_user_model()
-            users = User.objects.order_by("?")[: fake.random_int(min=1, max=3)]
-            self.admins.set(users)
+                self.save()
 
 
 class LanguageVersionFactory(DjangoModelFactory):
@@ -76,6 +67,7 @@ class LanguageVersionFactory(DjangoModelFactory):
 
     class Meta:
         model = "traduko.LanguageVersion"
+        skip_postgeneration_save = True
 
     project = factory.SubFactory(ProjectFactory)
     language = factory.SubFactory(LanguageFactory)
@@ -88,6 +80,7 @@ class LanguageVersionFactory(DjangoModelFactory):
 
         # Add the iterable of translators using bulk addition
         self.translators.add(*extracted)
+        self.save()
 
 
 class TranslatorRequestFactory(DjangoModelFactory):

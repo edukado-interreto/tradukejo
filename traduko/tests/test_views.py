@@ -1,5 +1,4 @@
 import json
-from compressor.base import Compressor
 from http import HTTPStatus
 from unittest.mock import patch
 
@@ -30,18 +29,16 @@ def test_projects_visible_to_anonymous(client):
 
 
 def test_projects_admin_sees_hidden(client, project_admin):
-    hidden = ProjectFactory(visible=False)
-    project_admin.lv.project.admins.add(project_admin)
+    hidden = ProjectFactory(visible=False, admins=[project_admin])
 
     client.force_login(project_admin)
     resp = client.get("/eo/")
 
-    assert hidden in list(resp.context["projects"])
+    assert set(resp.context["projects"]) == {hidden, project_admin.lv.project}
 
 
 def test_projectpage_hidden_for_non_admin(client, translator):
-    project = ProjectFactory(visible=False, admins=[])
-    project.admins.clear()
+    project = ProjectFactory(visible=False)
 
     client.force_login(translator)
     resp = client.get(f"/eo/project/{project.pk}/")
