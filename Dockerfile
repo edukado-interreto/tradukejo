@@ -60,7 +60,9 @@ FROM python-base AS production
 ARG GIT_COMMIT
 ARG GIT_BRANCH
 
-ENV ENVIRONMENT="build" GIT_COMMIT=$GIT_COMMIT GIT_BRANCH=$GIT_BRANCH
+ENV TRADUKEJO_ENVIRONMENT="build" \
+  GIT_COMMIT=$GIT_COMMIT \
+  GIT_BRANCH=$GIT_BRANCH
 
 # Copy installed packages from the builder stage
 COPY --from=builder-base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
@@ -74,4 +76,4 @@ COPY --chown=1030:33 ./ /app
 # Set working directory
 WORKDIR /app
 
-RUN SECRET_KEY=_ ./manage.py compilemessages -v0
+RUN TRADUKEJO_SECRET_KEY=_ ./manage.py compilemessages -v0
