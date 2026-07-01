@@ -1,13 +1,17 @@
 import os
+from pprint import pp
 from pathlib import Path
 
 import pymysql
 from django.contrib.messages import constants as messages
-from toml_decouple import config
+from toml_decouple import config, TomlDecouple
 
 from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 from .error_tracking import setup_bugsink
 from .utils import Environment
+
+td = TomlDecouple()
+pp(td.configuration)
 
 SECRET_KEY = config("SECRET_KEY", "NESEKURA")
 DEBUG = config("DEBUG", False)
@@ -36,7 +40,8 @@ if "emaillabs" in EMAIL_BACKEND:
         "EMAILLABS_APP_KEY": config("EMAILLABS_APP_KEY", "NONE"),
         "EMAILLABS_SECRET_KEY": config("EMAILLABS_SECRET_KEY", "NONE"),
     }
-if "MARIADB_DATABASE" in config:
+pp(f'"MARIADB_DATABASE" in config: {"MARIADB_DATABASE" in config}')
+if True:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
