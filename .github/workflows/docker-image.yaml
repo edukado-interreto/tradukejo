@@ -33,14 +33,29 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate Commit Hash Tag
+        id: commit_tag_gen
+        run: |
+          echo "SHORT_COMMIT_HASH_TAG=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "COMMIT_HASH_TAG=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Date Tag
+        id: date_tag_gen
+        run: |
+          echo "DATE_TAG=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
+
       - name: Build and push Docker image
         id: docker-build
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/django:latest
           build-args: |
             GIT_COMMIT=${{ github.sha }}
             GIT_BRANCH=${{ github.ref_name }}
+          tags: |
+            ghcr.io/${{ github.repository }}/django:latest
+            ghcr.io/${{ github.repository }}/django:${{ steps.date_tag_gen.outputs.DATE_TAG }}
+            ghcr.io/${{ github.repository }}/django:${{ steps.commit_tag_gen.outputs.COMMIT_HASH_TAG }}
+            ghcr.io/${{ github.repository }}/django:${{ steps.commit_tag_gen.outputs.SHORT_COMMIT_HASH_TAG }}
 

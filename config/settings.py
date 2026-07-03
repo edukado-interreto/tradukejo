@@ -1,17 +1,14 @@
 import os
-from pprint import pp
 from pathlib import Path
 
 import pymysql
 from django.contrib.messages import constants as messages
-from toml_decouple import config, TomlDecouple
+from toml_decouple import config
+from dj_database_url import parse as db_url_parse
 
 from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 from .error_tracking import setup_bugsink
 from .utils import Environment
-
-td = TomlDecouple()
-pp(td.configuration)
 
 SECRET_KEY = config("SECRET_KEY", "NESEKURA")
 DEBUG = config("DEBUG", False)
@@ -40,24 +37,21 @@ if "emaillabs" in EMAIL_BACKEND:
         "EMAILLABS_APP_KEY": config("EMAILLABS_APP_KEY", "NONE"),
         "EMAILLABS_SECRET_KEY": config("EMAILLABS_SECRET_KEY", "NONE"),
     }
-pp(f'"MARIADB_DATABASE" in config: {"MARIADB_DATABASE" in config}')
-if True:
+
+if "DATABASE_URL" in config:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": config("MARIADB_DATABASE", "tradukejo"),
-            "USER": config("MARIADB_USER", "ikso"),
-            "PASSWORD": config("MARIADB_PASSWORD", "NONE"),
-            # Name of the service in Docker Compose:
-            "HOST": config("MARIADB_HOST", "mariadb"),
-            "PORT": config("MARIADB_PORT", 3306),
+            **config("DATABASE_URL", to=db_url_parse),
+            "PASSWORD": config.MARIADB_PASSWORD,
         }
     }
-    if ENVIRONMENT.testing:
-        DATABASES["default"]["HOST"] = "127.0.0.1"
 
+if "mysql" in config("DATABASE_URL", ""):
     # Fake PyMySQL's version and install as MySQLdb
     pymysql.install_as_MySQLdb()
+
+if ENVIRONMENT.testing:
+    DATABASES["default"]["HOST"] = "127.0.0.1"
 
 INSTALLED_APPS = [
     "traduko.apps.TradukoConfig",

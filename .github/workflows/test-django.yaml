@@ -43,10 +43,8 @@ jobs:
       - name: Run tests
         env:
           TRADUKEJO_SECRET_KEY: secret_key
-          TRADUKEJO_MARIADB_ROOT_PASSWORD: rootpass
-          TRADUKEJO_MARIADB_DATABASE: db
-          TRADUKEJO_MARIADB_USER: testuser
           TRADUKEJO_MARIADB_PASSWORD: testpass
+          TRADUKEJO_DATABASE_URL: mysql://testuser:_@mariadb:3306/db
         run: |
           pytest -v --cov=. --cov-report term-missing:skip-covered
 

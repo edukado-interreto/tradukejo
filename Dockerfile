@@ -59,10 +59,11 @@ FROM python-base AS production
 
 ARG GIT_COMMIT
 ARG GIT_BRANCH
+ARG TRADUKEJO_ENVIRONMENT=build
+ARG TRADUKEJO_SECRET_KEY=_ 
+ARG TRADUKEJO_COMPRESS_OFFLINE=true
 
-ENV TRADUKEJO_ENVIRONMENT="build" \
-  GIT_COMMIT=$GIT_COMMIT \
-  GIT_BRANCH=$GIT_BRANCH
+ENV TRADUKEJO_COMMIT_HASH=$GIT_COMMIT TRADUKEJO_GIT_BRANCH=$GIT_BRANCH
 
 # Copy installed packages from the builder stage
 COPY --from=builder-base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
@@ -76,4 +77,6 @@ COPY --chown=1030:33 ./ /app
 # Set working directory
 WORKDIR /app
 
-RUN TRADUKEJO_SECRET_KEY=_ ./manage.py compilemessages -v0
+RUN ./manage.py compilemessages -v0 \
+ && ./manage.py compress \
+ && ./manage.py collectstatic --noinput 
