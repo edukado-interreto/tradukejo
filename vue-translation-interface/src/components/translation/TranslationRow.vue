@@ -1,111 +1,104 @@
+<script setup lang="ts">
+import axios from "axios"
+import { useGlobals } from "@/composables/useGlobals"
+import { useTranslation } from "@/composables/useTranslation"
+import { useStore } from "@/store"
+
+const props = defineProps<{ string: TrString }>()
+
+const store = useStore()
+const {
+  vueTranslationInterface: { projectLanguage },
+  globals,
+} = useGlobals()
+const rowRef = useTemplateRef<HTMLElement>("row")
+
+const translationIsBeingEdited = ref(false)
+const languageFromLoading = ref(false)
+const currentOriginalText = ref(props.string.original_text)
+
+const { chosenStringId } = useTranslation()
+const isSelected = computed(() => chosenStringId.value === props.string.id)
+
+const stringToShow = computed(() => ({
+  ...props.string,
+  original_text: currentOriginalText.value,
+}))
+
+const translationRowClasses = computed(() => ({
+  translated: props.string.state === globals.TRANSLATION_STATE_TRANSLATED,
+  outdated: props.string.state === globals.TRANSLATION_STATE_OUTDATED,
+  untranslated: props.string.state === globals.TRANSLATION_STATE_UNTRANSLATED,
+  selected: isSelected.value,
+}))
+
+const rowAlignClasses = computed(() => ({
+  "d-flex":
+    props.string.state === globals.TRANSLATION_STATE_UNTRANSLATED &&
+    !translationIsBeingEdited.value,
+  "align-items-center":
+    props.string.state === globals.TRANSLATION_STATE_UNTRANSLATED &&
+    !translationIsBeingEdited.value,
+}))
+
+const loadLanguageFrom = async (code: string) => {
+  if (code === projectLanguage) {
+    currentOriginalText.value = props.string.original_text
+  } else if (code === store.currentLanguage?.code) {
+    currentOriginalText.value = props.string.translated_text
+  } else {
+    languageFromLoading.value = true
+    try {
+      const response = await axios.post("/vue/get-string-translation/", {
+        trstring_id: props.string.id,
+        language: code,
+      })
+      currentOriginalText.value = response.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      languageFromLoading.value = false
+    }
+  }
+}
+
+const setTranslationIsBeingEdited = (status: boolean) => {
+  translationIsBeingEdited.value = status
+  if (store.currentLanguage?.id === currentOriginalText.value?.language?.id) {
+    currentOriginalText.value = props.string.original_text
+  }
+}
+
+provide("loadLanguageFrom", loadLanguageFrom)
+provide("stringId", stringToShow.value.id)
+provide("setTranslationIsBeingEdited", setTranslationIsBeingEdited)
+provide(
+  "translationIsBeingEdited",
+  computed(() => translationIsBeingEdited.value),
+)
+provide("rowIsSelected", isSelected.value)
+
+onMounted(() => {
+  if (isSelected.value && rowRef.value) {
+    rowRef.value.scrollIntoView({ behavior: "smooth" })
+  }
+})
+</script>
+
 <template>
-  <article class="translation-row" :class="translationRowClasses" :id="string.id" ref="row">
-    <translation-row-header :string="stringToShow"></translation-row-header>
+  <article class="translation-row" :class="translationRowClasses" :id="String(string.id)" ref="row">
+    <TranslationRowHeader :string="stringToShow" />
     <div class="row mt-1" :class="rowAlignClasses">
       <text-from
         v-if="!languageFromLoading"
         :stringtext="currentOriginalText"
         :context="string.context"
       ></text-from>
-      <loading-spinner v-else small></loading-spinner>
-      <text-to :string="stringToShow"></text-to>
+      <LoadingSpinner v-else small />
+      <TextTo :string="stringToShow" />
     </div>
   </article>
 </template>
-
-<script>
-import TranslationRowHeader from "./TranslationRowHeader";
-import TextFrom from "./translatingFrom/TextFrom";
-import TextTo from "./translatingTo/TextTo";
-import axios from 'axios';
-import { computed } from 'vue';
-
-export default {
-  components: { TranslationRowHeader, TextFrom, TextTo },
-  props: ["string"],
-  data() {
-    return {
-      translationIsBeingEdited: false,
-      languageFromLoading: false,
-      currentOriginalText: this.string.original_text,
-    };
-  },
-  computed: {
-    stringToShow() {
-      return {
-        ...this.string,
-        original_text: this.currentOriginalText,
-      };
-    },
-    translationRowClasses() {
-      return {
-        translated:
-          this.string.state === this.globals.TRANSLATION_STATE_TRANSLATED,
-        outdated: this.string.state === this.globals.TRANSLATION_STATE_OUTDATED,
-        untranslated:
-          this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED,
-        selected: this.isSelected
-      };
-    },
-    rowAlignClasses() {
-      return {
-        "d-flex":
-          this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED &&
-          !this.translationIsBeingEdited,
-        "align-items-center":
-          this.string.state === this.globals.TRANSLATION_STATE_UNTRANSLATED &&
-          !this.translationIsBeingEdited,
-      };
-    },
-    isSelected() {
-      return this.chosenStringId === this.string.id;
-    }
-  },
-  methods: {
-    async loadLanguageFrom(code) {
-      if (code === this.projectLanguage) {
-        this.currentOriginalText = this.string.original_text;
-      } else if (code === this.currentLanguage.code) {
-        this.currentOriginalText = this.string.translated_text;
-      } else {
-        this.languageFromLoading = true;
-        await axios.post("/vue/get-string-translation/", {
-          trstring_id: this.string.id,
-          language: code,
-        })
-          .then((response) => {
-            this.currentOriginalText = response.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        this.languageFromLoading = false;
-      }
-    },
-    setTranslationIsBeingEdited(status) {
-      this.translationIsBeingEdited = status;
-
-      if (this.currentLanguage.id === this.currentOriginalText.language.id) {
-        this.currentOriginalText = this.string.original_text; // Update original if it is being modified
-      }
-    },
-  },
-  provide() {
-    return {
-      loadLanguageFrom: this.loadLanguageFrom,
-      stringId: this.stringToShow.id,
-      setTranslationIsBeingEdited: this.setTranslationIsBeingEdited,
-      translationIsBeingEdited: computed(() => this.translationIsBeingEdited),
-      rowIsSelected: this.isSelected,
-    };
-  },
-  mounted() {
-    if (this.isSelected) {
-      this.$refs.row.scrollIntoView({behavior: 'smooth'})
-    }
-  }
-};
-</script>
 
 <style lang="scss">
 .translation-row {

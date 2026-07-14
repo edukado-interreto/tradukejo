@@ -1,14 +1,49 @@
+<script setup lang="ts">
+import { encode } from "html-entities"
+import { useI18n } from "vue-i18n"
+import { useGlobals } from "@/composables/useGlobals"
+
+const { t } = useI18n()
+const { vueTranslationInterface: session } = useGlobals()
+
+const { comment, language } = defineProps<{ comment: TranslationComment; language: Language }>()
+
+const deleteComment = inject("deleteComment") as (id: number) => void
+
+const beingDeleted = ref(false)
+
+const canComment = computed(() => comment.author?.id === session.userId || session.isAdmin)
+
+const URL_REGEX = /(((https?:\/\/)|(www\.))[^\s]+)/g
+const ensure_proto = (url: string) => (url.match("^https?://") ? url : `https://${url}`)
+const as_link = (url: string) =>
+  `<a href="${ensure_proto(url)}" target="_blank" rel="noopener noreferrer">${url}</a>`
+
+const formattedComment = computed(() => encode(comment.text).replace(URL_REGEX, as_link))
+
+const deleteThis = () => {
+  if (confirm(t("comments.delete_confirm"))) {
+    beingDeleted.value = true
+    deleteComment(comment.id)
+  }
+}
+</script>
+
 <template>
   <article>
-    <loading-button
+    <LoadingButton
       v-if="canComment"
       class="btn btn-sm btn-danger float-right mb-1"
       @click="deleteThis"
       :loading="beingDeleted"
-      >
-      {{ $t('delete') }}
-    </loading-button>
-    <blockquote :lang="language.code" :dir="language.direction" v-html="formattedComment"></blockquote>
+    >
+      {{ $t("delete") }}
+    </LoadingButton>
+    <blockquote
+      :lang="language.code"
+      :dir="language.direction"
+      v-html="formattedComment"
+    ></blockquote>
 
     <hr class="my-2" style="clear: right" />
 
@@ -20,42 +55,8 @@
   </article>
 </template>
 
-<script>
-import escape from 'escape-html';
-
-export default {
-  inject: ['deleteComment'],
-  props: ["comment", "language"],
-  data() {
-    return {
-      beingDeleted: false
-    }
-  },
-  computed: {
-    canComment() {
-      return this.comment.author.id === this.userId || this.isAdmin;
-    },
-    formattedComment() {
-      let text = escape(this.comment.text);
-      text = text.replaceAll('\n', '<br>');
-      const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-      text = text.replace(urlRegex, function (url) {
-        let hyperlink = url;
-        if (!hyperlink.match('^https?://')) {
-          hyperlink = 'http://' + hyperlink;
-        }
-        return '<a href="' + hyperlink + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
-      });
-      return text;
-    }
-  },
-  methods: {
-    deleteThis() {
-      if (confirm(this.$t('comments.delete_confirm'))) {
-        this.beingDeleted = true;
-        this.deleteComment(this.comment.id);
-      }
-    }
-  }
-};
-</script>
+<style lang="scss" scoped>
+blockquote {
+  white-space: pre-line;
+}
+</style>

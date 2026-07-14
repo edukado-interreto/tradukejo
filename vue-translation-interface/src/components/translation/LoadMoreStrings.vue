@@ -1,28 +1,33 @@
-<template>
-  <div v-if="!loading" class="text-center">
-    <button class="btn btn-primary btn-lg" @click="loadMore">{{ $t('load_more') }}</button>
-  </div>
-  <loading-spinner v-else></loading-spinner>
-</template>
+<script setup lang="ts">
+import { useStore } from "@/store"
+import { useTranslation } from "@/composables/useTranslation"
+import LoadingSpinner from "@/components/ui/LoadingSpinner.vue"
 
-<script>
-export default {
-  data() {
-    return {
-      loading: false,
-    };
-  },
-  methods: {
-    async loadMore() {
-      this.loading = true;
-      await this.$store.dispatch("loadMore", {
-        dir: this.queryStringDir,
-        q: this.queryStringQ,
-        state: this.queryStringState,
-        sort: this.queryStringSort,
-      });
-      this.loading = false;
-    },
-  },
-};
+const store = useStore()
+const { queryStringDir, queryStringQ, queryStringState, queryStringSort } = useTranslation()
+
+const loading = ref(false)
+
+const loadMore = async () => {
+  loading.value = true
+  try {
+    await store.loadMore({
+      dir: queryStringDir.value,
+      q: queryStringQ.value,
+      state: queryStringState.value,
+      sort: queryStringSort.value,
+    })
+  } finally {
+    loading.value = false
+  }
+}
 </script>
+
+<template>
+  <LoadingSpinner v-if="loading" />
+  <div v-else class="text-center">
+    <button class="btn btn-primary btn-lg" @click="loadMore">
+      {{ $t("load_more") }}
+    </button>
+  </div>
+</template>

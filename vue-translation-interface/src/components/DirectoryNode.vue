@@ -1,153 +1,132 @@
+<script setup lang="ts">
+import { useTranslation } from "@/composables/useTranslation"
+
+type NodeData = {
+  children: Record<string, NodeData>
+  strings: { count: number; words: number }
+  strings_in_children: { count: number; words: number }
+}
+
+type Props = {
+  node: NodeData
+  nodeName?: string
+  first?: boolean
+  parentPath?: string
+}
+
+const props = withDefaults(defineProps<Props>(), { nodeName: "", parentPath: "" })
+
+const { translateLink, queryStringDir } = useTranslation()
+
+const open = ref(props.first)
+
+const name = computed(() => (props.first ? "navigation.all" : props.nodeName))
+
+const path = computed(() => {
+  return props.first || props.parentPath === ""
+    ? props.nodeName
+    : `${props.parentPath}/${props.nodeName}`
+})
+
+const hasChildren = computed(() => Object.keys(props.node.children).length > 0)
+
+const active = computed(() => {
+  return queryStringDir.value === path.value || (props.first && !queryStringDir.value)
+})
+
+const folderOpen = computed(() => (open.value && hasChildren.value) || active.value)
+
+const title = computed(() => (hasChildren.value ? "navigation.count_children" : "navigation.count"))
+
+const titleParams = computed(() => ({
+  strings: props.node.strings.count,
+  strings2: props.node.strings_in_children.count,
+  words: props.node.strings.words,
+  words2: props.node.strings_in_children.words,
+}))
+
+const toggle = () => {
+  open.value = !open.value
+}
+
+watch(active, (isNowActive) => {
+  if (isNowActive) open.value = true
+})
+
+onMounted(() => {
+  if (props.first || active.value || queryStringDir.value.startsWith(`${path.value}/`)) {
+    open.value = true
+  }
+})
+</script>
+
 <template>
-  <li :class="{first}">
-    <span v-if="hasChildren" @click="toggle" :class="{open}">
-      <i class="fas fa-angle-right"></i>
+  <li :class="{ first }">
+    <span v-if="hasChildren" @click="toggle" :class="{ open }">
+      <i class="fas fa-angle-right" />
     </span>
-    <span v-if="folderOpen" class="folder" :class="{'has-children': hasChildren}">
-      <i class="fas fa-folder-open mr-1"></i>
+
+    <span class="folder" :class="{ 'has-children': hasChildren, closed: !folderOpen }">
+      <i :class="['fas', folderOpen ? 'fa-folder-open mr-1' : 'fa-folder mr-1']" />
     </span>
-    <span v-else class="folder closed" :class="{'has-children': hasChildren}">
-      <i class="fas fa-folder mr-1"></i>
-    </span>
-    <router-link
+
+    <RouterLink
       :to="translateLink({ dir: path })"
-      :class="{active}"
-      :title="title"
-      >
-      {{ name }} ({{ node.strings.count + node.strings_in_children.count}})
-    </router-link>
-    <transition name="slide">
+      :class="{ active }"
+      :title="$t(title, titleParams)"
+    >
+      {{ first ? $t(name) : name }}
+      ({{ node.strings.count + node.strings_in_children.count }})
+    </RouterLink>
+
+    <Transition name="slide">
       <ul v-if="hasChildren && open">
-        <directory-node
-          v-for="(child, name) in node.children"
-          :key="name"
+        <DirectoryNode
+          v-for="(child, childName) in node.children"
+          :key="childName"
           :node="child"
-          :node-name="name"
+          :node-name="String(childName)"
           :parent-path="path"
-          ></directory-node>
+        />
       </ul>
-    </transition>
+    </Transition>
   </li>
 </template>
-
-<script>
-export default {
-  props: {
-    nodeName: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    node: {
-      type: Object,
-      required: true,
-    },
-    first: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    parentPath: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-  data() {
-    return {
-      open: this.first
-    }
-  },
-  computed: {
-    name() {
-      return this.first ? this.$t('navigation.all') : this.nodeName;
-    },
-    path() {
-      return (this.first || this.parentPath === '') ? this.nodeName : this.parentPath + '/' + this.nodeName;
-    },
-    hasChildren() {
-      return Object.keys(this.node.children).length > 0;
-    },
-    active() {
-      return this.queryStringDir === this.path || this.first && !this.queryStringDir;
-    },
-    folderOpen() {
-      return (this.open && this.hasChildren) || this.active;
-    },
-    title() {
-      if (this.hasChildren) {
-        return this.$t('navigation.count_children', {
-          strings: this.node.strings.count,
-          strings2: this.node.strings_in_children.count,
-          words: this.node.strings.words,
-          words2: this.node.strings_in_children.words
-        })
-      }
-      else {
-        return this.$t('navigation.count', {strings: this.node.strings.count, words: this.node.strings.words})
-      }
-    }
-  },
-  watch: {
-    active(newValue) {
-      if (newValue) {
-        this.open = true;
-      }
-    }
-  },
-  methods: {
-    toggle() {
-      this.open = !this.open;
-    },
-  },
-  created() {
-    if (this.first || this.queryStringDir === this.path || this.queryStringDir.startsWith(this.path + '/')) {
-      this.open = true;
-    }
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 ul {
   padding-left: 9px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  margin-left: 4px;
+  margin: 1px 0 1px 4px;
   list-style-type: none;
   border-left: 1px solid #999;
 }
 
 a {
   padding-left: 2px;
-
   &.active {
     font-weight: bold;
-    background: $link-color;
+    background: #007bff;
     color: white;
     padding: 2px 4px;
     margin: 1px 0;
     border-radius: 6px;
-    font-size: .9rem;
-
+    font-size: 0.9rem;
     &:hover {
-      background: $link-hover-color;
+      background: #0056b3;
       text-decoration: none;
     }
   }
 }
 
-li {
-  &.first > a::before {
-    display: none;
-  }
+li.first > a::before {
+  display: none;
 }
 
 .fa-angle-right {
   margin-right: 4px;
   position: relative;
   top: 1px;
-  transition: transform .2s;
+  transition: transform 0.2s;
   cursor: pointer;
 }
 
@@ -157,11 +136,9 @@ li {
 
 .folder {
   margin-left: 14px;
-
   &.closed {
     margin-right: 2px;
   }
-
   &.has-children {
     margin-left: 2px;
   }

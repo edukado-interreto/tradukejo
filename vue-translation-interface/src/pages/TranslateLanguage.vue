@@ -1,167 +1,151 @@
+<script setup lang="ts">
+import { useRoute, useRouter, onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router"
+import { useI18n } from "vue-i18n"
+import { useStore } from "@/store"
+import { useTranslation } from "@/composables/useTranslation"
+
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
+const { t } = useI18n()
+
+const {
+  queryStringDir,
+  queryStringQ,
+  queryStringState,
+  queryStringSort,
+  chosenStringId,
+  fetchDirectoriesTree,
+} = useTranslation()
+
+const isLoading = ref(false)
+const directoriesTreeLoadedOnce = ref(false)
+
+const dirLoading = computed(() => store.directoriesTreeLoading)
+const paramLang = computed(() => route.params.lang as string)
+
+const directories = computed(() => {
+  let currentDir = store.directoriesTree[""]
+  if (!currentDir) return {}
+
+  if (queryStringDir.value !== "") {
+    const segments = queryStringDir.value.split("/")
+    let notFound = false
+    segments.forEach((d) => {
+      if (currentDir?.children && d in currentDir.children) {
+        currentDir = currentDir.children[d]
+      } else {
+        notFound = true
+      }
+    })
+    if (notFound) return {}
+  }
+  return currentDir.children || {}
+})
+
+const noDirectories = computed(() => {
+  return (
+    !store.directoriesTreeLoading &&
+    Object.keys(store.directoriesTree[""]?.children || {}).length === 0
+  )
+})
+
+const fetchStrings = async () => {
+  isLoading.value = true
+  await store.fetchStrings({
+    dir: queryStringDir.value,
+    q: queryStringQ.value,
+    state: queryStringState.value,
+    sort: queryStringSort.value,
+    chosen_string: chosenStringId.value,
+  })
+  isLoading.value = false
+}
+
+const isAllowedToLeave = () => {
+  const saveButtons = document.querySelectorAll("#app .can-submit")
+  if (saveButtons.length > 0) {
+    return window.confirm(
+      "Vi havas nekonservitajn ŝanĝojn, ĉu vi certe volas eliri el ĉi tiu paĝo?",
+    )
+  }
+  return true
+}
+
+const handlerClose = (e: BeforeUnloadEvent) => {
+  if (!isAllowedToLeave()) e.preventDefault()
+}
+
+watch(paramLang, (code) => {
+  store.setLanguage(code)
+  fetchStrings()
+  fetchDirectoriesTree()
+})
+
+watch([queryStringState, queryStringQ], () => {
+  fetchStrings()
+  fetchDirectoriesTree()
+})
+
+watch([queryStringSort, queryStringDir], () => {
+  fetchStrings()
+})
+
+watch(dirLoading, (newVal) => {
+  if (!newVal) {
+    directoriesTreeLoadedOnce.value = true
+  }
+})
+
+// init
+store.setLanguage(paramLang.value)
+fetchStrings()
+fetchDirectoriesTree()
+
+onMounted(() => {
+  if (!store.currentLanguage) {
+    router.push({ name: "languageChoice" })
+  }
+  window.addEventListener("beforeunload", handlerClose)
+})
+
+onUnmounted(() => {
+  window.removeEventListener("beforeunload", handlerClose)
+})
+
+onBeforeRouteUpdate(isAllowedToLeave)
+onBeforeRouteLeave(isAllowedToLeave)
+</script>
+
 <template>
-  <filter-bar></filter-bar>
-  <navigation-bar></navigation-bar>
+  <filter-bar />
+  <navigation-bar />
 
   <div class="row">
-    <div class="col-12 col-lg-3 col-xl-2" v-if="!noDirectories">
+    <div v-if="!noDirectories" class="col-12 col-lg-3 col-xl-2">
       <div class="card mb-3">
         <div class="card-body">
-          <loading-spinner v-if="directoriesTreeLoading"></loading-spinner>
-          <directories-tree v-else :tree="directoriesTree"></directories-tree>
+          <loading-spinner v-if="store.directoriesTreeLoading" small />
+          <directories-tree v-else :tree="store.directoriesTree" />
         </div>
       </div>
     </div>
     <div class="col">
-      <directories-list
-        v-if="directoriesTreeLoadedOnce"
-        :directories="directories"
-      ></directories-list>
-      <loading-spinner v-if="isLoading"></loading-spinner>
-      <translation-zone v-else :strings="strings">
-      </translation-zone>
+      <directories-list v-if="directoriesTreeLoadedOnce" :directories="directories" />
+      <loading-spinner v-if="isLoading" />
+      <translation-zone v-else :strings="store.strings" />
+
       <div
-        v-if="strings.length === 0 && !isLoading && !directoriesTreeLoading && Object.keys(directories).length === 0"
+        v-if="
+          store.strings.length === 0 &&
+          !isLoading &&
+          !store.directoriesTreeLoading &&
+          Object.keys(directories).length === 0
+        "
         class="alert alert-info"
       >
-        {{ $t('translate.no_result') }}
+        {{ t("translate.no_result") }}
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import FilterBar from "../components/FilterBar";
-import NavigationBar from "../components/NavigationBar";
-import DirectoriesList from "../components/DirectoriesList";
-import DirectoriesTree from "../components/DirectoriesTree";
-import TranslationZone from "../components/translation/TranslationZone";
-
-export default {
-  components: {
-    FilterBar,
-    NavigationBar,
-    DirectoriesList,
-    DirectoriesTree,
-    TranslationZone,
-  },
-  data() {
-    return {
-      isLoading: false,
-      directoriesTreeLoadedOnce: false,
-    };
-  },
-  computed: {
-    paramLang() {
-      return this.$route.params.lang;
-    },
-    strings() {
-      return this.$store.getters.strings;
-    },
-    directoriesTree() {
-      return this.$store.getters.directoriesTree;
-    },
-    directories() {
-      let currentDir = this.directoriesTree[""];
-
-      if (this.queryStringDir != '') {
-        const directories = this.queryStringDir.split('/');
-        let notFound = false;
-        directories.forEach((d) => {
-          if (d in currentDir.children) {
-            currentDir = currentDir.children[d];
-          }
-          else {
-            notFound = true;
-          }
-        });
-        if (notFound) {
-          return {};
-        }
-      }
-
-      return currentDir.children;
-    },
-    directoriesTreeLoading() {
-      return this.$store.getters.directoriesTreeLoading;
-    },
-    noDirectories() {
-      return !this.directoriesTreeLoading && Object.keys(this.directoriesTree[""].children).length === 0;
-    }
-  },
-  watch: {
-    paramLang(newValue) {
-      this.setLanguage(newValue);
-      this.fetchStrings();
-      this.fetchDirectoriesTree();
-    },
-    queryStringState() {
-      this.fetchStrings();
-      this.fetchDirectoriesTree();
-    },
-    queryStringSort() {
-      this.fetchStrings();
-    },
-    queryStringDir() {
-      this.fetchStrings();
-    },
-    queryStringQ() {
-      this.fetchStrings();
-      this.fetchDirectoriesTree();
-    },
-    directoriesTreeLoading(newVal) {
-      if (!newVal) {
-        this.directoriesTreeLoadedOnce = true;
-      }
-    }
-  },
-  methods: {
-    setLanguage(code) {
-      this.$store.dispatch("setLanguage", code);
-      if (!this.currentLanguage) {
-        this.$router.push({ name: "languageChoice" });
-      }
-    },
-    async fetchStrings() {
-      this.isLoading = true;
-      await this.$store.dispatch("fetchStrings", {
-        dir: this.queryStringDir,
-        q: this.queryStringQ,
-        state: this.queryStringState,
-        sort: this.queryStringSort,
-        chosen_string: this.chosenStringId,
-      });
-      this.isLoading = false;
-    },
-    isAllowedToLeave() {
-      const saveButtons = document.querySelectorAll("#app .can-submit");
-      if (saveButtons.length > 0) {
-        return window.confirm(
-          "Vi havas nekonservitajn ŝanĝojn, ĉu vi certe volas eliri el ĉi tiu paĝo?"
-        );
-      }
-      return true;
-    },
-    handlerClose(e) {
-      if (!this.isAllowedToLeave()) {
-      console.log('ici');
-        e.preventDefault();
-        e.returnValue = "";
-        return;
-      }
-    },
-  },
-  created() {
-    this.setLanguage(this.paramLang);
-    this.fetchStrings();
-    this.fetchDirectoriesTree();
-
-    window.addEventListener("beforeunload", this.handlerClose);
-  },
-  beforeRouteUpdate() {
-    return this.isAllowedToLeave();
-  },
-  beforeRouteLeave() {
-    return this.isAllowedToLeave();
-  },
-};
-</script>
