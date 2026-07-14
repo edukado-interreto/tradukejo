@@ -1,10 +1,10 @@
 name: Docker Image Build and Push
 
 on:
-  workflow_run:
-    workflows: ["Test Django with MariaDB"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["Test Django with MariaDB"]
+  #   types:
+  #     - completed
     branches: [main, composition]
 
 jobs:
