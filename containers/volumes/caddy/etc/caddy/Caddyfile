@@ -1,0 +1,15 @@
+{$LOCAL_HOST} {
+	handle /static/vue-ui/* {
+		reverse_proxy vue:5173
+	}
+	handle {
+		reverse_proxy django:8000 {
+			header_up X-Real-IP {remote}
+		}
+	}
+}
+{$LOCAL_HOST}:24678 {
+	handle {
+		reverse_proxy vue:24678
+	}
+}

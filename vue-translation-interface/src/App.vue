@@ -1,17 +1,11 @@
 <template>
-  <router-view></router-view>
+  <RouterView />
 </template>
-
-<script>
-export default {
-  name: 'App',
-}
-</script>
 
 <style>
 .slide-enter-from,
 .slide-leave-to {
-  transform: scaleY(.7);
+  transform: scaleY(0.7);
   opacity: 0;
 }
 
@@ -24,7 +18,7 @@ export default {
 .slide-enter-active,
 .slide-leave-active,
 .slide-move {
-  transition: all .15s ease-out;
+  transition: all 0.15s ease-out;
   transform-origin: top;
 }
 
@@ -41,10 +35,10 @@ export default {
 }
 
 .jump-enter-active {
-  transition: all .2s cubic-bezier(.77,.06,.8,1.72);
+  transition: all 0.2s cubic-bezier(0.77, 0.06, 0.8, 1.72);
 }
 
 .jump-leave-active {
-  transition: all .2s ease-out;
+  transition: all 0.2s ease-out;
 }
 </style>

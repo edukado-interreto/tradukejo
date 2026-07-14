@@ -1,5 +1,11 @@
+<script setup lang="ts">
+import { useGlobals } from "@/composables/useGlobals.ts"
+
+const { availableLanguages } = useGlobals().vueTranslationInterface
+</script>
+
 <template>
-  <h3>{{ $t('choose') }}</h3>
+  <h3>{{ $t("choose") }}</h3>
   <div v-if="availableLanguages.length > 0" class="row">
     <div
       class="col-6 col-sm-4 col-md-3 col-lx-2 py-2 vue-language-selector"
@@ -8,9 +14,7 @@
       :lang="language.code"
       :dir="language.direction"
     >
-      <router-link
-        :to="{ name: 'translateLanguage', params: { lang: language.code } }"
-      >
+      <router-link :to="{ name: 'translateLanguage', params: { lang: language.code } }">
         {{ language.name }}
       </router-link>
     </div>

@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { useTranslation } from "@/composables/useTranslation"
+import { useGlobals } from "@/composables/useGlobals"
+import { useStore } from "@/store"
+
+const store = useStore()
+
+const { availableLanguages } = useGlobals().vueTranslationInterface
+const { queryStringDir, translateLink } = useTranslation()
+
+const path = computed<string[]>(() => queryStringDir.value.split("/"))
+const pathWithLinks = computed(() => {
+  return path.value.map((item, index) => ({
+    name: item,
+    path: path.value.slice(0, index + 1).join("/"),
+  }))
+})
+</script>
+
 <template>
   <nav aria-label="breadcrumb" class="my-4">
     <ol class="breadcrumb translation-path p-1">
@@ -11,77 +30,47 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            >{{ currentLanguage.name }}</a
+            >{{ store.currentLanguage?.name }}</a
           >
-          <div
-            class="dropdown-menu"
-            aria-labelledby="dropdownLanguageVersionButton"
-          >
-            <router-link
+          <div class="dropdown-menu" aria-labelledby="dropdownLanguageVersionButton">
+            <RouterLink
               v-for="language in availableLanguages"
-              :key="language"
+              :key="language.code"
               :to="translateLink({ lang: language.code })"
               class="dropdown-item"
-              >{{ language.name }}</router-link
+              >{{ language.name }}</RouterLink
             >
           </div>
         </span>
       </li>
 
       <li class="breadcrumb-item">
-        <router-link v-if="path.length > 0 && path[0] != ''" :to="translateLink({ dir: '' })"><i class="fas fa-home"></i></router-link>
+        <RouterLink v-if="path.length > 0 && path[0] != ''" :to="translateLink({ dir: '' })"
+          ><i class="fas fa-home"></i>
+        </RouterLink>
         <span v-else><i class="fas fa-home"></i></span>
       </li>
       <li
         v-for="(directory, index) in pathWithLinks"
         :key="index"
-        :aria-current="index === pathWithLinks.length - 1 ? 'page' : null"
+        :aria-current="index === pathWithLinks.length - 1 ? 'page' : undefined"
         class="breadcrumb-item"
-        >
-        <router-link
+      >
+        <RouterLink
           v-if="index < pathWithLinks.length - 1"
           :to="translateLink({ dir: directory.path })"
-          >
+        >
           {{ directory.name }}
-        </router-link>
+        </RouterLink>
         <template v-else>{{ directory.name }}</template>
       </li>
     </ol>
   </nav>
 </template>
 
-<script>
-export default {
-  computed: {
-    path() {
-      return this.queryStringDir.split('/');
-    },
-    pathWithLinks() {
-      let currentPath = '';
-      const items = [];
-      this.path.forEach((item) => {
-        if (currentPath === '') {
-          currentPath = item;
-        }
-        else {
-          currentPath += '/' + item;
-        }
-        items.push({
-          name: item,
-          path: currentPath
-        });
-      });
-      return items;
-    }
-  }
-};
-</script>
-
-
 <style lang="scss" scoped>
 .breadcrumb.translation-path {
   background: none;
   font-size: 1rem;
 }
-
 </style>

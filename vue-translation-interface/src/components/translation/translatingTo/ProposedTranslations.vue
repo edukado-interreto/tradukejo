@@ -1,15 +1,19 @@
+<script setup lang="ts">
+const props = defineProps<{
+  translations: string[]
+}>()
+</script>
+
 <template>
   <div>
-    <h5>{{ $t('translate.suggestions') }}</h5>
+    <h5>{{ $t("translate.suggestions") }}</h5>
     <ul>
       <li
         v-for="translation in translations"
         :key="translation"
-        @click="pickTranslation(translation)"
-        >
-        <span
-          v-for="pluralVersion in translation"
-          :key="pluralVersion">
+        @click="$emit('pickTranslation', translation)"
+      >
+        <span v-for="pluralVersion in translation" :key="pluralVersion">
           {{ pluralVersion }}
         </span>
       </li>
@@ -38,7 +42,7 @@ ul {
 }
 
 li {
-  transition: color .2s;
+  transition: color 0.2s;
 
   &:hover {
     color: #555;
@@ -50,14 +54,3 @@ span {
   display: block;
 }
 </style>
-
-<script>
-export default {
-  props: ['translations'],
-  methods: {
-    pickTranslation(text) {
-      this.$emit('pick-translation', text);
-    }
-  }
-}
-</script>

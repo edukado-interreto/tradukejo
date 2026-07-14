@@ -1,37 +1,121 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router"
+import { useStore } from "@/store"
+import { useTranslation } from "@/composables/useTranslation"
+import { useI18n } from "vue-i18n"
+
+import StringInfo from "@/components/translation/bottom/StringInfo.vue"
+import DisplayText from "@/components/translation/DisplayText.vue"
+import TranslateForm from "./TranslateForm.vue"
+
+const { string } = defineProps<{ string: TrString }>()
+
+const store = useStore()
+const router = useRouter()
+const { t } = useI18n()
+const { editMode, translateLink, fetchDirectoriesTree, queryStringState } = useTranslation()
+
+const editing = ref(false)
+const loading = ref(false)
+const error = ref<string | null>(null)
+const translateBtn = ref<HTMLButtonElement | null>(null)
+
+const STATE_FILTER_ALL = "all"
+
+const currentIndex = computed(() => store.indexOfString(string.id) + 1)
+
+const pluralized = computed(() => string.original_text.pluralized)
+
+const texts = computed(() => (string.translated_text ? string.translated_text.raw_text : {}))
+
+const specialTokens = computed<string[]>(() => {
+  const originalTexts = Object.values(string.original_text.text)
+  const tokens = originalTexts.flatMap((text) =>
+    Array.from(text.matchAll(/<code>([^<]*?)<\/code>/g), (m) => m[1]),
+  )
+  return [...new Set(tokens.filter((t): t is string => !!t))]
+})
+
+const setTranslationIsBeingEdited = inject<(status: boolean) => { value: boolean }>(
+  "setTranslationIsBeingEdited",
+)
+const showForm = () => {
+  editing.value = true
+  setTranslationIsBeingEdited?.(true)
+}
+
+const hideForm = () => {
+  editing.value = false
+  setTranslationIsBeingEdited?.(false)
+  nextTick(() => {
+    if (document.activeElement?.tagName !== "TEXTAREA") {
+      translateBtn.value?.focus()
+    }
+  })
+}
+
+const saveTranslation = async (data: TranslationData) => {
+  if (!editMode.value && specialTokens.value.length > 0) {
+    const unusedTokens = specialTokens.value.filter(
+      (token) => !data.text.some((t) => t.includes(token)),
+    )
+
+    if (unusedTokens.length > 0) {
+      const confirmMsg = t("translate.special_symbols", unusedTokens.join(", "))
+      const sure = confirm(confirmMsg)
+      if (!sure) return
+    }
+  }
+
+  loading.value = true
+  error.value = null
+  const oldPath = string.path
+
+  try {
+    await store.saveTranslation(data)
+    hideForm()
+
+    setTimeout(() => {
+      if (string.path !== oldPath) {
+        router.push(translateLink({ dir: string.path, params: { force: true } }))
+        fetchDirectoriesTree()
+      }
+    }, 200)
+  } catch (e: any) {
+    error.value = e.message
+  } finally {
+    if (queryStringState.value !== STATE_FILTER_ALL) {
+      fetchDirectoriesTree()
+    }
+    loading.value = false
+  }
+}
+</script>
+
 <template>
   <div class="col-md-6">
-    <display-text
-      v-if="string.translated_text && !editing"
+    <DisplayText
+      v-if="string.translated_text && !editing && store.currentLanguage"
       :texts="string.translated_text.text"
       :pluralized="string.translated_text.pluralized"
       :click-to-edit="true"
-      :language="currentLanguage"
+      :language="store.currentLanguage"
       @click="showForm"
-    ></display-text>
+    />
 
-    <div class="text-center" v-if="!editing" ref="buttonWrapper">
+    <div v-if="!editing" class="text-center">
       <button
-        v-if="string.translated_text"
+        ref="translateBtn"
         class="btn btn-secondary mb-2 mt-3"
         :tabindex="currentIndex"
         @click="showForm"
-        ref="translate"
       >
-        {{ $t('translate.edit') }}
-      </button>
-      <button
-        v-else
-        class="btn btn-secondary mb-3"
-        :tabindex="currentIndex"
-        @click="showForm"
-        ref="translate"
-      >
-        {{ $t('translate.translate') }}
+        {{ string.translated_text ? $t("translate.edit") : $t("translate.translate") }}
       </button>
     </div>
 
-    <transition name="slide">
-      <translate-form
+    <Transition name="slide">
+      <TranslateForm
         v-if="editing"
         :name="string.name"
         :path="string.path"
@@ -41,123 +125,14 @@
         :context="string.context"
         :error="error"
         @cancel="hideForm"
-        @save-translation="saveTranslation($event)"
-      ></translate-form>
-    </transition>
+        @save-translation="saveTranslation"
+      />
+    </Transition>
 
-    <string-info
+    <StringInfo
       v-if="string.translated_text"
       :stringtext="string.translated_text"
       :is-translation="true"
-    ></string-info>
+    />
   </div>
 </template>
-
-<script>
-import StringInfo from '../bottom/StringInfo';
-import DisplayText from "../DisplayText";
-import TranslateForm from "./TranslateForm";
-
-export default {
-  inject: ["setTranslationIsBeingEdited"],
-  props: ["string"],
-  components: { StringInfo, DisplayText, TranslateForm },
-  data() {
-    return {
-      editing: false,
-      loading: false,
-      error: null,
-    };
-  },
-  computed: {
-    currentIndex() {
-      return this.$store.getters.indexOfString(this.string.id) + 1;
-    },
-    pluralized() {
-      return this.string.original_text.pluralized;
-    },
-    texts() {
-      if (this.string.translated_text) {
-        return this.string.translated_text.raw_text;
-      } else {
-        return {};
-      }
-    },
-    specialTokens() { // Returns things in <code> tags in the original text
-      const tokens = [];
-      Object.values(this.string.original_text.text).forEach((text) => {
-        const codes = [...text.matchAll(/<code>([^<]*?)<\/code>/g)];
-        codes.forEach((code) => {
-          if (!tokens.includes(code[1])) {
-            tokens.push(code[1]);
-          }
-        });
-      });
-      return tokens;
-    }
-  },
-  methods: {
-    showForm() {
-      this.editing = true;
-      this.setTranslationIsBeingEdited(true);
-    },
-    hideForm() {
-      this.editing = false;
-      this.setTranslationIsBeingEdited(false);
-      this.$nextTick(() => {
-        if (document.activeElement.tagName !== 'TEXTAREA') {
-          this.$refs.translate.focus();
-        }
-      });
-    },
-    async saveTranslation(data) {
-      if (!this.editMode && this.specialTokens.length > 0) {
-        const unusedTokens = [];
-        this.specialTokens.forEach(token => {
-          let found = false;
-          data.text.forEach(t => {
-            if (t.includes(token)) {
-              found = true;
-            }
-          });
-          if (!found) {
-            unusedTokens.push(token);
-          }
-        });
-        if (unusedTokens.length > 0) {
-          const sure = confirm(this.$t('translate.special_symbols', {s: '\n\n' + unusedTokens.join('\n') + '\n\n'}));
-          if (!sure) {
-            return false;
-          }
-        }
-      }
-
-      this.loading = true;
-      this.error = null;
-      const oldPath = this.string.path;
-
-      await this.$store
-        .dispatch("saveTranslation", data)
-        .then(() => {
-          this.hideForm();
-
-          setTimeout(() => {
-            if (this.string.path != oldPath) {
-              this.$router.push(this.translateLink({ dir: this.string.path, params: { force: true } }));
-              this.fetchDirectoriesTree();
-              return;
-            }
-          }, 200); // Wait until end of transition
-        })
-        .catch((e) => {
-          this.error = e.message;
-        });
-      
-      if (this.queryStringState !== this.globals.STATE_FILTER_ALL) {
-        this.fetchDirectoriesTree();
-      }
-      this.loading = false;
-    },
-  },
-};
-</script>

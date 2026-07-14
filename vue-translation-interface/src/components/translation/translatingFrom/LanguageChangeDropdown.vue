@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const props = defineProps<{ string: TrString }>()
+
+const loadLanguageFrom = inject("loadLanguageFrom") as (code: string) => void
+</script>
+
 <template>
   <span class="dropdown">
     <a
@@ -25,10 +31,3 @@
     </div>
   </span>
 </template>
-
-<script>
-export default {
-  inject: ['loadLanguageFrom'],
-  props: ["string"],
-}
-</script>

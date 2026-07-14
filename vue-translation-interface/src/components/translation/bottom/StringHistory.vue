@@ -1,57 +1,42 @@
+<script setup lang="ts">
+const { history } = defineProps<{ history: TrStringTextHistory[] | null }>()
+
+const showDeleted = ref(true)
+
+const toggleDeletedText = () => {
+  showDeleted.value = !showDeleted.value
+}
+</script>
+
 <template>
   <div class="old-versions" :class="{ 'hide-deleted': !showDeleted }">
     <div class="text-center mt-3 mb-2">
       <button class="btn btn-secondary btn-sm" @click="toggleDeletedText">
-        {{ showDeleted ? $t('history.hide_deleted') : $t('history.show_deleted') }}
+        {{ showDeleted ? $t("history.hide_deleted") : $t("history.show_deleted") }}
       </button>
     </div>
-    <div
-      v-for="(version, index) in history"
-      :key="version.id"
-      class="old-version"
-    >
+    <div v-for="(version, index) in history" :key="version.id" class="old-version">
       <template v-if="version.pluralized">
         <template v-for="(text, example) in version.comparison" :key="example">
           <div class="plural-number-explanation">
-            {{ $t('translate.number', {n: example}) }}
+            {{ $t("translate.number", { n: example }) }}
           </div>
           <div v-html="text"></div>
         </template>
       </template>
-      <div
-        v-else
-        v-html="version.comparison[Object.keys(version.comparison)[0]]"
-      ></div>
+      <div v-else v-html="Object.values(version.comparison)[0]"></div>
 
       <hr class="my-2" />
 
       {{ version.create_date }}
-      {{ index === 0 ? $t('history.current') : "" }}
+      {{ index === 0 ? $t("history.current") : "" }}
       <template v-if="version.translated_by">
         –
-        <a :href="version.translated_by.profile_url">{{
-          version.translated_by.username
-        }}</a>
+        <a :href="version.translated_by.profile_url">{{ version.translated_by.username }}</a>
       </template>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: ["history"],
-  data() {
-    return {
-      showDeleted: true,
-    };
-  },
-  methods: {
-    toggleDeletedText() {
-      this.showDeleted = !this.showDeleted;
-    },
-  },
-};
-</script>
 
 <style lang="scss">
 .hide-deleted del {

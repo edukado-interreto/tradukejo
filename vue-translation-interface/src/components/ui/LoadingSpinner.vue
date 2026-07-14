@@ -1,33 +1,24 @@
-<template>
-  <div v-if="inline" class="lds-ellipsis" :class="{white: white, small: small}"><div></div><div></div><div></div><div></div></div>
-  <div v-else class="loader" :class="{small: small}"></div>
-</template>
-
-<script>
-export default {
-  props: {
-    small: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    inline: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    white: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
-}
+<script setup lang="ts">
+const props = defineProps<{
+  small?: boolean
+  inline?: boolean
+  white?: boolean
+}>()
 </script>
+
+<template>
+  <div v-if="inline" class="lds-ellipsis" :class="{ white: white, small: small }">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div v-else class="loader" :class="{ small: small }"></div>
+</template>
 
 <style scoped>
 .small {
-  transform: scale(.5);
+  transform: scale(0.5);
   margin: 2rem auto;
 }
 
@@ -48,7 +39,7 @@ export default {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #254E58;
+  background: #254e58;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis.white div {

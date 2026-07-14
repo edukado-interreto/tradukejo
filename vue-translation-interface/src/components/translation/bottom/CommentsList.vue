@@ -1,11 +1,44 @@
+<script setup lang="ts">
+const {
+  comments = [],
+  language,
+  loading,
+} = defineProps<{
+  comments: TranslationComment[] | null
+  language: Language
+  loading: boolean
+}>()
+
+const enteredComment = ref("")
+
+const canSubmit = computed(() => enteredComment.value != "")
+
+defineEmits<{
+  save: [comment: string]
+  deleteComment: [id: number]
+}>()
+
+watch(
+  () => loading,
+  (isLoading) => {
+    if (!isLoading) enteredComment.value = ""
+  },
+)
+</script>
+
 <template>
   <div class="comments">
-    <h5>{{ $t('comments.comments') }}</h5>
-    <transition-group name="slide">
-      <string-comment v-for="comment in comments" :key="comment.id" :comment="comment" :language="language" />
-    </transition-group>
+    <h5>{{ $t("comments.comments") }}</h5>
+    <TransitionGroup name="slide">
+      <StringComment
+        v-for="comment in comments"
+        :key="comment.id"
+        :comment="comment"
+        :language="language"
+      />
+    </TransitionGroup>
 
-    <form @submit.prevent="saveComment">
+    <form @submit.prevent="$emit('save', enteredComment)">
       <div class="form-group">
         <textarea
           rows="3"
@@ -16,56 +49,21 @@
           :placeholder="$t('comments.write')"
           v-model.trim="enteredComment"
           :disabled="loading"
-          ></textarea>
+        ></textarea>
       </div>
       <div class="form-group">
-        <loading-button
+        <LoadingButton
           class="btn btn-primary"
-          :class="{'can-submit': canSubmit}"
+          :class="{ 'can-submit': canSubmit }"
           :disabled="!canSubmit"
           :loading="loading"
-          >
-          {{ $t('comments.add') }}
-        </loading-button>
+        >
+          {{ $t("comments.add") }}
+        </LoadingButton>
       </div>
     </form>
   </div>
 </template>
-
-<script>
-import StringComment from './StringComment';
-
-export default {
-  emits: ['save', 'delete-comment'],
-  props: ["comments", "language", "loading"],
-  components: { StringComment },
-  data() {
-    return {
-      enteredComment: ''
-    }
-  },
-  computed: {
-    canSubmit() {
-      return (this.enteredComment != '');
-    }
-  },
-  watch: {
-    loading(newVal) {
-      if (!newVal) {
-        this.enteredComment = '';
-      }
-    }
-  },
-  methods: {
-    saveComment() {
-      this.$emit('save', this.enteredComment);
-    },
-    deleteComment(id) {
-      this.$emit('delete-comment', id);
-    }
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 form {
@@ -73,7 +71,7 @@ form {
 }
 
 h5 {
-  margin-top: .7rem;
+  margin-top: 0.7rem;
   font-weight: bold;
   font-size: 1.2rem;
   color: rgb(81, 79, 78);
@@ -89,10 +87,11 @@ article {
   blockquote {
     font-size: 1rem;
     margin-bottom: 0;
+    white-space: pre-line;
   }
 }
 
 textarea:invalid {
-    box-shadow: none;
+  box-shadow: none;
 }
 </style>

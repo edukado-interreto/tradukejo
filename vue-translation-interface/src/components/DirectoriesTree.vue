@@ -1,20 +1,15 @@
+<script setup lang="ts">
+const { tree } = defineProps<{ tree: DirectoryTree }>()
+</script>
+
 <template>
-  <ul>
-    <directory-node :first="true" :node="tree['']"></directory-node>
+  <ul class="directory-tree-root">
+    <DirectoryNode first :node="tree['']" />
   </ul>
 </template>
 
-<script>
-import DirectoryNode from './DirectoryNode';
-
-export default {
-  props: ['tree'],
-  components: { DirectoryNode }
-};
-</script>
-
 <style lang="scss" scoped>
-ul {
+.directory-tree-root {
   margin: 0;
   padding: 0;
   border: 0;

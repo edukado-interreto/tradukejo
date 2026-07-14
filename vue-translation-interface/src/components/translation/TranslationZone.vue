@@ -1,43 +1,34 @@
-<template>
-  <add-string
-    v-if="editMode"
-  ></add-string>
-  <transition v-for="string in strings" :key="string.id" name="fade" mode="out-in">
-    <translation-row v-if="!string.deleted" :string="string"></translation-row>
-    <deleted-string v-else :string="string"></deleted-string>
-  </transition>
-  <load-more-strings v-if="canLoadMore"></load-more-strings>
-</template>
+<script setup lang="ts">
+import { useStore } from "@/store"
+import { useTranslation } from "@/composables/useTranslation"
 
-<script>
-import { defineAsyncComponent } from 'vue';
-import TranslationRow from "./TranslationRow";
-import DeletedString from "./DeletedString";
-const AddString = defineAsyncComponent(() => import('./AddString'));
-const LoadMoreStrings = defineAsyncComponent(() => import('./LoadMoreStrings'));
+import TranslationRow from "./TranslationRow.vue"
+import DeletedString from "./DeletedString.vue"
 
-export default {
-  components: {
-    TranslationRow,
-    DeletedString,
-    AddString,
-    LoadMoreStrings
-  },
-  props: ["strings"],
-  computed: {
-    canLoadMore() {
-      return this.$store.getters.canLoadMore;
-    }
-  }
-};
+const props = defineProps<{ strings: TrString[] }>()
+
+const AddString = defineAsyncComponent(() => import("./AddString.vue"))
+const LoadMoreStrings = defineAsyncComponent(() => import("./LoadMoreStrings.vue"))
+
+const store = useStore()
+const canLoadMore = computed(() => store.canLoadMore)
+
+const { editMode } = useTranslation()
 </script>
 
-<style scoped>
-.fade-enter-from {
-  opacity: 0;
-  transform: scaleY(0);
-}
+<template>
+  <AddString v-if="editMode" />
 
+  <Transition v-for="string in strings" :key="string.id" name="fade" mode="out-in">
+    <TranslationRow v-if="!string.deleted" :string="string" />
+    <DeletedString v-else :string="string" />
+  </Transition>
+
+  <LoadMoreStrings v-if="canLoadMore" />
+</template>
+
+<style scoped>
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
   transform: scaleY(0);
@@ -51,6 +42,6 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .2s;
+  transition: all 0.2s;
 }
 </style>
