@@ -9,9 +9,26 @@ from django.db.models import Q
 from django.middleware import csrf
 from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
+from django.urls import reverse
+
+from traduko.admin import TRANSLATION_STATE_OUTDATED, TRANSLATION_STATE_TRANSLATED
 
 from .decorators import is_project_admin, user_is_project_admin
-from .models import Language, LanguageVersion, Project, TranslatorRequest, TrString
+from .models import (
+    SORT_STRINGS_BY_NAME,
+    SORT_STRINGS_BY_NEWEST,
+    SORT_STRINGS_BY_OLDEST,
+    STATE_FILTER_ALL,
+    STATE_FILTER_OUTDATED,
+    STATE_FILTER_OUTDATED_UNTRANSLATED,
+    STATE_FILTER_UNTRANSLATED,
+    TRANSLATION_STATE_UNTRANSLATED,
+    Language,
+    LanguageVersion,
+    Project,
+    TranslatorRequest,
+    TrString,
+)
 from .translation_functions import (
     addible_languages,
     get_last_activities,
@@ -88,39 +105,67 @@ def translate(request, project_id, language=""):
     available_languages = get_project_languages_for_user(current_project, request.user)
 
     js_files = []
-    result = finders.find("traduko/vue-translation-interface/js")
-    for root, dirs, files in os.walk(result):
-        for filename in files:
-            if filename.endswith(".js"):
-                js_files.append(
-                    {
-                        "filename": filename,
-                        "prefetch": not filename.startswith("app.")
-                        and not filename.startswith("chunk-vendors."),
-                    }
-                )
+    # result = finders.find("traduko/vue-translation-interface/js")
+    # for root, dirs, files in os.walk(result):
+    #     for filename in files:
+    #         if filename.endswith(".js"):
+    #             js_files.append(
+    #                 {
+    #                     "filename": filename,
+    #                     "prefetch": not filename.startswith("app.")
+    #                     and not filename.startswith("chunk-vendors."),
+    #                 }
+    #             )
     css_files = []
-    result = finders.find("traduko/vue-translation-interface/css")
-    if result:
-        for root, dirs, files in os.walk(result):
-            for filename in files:
-                if filename.endswith(".css"):
-                    css_files.append(
-                        {
-                            "filename": filename,
-                            "prefetch": not filename.startswith("app.")
-                            and not filename.startswith("chunk-vendors."),
-                        }
-                    )
+    # result = finders.find("traduko/vue-translation-interface/css")
+    # if result:
+    #     for root, dirs, files in os.walk(result):
+    #         for filename in files:
+    #             if filename.endswith(".css"):
+    #                 css_files.append(
+    #                     {
+    #                         "filename": filename,
+    #                         "prefetch": not filename.startswith("app.")
+    #                         and not filename.startswith("chunk-vendors."),
+    #                     }
+    #                 )
 
     serialized_languages = []
     for l in available_languages:
         serialized_languages.append(l.to_dict())
 
+    js_constants = {
+        "projectId": current_project.pk,
+        "csrf": csrf.get_token(request),
+        "baseURL": reverse(
+            "translate_without_language", kwargs={"project_id": current_project.pk}
+        ),
+        "imgURL": static("traduko/img"),
+        "currentLocale": request.LANGUAGE_CODE,
+        "URLprefix": f"/{request.LANGUAGE_CODE}",
+        "projectLanguage": current_project.source_language.code,
+        "availableLanguages": [l.to_dict() for l in available_languages],
+        "userId": request.user.id,
+        "isAdmin": is_project_admin(request.user, current_project),
+        "globals": {
+            "TRANSLATION_STATE_TRANSLATED": TRANSLATION_STATE_TRANSLATED,
+            "TRANSLATION_STATE_UNTRANSLATED": TRANSLATION_STATE_UNTRANSLATED,
+            "TRANSLATION_STATE_OUTDATED": TRANSLATION_STATE_OUTDATED,
+            "STATE_FILTER_ALL": STATE_FILTER_ALL,
+            "STATE_FILTER_UNTRANSLATED": STATE_FILTER_UNTRANSLATED,
+            "STATE_FILTER_OUTDATED": STATE_FILTER_OUTDATED,
+            "STATE_FILTER_OUTDATED_UNTRANSLATED": STATE_FILTER_OUTDATED_UNTRANSLATED,
+            "SORT_STRINGS_BY_NEWEST": SORT_STRINGS_BY_NEWEST,
+            "SORT_STRINGS_BY_OLDEST": SORT_STRINGS_BY_OLDEST,
+            "SORT_STRINGS_BY_NAME": SORT_STRINGS_BY_NAME,
+        },
+    }
+
     context = {
+        "js_constants": js_constants,
         "project": current_project,
         "available_languages": json.dumps(serialized_languages, ensure_ascii=False),
-        "csrf": csrf.get_token(request),
+        "csrf": "csrf.get_token(request)",
         "imgURL": static("traduko/img"),
         "js_files": js_files,
         "css_files": css_files,

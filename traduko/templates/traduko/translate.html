@@ -1,5 +1,5 @@
 {% extends 'wide-page.html' %}
-{% load static i18n traduko_tags %}
+{% load static i18n django_vite traduko_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
@@ -13,6 +13,8 @@
 		{% format_translation translate_title link %}
 	{% endwith %}
 {% endblock %}
+
+{% comment %}
 
 {% block head %}
 {% for file in css_files %}
@@ -41,6 +43,8 @@
 {% endfor %}
 {% endblock %}
 
+{% endcomment %}
+
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb main-breadcrumb">
@@ -56,6 +60,8 @@
 <div id="app">
 	<div class="loader">…</div>
 </div>
+
+{{ js_constants|json_script:"vueTranslationInterface" }}
 
 <script>
 window.vueTranslationInterface = {
@@ -83,5 +89,7 @@ window.vueTranslationInterface = {
 	}
 };
 </script>
+
+{% vite_asset 'src/main.ts' %}
 {% endblock %}
 

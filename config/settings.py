@@ -1,14 +1,15 @@
 import os
+from itertools import product
 from pathlib import Path
 
+import dj_database_url
 import pymysql
 from django.contrib.messages import constants as messages
 from toml_decouple import config
-from dj_database_url import parse as db_url_parse
 
 from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
 from .error_tracking import setup_bugsink
-from .utils import Environment
+from .utils import Environment, django_vite_dev_mode
 
 SECRET_KEY = config("SECRET_KEY", "NESEKURA")
 DEBUG = config("DEBUG", False)
@@ -41,17 +42,17 @@ if "emaillabs" in EMAIL_BACKEND:
 if "DATABASE_URL" in config:
     DATABASES = {
         "default": {
-            **config("DATABASE_URL", to=db_url_parse),
+            **config("DATABASE_URL", to=dj_database_url.parse),
             "PASSWORD": config.MARIADB_PASSWORD,
         }
     }
 
-if "mysql" in config("DATABASE_URL", ""):
-    # Fake PyMySQL's version and install as MySQLdb
-    pymysql.install_as_MySQLdb()
+    if "mysql" in config.DATABASE_URL:
+        # Fake PyMySQL's version and install as MySQLdb
+        pymysql.install_as_MySQLdb()
 
-if ENVIRONMENT.testing:
-    DATABASES["default"]["HOST"] = "127.0.0.1"
+    if ENVIRONMENT.testing:
+        DATABASES["default"]["HOST"] = "127.0.0.1"
 
 INSTALLED_APPS = [
     "traduko.apps.TradukoConfig",
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_cleanup.apps.CleanupConfig",
     "django_extensions",
+    "django_vite",
     "rest_framework",
     "drf_spectacular",
     "drf_standardized_errors",
@@ -84,6 +86,16 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
 ]
+
+# CORS headers for Vite dev mode
+if ENVIRONMENT == Environment.DEV:
+    INSTALLED_APPS = ["corsheaders", *INSTALLED_APPS]
+    MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
+    CORS_ALLOWED_ORIGINS = [
+        f"http{secure}://{host}:5173"
+        for secure, host in product(("", "s"), ALLOWED_HOSTS)
+    ]
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -131,6 +143,7 @@ LANGUAGES = [
 
 LANGUAGE_CODE = "eo"
 
+USE_I18N = True
 USE_TZ = True
 TIME_ZONE = "Europe/Bratislava"
 
@@ -139,14 +152,14 @@ TIME_ZONE = "Europe/Bratislava"
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-
+STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / "config/static"]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
@@ -166,6 +179,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MAX_LOADED_STRINGS = 30
 
+COMPRESS_ENABLED = config("COMPRESS_ENABLED", not ENVIRONMENT.deployed)
 COMPRESS_OFFLINE = config("COMPRESS_OFFLINE", ENVIRONMENT.deployed)
 LIBSASS_OUTPUT_STYLE = config(
     "LIBSASS_OUTPUT_STYLE", default="nested" if DEBUG else "compressed"
@@ -175,6 +189,18 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
+
+DJANGO_VITE = {
+    "default": {
+        # "manifest_path": STATICFILES_DIRS[0] / "traduko/vue-translation-interface/manifest.json",
+        "static_url_prefix": "traduko/vue-translation-interface",
+        "dev_mode": django_vite_dev_mode(ENVIRONMENT),
+        "dev_server_host": HOSTNAME,
+        "dev_server_port": "443",  # Overrides 5173
+        "dev_server_protocol": "https",  # Overrides http
+    }
+}
+
 
 LOGGING = {
     "version": 1,

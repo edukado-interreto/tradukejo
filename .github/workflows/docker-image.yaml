@@ -5,7 +5,7 @@ on:
     workflows: ["Test Django with MariaDB"]
     types:
       - completed
-    branches: [main]
+    branches: [main, composition]
 
 jobs:
   build:

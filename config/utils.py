@@ -67,13 +67,3 @@ def django_vite_dev_mode(environment: Environment) -> bool:
         return bool(socket.gethostbyname(SERVICE_NAME))
     except socket.gaierror:
         return False
-
-
-def get_beercss_dir(static_dir) -> str:
-    """
-    Get the BeerCSS directory name in the form `beercss-x.y.z`
-    """
-    try:
-        return list(static_dir.glob("beercss-*"))[-1].name
-    except IndexError:
-        raise IndexError(f"BeerCSS is not install properly in {static_dir}")

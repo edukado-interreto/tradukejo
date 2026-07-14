@@ -343,9 +343,8 @@ class TrStringText(models.Model):
     def pluralized_text_dictionary(self):
         try:
             texts = json.loads(self.text)
-            if (
-                type(texts) != list
-            ):  # json.loads can parse self.text as an int or float, which isn't what we want
+            if type(texts) != list:
+                # json.loads can parse self.text as an int or float, which isn't what we want
                 texts = [self.text]
         except ValueError:
             texts = [self.text]

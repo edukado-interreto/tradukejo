@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static compress i18n traduko_tags %}
+{% load i18n static compress django_vite traduko_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -18,6 +18,7 @@
     <link rel="alternate" href="{% translate_abs_url code %}" hreflang="{{ code }}">
     {% endfor %}
 	<link rel="icon" type="image/png" href="{% static 'traduko/img/favicon.png' %}">
+	{% vite_hmr_client %}
 </head>
 <body>
 	<header id="page-header">
