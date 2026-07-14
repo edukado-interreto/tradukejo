@@ -2,9 +2,9 @@ name: Test Django with MariaDB
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, composition]
   push:
-    branches: [main]
+    branches: [main, composition]
 
 jobs:
   test:
