@@ -6,36 +6,43 @@ services:
     build:
       context: .
       target: development
-    restart: always
     depends_on:
       mariadb:
         condition: service_healthy
-      # vue-build:
-      #   condition: service_completed_successfully
     volumes:
       - .:/app:z
       - ./.venv:/app/.venv:z
     working_dir: /app
-    environment:
-      DJANGO_SETTINGS_MODULE: config.settings
-      MARIADB_HOST: mariadb
-      TRADUKEJO_MARIADB_NAME: ${COMPOSE_PROJECT_NAME}
-      TRADUKEJO_MARIADB_USER: $MARIADB_USER
-      TRADUKEJO_MARIADB_PASSWORD: $MARIADB_PASSWORD
+    env_file:
+      - .env
     user: ${USER_ID-1000}:${GROUP_ID-1000}
     command: >
       sh -c "
       python manage.py migrate &&
       python manage.py loaddata languages.json &&
-      python manage.py collectstatic --noinput &&
       python manage.py compilemessages -v0 &&
       python manage.py runserver 0.0.0.0:${DJANGO_PORT}
       "
-    # granian --interface wsgi --blocking-threads 3 config.wsgi:application --host 0.0.0.0 --port 8000
     networks:
       - backend
+      - public
     ports:
       - $DJANGO_PORT:$DJANGO_PORT
+    restart: always
+    stop_grace_period: 2s
+
+  vue:
+    image: node:22.23-slim
+    depends_on:
+      - caddy
+    working_dir: /app/vue-translation-interface
+    user: ${USER_ID-1000}:${USER_ID-1000}
+    volumes:
+      - .:/app:z
+    command: /bin/sh -c "npm i; npm run --verbose dev"
+    tty: true
+    networks:
+      - backend
 
   vue-build:
     image: node:16.20-slim
@@ -81,9 +88,25 @@ services:
     ports:
       - 3306:3306
 
+  caddy:
+    image: caddy:alpine
+    user: $USER_ID:$GROUP_ID
+    environment:
+      - LOCAL_HOST=${LOCAL_HOST}
+    ports:
+      - 127.0.0.1:443:443
+      - 127.0.0.1:24678:24678
+    volumes:
+      - ./containers/volumes/caddy/data:/data:Z
+      - ./containers/volumes/caddy/etc/caddy:/etc/caddy:Z
+    networks:
+      - public
+      - backend
+
 
 networks:
   backend:
+  public:
 
 volumes:
   MARIADB_TEST:

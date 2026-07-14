@@ -258,6 +258,19 @@ wheels = [
 ]
 
 [[package]]
+name = "django-cors-headers"
+version = "4.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asgiref" },
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/21/39/55822b15b7ec87410f34cd16ce04065ff390e50f9e29f31d6d116fc80456/django_cors_headers-4.9.0.tar.gz", hash = "sha256:fe5d7cb59fdc2c8c646ce84b727ac2bca8912a247e6e68e1fb507372178e59e8", size = 21458, upload-time = "2025-09-18T10:40:52.326Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/30/d8/19ed1e47badf477d17fb177c1c19b5a21da0fd2d9f093f23be3fb86c5fab/django_cors_headers-4.9.0-py3-none-any.whl", hash = "sha256:15c7f20727f90044dcee2216a9fd7303741a864865f0c3657e28b7056f61b449", size = 12809, upload-time = "2025-09-18T10:40:50.843Z" },
+]
+
+[[package]]
 name = "django-crispy-forms"
 version = "1.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -326,6 +339,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d8/01/419bc3cd882f3ec645d5a4511085202dd6bd3ef8d385871dcd2d32cc15b3/django_stubs_ext-6.0.5.tar.gz", hash = "sha256:1cc325e991303849bce70e19748981b225ef08b37256f263e113caf97cd3bcc0", size = 6666, upload-time = "2026-05-25T08:46:36.012Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/bf/7ee71071d84ad4e0efcd77e2681afed254a5f65c27524441a9caf8c60467/django_stubs_ext-6.0.5-py3-none-any.whl", hash = "sha256:a9932c8233d6dd4e34ae0b192026379c1a9be8f0b7c27aa1fa09ae215169773e", size = 10362, upload-time = "2026-05-25T08:46:34.467Z" },
+]
+
+[[package]]
+name = "django-vite"
+version = "3.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/23/fe/4be07f538bbf9bf8bf73b045552ec2a1b4fba67e3176abb30490b643368e/django_vite-3.1.0.tar.gz", hash = "sha256:8b4ffe4a9fa81ff568bfb195e74dde8694aaf13fd4b656ae60bf59cce08b85e8", size = 25434, upload-time = "2025-02-23T15:32:07.914Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/30/59/7df4b1077fa41b43b4e542696d75138dbb86a65f44248c607b3e0f1014ce/django_vite-3.1.0-py3-none-any.whl", hash = "sha256:4e46572bd6b1ce70784be129205dc2ffcbc7a3c19fea50bebfb72b327bbde5fc", size = 23579, upload-time = "2025-02-23T15:32:06.603Z" },
 ]
 
 [[package]]
@@ -1086,6 +1111,7 @@ dependencies = [
     { name = "django-extensions" },
     { name = "django-libsass" },
     { name = "django-sendmail-backend" },
+    { name = "django-vite" },
     { name = "djangorestframework" },
     { name = "drf-spectacular" },
     { name = "drf-standardized-errors", extra = ["openapi"] },
@@ -1102,6 +1128,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "django-cors-headers" },
     { name = "djangorestframework-stubs" },
     { name = "factory-boy" },
     { name = "freezegun" },
@@ -1127,6 +1154,7 @@ requires-dist = [
     { name = "django-extensions", specifier = ">=3.2.3" },
     { name = "django-libsass", specifier = "==0.9" },
     { name = "django-sendmail-backend", specifier = "==0.1.2" },
+    { name = "django-vite", specifier = ">=3.1.0" },
     { name = "djangorestframework", specifier = ">=3.15.1" },
     { name = "drf-spectacular", specifier = ">=0.29.0" },
     { name = "drf-standardized-errors", extras = ["openapi"], specifier = ">=0.15.0" },
@@ -1143,6 +1171,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "django-cors-headers", specifier = ">=4.9.0" },
     { name = "djangorestframework-stubs", specifier = ">=3.16.5" },
     { name = "factory-boy", specifier = ">=3.3.3" },
     { name = "freezegun", specifier = ">=1.5.5" },

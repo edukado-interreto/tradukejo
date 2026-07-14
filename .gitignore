@@ -4,6 +4,7 @@ upload/projects/*
 
 # Docker stuff
 .docker/*_data/
+containers/volumes/caddy/data
 
 # Pycharm stuff
 .idea/

@@ -1,5 +1,5 @@
 {% extends 'wide-page.html' %}
-{% load static i18n traduko_tags %}
+{% load static i18n django_vite traduko_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
@@ -12,33 +12,6 @@
 		{% blocktranslate asvar translate_title context 'Temas pri nomo de projekto' trimmed %}translate#title{% endblocktranslate %}
 		{% format_translation translate_title link %}
 	{% endwith %}
-{% endblock %}
-
-{% block head %}
-{% for file in css_files %}
-	{% if file.prefetch %}
-	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="prefetch">
-	{% else %}
-	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="preload" as="style">
-	<link href="{% static 'traduko/vue-translation-interface/css/'|add:file.filename %}" rel="stylesheet">
-	{% endif %}
-{% endfor %}
-
-{% for file in js_files %}
-	{% if file.prefetch %}
-	<link href="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}" rel="prefetch">
-	{% else %}
-	<link href="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}" rel="preload" as="script">
-	{% endif %}
-{% endfor %}
-{% endblock %}
-
-{% block js %}
-{% for file in js_files %}
-	{% if not file.prefetch %}
-	<script src="{% static 'traduko/vue-translation-interface/js/'|add:file.filename %}"></script>
-	{% endif %}
-{% endfor %}
 {% endblock %}
 
 {% block content %}
@@ -56,6 +29,8 @@
 <div id="app">
 	<div class="loader">…</div>
 </div>
+
+{{ js_constants|json_script:"vueTranslationInterface" }}
 
 <script>
 window.vueTranslationInterface = {
@@ -83,5 +58,7 @@ window.vueTranslationInterface = {
 	}
 };
 </script>
+
+{% vite_asset 'src/main.ts' %}
 {% endblock %}
 

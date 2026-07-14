@@ -1,0 +1,108 @@
+{
+  "__plugin-vue_export-helper-BDNMzG2s.js": {
+    "file": "assets/_plugin-vue_export-helper-BDNMzG2s.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_vue.runtime.esm-bundler-CeoDWAPj.js": {
+    "file": "assets/vue.runtime.esm-bundler-CeoDWAPj.js",
+    "name": "vue.runtime.esm-bundler"
+  },
+  "src/components/translation/AddString.vue": {
+    "file": "assets/AddString-DkbQUHRL.js",
+    "name": "AddString",
+    "src": "src/components/translation/AddString.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "__plugin-vue_export-helper-BDNMzG2s.js",
+      "src/main.ts"
+    ],
+    "css": [
+      "assets/AddString-CzAzRZL7.css"
+    ]
+  },
+  "src/components/translation/LoadMoreStrings.vue": {
+    "file": "assets/LoadMoreStrings-DF5W6Wkf.js",
+    "name": "LoadMoreStrings",
+    "src": "src/components/translation/LoadMoreStrings.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "src/main.ts"
+    ]
+  },
+  "src/components/translation/bottom/CommentsList.vue": {
+    "file": "assets/CommentsList-DSS806aI.js",
+    "name": "CommentsList",
+    "src": "src/components/translation/bottom/CommentsList.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "__plugin-vue_export-helper-BDNMzG2s.js",
+      "src/main.ts"
+    ],
+    "css": [
+      "assets/CommentsList-clbqUjZY.css"
+    ]
+  },
+  "src/components/translation/bottom/StringHistory.vue": {
+    "file": "assets/StringHistory-BShaLlK0.js",
+    "name": "StringHistory",
+    "src": "src/components/translation/bottom/StringHistory.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js"
+    ],
+    "css": [
+      "assets/StringHistory-C2OYbw-W.css"
+    ]
+  },
+  "src/components/translation/translatingTo/ProposedTranslations.vue": {
+    "file": "assets/ProposedTranslations-BUTrQsem.js",
+    "name": "ProposedTranslations",
+    "src": "src/components/translation/translatingTo/ProposedTranslations.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "__plugin-vue_export-helper-BDNMzG2s.js"
+    ],
+    "css": [
+      "assets/ProposedTranslations-7nwjr2Lq.css"
+    ]
+  },
+  "src/main.ts": {
+    "file": "assets/app-S0565j-D.js",
+    "name": "app",
+    "src": "src/main.ts",
+    "isEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "__plugin-vue_export-helper-BDNMzG2s.js"
+    ],
+    "dynamicImports": [
+      "src/components/translation/bottom/StringHistory.vue",
+      "src/components/translation/bottom/CommentsList.vue",
+      "src/components/translation/translatingTo/ProposedTranslations.vue",
+      "src/components/translation/AddString.vue",
+      "src/components/translation/LoadMoreStrings.vue",
+      "src/pages/LanguageChoice.vue"
+    ],
+    "css": [
+      "assets/app-B4ZKboqV.css"
+    ]
+  },
+  "src/pages/LanguageChoice.vue": {
+    "file": "assets/LanguageChoice-b1ba2N1_.js",
+    "name": "LanguageChoice",
+    "src": "src/pages/LanguageChoice.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.runtime.esm-bundler-CeoDWAPj.js",
+      "__plugin-vue_export-helper-BDNMzG2s.js",
+      "src/main.ts"
+    ],
+    "css": [
+      "assets/LanguageChoice-DCGl6XG4.css"
+    ]
+  }
+}

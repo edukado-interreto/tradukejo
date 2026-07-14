@@ -13,6 +13,7 @@ dependencies = [
   "django-extensions>=3.2.3",
   "django-libsass==0.9",
   "django-sendmail-backend==0.1.2",
+  "django-vite>=3.1.0",
   "djangorestframework>=3.15.1",
   "drf-spectacular>=0.29.0",
   "drf-standardized-errors[openapi]>=0.15.0",
@@ -29,6 +30,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+  "django-cors-headers>=4.9.0",
   "djangorestframework-stubs>=3.16.5",
   "factory-boy>=3.3.3",
   "freezegun>=1.5.5",
