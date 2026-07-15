@@ -10,18 +10,20 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - .:/app:z
-      - ./.venv:/app/.venv:z
-    working_dir: /app
+      - ./src:/tradukejo:z
+      - ./.venv:/tradukejo/.venv:z
+    working_dir: /tradukejo
     env_file:
-      - .env
+      - ./src/.env
+    environment:
+      TRADUKEJO_MARIADB_PASSWORD: $MARIADB_PASSWORD
     user: ${USER_ID-1000}:${GROUP_ID-1000}
     command: >
       sh -c "
-      python manage.py migrate &&
-      python manage.py loaddata languages.json &&
-      python manage.py compilemessages -v0 &&
-      python manage.py runserver 0.0.0.0:${DJANGO_PORT}
+      ./manage.py migrate &&
+      ./manage.py loaddata languages.json &&
+      ./manage.py compilemessages -v0 &&
+      ./manage.py runserver 0.0.0.0:${DJANGO_PORT}
       "
     networks:
       - backend
@@ -35,10 +37,10 @@ services:
     image: node:22.23-slim
     depends_on:
       - caddy
-    working_dir: /app/vue-translation-interface
+    working_dir: /tradukejo/vue-translation-interface
     user: ${USER_ID-1000}:${USER_ID-1000}
     volumes:
-      - .:/app:z
+      - .:/tradukejo:z
     command: /bin/sh -c "npm i; npm run --verbose dev"
     tty: true
     networks:
@@ -46,10 +48,10 @@ services:
 
   vue-build:
     image: node:16.20-slim
-    working_dir: /app/vue-translation-interface
+    working_dir: /tradukejo/vue-translation-interface
     user: ${USER_ID-1000}:${USER_ID-1000}
     volumes:
-      - .:/app:z
+      - .:/tradukejo:z
     command: /bin/sh -c "npm i; npm run --verbose build"
 
   vue-build-watch:
@@ -68,6 +70,7 @@ services:
       MARIADB_PASSWORD: $MARIADB_PASSWORD
     command: --wait-timeout=28800
     volumes:
+      # - containers!!!!/mariadb_data:/var/lib/mysql:z
       - .docker/mariadb_data:/var/lib/mysql:z
     networks:
       - backend

@@ -8,7 +8,7 @@
     "name": "vue.runtime.esm-bundler"
   },
   "src/components/translation/AddString.vue": {
-    "file": "assets/AddString-DkbQUHRL.js",
+    "file": "assets/AddString-DfGjd-GE.js",
     "name": "AddString",
     "src": "src/components/translation/AddString.vue",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "src/components/translation/LoadMoreStrings.vue": {
-    "file": "assets/LoadMoreStrings-DF5W6Wkf.js",
+    "file": "assets/LoadMoreStrings-D7fe0rqQ.js",
     "name": "LoadMoreStrings",
     "src": "src/components/translation/LoadMoreStrings.vue",
     "isDynamicEntry": true,
@@ -32,7 +32,7 @@
     ]
   },
   "src/components/translation/bottom/CommentsList.vue": {
-    "file": "assets/CommentsList-DSS806aI.js",
+    "file": "assets/CommentsList-Dstiw4yv.js",
     "name": "CommentsList",
     "src": "src/components/translation/bottom/CommentsList.vue",
     "isDynamicEntry": true,
@@ -71,7 +71,7 @@
     ]
   },
   "src/main.ts": {
-    "file": "assets/app-S0565j-D.js",
+    "file": "assets/app-BnXjludn.js",
     "name": "app",
     "src": "src/main.ts",
     "isEntry": true,
@@ -92,7 +92,7 @@
     ]
   },
   "src/pages/LanguageChoice.vue": {
-    "file": "assets/LanguageChoice-b1ba2N1_.js",
+    "file": "assets/LanguageChoice-DL5xNu-E.js",
     "name": "LanguageChoice",
     "src": "src/pages/LanguageChoice.vue",
     "isDynamicEntry": true,
