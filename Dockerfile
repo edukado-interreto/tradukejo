@@ -72,7 +72,7 @@ COPY --from=builder-base /usr/local/bin /usr/local/bin
 USER 1030:33
 
 # Copy the project
-COPY --chown=1030:33 ./ /app
+COPY --chown=1030:33 ./src /app
 
 # Set working directory
 WORKDIR /app

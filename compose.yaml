@@ -10,11 +10,11 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - .:/app:z
+      - ./src:/app:z
       - ./.venv:/app/.venv:z
     working_dir: /app
     env_file:
-      - .env
+      - ./src/.env
     user: ${USER_ID-1000}:${GROUP_ID-1000}
     command: >
       sh -c "
@@ -68,6 +68,7 @@ services:
       MARIADB_PASSWORD: $MARIADB_PASSWORD
     command: --wait-timeout=28800
     volumes:
+      # - containers!!!!/mariadb_data:/var/lib/mysql:z
       - .docker/mariadb_data:/var/lib/mysql:z
     networks:
       - backend
