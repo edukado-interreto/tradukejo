@@ -2,7 +2,7 @@ FROM python:3.13-slim-bookworm AS python-base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    HOME=/app \
+    HOME=/tradukejo \
     PYTHONPATH=/ \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
@@ -51,7 +51,7 @@ COPY --from=builder-base /usr/local/bin /usr/local/bin
 COPY --from=ghcr.io/astral-sh/uv:0.10.12 /uv /uvx /usr/local/bin/
 
 # Set working directory
-WORKDIR /app
+WORKDIR /tradukejo
 
 
 # Stage 4: Production
@@ -72,10 +72,10 @@ COPY --from=builder-base /usr/local/bin /usr/local/bin
 USER 1030:33
 
 # Copy the project
-COPY --chown=1030:33 ./src /app
+COPY --chown=1030:33 ./src /tradukejo
 
 # Set working directory
-WORKDIR /app
+WORKDIR /tradukejo
 
 RUN ./manage.py compilemessages -v0 \
  && ./manage.py compress \
