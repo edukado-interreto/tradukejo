@@ -166,6 +166,30 @@ def test_export_to_po_pluralized():
     assert poentry.msgstr_plural == {0: "plain"}
 
 
+def test_export_to_po_pluralized_original_text_as_key():
+    lv = LanguageVersionFactory()
+    lang, source = lv.language, lv.project.source_language
+
+    trstr = TrStringFactory(project=lv.project)
+    source_text = TrStringTextFactory(
+        trstring=trstr, language=source, pluralized=True, text='["one", "many"]'
+    )
+    TrStringTextFactory(
+        trstring=trstr, language=lang, pluralized=True, text='["wan", "tu"]'
+    )
+
+    poentry = uut.export_to_po(lv.project, original_text_as_key=True)[lang.code][0]
+    assert poentry.msgid == "one"
+    assert poentry.msgid_plural == "many"
+
+    # A pluralized source text with a single form used to raise IndexError
+    source_text.text = "plain"
+    source_text.save()
+    poentry = uut.export_to_po(lv.project, original_text_as_key=True)[lang.code][0]
+    assert poentry.msgid == "plain"
+    assert poentry.msgid_plural == "plain"
+
+
 def test_po_as_zip():
     lv = LanguageVersionFactory()
     language = lv.project.source_language
