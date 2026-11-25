@@ -7,7 +7,7 @@ import pymysql
 from django.contrib.messages import constants as messages
 from toml_decouple import config
 
-from .api.settings import REST_FRAMEWORK, SPECTACULAR_SETTINGS
+from .api.settings import dmr_settings
 from .error_tracking import setup_bugsink
 from .utils import Environment, django_vite_dev_mode
 
@@ -66,9 +66,7 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
     "django_extensions",
     "django_vite",
-    "rest_framework",
-    "drf_spectacular",
-    "drf_standardized_errors",
+    "dmr",
     "anymail",
     "crispy_forms",
     "compressor",
@@ -116,8 +114,7 @@ TEMPLATES = [
     },
 ]
 
-REST_FRAMEWORK = REST_FRAMEWORK
-SPECTACULAR_SETTINGS = SPECTACULAR_SETTINGS
+DMR_SETTINGS = dmr_settings(deployed=ENVIRONMENT.deployed)
 
 WSGI_APPLICATION = "config.wsgi.application"
 

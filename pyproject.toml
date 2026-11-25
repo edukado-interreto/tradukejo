@@ -6,7 +6,7 @@ requires-python = ">=3.13"
 dependencies = [
   "demjson3==3.0.6",
   "dj-database-url>=3.1.2",
-  "django==4.2.30",
+  "django==5.2.19",
   "django-anymail==11.1",
   "django-cleanup==5.2.0",
   "django-crispy-forms==1.12.0",
@@ -14,9 +14,8 @@ dependencies = [
   "django-libsass==0.9",
   "django-sendmail-backend==0.1.2",
   "django-vite>=3.1.0",
-  "djangorestframework>=3.15.1",
-  "drf-spectacular>=0.29.0",
-  "drf-standardized-errors[openapi]>=0.15.0",
+  "django-modern-rest[msgspec]>=0.17.0",
+  "dmr-jsonapi>=0.1.2",
   "pillow==12.2.0",
   "polib==1.1.1",
   "pylint>=2.9.6",
@@ -31,7 +30,6 @@ dependencies = [
 [dependency-groups]
 dev = [
   "django-cors-headers>=4.9.0",
-  "djangorestframework-stubs>=3.16.5",
   "factory-boy>=3.3.3",
   "freezegun>=1.5.5",
   "isort==5.9.3",

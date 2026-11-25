@@ -1,0 +1,39 @@
+name: Test Vue interface
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "vue-translation-interface/**"
+      - ".github/workflows/test-vue.yaml"
+  push:
+    branches: [main]
+    paths:
+      - "vue-translation-interface/**"
+      - ".github/workflows/test-vue.yaml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: vue-translation-interface
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: vue-translation-interface/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Run unit tests
+        run: npm run test:unit -- --run

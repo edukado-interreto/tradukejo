@@ -1,19 +1,14 @@
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer",
-        "config.api.renderers.BrowsableAPIRenderer",
-        "config.api.renderers.CsvRenderer",
-        "config.api.renderers.PoRenderer",
-        "config.api.renderers.TarGzRenderer",
-        "config.api.renderers.ZipFileRenderer",
-    ],
-    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
+from dmr.openapi import OpenAPIConfig
+from dmr.settings import Settings
 
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Tradukejo API",
-    "DESCRIPTION": "API por tradukejo.ikso.net/api",
-    "VERSION": "1.0",
-    "SERVE_INCLUDE_SCHEMA": False,
-}
+
+def dmr_settings(*, deployed: bool) -> dict:
+    return {
+        Settings.openapi_config: OpenAPIConfig(
+            title="Tradukejo API",
+            version="1.0",
+            description="API por tradukejo.ikso.net/api",
+        ),
+        # Response validation costs time, keep it out of deployed environments:
+        Settings.validate_responses: not deployed,
+    }

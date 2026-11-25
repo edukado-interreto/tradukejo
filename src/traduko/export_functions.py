@@ -270,7 +270,7 @@ def export_to_po(project, **kwargs):
                         trstring.original_text.pluralized_text_dictionary().values()
                     )
                     entry.msgid = forms[0]
-                    entry.msgid_plural = forms[1] if len(forms) > 0 else forms[0]
+                    entry.msgid_plural = forms[1] if len(forms) > 1 else forms[0]
                 else:
                     entry.msgid = trstring.original_text.text
             else:
