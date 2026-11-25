@@ -15,6 +15,7 @@ dependencies = [
   "django-sendmail-backend==0.1.2",
   "django-vite>=3.1.0",
   "django-modern-rest[msgspec]>=0.17.0",
+  "dmr-jsonapi>=0.1.2",
   "pillow==12.2.0",
   "polib==1.1.1",
   "pylint>=2.9.6",

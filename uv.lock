@@ -347,6 +347,19 @@ wheels = [
 ]
 
 [[package]]
+name = "dmr-jsonapi"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django-modern-rest" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d1/15/8807e6dccf64e509b760ae68f1ecff2f70841a4b0a22c4311461e48d90fd/dmr_jsonapi-0.1.2.tar.gz", hash = "sha256:c16d9976db3e21e4bb6458b21ac5c642d92525d6c8c8eb5947f193945d06459f", size = 17807, upload-time = "2026-11-25T12:07:07.623Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/3d/b486a8670f3ff3009d45b05447336bfe1b980509fa8a48eae76b6937bce0/dmr_jsonapi-0.1.2-py3-none-any.whl", hash = "sha256:6c810bbb7b0efc4fd87388f4a1b461374b8ae7788daf97a2b30ae3ee2e484e9a", size = 18453, upload-time = "2026-11-25T12:07:06.605Z" },
+]
+
+[[package]]
 name = "factory-boy"
 version = "3.3.3"
 source = { registry = "https://pypi.org/simple" }
@@ -923,6 +936,7 @@ dependencies = [
     { name = "django-modern-rest", extra = ["msgspec"] },
     { name = "django-sendmail-backend" },
     { name = "django-vite" },
+    { name = "dmr-jsonapi" },
     { name = "pillow" },
     { name = "polib" },
     { name = "pylint" },
@@ -963,6 +977,7 @@ requires-dist = [
     { name = "django-modern-rest", extras = ["msgspec"], specifier = ">=0.17.0" },
     { name = "django-sendmail-backend", specifier = "==0.1.2" },
     { name = "django-vite", specifier = ">=3.1.0" },
+    { name = "dmr-jsonapi", specifier = ">=0.1.2" },
     { name = "pillow", specifier = "==12.2.0" },
     { name = "polib", specifier = "==1.1.1" },
     { name = "pylint", specifier = ">=2.9.6" },
